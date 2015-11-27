@@ -1,0 +1,23 @@
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the WebDriver or PhpBrowser.
+# If you need both WebDriver and PHPBrowser tests - create a separate suite.
+
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - \Helper\Acceptance
+        - Db
+        - WebDriver
+        - Asserts
+    config:
+        WebDriver:
+            host: localhost                 # Selenium ContainerのIP/hostname
+            port: 4444                      # Selenium Container内部の4444portにmapしたport番号
+            url: 'http://222.158.239.68'    # テスト対象のurl
+            browser: firefox
+            window_size: 1680x3000
+            wait: 10
+            capabilities:
+                unexpectedAlertBehaviour: 'accept'
