@@ -1,2 +1,4 @@
 /test/_data
 /test/_output
+composer.phar
+/vendor
