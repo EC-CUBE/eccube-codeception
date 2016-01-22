@@ -4,6 +4,7 @@ use Codeception\Util\Fixtures;
 
 /**
  * @group admin
+ * @group admin02
  * @group basicinformation 
  * @group ea7
  */
@@ -122,11 +123,11 @@ class EA07BasicinfoCest
         $I->click('#main .container-fluid div:nth-child(2) .btn_area a');
 
         // 登録 
-        $I->fillField('#form1 #payment_register_method', '支払方法');
+        $I->fillField('#form1 #payment_register_method', 'payment method1');
         $I->fillField('#form1 #payment_register_charge', '100');
         $I->click('#form1 #aside_column button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
-        $I->see('支払方法', '#main .container-fluid .table_list table tbody tr td:nth-child(1)');
+        $I->see('payment method1', '#main .container-fluid .table_list table tbody tr td:nth-child(1)');
     }
 
     public function basicinfo_支払方法編集(AcceptanceTester $I)
@@ -143,11 +144,11 @@ class EA07BasicinfoCest
         $I->click('#main .container-fluid .table_list table tbody tr:nth-child(2) .icon_edit ul li:nth-child(1) a');
 
         // 編集 
-        $I->fillField('#form1 #payment_register_method', '支払方法1');
+        $I->fillField('#form1 #payment_register_method', 'payment method2');
         $I->fillField('#form1 #payment_register_charge', '1000');
         $I->click('#form1 #aside_column button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
-        $I->see('支払方法1', '#main .container-fluid .table_list table tbody tr td:nth-child(1)');
+        $I->see('payment method2', '#main .container-fluid .table_list table tbody tr td:nth-child(1)');
     }
 
     public function basicinfo_支払方法削除(AcceptanceTester $I)

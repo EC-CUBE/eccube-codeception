@@ -1,6 +1,7 @@
 {
     "require": {
         "codeception/codeception": "*",
-        "fzaninotto/faker":"1.*"
+        "fzaninotto/faker": "1.*",
+        "codeception/robo-paracept": "@dev"
     }
 }

@@ -21,7 +21,12 @@ class AcceptanceTester extends \Codeception\Actor
 {
     use _generated\AcceptanceTesterActions;
 
-    public function loginAsAdmin($user = '', $password = '')
+    public function getScenario() 
+    {
+        return $this->scenario;
+    }
+
+    public function loginAsAdmin($user = '', $password = '', $dir = '')
     {
         if(!$user || !$password) {
             $account = Fixtures::get('admin_account');
@@ -30,7 +35,7 @@ class AcceptanceTester extends \Codeception\Actor
         }
         
         $I = $this;
-        $this->goToAdminPage();
+        $this->goToAdminPage($dir);
 
         $I->submitForm('#form1', [
             'login_id' => $user, 
@@ -51,11 +56,15 @@ class AcceptanceTester extends \Codeception\Actor
         }
     }
 
-    public function goToAdminPage()
+    public function goToAdminPage($dir = '')
     {
         $I = $this;
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route']);
+        if ($dir == '') {
+            $config = Fixtures::get('config');
+            $I->amOnPage('/'.$config['admin_route']);
+        } else {
+            $I->amOnPage('/'.$dir);
+        }
     }
 
     public function loginAsMember($email = '', $password = '')

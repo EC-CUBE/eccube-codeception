@@ -4,6 +4,7 @@ use Codeception\Util\Fixtures;
 
 /**
  * @group admin
+ * @group admin01
  * @group toppage
  * @group ea1
  */
@@ -23,7 +24,7 @@ class EA01TopCest
     public function topページ_初期表示(AcceptanceTester $I)
     {
         $I->wantTo('EA0101-UC01-T01 TOPページ 初期表示');
-
+        
         // TOP画面に現在の受注状況、お知らせ、売り上げ状況、ショップ状況が表示されている
         $I->see('受注状況', '.container-fluid #order_info');
         $I->see('お知らせ', '.container-fluid #cube_news');

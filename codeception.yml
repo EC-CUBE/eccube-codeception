@@ -12,13 +12,3 @@ settings:
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
-modules:
-    config:
-        Db:
-            dsn: 'mysql:host=localhost;dbname=eccube;charset=utf8'
-            user: 'root'
-            password: ''
-            dump: 'tests/_data/dump.sql'
-            populate: true
-            cleanup: false
-            reconnect: true

@@ -2,18 +2,36 @@
 use Codeception\Util\Fixtures;
 use Faker\Factory as Faker;
 
+$config = parse_ini_file('tests/acceptance/config.ini',true);
+
 /**
- * 前提:
- *  - codeceptionで使うPhantomJSやSelenium2からテスト対象のeccubeがhttp参照できること
- *  - 対象eccubeはinstall.phpなどで初期化されていること
+ * envで指定された値を読み、config.iniなどのの切り替えに使う
  */
-$config = parse_ini_file('tests/acceptance/config.ini');
-require_once $config['eccube_path'].'autoload.php'; 
-$app = new Eccube\Application();
-$app->initialize();
-$app->initializePlugin();
-$app->run();
-Fixtures::add('app', $app);
+$argv = $_SERVER['argv'];
+$check = false;
+$env = '';
+foreach ($argv as $arg) {
+    if (!$check && $arg == '--env') {
+        $check = true;
+        continue;
+    }
+    if ($check) {
+        $env = $arg;
+        break;
+    }
+}
+if ($env != '') {
+    if (isset($config[$env])) {
+        $config['eccube_path'] = $config[$env]['eccube_path'];
+        $config['hostname'] = $config[$env]['hostname'];
+        $config['db'] = $config[$env]['db'];
+        $config['dbhost'] = $config[$env]['dbhost'];
+        $config['dbport'] = $config[$env]['dbport'];
+        $config['user'] = $config[$env]['user'];
+        $config['password'] = $config[$env]['password'];
+        $config['charset'] = $config[$env]['charset'];
+    }
+}
 
 /**
  * create fixture
@@ -26,6 +44,25 @@ Fixtures::add('app', $app);
  * 将来、Eccube\Util上に共通クラスとして作成され置き換えられる
  * https://github.com/EC-CUBE/ec-cube/issues/1127
  */
+require_once $config['eccube_path'].'autoload.php'; 
+use Symfony\Component\Yaml\Yaml;
+$dbyml = $config['eccube_path'].'app/config/eccube/database.yml';
+$database = $database_org = Yaml::parse($dbyml);
+$database['database']['dbname'] = $config['db'];
+$database['database']['host'] = $config['dbhost'];
+$database['database']['port'] = ($config['dbport']) ? $config['dbport'] : null;
+$database['database']['user'] = $config['user'];
+$database['database']['password'] = ($config['password']) ? $config['password'] : '';
+$database['database']['charset'] = $config['charset'];
+file_put_contents($dbyml,Yaml::dump($database));
+
+$app = new Eccube\Application();
+$app->initialize();
+$app->initializePlugin();
+$app->run();
+Fixtures::add('app', $app);
+file_put_contents($dbyml,Yaml::dump($database_org));
+
 use Eccube\Common\Constant;
 use Eccube\Entity\Customer;
 use Eccube\Entity\Master\CustomerStatus;
@@ -85,10 +122,10 @@ function createCustomer($app, $email = null, $active = true)
         ->setSalt($app['eccube.repository.customer']->createSalt(5))
         ->setPassword('password')
         ->setPref($app['eccube.repository.master.pref']->find(13))
-        ->setSecretKey($app['eccube.repository.customer']->getUniqueSecretKey($app))
         ->setStatus($Status)
-        ->setDelFlg(0);
-    $Customer->setPassword($app['eccube.repository.customer']->encryptPassword($app, $Customer));
+        ->setDelFlg(0)
+        ->setPassword($app['eccube.repository.customer']->encryptPassword($app, $Customer))
+        ->setSecretKey($app['eccube.repository.customer']->getUniqueSecretKey($app));
 
     $CustomerAddress = new \Eccube\Entity\CustomerAddress();
     $CustomerAddress->setName01($Customer->getName01())
