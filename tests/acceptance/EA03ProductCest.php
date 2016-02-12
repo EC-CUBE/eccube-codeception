@@ -273,7 +273,8 @@ class EA03ProductCest
         $I->fillField('#search_form #admin_search_product_id', 'test product1');
         $I->click('#search_form button');
 
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div.tableish > div:nth-child(1)  > .item_detail > a');
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(3) > a');
+
         $I->see('商品管理商品登録', '#main .page-header');
         $I->fillField('#form1 #admin_product_name', 'test product11');
         $I->click('#form1 #aside_column button:nth-child(1)');
