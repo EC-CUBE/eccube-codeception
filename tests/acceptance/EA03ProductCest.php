@@ -59,8 +59,10 @@ class EA03ProductCest
         $I->see('商品管理商品マスター', '#main .page-header');
 
         $I->click('#search_form button');
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.row > div:nth-child(2) > ul > li:nth-child(2) > a');
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.row > div:nth-child(2) > ul > li.dropdown.open > ul > li:nth-child(1) > a');
+        // 「CSVダウンロード」ドロップダウン
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > a');
+        // 「CSVダウンロード」リンク
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > ul > li:nth-child(1) > a');
 
         /**
          * clientに指定しているphantomjsのdockerコンテナにダウンロードされているかどうかは現在確認不可
@@ -76,8 +78,10 @@ class EA03ProductCest
         $I->see('商品管理商品マスター', '#main .page-header');
 
         $I->click('#search_form button');
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.row > div:nth-child(2) > ul > li:nth-child(2) > a');
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.row > div:nth-child(2) > ul > li.dropdown.open > ul > li:nth-child(2) > a');
+        // 「CSVダウンロード」ドロップダウン
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > a');
+        // 「CSV出力項目設定」リンク
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > ul > li:nth-child(2) > a');
 
         $I->see('システム設定CSV出力項目設定', '#main .page-header');
         $value = $I->grabValueFrom('#csv-form #csv-type');
@@ -94,8 +98,10 @@ class EA03ProductCest
 
         $I->click('#search_form button');
 
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div > div:nth-child(1) > div.icon_edit.td > div > a');
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div > div:nth-child(1) > div.icon_edit.td > div > ul > li:nth-child(1) > a');
+        // 規格アイコン クリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(4) > div > a');
+        // 規格リンク クリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(4) > div > ul > li:nth-child(1) > a');
         $I->see('商品管理商品登録(商品規格)', '#main .page-header');
 
         $I->click('#main > div > div > div > form > div > div.box-body > button');
@@ -115,8 +121,11 @@ class EA03ProductCest
 
         $I->click('#search_form button');
 
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div > div:nth-child(1) > div.icon_edit.td > div > a');
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div > div:nth-child(1) > div.icon_edit.td > div > ul > li:nth-child(1) > a');
+        // 規格アイコン クリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(4) > div > a');
+        // 規格リンク クリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(4) > div > ul > li:nth-child(1) > a');
+
         $I->see('商品管理商品登録(商品規格)', '#main .page-header');
 
         $I->selectOption('#form_class_name1', '材質');
@@ -146,8 +155,11 @@ class EA03ProductCest
         $I->fillField('#search_form #admin_search_product_id', 'フォーク');
         $I->click('#search_form button');
 
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div > div:nth-child(1) > div.icon_edit.td > div > a');
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div > div:nth-child(1) > div.icon_edit.td > div > ul > li:nth-child(1) > a');
+        // 規格アイコン クリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(4) > div > a');
+        // 規格リンク クリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(4) > div > ul > li:nth-child(1) > a');
+
         $I->see('商品管理商品登録(商品規格)', '#main .page-header');
 
         $I->click('#delete');
@@ -168,8 +180,11 @@ class EA03ProductCest
         $I->fillField('#search_form #admin_search_product_id', 'フォーク');
         $I->click('#search_form button');
 
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div > div:nth-child(1) > div.icon_edit.td > div > a');
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div > div:nth-child(1) > div.icon_edit.td > div > ul > li:nth-child(1) > a');
+        // 規格アイコン クリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(4) > div > a');
+        // 規格リンク クリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(4) > div > ul > li:nth-child(1) > a');
+
         $I->see('商品管理商品登録(商品規格)', '#main .page-header');
 
         $I->click("#product-class-form > div:nth-child(3) > div > button");
@@ -187,8 +202,10 @@ class EA03ProductCest
         $I->fillField('#search_form #admin_search_product_id', 'フォーク');
         $I->click('#search_form button');
 
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div > div:nth-child(1) > div.icon_edit.td > div > a');
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div > div:nth-child(1) > div.icon_edit.td > div > ul > li:nth-child(2) > a');
+        // アイコンクリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > a');
+        // 確認リンク クリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > ul > li:nth-child(2) > a');
 
         /**
          * 確認をクリックすると、別ウィンドウでフロント側の商品詳細ページが表示される為、phantomjsではハンドリングできない
@@ -206,8 +223,10 @@ class EA03ProductCest
         $I->fillField('#search_form #admin_search_product_id', 'フォーク');
         $I->click('#search_form button');
 
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div > div:nth-child(1) > div.icon_edit.td > div > a');
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div > div:nth-child(1) > div.icon_edit.td > div > ul > li:nth-child(3) > a');
+        // アイコンクリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > a');
+        // 複製リンク クリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > ul > li:nth-child(3) > a');
 
         /**
          * ToDo: popup
@@ -254,7 +273,8 @@ class EA03ProductCest
         $I->fillField('#search_form #admin_search_product_id', 'test product1');
         $I->click('#search_form button');
 
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div.tableish > div:nth-child(1)  > .item_detail > a');
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(3) > a');
+
         $I->see('商品管理商品登録', '#main .page-header');
         $I->fillField('#form1 #admin_product_name', 'test product11');
         $I->click('#form1 #aside_column button:nth-child(1)');
@@ -281,8 +301,10 @@ class EA03ProductCest
         $I->fillField('#search_form #admin_search_product_id', 'test product2');
         $I->click('#search_form button');
 
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div > div:nth-child(1) > div.icon_edit.td > div > a');
-        $I->click('#main > div > div.row > div > div > div.box-body.no-padding > div.item_list > div > div:nth-child(1) > div.icon_edit.td > div > ul > li:nth-child(4) > a');
+        // アイコンクリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > a');
+        // 削除リンク クリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > ul > li:nth-child(4) > a');
 
         /**
          * ToDo: popup
@@ -298,7 +320,7 @@ class EA03ProductCest
         $I->see('商品管理規格編集', '#main .page-header');
 
         $I->fillField('#admin_class_name_name', 'test class1');
-        $I->click('#form1 > button');
+        $I->click('#form1 > div > div > button');
 
         $I->see('規格を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
@@ -320,7 +342,7 @@ class EA03ProductCest
         $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(2) a');
         $value = $I->grabValueFrom('#admin_class_name_name');
         $I->assertEquals('test class1', $value);
-        $I->click('#form1 > button');
+        $I->click('#form1 > div > div > button');
 
         $I->see('規格を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
@@ -348,7 +370,7 @@ class EA03ProductCest
         $I->see('商品管理規格編集', '#main .page-header');
 
         $I->fillField('#admin_class_name_name', 'test class2');
-        $I->click('#form1 > button');
+        $I->click('#form1 > div > div > button');
         $I->see('規格を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
 
         $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown a');
@@ -356,7 +378,7 @@ class EA03ProductCest
         $I->see('規格名： test class2', '#main > div > div:nth-child(1) > div > div > div.box-header > h3');
 
         $I->fillField('#admin_class_category_name', 'test class2 category1');
-        $I->click('#form1 > button');
+        $I->click('#form1 > div > div > button');
 
         $I->see('分類を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
 
@@ -364,7 +386,7 @@ class EA03ProductCest
         $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(1) a');
         $value = $I->grabValueFrom('#admin_class_category_name');
         $I->assertEquals('test class2 category1', $value);
-        $I->click('#form1 > button');
+        $I->click('#form1 > div > div > button');
 
         $I->see('分類を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
 
