@@ -31,7 +31,7 @@ class EA05CustomerCest
 
         $app = Fixtures::get('app');
         $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(1);
-        
+
         $I->fillField('#admin_search_customer_multi', $customer->getEmail());
         $I->click('#search_form > div.search-box > div.row.btn_area > div > button');
 
@@ -75,14 +75,14 @@ class EA05CustomerCest
         $I->fillField('#admin_customer_tel_tel03', '111');
         $I->fillField('#admin_customer_password_first', 'password');
         $I->fillField('#admin_customer_password_second', 'password');
-        $I->click('#aside_column > div > div.box.no-header > div > div.row.text-center > div > button');
+        $I->click('#button_box__insert_button > div > button');
 
         $I->see('会員情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
-        
+
         $I->amOnPage('/'.$config['admin_route'].'/customer/new');
         $I->see('会員管理会員登録・編集', '#main .page-header');
 
-        $I->click('#aside_column > div > div.box.no-header > div > div.row.text-center > div > button');
+        $I->click('#button_box__insert_button > div > button');
         /* ブラウザによるhtml5のエラーなのでハンドリング不可 */
     }
 
@@ -102,11 +102,11 @@ class EA05CustomerCest
         $I->click('#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr > td.icon_edit > div > ul > li:nth-child(1) > a');
 
         $I->fillField('#admin_customer_name_name01', 'testuser-1');
-        $I->click('#aside_column > div > div.box.no-header > div > div.row.text-center > div > button');
+        $I->click('#button_box__insert_button > div > button');
         $I->see('会員情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
-        
+
         $I->fillField('#admin_customer_name_name01', '');
-        $I->click('#aside_column > div > div.box.no-header > div > div.row.text-center > div > button');
+        $I->click('#button_box__insert_button > div > button');
         /* ブラウザによるhtml5のエラーなのでハンドリング不可 */
     }
 
@@ -117,27 +117,27 @@ class EA05CustomerCest
         $config = Fixtures::get('config');
         $I->amOnPage('/'.$config['admin_route'].'/customer');
         $I->see('会員管理会員マスター', '#main .page-header');
-        
+
         $app = Fixtures::get('app');
         $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(1);
-        
+
         $I->fillField('#admin_search_customer_multi', $customer->getEmail());
         $I->click('#search_form > div.search-box > div.row.btn_area > div > button');
-    
+
         $I->click('#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr > td.icon_edit > div > a');
         $I->click('#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr > td.icon_edit > div > ul > li:nth-child(2) > a');
-        
+
         /* ToDo: popup */
     }
-    
+
     public function customer_CSV出力(AcceptanceTester $I)
     {
         $I->wantTo('EA0501-UC05-T01 CSV出力');
-        
+
         $config = Fixtures::get('config');
         $I->amOnPage('/'.$config['admin_route'].'/customer');
         $I->see('会員管理会員マスター', '#main .page-header');
-        
+
         $I->click('#search_form > div.search-box > div.row.btn_area > div > button');
         $I->click('#search_form > div.row > div > div > div.box-body > div.row > div > ul > li:nth-child(2) > a');
         $I->click('#search_form > div.row > div > div > div.box-body > div.row > div > ul > li.dropdown.open > ul > li:nth-child(1) > a');
@@ -154,7 +154,7 @@ class EA05CustomerCest
         $config = Fixtures::get('config');
         $I->amOnPage('/'.$config['admin_route'].'/customer');
         $I->see('会員管理会員マスター', '#main .page-header');
-        
+
         $I->click('#search_form > div.search-box > div.row.btn_area > div > button');
         $I->click('#search_form > div.row > div > div > div.box-body > div.row > div > ul > li:nth-child(2) > a');
         $I->click('#search_form > div.row > div > div > div.box-body > div.row > div > ul > li.dropdown.open > ul > li:nth-child(2) > a');
@@ -171,13 +171,13 @@ class EA05CustomerCest
         $config = Fixtures::get('config');
         $I->amOnPage('/'.$config['admin_route'].'/customer');
         $I->see('会員管理会員マスター', '#main .page-header');
-        
+
         $I->fillField('#admin_search_customer_multi', 'test@test.test');
         $I->click('#search_form > div.search-box > div.row.btn_area > div > button');
-    
+
         $I->click('#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr > td.icon_edit > div > a');
         $I->click('#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr > td.icon_edit > div > ul > li:nth-child(3) > a');
-        
+
         /* ToDo: popup */
     }
 }
