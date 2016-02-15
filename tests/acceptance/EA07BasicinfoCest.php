@@ -5,7 +5,7 @@ use Codeception\Util\Fixtures;
 /**
  * @group admin
  * @group admin02
- * @group basicinformation 
+ * @group basicinformation
  * @group ea7
  */
 class EA07BasicinfoCest
@@ -122,7 +122,7 @@ class EA07BasicinfoCest
         // 登録フォーム
         $I->click('#main .container-fluid div:nth-child(2) .btn_area a');
 
-        // 登録 
+        // 登録
         $I->fillField('#form1 #payment_register_method', 'payment method1');
         $I->fillField('#form1 #payment_register_charge', '100');
         $I->click('#form1 #aside_column button');
@@ -143,7 +143,7 @@ class EA07BasicinfoCest
         $I->click('#main .container-fluid .table_list table tbody tr:nth-child(2) .icon_edit a');
         $I->click('#main .container-fluid .table_list table tbody tr:nth-child(2) .icon_edit ul li:nth-child(1) a');
 
-        // 編集 
+        // 編集
         $I->fillField('#form1 #payment_register_method', 'payment method2');
         $I->fillField('#form1 #payment_register_charge', '1000');
         $I->click('#form1 #aside_column button');
@@ -160,7 +160,7 @@ class EA07BasicinfoCest
         $I->amOnPage('/'.$config['admin_route'].'/setting/shop/payment');
         $I->see('ショップ設定支払方法管理', '#main .page-header');
 
-        // 削除 
+        // 削除
         $I->click('#main .container-fluid .table_list table tbody tr:nth-child(2) .icon_edit a');
         $I->click('#main .container-fluid .table_list table tbody tr:nth-child(2) .icon_edit ul li:nth-child(2) a');
         /* ToDo: popup*/
@@ -189,9 +189,9 @@ class EA07BasicinfoCest
         $I->see('ショップ設定配送方法管理', '#main .page-header');
 
         // 登録フォーム
-        $I->click('#main .container-fluid div:nth-child(3) .btn_area a');
+        $I->click('delivery_list__name--2 > a');
 
-        // 登録 
+        // 登録
         $I->fillField('#form1 #delivery_name', '配送業者名');
         $I->fillField('#form1 #delivery_service_name', '名称');
         $I->checkOption('#form1 #delivery_payments_1');
@@ -216,7 +216,7 @@ class EA07BasicinfoCest
         $I->click('#main .container-fluid .sortable_list .tableish .item_box:nth-child(1) .icon_edit .dropdown a');
         $I->click('#main .container-fluid .sortable_list .tableish .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(1) a');
 
-        // 編集 
+        // 編集
         $I->fillField('#form1 #delivery_name', '配送業者名1');
         $I->click('#form1 #aside_wrap div:nth-child(2) button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
@@ -232,7 +232,7 @@ class EA07BasicinfoCest
         $I->amOnPage('/'.$config['admin_route'].'/setting/shop/delivery');
         $I->see('ショップ設定配送方法管理', '#main .page-header');
 
-        // 削除 
+        // 削除
         $I->click('#main .container-fluid .sortable_list .tableish .item_box:nth-child(1) .icon_edit .dropdown a');
         $I->click('#main .container-fluid .sortable_list .tableish .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(2) a');
         /* ToDo: popup*/
@@ -258,14 +258,14 @@ class EA07BasicinfoCest
         $I->see('税率設定情報を保存しました。', '#main .container-fluid .alert-success');
         $I->see('10%', '#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) td:nth-child(2)');
 
-        // 編集 
+        // 編集
         $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown a');
         $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown ul li:nth-child(1) a');
         $I->fillField('#form1 #tax_rule_tax_rate', '12');
         $I->click('#form1 div div div:nth-child(4) button');
         $I->see('税率設定情報を保存しました。', '#main .container-fluid .alert-success');
         $I->see('12%', '#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) td:nth-child(2)');
-        
+
         // 削除
         $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown a');
         $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown ul li:nth-child(2) a');
@@ -290,7 +290,7 @@ class EA07BasicinfoCest
 
         // テンプレートロード
         $I->selectOption('#form1 #mail_template', 'ご注文ありがとうございます');
-        
+
         // 編集
         $I->fillField('#form1 #mail_subject', 'ご注文有難うございました');
         $I->click('#form1 #aside_column button');
@@ -300,7 +300,7 @@ class EA07BasicinfoCest
     public function basicinfo_CSV出力項目(AcceptanceTester $I)
     {
         $I->wantTo('EA0710-UC01-T01  CSV出力項目設定');
-        
+
         // 表示
         $config = Fixtures::get('config');
         $I->amOnPage('/'.$config['admin_route'].'/setting/shop/csv');
@@ -308,11 +308,11 @@ class EA07BasicinfoCest
 
         // テンプレートロード
         $I->selectOption('#csv-form #csv-type', '配送CSV');
-        
+
         // 編集
         $I->selectOption('#csv-form #csv-output', '誕生日');
         $I->click('#csv-form #remove');
-        $I->click('#csv-form #aside_column button');
+        $I->click('#common_button_box__confirm_button button');
         $I->see('CSV出力を設定しました。', '#main .container-fluid .alert-success');
     }
 }
