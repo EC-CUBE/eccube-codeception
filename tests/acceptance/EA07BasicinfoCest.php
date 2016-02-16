@@ -189,7 +189,7 @@ class EA07BasicinfoCest
         $I->see('ショップ設定配送方法管理', '#main .page-header');
 
         // 登録フォーム
-        $I->click('delivery_list__name--2 > a');
+        $I->click('#delivery_list__name--2 > a');
 
         // 登録
         $I->fillField('#form1 #delivery_name', '配送業者名');
