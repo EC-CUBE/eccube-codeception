@@ -70,11 +70,11 @@ $num = $app['orm.em']->getRepository('Eccube\Entity\Customer')
     ->where('o.del_flg = 0')
     ->getQuery()
     ->getSingleScalarResult();
-if(!$num) {
-    for ($i = 0; $i < $config['fixture_customer_num']; $i++) {
+if ($num < $config['fixture_customer_num']) {
+    $num = $config['fixture_customer_num'] - $num;
+    for ($i = 0; $i < $num; $i++) {
         $customer = createCustomer($app);
         $order = createOrder($app, $customer);
-        $order->setOrderStatus($app['eccube.repository.order_status']->find($app['config']['order_new']));
     }
     createCustomer($app, null, false); // non-active member
 }
@@ -111,7 +111,10 @@ function createProduct($app, $product_name = null, $product_class_num = 3)
 
 function createOrder($app, Customer $Customer)
 {
-    return $app['eccube.fixture.generator']->createOrder($Customer);
+    $Order = $app['eccube.fixture.generator']->createOrder($Customer);
+    $Order->setOrderStatus($app['eccube.repository.order_status']->find($app['config']['order_new']));
+    $app['orm.em']->flush($Order);
+    return $Order;
 }
 
 /**
