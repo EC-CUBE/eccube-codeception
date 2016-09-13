@@ -5,7 +5,7 @@ use Codeception\Util\Fixtures;
 /**
  * @group admin
  * @group admin02
- * @group systeminformation 
+ * @group systeminformation
  * @group ea8
  */
 class EA08SysteminfoCest
@@ -66,7 +66,7 @@ class EA08SysteminfoCest
         $I->selectOption('#form1 #admin_member_Work_1', '稼働');
         $I->click('#aside_column button');
         $I->see('メンバーを保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
-        
+
         $I->see('メンバー管理', '#main .container-fluid div:nth-child(1) .box-header .box-title');
         $I->see('admintest', '#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(1)');
     }
@@ -91,7 +91,7 @@ class EA08SysteminfoCest
         $I->selectOption('#form1 #admin_member_Authority', 'システム管理者');
         $I->selectOption('#form1 #admin_member_Work_1', '稼働');
         $I->click('#aside_wrap .btn_area a');
-        
+
         $I->see('メンバー管理', '#main .container-fluid div:nth-child(1) .box-header .box-title');
         $I->dontSee('admintest2', '#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(1)');
     }
@@ -107,7 +107,7 @@ class EA08SysteminfoCest
 
         $I->click('#main .container-fluid .btn_area a');
         $I->see('メンバー登録・編集', '#main .container-fluid div:nth-child(1) .box-header .box-title');
-        
+
         $I->click('#aside_column button');
         $I->see('入力されていません。', '#form1 div:nth-child(1) div');
     }
@@ -128,7 +128,7 @@ class EA08SysteminfoCest
         $I->fillField('#form1 #admin_member_name', 'administrator');
         $I->click('#aside_column button');
         $I->see('メンバーを保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
-        
+
         $I->see('メンバー管理', '#main .container-fluid div:nth-child(1) .box-header .box-title');
         $I->see('administrator', '#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(1)');
     }
@@ -148,7 +148,7 @@ class EA08SysteminfoCest
 
         $I->fillField('#form1 #admin_member_name', 'administrator2');
         $I->click('#aside_wrap .btn_area a');
-        
+
         $I->see('メンバー管理', '#main .container-fluid div:nth-child(1) .box-header .box-title');
         $I->dontSee('administrator2', '#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(1)');
     }
@@ -168,7 +168,7 @@ class EA08SysteminfoCest
 
         $I->fillField('#form1 #admin_member_name', '');
         $I->click('#aside_column button');
-        
+
         $I->see('入力されていません。', '#form1 div:nth-child(1) div');
     }
 
@@ -220,7 +220,7 @@ class EA08SysteminfoCest
         $I->see('管理者', '#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(1)');
         */
     }
-    
+
     public function systeminfo_メンバー管理自ユーザー削除(AcceptanceTester $I)
     {
         $I->wantTo('EA0802-UC01-T07 メンバー管理 - 自ユーザー削除');
@@ -277,13 +277,13 @@ class EA08SysteminfoCest
 
         $I->fillField('form #admin_security_admin_allow_host', '1.1.1.1');
         $I->click('#aside_column div div div div div button');
-        
+
         $I->amOnPage('/'.$config['admin_route']);
         $I->see('システムエラーが発生しました。', '#main .container-fluid h1');
 
         $test_config = Fixtures::get('test_config');
         $eccube = $test_config['eccube_path'];
-        $configfile = $eccube."/app/config/eccube/config.yml"; 
+        $configfile = $eccube."/app/config/eccube/config.yml";
         $lines = file($configfile);
         $fh = fopen($configfile, 'w');
         foreach ($lines as $line) {
@@ -294,7 +294,7 @@ class EA08SysteminfoCest
         }
         fclose($fh);
     }
-    
+
     public function systeminfo_セキュリティ管理SSL(AcceptanceTester $I)
     {
         $I->wantTo('EA0804-UC01-T04 セキュリティ管理 - SSL強制');
@@ -326,7 +326,7 @@ class EA08SysteminfoCest
         $I->dontSee('コンテンツ管理', '#side ul');
         $I->dontSee('オーナーズストア', '#side ul');
     }
-    
+
     public function systeminfo_権限管理削除(AcceptanceTester $I)
     {
         $I->wantTo('EA0805-UC02-T01 権限管理 - 削除');
@@ -345,7 +345,7 @@ class EA08SysteminfoCest
         $I->see('コンテンツ管理', '#side ul');
         $I->see('オーナーズストア', '#side ul');
     }
-    
+
     public function systeminfo_ログ表示(AcceptanceTester $I)
     {
         $I->wantTo('EA0806-UC01-T01 ログ表示');
@@ -364,7 +364,7 @@ class EA08SysteminfoCest
 
         $I->dontSeeElement('#main .container-fluid .box table tbody tr:nth-child(2)');
     }
-    
+
     public function systeminfo_マスターデータ管理(AcceptanceTester $I)
     {
         $I->wantTo('EA0807-UC01-T01 マスターデータ管理');

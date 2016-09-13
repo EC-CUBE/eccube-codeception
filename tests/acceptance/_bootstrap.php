@@ -92,6 +92,7 @@ if($num==($config['fixture_customer_num']+2)) {
         createProduct($app);
     }
 }
+createProduct($app, '規格なし商品', 0);
 
 function createCustomer($app, $email = null, $active = true)
 {
