@@ -52,6 +52,8 @@ $database['database']['charset'] = $config['charset'];
 file_put_contents($dbyml,Yaml::dump($database));
 
 $app = Eccube\Application::getInstance();
+// Disable to TransactionListener.
+$app->setTestMode(true);
 $app->initialize();
 $app->initializePlugin();
 $app->register(new \Eccube\Tests\ServiceProvider\FixtureServiceProvider());
