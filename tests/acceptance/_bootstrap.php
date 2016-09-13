@@ -42,7 +42,7 @@ if ($env != '') {
 require_once $config['eccube_path'].'autoload.php';
 use Symfony\Component\Yaml\Yaml;
 $dbyml = $config['eccube_path'].'app/config/eccube/database.yml';
-$database = $database_org = Yaml::parse($dbyml);
+$database = $database_org = Yaml::parse(file_get_contents($dbyml));
 $database['database']['dbname'] = $config['db'];
 $database['database']['host'] = $config['dbhost'];
 $database['database']['port'] = ($config['dbport']) ? $config['dbport'] : null;
