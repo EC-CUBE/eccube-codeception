@@ -37,7 +37,7 @@ class EA06ContentsManagementCest
         $I->fillField('#admin_news_comment', 'newsnewsnewsnewsnews');
         $I->click('#aside_column > div > div > div > div > button');
         $I->see('新着情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
-        
+
         /* 編集 */
         $I->click('#form1 > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
         $I->click('#form1 > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(1) > a');
@@ -107,11 +107,11 @@ class EA06ContentsManagementCest
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->amOnPage('/user_data/page1');
         $I->see('page1', 'body');
-        
+
         /* 編集 */
         $I->amOnPage('/'.$config['admin_route'].'/content/page');
-        $I->click('#main > div > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(42) > div.icon_edit.td > div > a');
-        $I->click('#main > div > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(42) > div.icon_edit.td > div > ul > li:nth-child(2) > a');
+        $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > a');
+        $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > ul > li:nth-child(2) > a');
         $I->fillField('#main_edit_tpl_data', "{% extends 'default_frame.twig' %}");
         $I->click('#aside_column > div > div > div > div > button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
@@ -120,18 +120,18 @@ class EA06ContentsManagementCest
 
         /* レイアウト編集 */
         $I->amOnPage('/'.$config['admin_route'].'/content/page');
-        $I->click('#main > div > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(42) > div.icon_edit.td > div > a');
-        $I->click('#main > div > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(42) > div.icon_edit.td > div > ul > li:nth-child(1) > a');
+        $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > a');
+        $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > ul > li:nth-child(1) > a');
         //$I->dragAndDrop('#position_0 > div:nth-child(1)', '#position_5'); // ちゃんと動かない...ECCUBEが壊れる... ToDo
         $I->click('#aside_wrap > div.col-md-3 > div > div.box.no-header > div > div > div > button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->amOnPage('/user_data/page1');
         $I->see($config['shop_name'], '#header > div > div.header_logo_area > h1 > a');
-        
+
         /* 削除 */
         $I->amOnPage('/'.$config['admin_route'].'/content/page');
-        $I->click('#main > div > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(42) > div.icon_edit.td > div > a');
-        $I->click('#main > div > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(42) > div.icon_edit.td > div > ul > li:nth-child(3) > a');
+        $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > a');
+        $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > ul > li:nth-child(3) > a');
         // ToDo: popup
     }
 
@@ -151,7 +151,7 @@ class EA06ContentsManagementCest
         $I->fillField('#block_block_html', "<div id='block1'>block1</div>");
         $I->click('#aside_column > div > div > div > div > button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
-        
+
         /* 編集 */
         $I->amOnPage('/'.$config['admin_route'].'/content/block');
         $I->click('#content_block_form > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(1) > div.icon_edit.td > div > a');

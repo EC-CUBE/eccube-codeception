@@ -176,7 +176,7 @@ class EA07BasicinfoCest
         $I->see('ショップ設定配送方法管理', '#main .page-header');
 
         $I->see('配送方法一覧', '#main .container-fluid .box-title');
-        $I->see('サンプル宅配', '#main .container-fluid .sortable_list .tableish div:nth-child(1)');
+        $I->see('サンプル宅配', '#delivery_list__name--2 a');
     }
 
     public function basicinfo_配送方法登録(AcceptanceTester $I)
@@ -200,7 +200,7 @@ class EA07BasicinfoCest
         $I->click('#form1 #set_fee_all');
         $I->click('#form1 #aside_wrap div:nth-child(2) button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
-        $I->see('配送業者名', '#main .container-fluid .sortable_list .tableish div:nth-child(1)');
+        $I->see('配送業者名', '#delivery_list__name--2 a');
     }
 
     public function basicinfo_配送方法編集(AcceptanceTester $I)
@@ -249,14 +249,14 @@ class EA07BasicinfoCest
 
         // 一覧
         $I->see('税率一覧', '#form1 div div div:nth-child(5) .box-header h3');
-        $I->see('8%', '#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) td:nth-child(2)');
+        $I->see('8%', '#tax_rule_list__tax_rate--1');
 
         // 登録
         $I->fillField('#form1 #tax_rule_tax_rate', '10');
         $I->fillField('#form1 #tax_rule_apply_date', date('Y-m-d H:i'));
         $I->click('#form1 div div div:nth-child(4) button');
         $I->see('税率設定情報を保存しました。', '#main .container-fluid .alert-success');
-        $I->see('10%', '#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) td:nth-child(2)');
+        $I->see('10%', '#tax_rule_list__tax_rate--2');
 
         // 編集
         $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown a');
@@ -264,7 +264,7 @@ class EA07BasicinfoCest
         $I->fillField('#form1 #tax_rule_tax_rate', '12');
         $I->click('#form1 div div div:nth-child(4) button');
         $I->see('税率設定情報を保存しました。', '#main .container-fluid .alert-success');
-        $I->see('12%', '#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) td:nth-child(2)');
+        $I->see('12%', '#tax_rule_list__tax_rate--1');
 
         // 削除
         $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown a');

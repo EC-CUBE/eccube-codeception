@@ -359,7 +359,7 @@ class EA08SysteminfoCest
         $expect = "site_".date('Y-m-d').".log";
         $I->assertEquals($expect, $log);
 
-        $I->fillField('#form1 #admin_system_log_line_max', '1');
+        $I->fillField('#line-max', '1');
         $I->click('#form1 button');
 
         $I->dontSeeElement('#main .container-fluid .box table tbody tr:nth-child(2)');

@@ -87,12 +87,14 @@ $num = $app['orm.em']->getRepository('Eccube\Entity\Product')
     ->where('o.del_flg = 0')
     ->getQuery()
     ->getSingleScalarResult();
+// 受注生成件数 + 初期データの商品が生成されているはず
 if($num==($config['fixture_customer_num']+2)) {
-    for ($i = 0; $i < $config['fixture_product_num']; $i++) {
+    // 規格なしも含め $config['fixture_product_num'] の分だけ生成する
+    for ($i = 0; $i < $config['fixture_product_num'] - 1; $i++) {
         createProduct($app);
     }
+    createProduct($app, '規格なし商品', 0);
 }
-createProduct($app, '規格なし商品', 0);
 
 function createCustomer($app, $email = null, $active = true)
 {
