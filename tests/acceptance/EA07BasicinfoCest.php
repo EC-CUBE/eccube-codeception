@@ -66,14 +66,14 @@ class EA07BasicinfoCest
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
 
-    public function basicinfo_会員規約(AcceptanceTester $I)
+    public function basicinfo_利用規約(AcceptanceTester $I)
     {
-        $I->wantTo('EA0703-UC01-T01 会員規約');
+        $I->wantTo('EA0703-UC01-T01 利用規約');
 
         // 表示
         $config = Fixtures::get('config');
         $I->amOnPage('/'.$config['admin_route'].'/setting/shop/customer_agreement');
-        $I->see('ショップ設定会員規約管理', '#main .page-header');
+        $I->see('ショップ設定利用規約管理', '#main .page-header');
 
         // 値変更
         $I->fillField('#form1 #customer_agreement_customer_agreement', '会員規約');
