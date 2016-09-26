@@ -21,7 +21,7 @@ class AcceptanceTester extends \Codeception\Actor
 {
     use _generated\AcceptanceTesterActions;
 
-    public function getScenario() 
+    public function getScenario()
     {
         return $this->scenario;
     }
@@ -33,12 +33,12 @@ class AcceptanceTester extends \Codeception\Actor
             $user = $account['member'];
             $password = $account['password'];
         }
-        
+
         $I = $this;
         $this->goToAdminPage($dir);
 
         $I->submitForm('#form1', [
-            'login_id' => $user, 
+            'login_id' => $user,
             'password' => $password
         ]);
 
@@ -51,7 +51,8 @@ class AcceptanceTester extends \Codeception\Actor
         $isLogin = $I->grabTextFrom('#header .navbar-menu .dropdown .dropdown-toggle');
         if ($isLogin == '管理者 様') {
             $I->click('#header .navbar-menu .dropdown .dropdown-toggle');
-            $I->click('#header .navbar-menu .dropdown .dropdown-menu a');
+            $config = Fixtures::get('config');
+            $I->amOnPage('/'.$config['admin_route'].'/logout');
             $I->see('ログイン', '.login-box #form1 .btn_area button');
         }
     }
@@ -140,4 +141,4 @@ class AcceptanceTester extends \Codeception\Actor
         $I->click('#form_cart .item_box .icon_edit a');
         /* ToDo: popup*/
     }
-}   
+}

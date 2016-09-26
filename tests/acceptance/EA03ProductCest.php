@@ -96,6 +96,7 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product');
         $I->see('商品管理商品マスター', '#main .page-header');
 
+        $I->fillField('#search_form #admin_search_product_id', '規格なし商品');
         $I->click('#search_form button');
 
         // 規格アイコン クリック
@@ -119,6 +120,7 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product');
         $I->see('商品管理商品マスター', '#main .page-header');
 
+        $I->fillField('#search_form #admin_search_product_id', '規格なし商品');
         $I->click('#search_form button');
 
         // 規格アイコン クリック
