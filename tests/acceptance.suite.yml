@@ -13,7 +13,7 @@ modules:
         - Asserts
     config:
         Db:
-            dsn: 'mysql:host=localhost;dbname=eccube;charset=utf8'
+            dsn: 'pgsql:host=postgres;dbname=cube3_dev;charset=utf8'
             user: 'root'
             password: ''
             dump: 'tests/_data/dump.sql'
@@ -21,9 +21,9 @@ modules:
             cleanup: false
             reconnect: true
         WebDriver:
-            host: localhost                 # Selenium ContainerのIP/hostname
+            host: firefox                 # Selenium ContainerのIP/hostname
             port: 4444                      # Selenium Container内部の4444portにmapしたport番号
-            url: 'http://eccube.case-k.com'    # テスト対象のurl
+            url: 'http://eccube3'    # テスト対象のurl
             browser: firefox
             window_size: 1680x3000
             wait: 10
@@ -35,17 +35,17 @@ env:
         modules:
             config:
                 Db:
-                    dsn: 'mysql:host=localhost;dbname=eccube;charset=utf8'
-                    dump: 'tests/_data/cube1.dump.sql'
+                    dsn: 'pgsql:host=postgres;dbname=cube3_dev;charset=utf8'
+#                    dump: 'tests/_data/cube1.dump.sql'
                 WebDriver:
-                    port: 10001
-                    url: 'http://eccube.case-k.com:8881'
+                    port: 80
+                    url: 'http://eccube3'
     front:
         modules:
             config:
                 Db:
-                    dsn: 'mysql:host=localhost;dbname=eccube02;charset=utf8'
-                    dump: 'tests/_data/cube2.dump.sql'
+                    dsn: 'pgsql:host=postgres;dbname=cube3_dev;charset=utf8'
+#                    dump: 'tests/_data/cube2.dump.sql'
                 WebDriver:
-                    port: 10002
-                    url: 'http://eccube.case-k.com:8882'
+                    port: 80
+                    url: 'http://eccube3'
