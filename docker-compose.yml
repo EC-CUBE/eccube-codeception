@@ -7,7 +7,7 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=cube3_dev
   eccube3:
-    build: eccube3/
+    build: eccube3
     environment:
       - PGPASSWORD=password
       - POSTGRES_ENV_POSTGRES_PASSWORD=password
@@ -17,17 +17,18 @@ services:
       - postgres
     depends_on:
       - postgres
-  codeception:
-    image: codeception/codeception
+  codecept:
+    build: codeception
     depends_on:
       - firefox
       - eccube3
     volumes:
-#      - ./src:/src
-      - ./tests:/tests
-      - ./codeception.yml:/codeception.yml
+      - ./tests:/project/tests
+      - ./codeception.yml:/project/codeception.yml
   firefox:
     image: selenium/standalone-firefox-debug:2.53.0
     ports:
-      - '4444'
       - '5900'
+    dns: 8.8.4.4
+    environment:
+        - no_proxy=localhost

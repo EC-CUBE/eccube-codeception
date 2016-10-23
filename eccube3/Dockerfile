@@ -30,8 +30,13 @@ RUN cd /var && \
     rm -r /var/www && \
     git clone --depth=50 -b ${ECCUBE_BRANCHE} ${ECCUBE_REPOS} ${ECCUBE_PATH}
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer global require hirak/prestissimo
+ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN curl -sS https://getcomposer.org/installer | php -- \
+        --filename=composer \
+        --install-dir=/usr/local/bin
+RUN composer global require --optimize-autoloader \
+        "hirak/prestissimo"
+
 WORKDIR ${ECCUBE_PATH}
 RUN composer install
 COPY config/exec_env.sh ${ECCUBE_PATH}/exec_env.sh
