@@ -5,6 +5,9 @@ services:
   - php
 
 env:
+  matrix:
+    - TARGET=front
+    - TARGET=admin
   DOCKER_COMPOSE_VERSION: 1.8.0
 
 before_install:
@@ -16,6 +19,4 @@ before_install:
     - sudo mv docker-compose /usr/local/bin
     - docker-compose build
 script:
-    # - docker-compose run -d --rm codecept run -d -g front --env front & \
-    # docker-compose run -d --rm codecept run -d -g admin --env admin
-    - docker-compose run --rm codecept run -d
+    - docker-compose run --rm codecept run -d -g ${TARGET} --env ${TARGET}
