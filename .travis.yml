@@ -6,10 +6,8 @@ services:
 
 env:
   matrix:
-    - TARGET=front
-    - TARGET=admin
-  DOCKER_COMPOSE_VERSION: 1.8.0
-
+    - TARGET=front DOCKER_COMPOSE_VERSION=1.8.0
+    - TARGET=admin DOCKER_COMPOSE_VERSION=1.8.0
 before_install:
     - sudo apt-get update
     - sudo apt-get -y -q -o Dpkg::Options::="--force-confnew" install docker-engine
