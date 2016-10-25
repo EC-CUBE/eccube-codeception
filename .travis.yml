@@ -14,10 +14,8 @@ before_install:
     - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
     - chmod +x docker-compose
     - sudo mv docker-compose /usr/local/bin
-    - docker-compose up -d
-    - docker-compose run workspace composer install
-    - cp .env.example .env
-    - docker-compose run workspace php artisan key:generate
-
+    - docker-compose build --no-cache
 script:
-    - docker-compose run workspace ./vendor/bin/phpunit
+    # - docker-compose run -d --rm codecept run -d -g front --env front & \
+    # docker-compose run -d --rm codecept run -d -g admin --env admin
+    - docker-compose run -d --rm codecept run -d

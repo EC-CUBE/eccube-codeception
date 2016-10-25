@@ -5,8 +5,8 @@ MAINTAINER Kentaro Ohkouchi <nanasess@fsm.ne.jp>
 ENV PGUSER cube3_dev_user
 ENV ECCUBE_PATH /var/www
 
-ARG ECCUBE_REPOS=https://github.com/nanasess/ec-cube.git
-ARG ECCUBE_BRANCHE=improve/php_installer
+ARG ECCUBE_REPOS
+ARG ECCUBE_BRANCH
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
         git curl wget sudo libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libmcrypt-dev libxml2-dev libpq-dev libpq5 postgresql-client \
@@ -28,7 +28,7 @@ ENTRYPOINT ["/wait-for-postgres.sh", "postgres"]
 ## Clone EC-CUBE3
 RUN cd /var && \
     rm -r /var/www && \
-    git clone --depth=50 -b ${ECCUBE_BRANCHE} ${ECCUBE_REPOS} ${ECCUBE_PATH}
+    git clone --depth=50 -b ${ECCUBE_BRANCH} ${ECCUBE_REPOS} ${ECCUBE_PATH}
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN curl -sS https://getcomposer.org/installer | php -- \

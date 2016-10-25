@@ -7,18 +7,27 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=cube3_dev
   eccube3:
-    build: eccube3
+    build:
+      context: eccube3
+      args:
+        - ECCUBE_BRANCH=master
+        - ECCUBE_REPOS=https://github.com/EC-CUBE/ec-cube.git
     environment:
       - PGPASSWORD=password
       - POSTGRES_ENV_POSTGRES_PASSWORD=password
     ports:
-      - 8080:80
+      - 80
     links:
       - postgres
     depends_on:
       - postgres
+    restart: unless-stopped
   codecept:
-    build: codeception
+    build:
+      context: codeception
+      args:
+        - ECCUBE_BRANCH=master
+        - ECCUBE_REPOS=https://github.com/EC-CUBE/ec-cube.git
     depends_on:
       - firefox
       - eccube3
@@ -28,7 +37,7 @@ services:
   firefox:
     image: selenium/standalone-firefox-debug:2.53.0
     ports:
-      - '5900'
+      - 5900
     dns: 8.8.4.4
     environment:
-        - no_proxy=localhost
+      - no_proxy=localhost

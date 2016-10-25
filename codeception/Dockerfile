@@ -18,12 +18,11 @@ RUN echo "date.timezone = Asia/Tokyo" >> /usr/local/etc/php/php.ini
 
 ENV ECCUBE_PATH /var/www
 
-## XXX provisional
-ARG ECCUBE_REPOS=https://github.com/nanasess/ec-cube.git
-ARG ECCUBE_BRANCHE=improve/php_installer
+ARG ECCUBE_REPOS
+ARG ECCUBE_BRANCH
 
 RUN cd /var && \
-    git clone --depth=50 -b ${ECCUBE_BRANCHE} ${ECCUBE_REPOS} ${ECCUBE_PATH}
+    git clone --depth=50 -b ${ECCUBE_BRANCH} ${ECCUBE_REPOS} ${ECCUBE_PATH}
 
 WORKDIR ${ECCUBE_PATH}
 RUN composer install
@@ -37,3 +36,6 @@ WORKDIR /project
 ## create dummy directories
 RUN mkdir /project/html
 RUN mkdir /project/app
+
+COPY codecept /repo/codecept
+RUN chmod +x /repo/codecept
