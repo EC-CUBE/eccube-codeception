@@ -165,6 +165,7 @@ class EA03ProductCest
         $I->see('商品管理商品登録(商品規格)', '#main .page-header');
 
         $I->click('#delete');
+        $I->acceptPopup();
 
         /**
          * ToDo: popup
