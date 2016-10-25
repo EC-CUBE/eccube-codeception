@@ -309,6 +309,7 @@ class EA03ProductCest
         // 削除リンク クリック
         $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > ul > li:nth-child(4) > a');
 
+        $I->acceptPopup();
         /**
          * ToDo: popup
          */
