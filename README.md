@@ -1,6 +1,6 @@
 # EC-CUBE3 Continuous Delivery
 
-1[![Build Status](https://travis-ci.org/EC-CUBE/eccube-codeception.svg?branch=master)](https://travis-ci.org/EC-CUBE/eccube-codeception)
+[![Build Status](https://travis-ci.org/EC-CUBE/eccube-codeception.svg?branch=master)](https://travis-ci.org/EC-CUBE/eccube-codeception)
 
 * [EC-CUBE3](https://github.com/EC-CUBE/ec-cube)の開発における継続的デリバリー環境構築用
 
