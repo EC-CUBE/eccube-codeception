@@ -168,12 +168,12 @@ class EF02ProductCest
 
         // デフォルトサムネイル表示確認
         $img = $I->grabAttributeFrom('#item_photo_area .slick-active img', 'src');
-        $I->assertTrue(('http://'.$config['hostname'].'/upload/save_image/cafe-1.jpg' == $img));
+        $I->assertTrue(('/upload/save_image/cafe-1.jpg' == $img));
 
         // 2個目のサムネイルクリック
         $I->click('#item_photo_area .slick-dots li:nth-child(2) button');
         $img = $I->grabAttributeFrom('#item_photo_area .slick-active img', 'src');
-        $I->assertTrue(('http://'.$config['hostname'].'/upload/save_image/cafe-2.jpg' == $img));
+        $I->assertTrue(('/upload/save_image/cafe-2.jpg' == $img));
     }
 
     public function product_商品詳細カート1(\AcceptanceTester $I)
