@@ -16,7 +16,6 @@ modules:
             dsn: 'pgsql:host=postgres;dbname=cube3_dev'
             user: 'cube3_dev_user'
             password: 'password'
-#            dump: 'tests/_data/dump.sql'
             populate: true
             cleanup: false
             reconnect: true
@@ -31,12 +30,19 @@ modules:
                 unexpectedAlertBehaviour: 'accept'
 
 env:
-    admin:
+    admin01:
         modules:
             config:
                 Db:
                     dsn: 'pgsql:host=postgres;dbname=cube3_dev'
-#                    dump: 'tests/_data/cube1.dump.sql'
+                WebDriver:
+                    port: 4444
+                    url: 'http://eccube3'
+    admin02:
+        modules:
+            config:
+                Db:
+                    dsn: 'pgsql:host=postgres;dbname=cube3_dev'
                 WebDriver:
                     port: 4444
                     url: 'http://eccube3'
@@ -45,7 +51,6 @@ env:
             config:
                 Db:
                     dsn: 'pgsql:host=postgres;dbname=cube3_dev'
-#                    dump: 'tests/_data/cube2.dump.sql'
                 WebDriver:
                     port: 4444
                     url: 'http://eccube3'
