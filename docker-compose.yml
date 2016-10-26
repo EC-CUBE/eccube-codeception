@@ -35,7 +35,7 @@ services:
       - ./tests:/project/tests
       - ./codeception.yml:/project/codeception.yml
   firefox:
-    image: selenium/standalone-firefox-debug:2.53.0
+    image: selenium/standalone-firefox-debug:2.53.1
     ports:
       - 5900
     dns: 8.8.4.4
