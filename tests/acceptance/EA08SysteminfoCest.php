@@ -1,5 +1,5 @@
 <?php
-use AcceptanceTester;
+
 use Codeception\Util\Fixtures;
 
 /**
@@ -10,16 +10,16 @@ use Codeception\Util\Fixtures;
  */
 class EA08SysteminfoCest
 {
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
         $I->loginAsAdmin();
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 
-    public function systeminfo_システム情報(AcceptanceTester $I)
+    public function systeminfo_システム情報(\AcceptanceTester $I)
     {
         $I->wantTo('EA0801-UC01-T01 システム情報');
 
@@ -32,7 +32,7 @@ class EA08SysteminfoCest
         $I->see('PHP情報', '#main .container-fluid div:nth-child(2) .box-header .box-title');
     }
 
-    public function systeminfo_メンバー管理表示(AcceptanceTester $I)
+    public function systeminfo_メンバー管理表示(\AcceptanceTester $I)
     {
         $I->wantTo('EA0802-UC01-T01 メンバー管理 - 表示');
 
@@ -45,7 +45,7 @@ class EA08SysteminfoCest
         $I->see('新規登録', '#main .container-fluid .btn_area a');
     }
 
-    public function systeminfo_メンバー管理登録実施(AcceptanceTester $I)
+    public function systeminfo_メンバー管理登録実施(\AcceptanceTester $I)
     {
         $I->wantTo('EA0803-UC01-T01 メンバー管理 - 登録 - 登録実施');
 
@@ -71,7 +71,7 @@ class EA08SysteminfoCest
         $I->see('admintest', '#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(1)');
     }
 
-    public function systeminfo_メンバー管理登録未実施(AcceptanceTester $I)
+    public function systeminfo_メンバー管理登録未実施(\AcceptanceTester $I)
     {
         $I->wantTo('EA0803-UC01-T02 メンバー管理 - 登録 - 登録未実施');
 
@@ -96,7 +96,7 @@ class EA08SysteminfoCest
         $I->dontSee('admintest2', '#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(1)');
     }
 
-    public function systeminfo_メンバー管理登録異常(AcceptanceTester $I)
+    public function systeminfo_メンバー管理登録異常(\AcceptanceTester $I)
     {
         $I->wantTo('EA0803-UC01-T03 メンバー管理 - 登録 - 異常パターン');
 
@@ -112,7 +112,7 @@ class EA08SysteminfoCest
         $I->see('入力されていません。', '#form1 div:nth-child(1) div');
     }
 
-    public function systeminfo_メンバー管理編集実施(AcceptanceTester $I)
+    public function systeminfo_メンバー管理編集実施(\AcceptanceTester $I)
     {
         $I->wantTo('EA0803-UC02-T01 メンバー管理 - 編集 - 編集実施');
 
@@ -133,7 +133,7 @@ class EA08SysteminfoCest
         $I->see('administrator', '#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(1)');
     }
 
-    public function systeminfo_メンバー管理編集未実施(AcceptanceTester $I)
+    public function systeminfo_メンバー管理編集未実施(\AcceptanceTester $I)
     {
         $I->wantTo('EA0803-UC02-T02 メンバー管理 - 編集 - 編集未実施');
 
@@ -153,7 +153,7 @@ class EA08SysteminfoCest
         $I->dontSee('administrator2', '#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(1)');
     }
 
-    public function systeminfo_メンバー管理編集異常(AcceptanceTester $I)
+    public function systeminfo_メンバー管理編集異常(\AcceptanceTester $I)
     {
         $I->wantTo('EA0803-UC03-T01 メンバー管理 - 編集 - 異常パターン');
 
@@ -172,7 +172,7 @@ class EA08SysteminfoCest
         $I->see('入力されていません。', '#form1 div:nth-child(1) div');
     }
 
-    public function systeminfo_メンバー管理登録下へ(AcceptanceTester $I)
+    public function systeminfo_メンバー管理登録下へ(\AcceptanceTester $I)
     {
         $I->wantTo('EA0802-UC01-T02 メンバー管理 - 下へ');
 
@@ -187,7 +187,7 @@ class EA08SysteminfoCest
         $I->see('管理者', '#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(1)');
     }
 
-    public function systeminfo_メンバー管理登録上へ(AcceptanceTester $I)
+    public function systeminfo_メンバー管理登録上へ(\AcceptanceTester $I)
     {
         $I->wantTo('EA0802-UC01-T03 メンバー管理 - 上へ');
 
@@ -202,7 +202,7 @@ class EA08SysteminfoCest
         $I->see('管理者', '#main .container-fluid .table_list .table tbody tr:nth-child(2) td:nth-child(1)');
     }
 
-    public function systeminfo_メンバー管理削除(AcceptanceTester $I)
+    public function systeminfo_メンバー管理削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0802-UC01-T06 メンバー管理 - 削除');
 
@@ -221,7 +221,7 @@ class EA08SysteminfoCest
         */
     }
 
-    public function systeminfo_メンバー管理自ユーザー削除(AcceptanceTester $I)
+    public function systeminfo_メンバー管理自ユーザー削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0802-UC01-T07 メンバー管理 - 自ユーザー削除');
 
@@ -236,7 +236,7 @@ class EA08SysteminfoCest
         $I->assertEquals('', $href);
     }
 
-    public function systeminfo_セキュリティ管理表示(AcceptanceTester $I)
+    public function systeminfo_セキュリティ管理表示(\AcceptanceTester $I)
     {
         $I->wantTo('EA0804-UC01-T01 セキュリティ管理 - 表示');
 
@@ -247,7 +247,7 @@ class EA08SysteminfoCest
         $I->see('セキュリティ機能設定', '#main .container-fluid div:nth-child(1) .box-header .box-title');
     }
 
-    public function systeminfo_セキュリティ管理ディレクトリ名(AcceptanceTester $I)
+    public function systeminfo_セキュリティ管理ディレクトリ名(\AcceptanceTester $I)
     {
         $I->wantTo('EA0804-UC01-T02 セキュリティ管理 - ディレクトリ名変更');
 
@@ -266,7 +266,7 @@ class EA08SysteminfoCest
         $I->loginAsAdmin();
     }
 
-    public function systeminfo_セキュリティ管理IP制限(AcceptanceTester $I)
+    public function systeminfo_セキュリティ管理IP制限(\AcceptanceTester $I)
     {
         $I->wantTo('EA0804-UC01-T03 セキュリティ管理 - IP制限');
 
@@ -295,7 +295,7 @@ class EA08SysteminfoCest
         fclose($fh);
     }
 
-    public function systeminfo_セキュリティ管理SSL(AcceptanceTester $I)
+    public function systeminfo_セキュリティ管理SSL(\AcceptanceTester $I)
     {
         $I->wantTo('EA0804-UC01-T04 セキュリティ管理 - SSL強制');
 
@@ -304,7 +304,7 @@ class EA08SysteminfoCest
          */
     }
 
-    public function systeminfo_権限管理追加(AcceptanceTester $I)
+    public function systeminfo_権限管理追加(\AcceptanceTester $I)
     {
         $I->wantTo('EA0805-UC01-T01 権限管理 - 追加');
 
@@ -327,7 +327,7 @@ class EA08SysteminfoCest
         $I->dontSee('オーナーズストア', '#side ul');
     }
 
-    public function systeminfo_権限管理削除(AcceptanceTester $I)
+    public function systeminfo_権限管理削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0805-UC02-T01 権限管理 - 削除');
 
@@ -346,7 +346,7 @@ class EA08SysteminfoCest
         $I->see('オーナーズストア', '#side ul');
     }
 
-    public function systeminfo_ログ表示(AcceptanceTester $I)
+    public function systeminfo_ログ表示(\AcceptanceTester $I)
     {
         $I->wantTo('EA0806-UC01-T01 ログ表示');
 
@@ -365,7 +365,7 @@ class EA08SysteminfoCest
         $I->dontSeeElement('#main .container-fluid .box table tbody tr:nth-child(2)');
     }
 
-    public function systeminfo_マスターデータ管理(AcceptanceTester $I)
+    public function systeminfo_マスターデータ管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0807-UC01-T01 マスターデータ管理');
 

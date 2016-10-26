@@ -1,5 +1,5 @@
 <?php
-use AcceptanceTester;
+
 use Codeception\Util\Fixtures;
 
 /**
@@ -9,15 +9,15 @@ use Codeception\Util\Fixtures;
  */
 class EF01TopCest
 {
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 
-    public function topページ_初期表示(AcceptanceTester $I)
+    public function topページ_初期表示(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC01-T01 TOPページ 初期表示');
         $I->amOnPage('/');
@@ -62,7 +62,7 @@ class EF01TopCest
         }
     }
 
-    public function topページ_新着情報(AcceptanceTester $I)
+    public function topページ_新着情報(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC01-T02 TOPページ 新着情報');
         $I->amOnPage('/');
@@ -84,7 +84,7 @@ class EF01TopCest
         $I->seeInTitle('ECサイト構築・リニューアルは「ECオープンプラットフォームEC-CUBE」');
     }
 
-    public function topページ_カテゴリ検索(AcceptanceTester $I)
+    public function topページ_カテゴリ検索(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC02-T01 TOPページ カテゴリ検索');
         $I->amOnPage('/');
@@ -98,7 +98,7 @@ class EF01TopCest
         $I->see('パーコレーター', '#item_list');
     }
 
-    public function topページ_全件検索(AcceptanceTester $I)
+    public function topページ_全件検索(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC03-T01 TOPページ 全件検索');
         $I->amOnPage('/');
@@ -117,7 +117,7 @@ class EF01TopCest
         $I->assertTrue((count($products) >= 2));
     }
 
-    public function topページ_カテゴリ絞込検索(AcceptanceTester $I)
+    public function topページ_カテゴリ絞込検索(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC03-T02 TOPページ カテゴリ絞込検索');
         $I->amOnPage('/');
@@ -136,7 +136,7 @@ class EF01TopCest
         $I->dontSee('ディナーフォーク', '#item_list');
     }
 
-    public function topページ_キーワード絞込検索(AcceptanceTester $I)
+    public function topページ_キーワード絞込検索(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC03-T02 TOPページ キーワード絞込検索');
         $I->amOnPage('/');

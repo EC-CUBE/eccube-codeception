@@ -1,5 +1,5 @@
 <?php
-use AcceptanceTester;
+
 use Codeception\Util\Fixtures;
 
 /**
@@ -10,16 +10,16 @@ use Codeception\Util\Fixtures;
  */
 class EA07BasicinfoCest
 {
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
         $I->loginAsAdmin();
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 
-    public function basicinfo_ショップマスター(AcceptanceTester $I)
+    public function basicinfo_ショップマスター(\AcceptanceTester $I)
     {
         $I->wantTo('EA0701-UC01-T01 ショップマスター');
 
@@ -34,7 +34,7 @@ class EA07BasicinfoCest
         $I->see('基本情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
 
-    public function basicinfo_特定商取引法(AcceptanceTester $I)
+    public function basicinfo_特定商取引法(\AcceptanceTester $I)
     {
         $I->wantTo('EA0702-UC01-T01 特定商取引法');
 
@@ -66,7 +66,7 @@ class EA07BasicinfoCest
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
 
-    public function basicinfo_利用規約(AcceptanceTester $I)
+    public function basicinfo_利用規約(\AcceptanceTester $I)
     {
         $I->wantTo('EA0703-UC01-T01 利用規約');
 
@@ -81,7 +81,7 @@ class EA07BasicinfoCest
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
 
-    public function basicinfo_支払方法一覧(AcceptanceTester $I)
+    public function basicinfo_支払方法一覧(\AcceptanceTester $I)
     {
         $I->wantTo('EA0704-UC01-T01 支払方法 一覧');
 
@@ -94,7 +94,7 @@ class EA07BasicinfoCest
         $I->see('郵便振替', '#main .container-fluid .table_list table tbody tr td:nth-child(1)');
     }
 
-    public function basicinfo_支払方法入れ替え(AcceptanceTester $I)
+    public function basicinfo_支払方法入れ替え(\AcceptanceTester $I)
     {
         $I->wantTo('EA0704-UC02-T01 支払方法 入れ替え');
 
@@ -110,7 +110,7 @@ class EA07BasicinfoCest
         $I->see('ランクの移動が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
 
-    public function basicinfo_支払方法登録(AcceptanceTester $I)
+    public function basicinfo_支払方法登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0705-UC01-T01 支払方法 登録');
 
@@ -130,7 +130,7 @@ class EA07BasicinfoCest
         $I->see('payment method1', '#main .container-fluid .table_list table tbody tr td:nth-child(1)');
     }
 
-    public function basicinfo_支払方法編集(AcceptanceTester $I)
+    public function basicinfo_支払方法編集(\AcceptanceTester $I)
     {
         $I->wantTo('EA0705-UC02-T01 支払方法 編集');
 
@@ -151,7 +151,7 @@ class EA07BasicinfoCest
         $I->see('payment method2', '#main .container-fluid .table_list table tbody tr td:nth-child(1)');
     }
 
-    public function basicinfo_支払方法削除(AcceptanceTester $I)
+    public function basicinfo_支払方法削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0704-UC03-T01 支払方法 削除');
 
@@ -166,7 +166,7 @@ class EA07BasicinfoCest
         /* ToDo: popup*/
     }
 
-    public function basicinfo_配送方法一覧(AcceptanceTester $I)
+    public function basicinfo_配送方法一覧(\AcceptanceTester $I)
     {
         $I->wantTo('EA0706-UC01-T01 配送方法 一覧');
 
@@ -179,7 +179,7 @@ class EA07BasicinfoCest
         $I->see('サンプル宅配', '#delivery_list__name--2 a');
     }
 
-    public function basicinfo_配送方法登録(AcceptanceTester $I)
+    public function basicinfo_配送方法登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0707-UC01-T01 配送方法 登録');
 
@@ -203,7 +203,7 @@ class EA07BasicinfoCest
         $I->see('配送業者名', '#delivery_list__name--2 a');
     }
 
-    public function basicinfo_配送方法編集(AcceptanceTester $I)
+    public function basicinfo_配送方法編集(\AcceptanceTester $I)
     {
         $I->wantTo('EA0707-UC02-T01 配送方法 編集');
 
@@ -223,7 +223,7 @@ class EA07BasicinfoCest
         $I->see('配送業者名1', '#main .container-fluid .sortable_list .tableish div:nth-child(1)');
     }
 
-    public function basicinfo_配送方法削除(AcceptanceTester $I)
+    public function basicinfo_配送方法削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0706-UC03-T01 配送方法 削除');
 
@@ -238,7 +238,7 @@ class EA07BasicinfoCest
         /* ToDo: popup*/
     }
 
-    public function basicinfo_税率設定(AcceptanceTester $I)
+    public function basicinfo_税率設定(\AcceptanceTester $I)
     {
         $I->wantTo('EA0708-UC01-T01 税率設定');
 
@@ -279,7 +279,7 @@ class EA07BasicinfoCest
         $I->assertTrue(($value == 1));
     }
 
-    public function basicinfo_メール設定(AcceptanceTester $I)
+    public function basicinfo_メール設定(\AcceptanceTester $I)
     {
         $I->wantTo('EA0709-UC02-T01  メール設定'); // EA0709-UC01-T01 はメールテンプレート登録機能がないのでテスト不可
 
@@ -297,7 +297,7 @@ class EA07BasicinfoCest
         $I->see('メールテンプレート情報を保存しました。', '#main .container-fluid .alert-success');
     }
 
-    public function basicinfo_CSV出力項目(AcceptanceTester $I)
+    public function basicinfo_CSV出力項目(\AcceptanceTester $I)
     {
         $I->wantTo('EA0710-UC01-T01  CSV出力項目設定');
 

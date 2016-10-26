@@ -1,5 +1,5 @@
 <?php
-use AcceptanceTester;
+
 use Codeception\Util\Fixtures;
 
 /**
@@ -9,15 +9,15 @@ use Codeception\Util\Fixtures;
  */
 class EF03OrderCest
 {
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 
-    public function order_カート買い物を続ける(AcceptanceTester $I)
+    public function order_カート買い物を続ける(\AcceptanceTester $I)
     {
         $I->wantTo('EF0301-UC01-T01 カート 買い物を続ける');
         $app = Fixtures::get('app');
@@ -35,7 +35,7 @@ class EF03OrderCest
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
 
-    public function _order_カート削除(AcceptanceTester $I)
+    public function _order_カート削除(\AcceptanceTester $I)
     {
         $I->wantTo('EF0301-UC01-T02 カート 削除');
         $app = Fixtures::get('app');
@@ -45,7 +45,7 @@ class EF03OrderCest
         // 商品詳細パーコレータ カートへ
         $I->amOnPage('products/detail/2');
         $I->buyThis(1);
-        
+
         // 削除
         $I->makeEmptyCart();
         /* ToDo: popup */
@@ -53,7 +53,7 @@ class EF03OrderCest
         // 「現在カート内に商品はございません。」など
     }
 
-    public function _order_カート数量増やす(AcceptanceTester $I)
+    public function _order_カート数量増やす(\AcceptanceTester $I)
     {
         $I->wantTo('EF0301-UC01-T03 カート 数量増やす');
         $app = Fixtures::get('app');
@@ -66,13 +66,13 @@ class EF03OrderCest
 
         // 増加
         $I->click('#main_middle .cart_item .item_box:nth-child(1) .item_quantity ul li:nth-child(2) a');
-        
+
         // 確認
         $I->see('2', '#main_middle .cart_item .item_box:nth-child(1) .item_quantity');
 
     }
 
-    public function _order_カート数量減らす(AcceptanceTester $I)
+    public function _order_カート数量減らす(\AcceptanceTester $I)
     {
         $I->wantTo('EF0301-UC01-T04 カート 数量減らす');
         $app = Fixtures::get('app');
@@ -85,12 +85,12 @@ class EF03OrderCest
 
         // 減らす
         $I->click('#main_middle .cart_item .item_box:nth-child(1) .item_quantity ul li:nth-child(1) a');
-        
+
         // 確認
         $I->see('1', '#main_middle .cart_item .item_box:nth-child(1) .item_quantity');
     }
 
-    public function _order_ログインユーザ購入(AcceptanceTester $I)
+    public function _order_ログインユーザ購入(\AcceptanceTester $I)
     {
         $I->wantTo('EF0302-UC01-T01 ログインユーザ購入');
         $I->logoutAsMember();
@@ -118,10 +118,10 @@ class EF03OrderCest
         $I->see('お届け先', '#main_middle #shopping-form #confirm_main');
         $I->see('お支払方法', '#main_middle #shopping-form #confirm_main');
         $I->see('お問い合わせ欄', '#main_middle #shopping-form #confirm_main');
-        $I->see('小計', '#main_middle #shopping-form #confirm_side'); 
-        $I->see('手数料', '#main_middle #shopping-form #confirm_side'); 
-        $I->see('送料', '#main_middle #shopping-form #confirm_side'); 
-        $I->see('合計', '#main_middle #shopping-form #confirm_side'); 
+        $I->see('小計', '#main_middle #shopping-form #confirm_side');
+        $I->see('手数料', '#main_middle #shopping-form #confirm_side');
+        $I->see('送料', '#main_middle #shopping-form #confirm_side');
+        $I->see('合計', '#main_middle #shopping-form #confirm_side');
 
         // 注文
         $I->click('#main_middle #shopping-form #confirm_side .total_amount p:nth-child(2) button');
@@ -134,7 +134,7 @@ class EF03OrderCest
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
 
-    public function _order_ゲスト購入(AcceptanceTester $I)
+    public function _order_ゲスト購入(\AcceptanceTester $I)
     {
         $I->wantTo('EF0302-UC02-T01 ゲスト購入');
         $I->logoutAsMember();
@@ -167,7 +167,7 @@ class EF03OrderCest
             'nonmember[email][first]' => 'acctest03@ec-cube.net',
             'nonmember[email][second]' => 'acctest03@ec-cube.net',
         ]);
-        
+
         // 確認
         $I->see('ご注文内容のご確認', '#main_middle .page-heading');
         $I->see('お客様情報', '#main_middle #shopping-form #confirm_main');
@@ -175,10 +175,10 @@ class EF03OrderCest
         $I->see('お届け先', '#main_middle #shopping-form #confirm_main');
         $I->see('お支払方法', '#main_middle #shopping-form #confirm_main');
         $I->see('お問い合わせ欄', '#main_middle #shopping-form #confirm_main');
-        $I->see('小計', '#main_middle #shopping-form #confirm_side'); 
-        $I->see('手数料', '#main_middle #shopping-form #confirm_side'); 
-        $I->see('送料', '#main_middle #shopping-form #confirm_side'); 
-        $I->see('合計', '#main_middle #shopping-form #confirm_side'); 
+        $I->see('小計', '#main_middle #shopping-form #confirm_side');
+        $I->see('手数料', '#main_middle #shopping-form #confirm_side');
+        $I->see('送料', '#main_middle #shopping-form #confirm_side');
+        $I->see('合計', '#main_middle #shopping-form #confirm_side');
 
         // 注文
         $I->click('#main_middle #shopping-form #confirm_side .total_amount p:nth-child(2) button');
@@ -191,7 +191,7 @@ class EF03OrderCest
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
 
-    public function _order_ゲスト購入情報変更(AcceptanceTester $I)
+    public function _order_ゲスト購入情報変更(\AcceptanceTester $I)
     {
         $I->wantTo('EF0305-UC02-T01 ゲスト購入 情報変更'); // EF0305-UC04-T01も一緒にテスト
         $I->logoutAsMember();
@@ -224,7 +224,7 @@ class EF03OrderCest
             'nonmember[email][first]' => 'acctest03@ec-cube.net',
             'nonmember[email][second]' => 'acctest03@ec-cube.net',
         ]);
-        
+
         // 確認
         $I->see('ご注文内容のご確認', '#main_middle .page-heading');
         $I->see('お客様情報', '#main_middle #shopping-form #confirm_main');
@@ -232,10 +232,10 @@ class EF03OrderCest
         $I->see('お届け先', '#main_middle #shopping-form #confirm_main');
         $I->see('お支払方法', '#main_middle #shopping-form #confirm_main');
         $I->see('お問い合わせ欄', '#main_middle #shopping-form #confirm_main');
-        $I->see('小計', '#main_middle #shopping-form #confirm_side'); 
-        $I->see('手数料', '#main_middle #shopping-form #confirm_side'); 
-        $I->see('送料', '#main_middle #shopping-form #confirm_side'); 
-        $I->see('合計', '#main_middle #shopping-form #confirm_side'); 
+        $I->see('小計', '#main_middle #shopping-form #confirm_side');
+        $I->see('手数料', '#main_middle #shopping-form #confirm_side');
+        $I->see('送料', '#main_middle #shopping-form #confirm_side');
+        $I->see('合計', '#main_middle #shopping-form #confirm_side');
 
         // お客様情報変更
         $I->click('#main_middle #shopping-form #confirm_main #customer');

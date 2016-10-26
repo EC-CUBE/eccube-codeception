@@ -1,5 +1,5 @@
 <?php
-use AcceptanceTester;
+
 use Codeception\Util\Fixtures;
 
 /**
@@ -10,18 +10,18 @@ use Codeception\Util\Fixtures;
  */
 class EA03ProductCest
 {
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
         // すべてのテストケース実施前にログインしておく
         // ログイン後は管理アプリのトップページに遷移している
         $I->loginAsAdmin();
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 
-    public function product_商品検索(AcceptanceTester $I)
+    public function product_商品検索(\AcceptanceTester $I)
     {
         $I->wantTo('EA0301-UC01-T01 商品検索');
 
@@ -36,7 +36,7 @@ class EA03ProductCest
         $I->see("ディナーフォーク", "#main .container-fluid .box-body .item_list");
     }
 
-    public function product_商品検索結果無(AcceptanceTester $I)
+    public function product_商品検索結果無(\AcceptanceTester $I)
     {
         $I->wantTo('EA0301-UC01-T02 商品検索 検索結果なし');
 
@@ -50,7 +50,7 @@ class EA03ProductCest
         $I->see("検索条件に該当するデータがありませんでした。", "#main .container-fluid .box .box-title");
     }
 
-    public function product_CSV出力(AcceptanceTester $I)
+    public function product_CSV出力(\AcceptanceTester $I)
     {
         $I->wantTo('EA0301-UC02-T01 CSV出力');
 
@@ -69,7 +69,7 @@ class EA03ProductCest
          */
     }
 
-    public function product_CSV出力項目設定(AcceptanceTester $I)
+    public function product_CSV出力項目設定(\AcceptanceTester $I)
     {
         $I->wantTo('EA0301-UC02-T02 CSV出力項目設定');
 
@@ -88,7 +88,7 @@ class EA03ProductCest
         $I->assertEquals('1', $value);
     }
 
-    public function product_一覧からの規格編集規格なし失敗(AcceptanceTester $I)
+    public function product_一覧からの規格編集規格なし失敗(\AcceptanceTester $I)
     {
         $I->wantTo('EA0310-UC01-T02 一覧からの規格編集 規格なし 失敗');
 
@@ -112,7 +112,7 @@ class EA03ProductCest
          */
     }
 
-    public function product_一覧からの規格編集規格なし(AcceptanceTester $I)
+    public function product_一覧からの規格編集規格なし(\AcceptanceTester $I)
     {
         $I->wantTo('EA0310-UC01-T01 一覧からの規格編集 規格なし');
 
@@ -146,7 +146,7 @@ class EA03ProductCest
         */
     }
 
-    public function product_一覧からの規格編集規格あり1(AcceptanceTester $I)
+    public function product_一覧からの規格編集規格あり1(\AcceptanceTester $I)
     {
         $I->wantTo('EA0310-UC02-T01 一覧からの規格編集 規格あり1');
 
@@ -172,7 +172,7 @@ class EA03ProductCest
          */
     }
 
-    public function product_一覧からの規格編集規格あり2(AcceptanceTester $I)
+    public function product_一覧からの規格編集規格あり2(\AcceptanceTester $I)
     {
         $I->wantTo('EA0310-UC02-T02 一覧からの規格編集 規格あり2');
 
@@ -194,7 +194,7 @@ class EA03ProductCest
         $I->see('商品規格を更新しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
 
-    public function product_一覧からの商品確認(AcceptanceTester $I)
+    public function product_一覧からの商品確認(\AcceptanceTester $I)
     {
         $I->wantTo('EA0310-UC05-T01 一覧からの商品確認');
 
@@ -215,7 +215,7 @@ class EA03ProductCest
          */
     }
 
-    public function product_一覧からの商品複製(AcceptanceTester $I)
+    public function product_一覧からの商品複製(\AcceptanceTester $I)
     {
         $I->wantTo('EA0310-UC05-T02 一覧からの商品複製');
 
@@ -236,7 +236,7 @@ class EA03ProductCest
          */
     }
 
-    public function product_商品登録非公開(AcceptanceTester $I)
+    public function product_商品登録非公開(\AcceptanceTester $I)
     {
         $I->wantTo('EA0302-UC01-T01 商品登録 非公開');
 
@@ -250,7 +250,7 @@ class EA03ProductCest
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
 
-    public function product_商品登録公開(AcceptanceTester $I)
+    public function product_商品登録公開(\AcceptanceTester $I)
     {
         $I->wantTo('EA0302-UC01-T02 商品登録 公開');
 
@@ -265,7 +265,7 @@ class EA03ProductCest
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
 
-    public function product_商品編集規格なし(AcceptanceTester $I)
+    public function product_商品編集規格なし(\AcceptanceTester $I)
     {
         $I->wantTo('EA0302-UC01-T03 商品編集 規格なし');
 
@@ -284,7 +284,7 @@ class EA03ProductCest
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
 
-    public function product_商品編集規格あり(AcceptanceTester $I)
+    public function product_商品編集規格あり(\AcceptanceTester $I)
     {
         $I->wantTo('EA0302-UC01-T04 商品編集 規格あり');
 
@@ -293,7 +293,7 @@ class EA03ProductCest
          */
     }
 
-    public function product_一覧からの商品削除(AcceptanceTester $I)
+    public function product_一覧からの商品削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0310-UC05-T03 一覧からの商品削除');
 
@@ -315,7 +315,7 @@ class EA03ProductCest
          */
     }
 
-    public function product_規格登録(AcceptanceTester $I)
+    public function product_規格登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0303-UC01-T01 規格登録');
 
@@ -329,12 +329,12 @@ class EA03ProductCest
         $I->see('規格を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
 
-    public function product_規格登録未登録時(AcceptanceTester $I)
+    public function product_規格登録未登録時(\AcceptanceTester $I)
     {
         $I->wantTo('EA0303-UC01-T02 規格登録 未登録時');
     }
 
-    public function product_規格編集(AcceptanceTester $I)
+    public function product_規格編集(\AcceptanceTester $I)
     {
         $I->wantTo('EA0303-UC02-T01 規格編集');
 
@@ -351,7 +351,7 @@ class EA03ProductCest
         $I->see('規格を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
 
-    public function product_規格削除(AcceptanceTester $I)
+    public function product_規格削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0303-UC03-T01 規格削除');
 
@@ -365,7 +365,7 @@ class EA03ProductCest
         /* ToDo: popup */
     }
 
-    public function product_分類登録(AcceptanceTester $I)
+    public function product_分類登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0304-UC01-T01(& UC01-T02/UC02-T01/UC03-T01) 分類登録/編集/削除');
 
@@ -400,7 +400,7 @@ class EA03ProductCest
         /* ToDo: popup */
     }
 
-    public function product_カテゴリ登録(AcceptanceTester $I)
+    public function product_カテゴリ登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0305-UC01-T01(& UC01-T02/UC02-T01/UC04-T01) カテゴリ登録/編集/削除');
 
@@ -450,7 +450,7 @@ class EA03ProductCest
         $I->see('カテゴリを保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
 
-    public function product_商品CSV登録(AcceptanceTester $I)
+    public function product_商品CSV登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0306-UC01-T01(& UC01-T02) 商品CSV登録');
 
@@ -465,7 +465,7 @@ class EA03ProductCest
         /* ダウンロードファイルの確認は不可*/
     }
 
-    public function product_カテゴリCSV登録(AcceptanceTester $I)
+    public function product_カテゴリCSV登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0307-UC01-T01(& UC01-T02) カテゴリCSV登録');
 

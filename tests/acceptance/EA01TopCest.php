@@ -1,5 +1,5 @@
 <?php
-use AcceptanceTester;
+
 use Codeception\Util\Fixtures;
 
 /**
@@ -10,21 +10,21 @@ use Codeception\Util\Fixtures;
  */
 class EA01TopCest
 {
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
         // すべてのテストケース実施前にログインしておく
         // ログイン後は管理アプリのトップページに遷移している
         $I->loginAsAdmin();
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 
-    public function topページ_初期表示(AcceptanceTester $I)
+    public function topページ_初期表示(\AcceptanceTester $I)
     {
         $I->wantTo('EA0101-UC01-T01 TOPページ 初期表示');
-        
+
         // TOP画面に現在の受注状況、お知らせ、売り上げ状況、ショップ状況が表示されている
         $I->see('受注状況', '.container-fluid #order_info');
         $I->see('お知らせ', '.container-fluid #cube_news');

@@ -1,27 +1,27 @@
 <?php
-use AcceptanceTester;
+
 use Codeception\Util\Fixtures;
 
 /**
  * @group front
- * @group customer 
+ * @group customer
  * @group ef4
  */
 class EF04CustomerCest
 {
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 
-    public function customer_会員登録正常(AcceptanceTester $I)
+    public function customer_会員登録正常(\AcceptanceTester $I)
     {
         $I->wantTo('EF0401-UC01-T01 会員登録 正常パターン');
         $I->amOnPage('/entry');
-        
+
         // 会員情報入力フォームに、会員情報を入力する
         // 「同意する」ボタンを押下する
         $I->submitForm("#main_middle form",[
@@ -67,11 +67,11 @@ class EF04CustomerCest
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
 
-    public function customer_会員登録異常1(AcceptanceTester $I)
+    public function customer_会員登録異常1(\AcceptanceTester $I)
     {
         $I->wantTo('EF0401-UC01-T02 会員登録 異常パターン 重複');
         $I->amOnPage('/entry');
-        
+
         // 会員情報入力フォームに、会員情報を入力する
         // 「同意する」ボタンを押下する
         $I->submitForm("#main_middle form",[
@@ -97,7 +97,7 @@ class EF04CustomerCest
         $I->see('既に利用されているメールアドレスです', '#main_middle form .dl_table dl:nth-child(7) dd');
     }
 
-    public function customer_会員登録異常2(AcceptanceTester $I)
+    public function customer_会員登録異常2(\AcceptanceTester $I)
     {
         $I->wantTo('EF0401-UC01-T03 会員登録 異常パターン 入力ミス');
         $I->amOnPage('/entry');
@@ -127,7 +127,7 @@ class EF04CustomerCest
         $I->see('新規会員登録', '#main_middle h1');
     }
 
-    public function customer_会員登録同意しない(AcceptanceTester $I)
+    public function customer_会員登録同意しない(\AcceptanceTester $I)
     {
         $I->wantTo('EF0401-UC01-T04 会員登録 同意しないボタン');
         $I->amOnPage('/entry');
@@ -136,7 +136,7 @@ class EF04CustomerCest
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
 
-    public function customer_会員登録戻る(AcceptanceTester $I)
+    public function customer_会員登録戻る(\AcceptanceTester $I)
     {
         $I->wantTo('EF0401-UC01-T05 会員登録 戻るボタン');
         $I->amOnPage('/entry');
@@ -166,7 +166,7 @@ class EF04CustomerCest
         $I->see('新規会員登録', '#main_middle h1');
     }
 
-    public function customer_会員登録利用規約(AcceptanceTester $I)
+    public function customer_会員登録利用規約(\AcceptanceTester $I)
     {
         $I->wantTo('EF0404-UC01-T01 会員登録 利用規約');
         $I->amOnPage('/entry');
