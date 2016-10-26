@@ -8,6 +8,7 @@ cmd="$@"
 
 export PGPASSWORD=password
 export DBSERVER=$host
+export AUTH_MAGIC=XjosAXOzO1B3mE0egwQA
 
 until psql -h "$host" -U "cube3_dev_user" -d "template1" -c '\l'; do
   >&2 echo "Postgres is unavailable - sleeping"
