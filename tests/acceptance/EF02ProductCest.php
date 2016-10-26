@@ -164,16 +164,16 @@ class EF02ProductCest
     {
         $I->wantTo('EF0202-UC01-T03 商品詳細 サムネイル');
         $I->amOnPage('/products/detail/2');
-	$config = Fixtures::get('test_config');
+        $config = Fixtures::get('test_config');
 
         // デフォルトサムネイル表示確認
         $img = $I->grabAttributeFrom('#item_photo_area .slick-active img', 'src');
-        $I->assertTrue(('/upload/save_image/cafe-1.jpg' == $img));
+        $I->assertEquals('http://'.$config['hostname'].'/upload/save_image/cafe-1.jpg', $img, $img.' が見つかりません');
 
         // 2個目のサムネイルクリック
         $I->click('#item_photo_area .slick-dots li:nth-child(2) button');
         $img = $I->grabAttributeFrom('#item_photo_area .slick-active img', 'src');
-        $I->assertTrue(('/upload/save_image/cafe-2.jpg' == $img));
+        $I->assertEquals('http://'.$config['hostname'].'/upload/save_image/cafe-2.jpg', $img, $img.' が見つかりません');
     }
 
     public function product_商品詳細カート1(\AcceptanceTester $I)

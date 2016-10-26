@@ -58,7 +58,7 @@ class EF04CustomerCest
         // 仮会員情報取得
         $app = Fixtures::get('app');
         $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->findOneBy(array('name01' => '姓'));
-        $activateUrl = $app->url('entry_activate', array('secret_key' => $customer->getSecretKey()));
+        $activateUrl = $app->path('entry_activate', array('secret_key' => $customer->getSecretKey()));
 
         // アクティベートURLからトップページへ
         $I->amOnPage($activateUrl);
