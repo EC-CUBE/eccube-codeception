@@ -41,6 +41,23 @@ docker-compose --project-name front run -d --rm codecept run -d -g front --env f
 docker-compose --project-name front logs -f
 ```
 
+### コンテナの削除
+
+本テスト環境は、データベースをロールバックしません。
+再実行する場合は、コンテナの削除をおすすめします。
+
+```
+docker-compose stop
+docker-compose rm
+```
+
+`--project-name` を指定した場合は、 `--project-name` ごとに削除してください。
+
+```
+docker-compose --project-name front stop
+docker-compose --project-name front rm
+```
+
 * Status
     * 2016/10/26 Travis CI にて並列テスト実行環境構築
     * 2015/11/27 本repository作成および並列テスト実行環境に関して検証中
