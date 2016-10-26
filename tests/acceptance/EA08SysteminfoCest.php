@@ -213,7 +213,7 @@ class EA08SysteminfoCest
 
         $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(5) .dropdown a');
         $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(5) .dropdown .dropdown-menu li:nth-child(2) a');
-
+        $I->acceptPopup();
         /* ToDo: popup
            alertによる確認あり
         $I->see('メンバーを削除しました。', '#main .container-fluid div:nth-child(1) .alert-success');

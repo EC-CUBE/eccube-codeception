@@ -126,8 +126,7 @@ class EA05CustomerCest
 
         $I->click('#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr > td.icon_edit > div > a');
         $I->click('#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr > td.icon_edit > div > ul > li:nth-child(2) > a');
-
-        /* ToDo: popup */
+        $I->acceptPopup();
     }
 
     public function customer_CSV出力(\AcceptanceTester $I)
@@ -177,7 +176,6 @@ class EA05CustomerCest
 
         $I->click('#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr > td.icon_edit > div > a');
         $I->click('#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr > td.icon_edit > div > ul > li:nth-child(3) > a');
-
-        /* ToDo: popup */
+        $I->acceptPopup();
     }
 }

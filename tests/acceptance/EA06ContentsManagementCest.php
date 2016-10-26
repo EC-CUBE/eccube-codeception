@@ -55,7 +55,7 @@ class EA06ContentsManagementCest
         /* 削除 */
         $I->click('#form1 > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
         $I->click('#form1 > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(2) > a');
-        /* ToDo: popup */
+        $I->acceptPopup();
     }
 
     public function contentsmanagement_ファイル管理(\AcceptanceTester $I)
@@ -85,7 +85,7 @@ class EA06ContentsManagementCest
         /* フォルダ削除 */
         $I->amOnPage('/'.$config['admin_route'].'/content/file_manager');
         $I->click('#aside_wrap > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(1) > td:nth-child(6) > a');
-        // ToDo: popup
+        $I->acceptPopup();
     }
 
     public function contentsmanagement_ページ管理(\AcceptanceTester $I)
@@ -132,7 +132,7 @@ class EA06ContentsManagementCest
         $I->amOnPage('/'.$config['admin_route'].'/content/page');
         $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > a');
         $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > ul > li:nth-child(3) > a');
-        // ToDo: popup
+        $I->acceptPopup();
     }
 
     public function contentsmanagement_ブロック管理(\AcceptanceTester $I)
@@ -165,6 +165,6 @@ class EA06ContentsManagementCest
         $I->amOnPage('/'.$config['admin_route'].'/content/block');
         $I->click('#content_block_form > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(1) > div.icon_edit.td > div > a');
         $I->click('#content_block_form > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(1) > div.icon_edit.td > div > ul > li:nth-child(2) > a');
-        // ToDo: popup
+        $I->acceptPopup();
     }
 }

@@ -226,10 +226,7 @@ class EA03ProductCest
         $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > a');
         // 複製リンク クリック
         $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > ul > li:nth-child(3) > a');
-
-        /**
-         * ToDo: popup
-         */
+        $I->acceptPopup();
     }
 
     public function product_商品登録非公開(\AcceptanceTester $I)

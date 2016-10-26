@@ -102,7 +102,7 @@ class EF05MypageCest
 
         // お気に入りを削除
         $I->click('#main_middle .container-fluid #item_list .btn_circle');
-        /* ToDo: popup */
+        $I->acceptPopup();
     }
 
     public function _mypage_会員情報編集(\AcceptanceTester $I)

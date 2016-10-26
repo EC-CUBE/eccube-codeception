@@ -163,7 +163,7 @@ class EA07BasicinfoCest
         // 削除
         $I->click('#main .container-fluid .table_list table tbody tr:nth-child(2) .icon_edit a');
         $I->click('#main .container-fluid .table_list table tbody tr:nth-child(2) .icon_edit ul li:nth-child(2) a');
-        /* ToDo: popup*/
+        $I->acceptPopup();
     }
 
     public function basicinfo_配送方法一覧(\AcceptanceTester $I)
@@ -235,7 +235,7 @@ class EA07BasicinfoCest
         // 削除
         $I->click('#main .container-fluid .sortable_list .tableish .item_box:nth-child(1) .icon_edit .dropdown a');
         $I->click('#main .container-fluid .sortable_list .tableish .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(2) a');
-        /* ToDo: popup*/
+        $I->acceptPopup();
     }
 
     public function basicinfo_税率設定(\AcceptanceTester $I)
@@ -269,7 +269,7 @@ class EA07BasicinfoCest
         // 削除
         $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown a');
         $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown ul li:nth-child(2) a');
-        /* ToDo: popup*/
+        $I->acceptPopup();
 
         // 個別税率設定
         $I->selectOption('#form1 div div div:nth-child(1) #tax_rule_option_product_tax_rule input[type=radio]', '有効');
