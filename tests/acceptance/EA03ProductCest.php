@@ -166,10 +166,6 @@ class EA03ProductCest
 
         $I->click('#delete');
         $I->acceptPopup();
-
-        /**
-         * ToDo: popup
-         */
     }
 
     public function product_一覧からの規格編集規格あり2(\AcceptanceTester $I)
@@ -310,9 +306,6 @@ class EA03ProductCest
         $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > ul > li:nth-child(4) > a');
 
         $I->acceptPopup();
-        /**
-         * ToDo: popup
-         */
     }
 
     public function product_規格登録(\AcceptanceTester $I)
@@ -362,7 +355,7 @@ class EA03ProductCest
         $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown a');
         $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(3) a');
 
-        /* ToDo: popup */
+        $I->acceptPopup();
     }
 
     public function product_分類登録(\AcceptanceTester $I)
@@ -396,8 +389,7 @@ class EA03ProductCest
 
         $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown a');
         $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(2) a');
-
-        /* ToDo: popup */
+        $I->acceptPopup();
     }
 
     public function product_カテゴリ登録(\AcceptanceTester $I)
@@ -423,7 +415,8 @@ class EA03ProductCest
         $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown a');
         $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(2) a');
 
-        /* ToDo: popup */
+
+        $I->acceptPopup();
 
         // csv EA0305-UC04-T01
         $I->click('#main > div > div > div.col-md-9 > div > div:nth-child(2) > div > div.dl_dropdown.col-md-3 > div > a');
