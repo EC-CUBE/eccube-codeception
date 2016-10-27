@@ -1,5 +1,5 @@
 <?php
-use AcceptanceTester;
+
 use Codeception\Util\Fixtures;
 
 /**
@@ -10,16 +10,16 @@ use Codeception\Util\Fixtures;
  */
 class EA02AuthenticationCest
 {
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
         $I->loginAsAdmin();
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 
-    public function authentication_パスワード認証(AcceptanceTester $I)
+    public function authentication_パスワード認証(\AcceptanceTester $I)
     {
         $I->wantTo('EA0201-UC01-T01 パスワード認証');
 
@@ -28,7 +28,7 @@ class EA02AuthenticationCest
         $I->logoutAsAdmin();
 
         $I->submitForm('#form1', [
-            'login_id' => "invalid", 
+            'login_id' => "invalid",
             'password' => "invalidpassword"
         ]);
 

@@ -1,5 +1,5 @@
 <?php
-use AcceptanceTester;
+
 use Codeception\Util\Fixtures;
 
 /**
@@ -9,15 +9,15 @@ use Codeception\Util\Fixtures;
  */
 class EF05MypageCest
 {
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 
-    public function _mypage_初期表示(AcceptanceTester $I)
+    public function _mypage_初期表示(\AcceptanceTester $I)
     {
         $I->wantTo('EF0501-UC01-T01 Mypage 初期表示');
         $app = Fixtures::get('app');
@@ -35,13 +35,13 @@ class EF05MypageCest
         $I->see('退会手続き', '#main_middle .local_nav ul li:nth-child(5) a');
     }
 
-    public function _mypage_ご注文履歴(AcceptanceTester $I)
+    public function _mypage_ご注文履歴(\AcceptanceTester $I)
     {
         $I->wantTo('EF0502-UC01-T01 Mypage ご注文履歴');
         $app = Fixtures::get('app');
         $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(1);
         $I->loginAsMember($customer->getEmail(), 'password');
-    
+
         // TOPページ>マイページ>ご注文履歴
         $I->amOnPage('/mypage');
         $I->click('#main_middle .local_nav ul li:nth-child(1) a');
@@ -52,13 +52,13 @@ class EF05MypageCest
         $I->see('詳細を見る', '#main_middle .historylist_column p a');
     }
 
-    public function _mypage_ご注文履歴詳細(AcceptanceTester $I)
+    public function _mypage_ご注文履歴詳細(\AcceptanceTester $I)
     {
         $I->wantTo('EF0503-UC01-T01 Mypage ご注文履歴詳細');
         $app = Fixtures::get('app');
         $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(1);
         $I->loginAsMember($customer->getEmail(), 'password');
-    
+
         // TOPページ>マイページ>ご注文履歴>ご注文履歴詳細
         $I->amOnPage('/mypage');
         $I->click('#main_middle .local_nav ul li:nth-child(1) a');
@@ -79,13 +79,13 @@ class EF05MypageCest
         $I->see('合計', '#main_middle #shopping_confirm #confirm_side .total_amount .total_price');
     }
 
-    public function mypage_お気に入り一覧(AcceptanceTester $I)
+    public function mypage_お気に入り一覧(\AcceptanceTester $I)
     {
         $I->wantTo('EF0508-UC01-T01 Mypage お気に入り一覧');
         $app = Fixtures::get('app');
         $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(1);
         $I->loginAsMember($customer->getEmail(), 'password');
-    
+
         // TOPページ>マイページ>ご注文履歴
         $I->amOnPage('/mypage');
         $I->click('#main_middle .local_nav ul li:nth-child(2) a');
@@ -98,20 +98,20 @@ class EF05MypageCest
         $product = $app['eccube.repository.product']->get(2);
         $app['eccube.repository.customer_favorite_product']->addFavorite($customer, $product);
         $I->click('#main_middle .local_nav ul li:nth-child(2) a');
-        $I->see('パーコレーター', '#main_middle .container-fluid #item_list'); 
+        $I->see('パーコレーター', '#main_middle .container-fluid #item_list');
 
         // お気に入りを削除
         $I->click('#main_middle .container-fluid #item_list .btn_circle');
-        /* ToDo: popup */
+        $I->acceptPopup();
     }
 
-    public function _mypage_会員情報編集(AcceptanceTester $I)
+    public function _mypage_会員情報編集(\AcceptanceTester $I)
     {
         $I->wantTo('EF0504-UC01-T01 Mypage 会員情報編集');
         $app = Fixtures::get('app');
         $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(1);
         $I->loginAsMember($customer->getEmail(), 'password');
-    
+
         // TOPページ>マイページ>会員情報編集
         $I->amOnPage('/mypage');
         $I->click('#main_middle .local_nav ul li:nth-child(3) a');
@@ -149,13 +149,13 @@ class EF05MypageCest
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
 
-    public function _mypage_お届け先編集表示(AcceptanceTester $I)
+    public function _mypage_お届け先編集表示(\AcceptanceTester $I)
     {
         $I->wantTo('EF0506-UC01-T01 Mypage お届け先編集表示');
         $app = Fixtures::get('app');
         $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(2);
         $I->loginAsMember($customer->getEmail(), 'password');
-    
+
         // TOPページ>マイページ>お届け先編集
         $I->amOnPage('/mypage');
         $I->click('#main_middle .local_nav ul li:nth-child(4) a');
@@ -163,17 +163,17 @@ class EF05MypageCest
         $I->see('お届け先編集', '#main_middle .page-heading');
     }
 
-    public function _mypage_お届け先編集作成(AcceptanceTester $I)
+    public function _mypage_お届け先編集作成(\AcceptanceTester $I)
     {
         $I->wantTo('EF0506-UC01-T02 Mypage お届け先編集作成');
         $app = Fixtures::get('app');
         $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(2);
         $I->loginAsMember($customer->getEmail(), 'password');
-    
+
         // TOPページ>マイページ>お届け先編集
         $I->amOnPage('/mypage');
         $I->click('#main_middle .local_nav ul li:nth-child(4) a');
-        
+
         // 追加フォーム
         $I->click('#main_middle #deliveradd_select div p a');
 
@@ -200,17 +200,17 @@ class EF05MypageCest
         $I->see('大阪市北区', '#main_middle #deliveradd_select .address_table .addr_box');
     }
 
-    public function _mypage_お届け先編集変更(AcceptanceTester $I)
+    public function _mypage_お届け先編集変更(\AcceptanceTester $I)
     {
         $I->wantTo('EF0506-UC02-T01 Mypage お届け先編集変更');
         $app = Fixtures::get('app');
         $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(2);
         $I->loginAsMember($customer->getEmail(), 'password');
-    
+
         // TOPページ>マイページ>お届け先編集
         $I->amOnPage('/mypage');
         $I->click('#main_middle .local_nav ul li:nth-child(4) a');
-        
+
         // 変更フォーム
         $I->click('#main_middle #deliveradd_select .address_table .addr_box .btn_edit a');
 
@@ -237,17 +237,17 @@ class EF05MypageCest
         $I->see('大阪市南区', '#main_middle #deliveradd_select .address_table .addr_box');
     }
 
-    public function _mypage_お届け先編集削除(AcceptanceTester $I)
+    public function _mypage_お届け先編集削除(\AcceptanceTester $I)
     {
         $I->wantTo('EF0503-UC01-T01 Mypage お届け先編集削除');
         $app = Fixtures::get('app');
         $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(2);
         $I->loginAsMember($customer->getEmail(), 'password');
-    
+
         // TOPページ>マイページ>お届け先編集
         $I->amOnPage('/mypage');
         $I->click('#main_middle .local_nav ul li:nth-child(4) a');
-        
+
         // 追加フォーム お届け先１つの登録だと削除できないので2個目を追加
         $I->click('#main_middle #deliveradd_select div p a');
 
@@ -283,13 +283,13 @@ class EF05MypageCest
         */
     }
 
-    public function _mypage_退会手続き未実施(AcceptanceTester $I)
+    public function _mypage_退会手続き未実施(\AcceptanceTester $I)
     {
-        $I->wantTo('EF0507-UC03-T01 Mypage 退会手続き 未実施'); 
+        $I->wantTo('EF0507-UC03-T01 Mypage 退会手続き 未実施');
         $app = Fixtures::get('app');
         $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(2);
         $I->loginAsMember($customer->getEmail(), 'password');
-    
+
         // TOPページ>マイページ>退会手続き
         $I->amOnPage('/mypage');
         $I->click('#main_middle .local_nav ul li:nth-child(5) a');
@@ -303,13 +303,13 @@ class EF05MypageCest
         $I->see('ご注文履歴', '#main_middle .page-heading');
     }
 
-    public function _mypage_退会手続き(AcceptanceTester $I)
+    public function _mypage_退会手続き(\AcceptanceTester $I)
     {
         $I->wantTo('EF0507-UC03-T02 Mypage 退会手続き');
         $app = Fixtures::get('app');
         $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(2);
         $I->loginAsMember($customer->getEmail(), 'password');
-    
+
         // TOPページ>マイページ>お届け先編集
         $I->amOnPage('/mypage');
         $I->click('#main_middle .local_nav ul li:nth-child(5) a');
@@ -323,7 +323,7 @@ class EF05MypageCest
         $I->see('退会手続き', '#main_middle .page-heading');
         $I->see('退会が完了いたしました', '#main_middle .unsubscribe_box');
         $I->click('#main_middle .unsubscribe_box .btn_group p a');
-        
+
         // TOPページヘ遷移する
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }

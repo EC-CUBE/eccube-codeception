@@ -1,27 +1,27 @@
 <?php
-use AcceptanceTester;
+
 use Codeception\Util\Fixtures;
 
 /**
  * @group admin
  * @group admin01
- * @group order 
+ * @group order
  * @group ea4
  */
 class EA04OrderCest
 {
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
         // すべてのテストケース実施前にログインしておく
         // ログイン後は管理アプリのトップページに遷移している
         $I->loginAsAdmin();
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 
-    public function order_受注検索(AcceptanceTester $I)
+    public function order_受注検索(\AcceptanceTester $I)
     {
         $I->wantTo('EA0401-UC01-T01(& UC01-T02) 受注検索');
 
@@ -37,7 +37,7 @@ class EA04OrderCest
         $I->see('検索条件に該当するデータがありませんでした。', '#main > div > div.row > div > div > div > h3');
     }
 
-    public function order_CSVダウンロード(AcceptanceTester $I)
+    public function order_CSVダウンロード(\AcceptanceTester $I)
     {
         $I->wantTo('EA0401-UC02-T01(& UC02-T02/UC03-T01/UC03-T2) CSVダウンロード');
 
@@ -67,7 +67,7 @@ class EA04OrderCest
         $I->assertEquals(4, $value);
     }
 
-    public function order_受注編集(AcceptanceTester $I)
+    public function order_受注編集(\AcceptanceTester $I)
     {
         $I->wantTo('EA0401-UC05-T01(& UC05-T02/UC06-T01) 受注編集');
 
@@ -87,7 +87,7 @@ class EA04OrderCest
         $I->fillField('#order_name_name01', '');
         $I->click('#aside_wrap > form > div > div.row.btn_area > p > button');
         $I->see('入力されていません。', '#aside_wrap > form > div > div:nth-child(2) > div.box-body.accpanel > div > div:nth-child(2) > div > span > ul > p');
-    
+
         /* 正常系 */
         $I->fillField('#order_name_name01', 'aaa');
         $I->fillField('#order_kana_kana01', 'アアア');
@@ -111,7 +111,7 @@ class EA04OrderCest
         $I->see('受注情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
 
-    public function order_受注削除(AcceptanceTester $I)
+    public function order_受注削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0401-UC08-T01(& UC08-T02) 受注削除');
 
@@ -124,10 +124,10 @@ class EA04OrderCest
 
         $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
         $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(2) > a');
-        // ToDo: popup
+        $I->acceptPopup();
     }
 
-    public function order_受注メール通知(AcceptanceTester $I)
+    public function order_受注メール通知(\AcceptanceTester $I)
     {
         $I->wantTo('EA0402-UC01-T01 受注メール通知');
 
@@ -136,14 +136,13 @@ class EA04OrderCest
         $I->see('受注管理受注マスター', '#main .page-header');
 
         $I->click('#search_form > div.row.btn_area > div > button');
-        $I->see('検索結果 3 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
+        $I->see('検索結果 2 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
 
         $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
         $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(3) > a');
-        // ToDo: popup
     }
 
-    public function order_一括メール通知(AcceptanceTester $I)
+    public function order_一括メール通知(\AcceptanceTester $I)
     {
         $I->wantTo('EA0402-UC02-T01(& UC02-T02) 一括メール通知');
 
@@ -152,21 +151,21 @@ class EA04OrderCest
         $I->see('受注管理受注マスター', '#main .page-header');
 
         $I->click('#search_form > div.row.btn_area > div > button');
-        $I->see('検索結果 3 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
+        $I->see('検索結果 2 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
 
         $I->click('#dropmenu > a');
         $I->click('#dropmenu > ul > li > a');
-        // ToDo: popup
+        $I->acceptPopup();
     }
 
-    public function order_受注登録(AcceptanceTester $I)
+    public function order_受注登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0405-UC01-T01(& UC01-T02) 受注登録');
 
         $config = Fixtures::get('config');
         $I->amOnPage('/'.$config['admin_route'].'/order/new');
         $I->see('受注管理受注登録・編集', '#main .page-header');
-        
+
         /* 異常系 */
         $I->click('#aside_wrap > form > div > div.row.btn_area > p > button');
         $I->dontSee('受注情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');

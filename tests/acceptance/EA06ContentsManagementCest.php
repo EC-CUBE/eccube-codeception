@@ -1,5 +1,5 @@
 <?php
-use AcceptanceTester;
+
 use Codeception\Util\Fixtures;
 
 /**
@@ -10,18 +10,18 @@ use Codeception\Util\Fixtures;
  */
 class EA06ContentsManagementCest
 {
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
         // すべてのテストケース実施前にログインしておく
         // ログイン後は管理アプリのトップページに遷移している
         $I->loginAsAdmin();
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 
-    public function contentsmanagement_新着情報管理(AcceptanceTester $I)
+    public function contentsmanagement_新着情報管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0601-UC01-T01(& UC02-T01/UC02-T02/UC03-T01) 新着情報管理（作成・編集・削除）');
 
@@ -55,10 +55,10 @@ class EA06ContentsManagementCest
         /* 削除 */
         $I->click('#form1 > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
         $I->click('#form1 > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(2) > a');
-        /* ToDo: popup */
+        $I->acceptPopup();
     }
 
-    public function contentsmanagement_ファイル管理(AcceptanceTester $I)
+    public function contentsmanagement_ファイル管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0602-UC01-T01(& UC01-T02/UC01-T03/UC01-T04/UC01-T05/UC01-T06/UC01-T07) ファイル管理');
 
@@ -85,10 +85,10 @@ class EA06ContentsManagementCest
         /* フォルダ削除 */
         $I->amOnPage('/'.$config['admin_route'].'/content/file_manager');
         $I->click('#aside_wrap > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(1) > td:nth-child(6) > a');
-        // ToDo: popup
+        $I->acceptPopup();
     }
 
-    public function contentsmanagement_ページ管理(AcceptanceTester $I)
+    public function contentsmanagement_ページ管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0603-UC01-T01(& UC01-T02/UC01-T03/UC01-T04/UC01-T05) ページ管理');
 
@@ -132,10 +132,10 @@ class EA06ContentsManagementCest
         $I->amOnPage('/'.$config['admin_route'].'/content/page');
         $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > a');
         $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > ul > li:nth-child(3) > a');
-        // ToDo: popup
+        $I->acceptPopup();
     }
 
-    public function contentsmanagement_ブロック管理(AcceptanceTester $I)
+    public function contentsmanagement_ブロック管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0603-UC01-T01(& UC01-T02/UC01-T03) ブロック管理');
 
@@ -165,6 +165,6 @@ class EA06ContentsManagementCest
         $I->amOnPage('/'.$config['admin_route'].'/content/block');
         $I->click('#content_block_form > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(1) > div.icon_edit.td > div > a');
         $I->click('#content_block_form > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(1) > div.icon_edit.td > div > ul > li:nth-child(2) > a');
-        // ToDo: popup
+        $I->acceptPopup();
     }
 }

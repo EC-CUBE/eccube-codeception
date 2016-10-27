@@ -1,5 +1,5 @@
 <?php
-use AcceptanceTester;
+
 use Codeception\Util\Fixtures;
 
 /**
@@ -9,15 +9,15 @@ use Codeception\Util\Fixtures;
  */
 class EF01TopCest
 {
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 
-    public function topページ_初期表示(AcceptanceTester $I)
+    public function topページ_初期表示(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC01-T01 TOPページ 初期表示');
         $I->amOnPage('/');
@@ -37,8 +37,9 @@ class EF01TopCest
         $today = new DateTime();
         $minus1 = $today->sub(new DateInterval('P1D'));
         $minus2 = $today->sub(new DateInterval('P2D'));
-        $I->haveInDatabase('dtb_news', array('news_date' => $minus1->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル1', 'news_comment' => 'コメント1', 'creator_id' => 1, 'rank' => 2));
-        $I->haveInDatabase('dtb_news', array('news_date' => $minus2->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル2', 'news_comment' => 'コメント2', 'creator_id' => 1, 'rank' => 3));
+
+        $I->haveInDatabase('dtb_news', array('news_id' => rand(999, 9999), 'news_date' => $minus1->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル1', 'news_comment' => 'コメント1', 'creator_id' => 1, 'rank' => 2, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00')));
+        $I->haveInDatabase('dtb_news', array('news_id' => rand(999, 9999), 'news_date' => $minus2->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル2', 'news_comment' => 'コメント2', 'creator_id' => 1, 'rank' => 3, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00')));
         $I->reloadPage();
         $news = Fixtures::get('news');
         $newsset = array();
@@ -62,7 +63,7 @@ class EF01TopCest
         }
     }
 
-    public function topページ_新着情報(AcceptanceTester $I)
+    public function topページ_新着情報(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC01-T02 TOPページ 新着情報');
         $I->amOnPage('/');
@@ -76,7 +77,7 @@ class EF01TopCest
 
         // 「詳しくはこちら」リンクを押下する
         $today = new DateTime();
-        $I->haveInDatabase('dtb_news', array('news_date' => $today->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル1', 'news_comment' => 'コメント1', 'creator_id' => 1, 'news_url' => 'http://www.ec-cube.net', 'rank' => 2));
+        $I->haveInDatabase('dtb_news', array('news_id' => rand(999, 9999), 'news_date' => $today->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル1', 'news_comment' => 'コメント1', 'creator_id' => 1, 'news_url' => 'http://www.ec-cube.net', 'rank' => 2, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00')));
         $I->reloadPage();
         $I->click('#news_area .newslist dt');
         $I->see('詳しくはこちら', '#news_area .newslist dd');
@@ -84,7 +85,7 @@ class EF01TopCest
         $I->seeInTitle('ECサイト構築・リニューアルは「ECオープンプラットフォームEC-CUBE」');
     }
 
-    public function topページ_カテゴリ検索(AcceptanceTester $I)
+    public function topページ_カテゴリ検索(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC02-T01 TOPページ カテゴリ検索');
         $I->amOnPage('/');
@@ -98,7 +99,7 @@ class EF01TopCest
         $I->see('パーコレーター', '#item_list');
     }
 
-    public function topページ_全件検索(AcceptanceTester $I)
+    public function topページ_全件検索(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC03-T01 TOPページ 全件検索');
         $I->amOnPage('/');
@@ -117,7 +118,7 @@ class EF01TopCest
         $I->assertTrue((count($products) >= 2));
     }
 
-    public function topページ_カテゴリ絞込検索(AcceptanceTester $I)
+    public function topページ_カテゴリ絞込検索(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC03-T02 TOPページ カテゴリ絞込検索');
         $I->amOnPage('/');
@@ -136,7 +137,7 @@ class EF01TopCest
         $I->dontSee('ディナーフォーク', '#item_list');
     }
 
-    public function topページ_キーワード絞込検索(AcceptanceTester $I)
+    public function topページ_キーワード絞込検索(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC03-T02 TOPページ キーワード絞込検索');
         $I->amOnPage('/');

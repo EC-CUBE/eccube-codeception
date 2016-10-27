@@ -1,5 +1,5 @@
 <?php
-use AcceptanceTester;
+
 use Codeception\Util\Fixtures;
 
 /**
@@ -10,21 +10,21 @@ use Codeception\Util\Fixtures;
  */
 class EA01TopCest
 {
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
         // すべてのテストケース実施前にログインしておく
         // ログイン後は管理アプリのトップページに遷移している
         $I->loginAsAdmin();
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 
-    public function topページ_初期表示(AcceptanceTester $I)
+    public function topページ_初期表示(\AcceptanceTester $I)
     {
         $I->wantTo('EA0101-UC01-T01 TOPページ 初期表示');
-        
+
         // TOP画面に現在の受注状況、お知らせ、売り上げ状況、ショップ状況が表示されている
         $I->see('受注状況', '.container-fluid #order_info');
         $I->see('お知らせ', '.container-fluid #cube_news');
@@ -46,16 +46,16 @@ class EA01TopCest
         $I->seeInField('#search_form #admin_search_order_status', '2'/*入金待ち*/);
         $I->goToAdminPage();
 
-        // 取り寄せ中をクリックすると「受注管理＞取り寄せ」のページに遷移することを確認
+        // 入金済みをクリックすると「受注管理＞入金済み」のページに遷移することを確認
         $I->click('#order_info .link_list .tableish a:nth-child(3)');
         $I->see('受注マスター', '#main .page-header');
-        $I->seeInField('#search_form #admin_search_order_status', '4'/*取り寄せ中*/);
+        $I->seeInField('#search_form #admin_search_order_status', '6'/*入金済み*/);
         $I->goToAdminPage();
 
-        // 入金済みをクリックすると「受注管理＞入金済み」のページに遷移することを確認
+        // 取り寄せ中をクリックすると「受注管理＞取り寄せ」のページに遷移することを確認
         $I->click('#order_info .link_list .tableish a:nth-child(4)');
         $I->see('受注マスター', '#main .page-header');
-        $I->seeInField('#search_form #admin_search_order_status', '6'/*入金済み*/);
+        $I->seeInField('#search_form #admin_search_order_status', '4'/*取り寄せ中*/);
         $I->goToAdminPage();
 
         // お知らせの記事をクリックすると設定されたURLに遷移することを確認

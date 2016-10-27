@@ -1,5 +1,5 @@
 <?php
-use AcceptanceTester;
+
 use Codeception\Util\Fixtures;
 
 /**
@@ -10,18 +10,18 @@ use Codeception\Util\Fixtures;
  */
 class EA05CustomerCest
 {
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
         // すべてのテストケース実施前にログインしておく
         // ログイン後は管理アプリのトップページに遷移している
         $I->loginAsAdmin();
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 
-    public function customer_検索(AcceptanceTester $I)
+    public function customer_検索(\AcceptanceTester $I)
     {
         $I->wantTo('EA0501-UC01-T01 検索');
 
@@ -38,7 +38,7 @@ class EA05CustomerCest
         $I->see('検索結果 1 件 が該当しました','#search_form > div.row > div > div > div.box-header.with-arrow > h3');
     }
 
-    public function customer_検索結果なし(AcceptanceTester $I)
+    public function customer_検索結果なし(\AcceptanceTester $I)
     {
         $I->wantTo('EA0501-UC01-T02 検索 結果なし');
 
@@ -52,7 +52,7 @@ class EA05CustomerCest
         $I->see('検索条件に該当するデータがありませんでした。','#search_form > div.row > div > div > div > h3');
     }
 
-    public function customer_会員登録(AcceptanceTester $I)
+    public function customer_会員登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0502-UC01-T02(& UC01-T02) 会員登録');
 
@@ -86,7 +86,7 @@ class EA05CustomerCest
         /* ブラウザによるhtml5のエラーなのでハンドリング不可 */
     }
 
-    public function customer_会員編集(AcceptanceTester $I)
+    public function customer_会員編集(\AcceptanceTester $I)
     {
         $I->wantTo('EA0502-UC02-T02(& UC02-T02) 会員編集');
 
@@ -110,7 +110,7 @@ class EA05CustomerCest
         /* ブラウザによるhtml5のエラーなのでハンドリング不可 */
     }
 
-    public function customer_会員削除(AcceptanceTester $I)
+    public function customer_会員削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0501-UC03-T01(& UC03-T02) 会員削除');
 
@@ -126,11 +126,10 @@ class EA05CustomerCest
 
         $I->click('#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr > td.icon_edit > div > a');
         $I->click('#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr > td.icon_edit > div > ul > li:nth-child(2) > a');
-
-        /* ToDo: popup */
+        $I->acceptPopup();
     }
 
-    public function customer_CSV出力(AcceptanceTester $I)
+    public function customer_CSV出力(\AcceptanceTester $I)
     {
         $I->wantTo('EA0501-UC05-T01 CSV出力');
 
@@ -147,7 +146,7 @@ class EA05CustomerCest
          */
     }
 
-    public function customer_CSV出力項目設定(AcceptanceTester $I)
+    public function customer_CSV出力項目設定(\AcceptanceTester $I)
     {
         $I->wantTo('EA0501-UC04-T01 CSV出力項目設定');
 
@@ -164,7 +163,7 @@ class EA05CustomerCest
         $I->assertEquals('2', $value);
     }
 
-    public function customer_仮会員メール再送(AcceptanceTester $I)
+    public function customer_仮会員メール再送(\AcceptanceTester $I)
     {
         $I->wantTo('EA0501-UC06-T01(& UC06-T02) 仮会員メール再送');
 
@@ -177,7 +176,6 @@ class EA05CustomerCest
 
         $I->click('#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr > td.icon_edit > div > a');
         $I->click('#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr > td.icon_edit > div > ul > li:nth-child(3) > a');
-
-        /* ToDo: popup */
+        $I->acceptPopup();
     }
 }

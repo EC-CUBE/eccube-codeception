@@ -1,27 +1,27 @@
 <?php
-use AcceptanceTester;
+
 use Codeception\Util\Fixtures;
 
 /**
  * @group front
- * @group product 
+ * @group product
  * @group ef2
  */
 class EF02ProductCest
 {
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 
-    public function product_商品一覧初期表示(AcceptanceTester $I)
+    public function product_商品一覧初期表示(\AcceptanceTester $I)
     {
         $I->wantTo('EF0201-UC01-T01 商品一覧ページ 初期表示');
         $I->amOnPage('/');
-        
+
         // TOPページ>商品一覧（ヘッダーのいずれかのカテゴリを選択）へ遷移
         $I->moveMouseOver(['css' => '#category .category-nav li:nth-child(2)']);
         $I->click('#header #category ul li:nth-child(2) ul li:nth-child(1) a');
@@ -33,19 +33,19 @@ class EF02ProductCest
         $I->see('パーコレーター', '#item_list');
     }
 
-    public function product_商品一覧ヘッダ以外のカテゴリリンク(AcceptanceTester $I)
+    public function product_商品一覧ヘッダ以外のカテゴリリンク(\AcceptanceTester $I)
     {
         $I->wantTo('EF0201-UC01-T02 商品一覧ページ ヘッダ以外のカテゴリリンク');
         $I->amOnPage('/');
-    
+
         // MEMO: EF0201-UC01-T02... テスト項目の記述が意味不明なのでskip
     }
-    
-    public function product_商品一覧ソート(AcceptanceTester $I)
+
+    public function product_商品一覧ソート(\AcceptanceTester $I)
     {
         $I->wantTo('EF0201-UC03-T01 商品一覧ページ ソート');
         $I->amOnPage('/');
-    
+
         // TOPページ>商品一覧（ヘッダーのいずれかのカテゴリを選択）へ遷移
         $I->moveMouseOver(['css' => '#category .category-nav li:nth-child(2)']);
         $I->click('#header #category ul li:nth-child(2) a');
@@ -56,7 +56,7 @@ class EF02ProductCest
         $fPos = 0;
         foreach ($products as $key => $product) {
             if ($product == 'パーコレーター') {
-                $pPos = $key; 
+                $pPos = $key;
             }
             if ($product == 'ディナーフォーク') {
                 $fPos = $key;
@@ -74,7 +74,7 @@ class EF02ProductCest
         $fPos = 0;
         foreach ($products as $key => $product) {
             if ($product == 'パーコレーター') {
-                $pPos = $key; 
+                $pPos = $key;
             }
             if ($product == 'ディナーフォーク') {
                 $fPos = $key;
@@ -85,12 +85,12 @@ class EF02ProductCest
         // 修正されたら以下を追加
         //$I->assertTrue(($pPos > $fPos));
     }
-    
-    public function product_商品一覧表示件数(AcceptanceTester $I)
+
+    public function product_商品一覧表示件数(\AcceptanceTester $I)
     {
         $I->wantTo('EF0201-UC04-T01 商品一覧ページ 表示件数');
         $I->amOnPage('/');
-        
+
         // TOPページ>商品一覧（ヘッダーのいずれかのカテゴリを選択）へ遷移
         $I->moveMouseOver(['css' => '#category .category-nav li:nth-child(2)']);
         $I->click('#header #category ul li:nth-child(2) a');
@@ -101,7 +101,7 @@ class EF02ProductCest
         $itemNum = ($productNum >= 15) ? 15 : $productNum;
         $products = $I->grabMultiple('#item_list .product_item');
         $I->assertTrue((count($products) == $itemNum));
-        
+
         // 表示件数の選択リストを変更する
         $I->selectOption("#page_navi_top select[name = 'disp_number']", '30件');
 
@@ -110,12 +110,12 @@ class EF02ProductCest
         $products = $I->grabMultiple('#item_list .product_item');
         $I->assertTrue((count($products) == $itemNum));
     }
-    
-    public function product_商品一覧ページング(AcceptanceTester $I)
+
+    public function product_商品一覧ページング(\AcceptanceTester $I)
     {
         $I->wantTo('EF0201-UC04-T02 商品一覧ページ ページング');
         $I->amOnPage('/');
-        
+
         // TOPページ>商品一覧（ヘッダーのいずれかのカテゴリを選択）へ遷移
         $I->moveMouseOver(['css' => '#category .category-nav li:nth-child(2)']);
         $I->click('#header #category ul li:nth-child(2) a');
@@ -124,7 +124,7 @@ class EF02ProductCest
         $I->see('1', '#main .pagination ul .active a');
         $I->see('2', '#main .pagination ul li a');
         $I->see('次へ', '#main .pagination ul li a');
-        
+
         // 選択されたリンクに応じてページングされる
         $I->click('#main .pagination ul li:nth-child(2) a'); // '2'をクリック
         $I->see('2', '#main .pagination ul .active a');
@@ -133,18 +133,18 @@ class EF02ProductCest
         $I->click('#main .pagination ul li:nth-child(3) a'); // '次へ'をクリック
         $I->see('2', '#main .pagination ul .active a');
     }
-    
-    public function product_商品詳細初期表示(AcceptanceTester $I)
+
+    public function product_商品詳細初期表示(\AcceptanceTester $I)
     {
         $I->wantTo('EF0202-UC01-T01 商品詳細 初期表示');
         $I->setStock(2, 0);
         $I->amOnPage('/products/detail/2');
-        
+
         // 「カートに入れる」ボタンが、非活性となり「ただいま品切れ中です」と表示される。
         $I->see('ただいま品切れ中です','#form1 button');
     }
-    
-    public function product_商品詳細カテゴリリンク(AcceptanceTester $I)
+
+    public function product_商品詳細カテゴリリンク(\AcceptanceTester $I)
     {
         $I->wantTo('EF0202-UC01-T02 商品詳細 カテゴリリンク');
         $I->amOnPage('/products/detail/2');
@@ -159,24 +159,24 @@ class EF02ProductCest
         // 一覧ページで商品がサムネイル表示される
         $I->see('パーコレーター', '#item_list');
     }
-    
-    public function product_商品詳細サムネイル(AcceptanceTester $I)
+
+    public function product_商品詳細サムネイル(\AcceptanceTester $I)
     {
         $I->wantTo('EF0202-UC01-T03 商品詳細 サムネイル');
         $I->amOnPage('/products/detail/2');
-	$config = Fixtures::get('test_config');
+        $config = Fixtures::get('test_config');
 
         // デフォルトサムネイル表示確認
         $img = $I->grabAttributeFrom('#item_photo_area .slick-active img', 'src');
-        $I->assertTrue(('http://'.$config['hostname'].'/upload/save_image/cafe-1.jpg' == $img));
-    
+        $I->assertEquals('http://'.$config['hostname'].'/upload/save_image/cafe-1.jpg', $img, $img.' が見つかりません');
+
         // 2個目のサムネイルクリック
         $I->click('#item_photo_area .slick-dots li:nth-child(2) button');
         $img = $I->grabAttributeFrom('#item_photo_area .slick-active img', 'src');
-        $I->assertTrue(('http://'.$config['hostname'].'/upload/save_image/cafe-2.jpg' == $img));
+        $I->assertEquals('http://'.$config['hostname'].'/upload/save_image/cafe-2.jpg', $img, $img.' が見つかりません');
     }
-    
-    public function product_商品詳細カート1(AcceptanceTester $I)
+
+    public function product_商品詳細カート1(\AcceptanceTester $I)
     {
         $I->wantTo('EF0202-UC02-T01 商品詳細 カート 注文数＜販売制限数＜在庫数の注文');
         $I->setStock(2, 10);
@@ -193,12 +193,12 @@ class EF02ProductCest
         $I->makeEmptyCart();
     }
 
-    public function product_商品詳細カート2(AcceptanceTester $I)
+    public function product_商品詳細カート2(\AcceptanceTester $I)
     {
         $I->wantTo('EF0202-UC02-T02 商品詳細 カート 販売制限数＜注文数＜在庫数の注文');
         $I->setStock(2, 10);
         $I->amOnPage('/products/detail/2');
-        
+
         // 「カートに入れる」ボタンを押下する
         $I->buyThis(6);
 
@@ -213,12 +213,12 @@ class EF02ProductCest
         $I->makeEmptyCart();
     }
 
-    public function product_商品詳細カート3(AcceptanceTester $I)
+    public function product_商品詳細カート3(\AcceptanceTester $I)
     {
         $I->wantTo('EF0202-UC02-T03 商品詳細 カート 販売制限数＜在庫数＜注文数の注文');
         $I->setStock(2, 10);
         $I->amOnPage('/products/detail/2');
-        
+
         // 「カートに入れる」ボタンを押下する
         $I->buyThis(12);
 
@@ -232,8 +232,8 @@ class EF02ProductCest
         // カートを空に
         $I->makeEmptyCart();
     }
-    
-    public function product_商品詳細カート4(AcceptanceTester $I)
+
+    public function product_商品詳細カート4(\AcceptanceTester $I)
     {
         $I->wantTo('EF0202-UC02-T04 商品詳細(規格あり) カート 注文数＜販売制限数＜在庫数の注文');
         $I->setStock(1, array(10, 10, 10, 10, 10, 10, 10, 10, 10));
@@ -251,13 +251,13 @@ class EF02ProductCest
         // カートを空に
         $I->makeEmptyCart();
     }
-    
-    public function product_商品詳細カート5(AcceptanceTester $I)
+
+    public function product_商品詳細カート5(\AcceptanceTester $I)
     {
         $I->wantTo('EF0202-UC02-T05 商品詳細(規格あり) カート 販売制限数＜注文数＜在庫数の注文');
         $I->setStock(1, array(10, 10, 10, 10, 10, 10, 10, 10, 10));
         $I->amOnPage('/products/detail/1');
-        
+
         // 「カートに入れる」ボタンを押下する
         $I->selectOption("#form1 #classcategory_id1", 'プラチナ');
         $I->selectOption("#form1 #classcategory_id2", '150cm');
@@ -274,12 +274,12 @@ class EF02ProductCest
         $I->makeEmptyCart();
     }
 
-    public function product_商品詳細カート6(AcceptanceTester $I)
+    public function product_商品詳細カート6(\AcceptanceTester $I)
     {
         $I->wantTo('EF0202-UC02-T06 商品詳細(規格あり) カート 販売制限数＜在庫数＜注文数の注文');
         $I->setStock(1, array(10, 10, 10, 10, 10, 10, 10, 10, 10));
         $I->amOnPage('/products/detail/1');
-        
+
         // 「カートに入れる」ボタンを押下する
         $I->selectOption("#form1 #classcategory_id1", 'プラチナ');
         $I->selectOption("#form1 #classcategory_id2", '150cm');

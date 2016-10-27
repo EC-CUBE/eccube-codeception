@@ -1,0 +1,38 @@
+{
+    "require": {
+        "codeception/codeception": "*",
+        "fzaninotto/faker": "1.*",
+        "codeception/robo-paracept": "@dev",
+        "php": ">=5.4.0 <8.0",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "phpunit/phpunit": ">4.8.20 <6.0",
+        "phpunit/php-code-coverage": ">=2.1.3 <5.0",
+        "facebook/webdriver": ">=1.0.1 <2.0",
+        "guzzlehttp/guzzle": ">=4.1.4 <7.0",
+        "guzzlehttp/psr7": "~1.0",
+        "symfony/finder": ">=2.7 <2.8",
+        "symfony/console": ">=2.7 <2.8",
+        "symfony/event-dispatcher": ">=2.7 <2.8",
+        "symfony/yaml": ">=2.7 <2.8",
+        "symfony/browser-kit": ">=2.7 <2.8",
+        "symfony/css-selector": ">=2.7 <2.8",
+        "symfony/dom-crawler": ">=2.7 <2.8",
+        "behat/gherkin": "~4.4.0",
+        "sebastian/comparator": "~1.1",
+        "sebastian/diff": "^1.4"
+    },
+    "require-dev": {
+        "monolog/monolog": "~1.8",
+        "facebook/graph-sdk": "~5.3",
+        "php-amqplib/php-amqplib": "~2.4",
+        "codeception/specify": "~0.3",
+        "pda/pheanstalk": "~3.0",
+        "flow/jsonpath": "~0.2",
+        "league/factory-muffin": "^3.0",
+        "league/factory-muffin-faker": "^1.0",
+        "mongodb/mongodb": "^1.0",
+        "predis/predis": "^1.0",
+        "squizlabs/php_codesniffer": "~2.0"
+    }
+}

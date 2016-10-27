@@ -57,7 +57,7 @@ $app->setTestMode(true);
 $app->initialize();
 $app->initializePlugin();
 $app->register(new \Eccube\Tests\ServiceProvider\FixtureServiceProvider());
-$app->run();
+$app->boot();
 Fixtures::add('app', $app);
 file_put_contents($dbyml,Yaml::dump($database_org));
 
