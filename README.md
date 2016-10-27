@@ -58,15 +58,44 @@ docker-compose --project-name front stop
 docker-compose --project-name front rm
 ```
 
-* Status
+### 実行中の Selenium へアクセス
+
+テストを実行中の Selenium へ VNC を使用してアクセスが可能です。
+
+`docker ps` で、`selenium/*` の IMAGE のポートにアクセスします。
+
+```
+docker ps
+
+CONTAINER ID        IMAGE                                      COMMAND                  CREATED             STATUS              PORTS                               NAMES
+d8c3d147e103        front_codecept                             "codecept run -d -g f"   5 minutes ago       Up 5 minutes                                            front_codecept_run_1
+f5377e65ea82        front_eccube3                              "/wait-for-postgres.s"   5 minutes ago       Up 5 minutes        0.0.0.0:32804->80/tcp               front_eccube3_1
+1dfeff84330c        postgres:9.4                               "/docker-entrypoint.s"   5 minutes ago       Up 5 minutes        5432/tcp                            front_postgres_1
+9f3c7bcc17f9        selenium/standalone-firefox-debug:2.53.1   "/opt/bin/entry_point"   5 minutes ago       Up 5 minutes        4444/tcp, 0.0.0.0:32803->5900/tcp   front_firefox_1
+```
+
+上記の例の場合は、 `vnc://127.0.0.1::32804` へアクセスします。初期パスワードは `secret` です。
+Mac の場合は、 `⌘ + k` で画面共有、 Windows の場合は [TightVNC viewer](http://www14.plala.or.jp/campus-note/vine_linux/server_vnc/tightvnc.html) などを使用すると良いでしょう。
+
+## Status
+
     * 2016/10/26 Travis CI にて並列テスト実行環境構築
     * 2015/11/27 本repository作成および並列テスト実行環境に関して検証中
     * 2015/11/20 EC-CUBE3 Ver.3.0.6に対応(Acception Test記述: フロント側 100% / 管理画面 40%)
     * 2015/11/13 [eccube3-doc](https://github.com/EC-CUBE/eccube3-doc)のIntegrationTestにあるテスト項目を順次Acception Testとして記述
     * 2015/11/06 Acception Test作成に[Codeception](http://codeception.com/)を採用
-* In near future...
+
+## In near future...
+
     * 【Acceptance Test】PostgreSQL/MySQL/Firefox/Chrome 各環境の並列テスト実行環境構築
     * 【Acceptance Test】Acceptance Test記述を完了
     * 【Acceptance Test】環境構築用ドキュメント作成
     * 【Deployment - Bootstrapping / Configuration】AWSなど各種クラウド環境へのEC-CUBE3自動デプロイ手法確立
     * 【Deployment - Bootstrapping / Configuration】EC-CUBE3自動デプロイ手法実装
+
+
+## See Also.
+
+- [Codeception Parallel Execution](http://codeception.com/docs/12-ParallelExecution)
+- [Acceptance Tests Demo Repository](https://github.com/dmstr/docker-acception)
+- [Docker Yii 2.0 Application](https://github.com/dmstr/docker-yii2-app)
