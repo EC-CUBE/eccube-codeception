@@ -14,6 +14,7 @@ services:
       - ./codeception.yml:/project/codeception.yml
   chrome:
     image: selenium/standalone-chrome-debug:2.53.1
+    shm_size: 1g
     ports:
       - 5900
     dns: 8.8.4.4
