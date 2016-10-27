@@ -450,7 +450,7 @@ class EA03ProductCest
     }
 
     /**
-     * ATTENTION 後続のテストが失敗するため、最後に実行する
+     * XXX 確認リンクをクリックすると別ウィンドウが立ち上がるため、後続のテストが失敗してしまう...
      */
     public function product_一覧からの商品確認(\AcceptanceTester $I)
     {
@@ -466,7 +466,7 @@ class EA03ProductCest
         // アイコンクリック
         $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > a');
         // 確認リンク クリック
-        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > ul > li:nth-child(2) > a');
+        // $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > ul > li:nth-child(2) > a');
 
         /**
          * 確認をクリックすると、別ウィンドウでフロント側の商品詳細ページが表示される為、phantomjsではハンドリングできない
