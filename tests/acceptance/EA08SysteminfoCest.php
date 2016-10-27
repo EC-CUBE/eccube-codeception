@@ -3,8 +3,8 @@
 use Codeception\Util\Fixtures;
 
 /**
- * @group admin
- * @group admin02
+ * @admin
+ * @admin03
  * @group systeminformation
  * @group ea8
  */
@@ -230,10 +230,10 @@ class EA08SysteminfoCest
         $I->amOnPage('/'.$config['admin_route'].'/setting/system/member');
         $I->see('システム設定メンバー管理', '#main .page-header');
 
-        $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(2) td:nth-child(5) .dropdown a');
-        $I->see('削除', '#main .container-fluid .table_list .table tbody tr:nth-child(2) td:nth-child(5) .dropdown .dropdown-menu li:nth-child(2) a');
-        $href = $I->grabAttributeFrom('#main .container-fluid .table_list .table tbody tr:nth-child(2) td:nth-child(5) .dropdown .dropdown-menu li:nth-child(2) a', 'href');
-        $I->assertEquals('', $href);
+        $I->click('#main #member_list__menu_box--2 a');
+        $I->see('削除', '#main #member_list__menu--2 li:nth-child(2) a');
+        $href = $I->grabAttributeFrom('#main #member_list__menu--2 li:nth-child(2) a', 'href');
+        $I->assertEquals('', $href, $href.' が一致しません');
     }
 
     public function systeminfo_セキュリティ管理表示(\AcceptanceTester $I)
@@ -264,35 +264,6 @@ class EA08SysteminfoCest
         $I->fillField('form #admin_security_admin_route_dir', $config['admin_route']);
         $I->click('#aside_column div div div div div button');
         $I->loginAsAdmin();
-    }
-
-    public function systeminfo_セキュリティ管理IP制限(\AcceptanceTester $I)
-    {
-        $I->wantTo('EA0804-UC01-T03 セキュリティ管理 - IP制限');
-
-        // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/security');
-        $I->see('システム設定セキュリティ管理', '#main .page-header');
-
-        $I->fillField('form #admin_security_admin_allow_host', '1.1.1.1');
-        $I->click('#aside_column div div div div div button');
-
-        $I->amOnPage('/'.$config['admin_route']);
-        $I->see('システムエラーが発生しました。', '#main .container-fluid h1');
-
-        $test_config = Fixtures::get('test_config');
-        $eccube = $test_config['eccube_path'];
-        $configfile = $eccube."/app/config/eccube/config.yml";
-        $lines = file($configfile);
-        $fh = fopen($configfile, 'w');
-        foreach ($lines as $line) {
-            if(preg_match('/1\.1\.1\.1/', $line)) {
-                continue;
-            }
-            fwrite($fh, $line);
-        }
-        fclose($fh);
     }
 
     public function systeminfo_セキュリティ管理SSL(\AcceptanceTester $I)
@@ -385,5 +356,37 @@ class EA08SysteminfoCest
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->amOnPage('/'.$config['admin_route'].'/customer/new');
         $I->see('無回答', '#customer_form #admin_customer_sex');
+    }
+
+    /**
+     * ATTENTION 後続のテストが失敗するため、最後に実行する必要がある
+     */
+    public function systeminfo_セキュリティ管理IP制限(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0804-UC01-T03 セキュリティ管理 - IP制限');
+
+        // 表示
+        $config = Fixtures::get('config');
+        $I->amOnPage('/'.$config['admin_route'].'/setting/system/security');
+        $I->see('システム設定セキュリティ管理', '#main .page-header');
+
+        $I->fillField('form #admin_security_admin_allow_host', '1.1.1.1');
+        $I->click('#aside_column div div div div div button');
+
+        $I->amOnPage('/'.$config['admin_route']);
+        $I->see('アクセスできません。', '#main .container-fluid h1');
+
+        $test_config = Fixtures::get('test_config');
+        $eccube = $test_config['eccube_path'];
+        $configfile = $eccube."/app/config/eccube/config.yml";
+        $lines = file($configfile);
+        $fh = fopen($configfile, 'w');
+        foreach ($lines as $line) {
+            if(preg_match('/1\.1\.1\.1/', $line)) {
+                continue;
+            }
+            fwrite($fh, $line);
+        }
+        fclose($fh);
     }
 }

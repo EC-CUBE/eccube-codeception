@@ -4,7 +4,7 @@ use Codeception\Util\Fixtures;
 
 /**
  * @group admin
- * @group admin02
+ * @group admin03
  * @group basicinformation
  * @group ea7
  */

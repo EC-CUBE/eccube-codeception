@@ -30,15 +30,7 @@ modules:
                 unexpectedAlertBehaviour: 'accept'
 
 env:
-    admin01:
-        modules:
-            config:
-                Db:
-                    dsn: 'pgsql:host=postgres;dbname=cube3_dev'
-                WebDriver:
-                    port: 4444
-                    url: 'http://eccube3'
-    admin02:
+    admin:
         modules:
             config:
                 Db:
