@@ -46,3 +46,23 @@ env:
                 WebDriver:
                     port: 4444
                     url: 'http://eccube3'
+    chrome:
+        modules:
+            config:
+                Db:
+                    dsn: 'pgsql:host=postgres;dbname=cube3_dev'
+                WebDriver:
+                    host: chrome
+                    browser: chrome
+                    port: 4444
+                    url: 'http://eccube3'
+    phantomjs:
+        modules:
+            config:
+                Db:
+                    dsn: 'pgsql:host=postgres;dbname=cube3_dev'
+                WebDriver:
+                    host: phantomjs
+                    browser: phantomjs
+                    port: 4444
+                    url: 'http://eccube3'
