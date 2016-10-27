@@ -10,11 +10,12 @@ services:
     build:
       context: eccube3
       args:
+        - PGUSER=cube3_dev_user
+        - DBSERVER=postgres
+        - DBPASS=password
+        - AUTH_MAGIC=XjosAXOzO1B3mE0egwQA
         - ECCUBE_BRANCH=master
         - ECCUBE_REPOS=https://github.com/EC-CUBE/ec-cube.git
-    environment:
-      - PGPASSWORD=password
-      - POSTGRES_ENV_POSTGRES_PASSWORD=password
     ports:
       - 80
     links:
@@ -26,6 +27,9 @@ services:
     build:
       context: codeception
       args:
+        - DBSERVER=postgres
+        - DBPASS=password
+        - AUTH_MAGIC=XjosAXOzO1B3mE0egwQA
         - ECCUBE_BRANCH=master
         - ECCUBE_REPOS=https://github.com/EC-CUBE/ec-cube.git
     depends_on:

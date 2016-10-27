@@ -3,14 +3,15 @@
 set -e
 
 host="$1"
-shift
-cmd="$@"
+user="$2"
+pass="$3"
+auth_magic="$4"
 
-export PGPASSWORD=password
+export PGPASSWORD=$pass
 export DBSERVER=$host
-export AUTH_MAGIC=XjosAXOzO1B3mE0egwQA
+export AUTH_MAGIC=$auth_magic
 
-until psql -h "$host" -U "cube3_dev_user" -d "template1" -c '\l'; do
+until psql -h "$host" -U "$user" -d "template1" -c '\l'; do
   >&2 echo "Postgres is unavailable - sleeping"
   sleep 1
 done
