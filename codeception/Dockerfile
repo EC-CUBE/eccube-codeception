@@ -26,9 +26,9 @@ RUN cd /var && \
 
 WORKDIR ${ECCUBE_PATH}
 RUN composer install
-ARG DBSERVER
-ARG DBPASS
-ARG AUTH_MAGIC
+ENV DBSERVER postgres
+ENV DBPASS password
+ENV AUTH_MAGIC XjosAXOzO1B3mE0egwQA
 
 ## create config yaml files
 RUN php /var/www/eccube_install.php pgsql none --skip-createdb --skip-initdb --verbose

@@ -2,22 +2,8 @@
 
 <?php
 
-/*
- * Original https://github.com/Codeception/Codeception/blob/2.2/codecept
- *
- * Docker を使用して codecept run を実行した場合, テスト対象の EC-CUBE が
- * 起動していないとエラーとなってしまう.
- * このため, 本スクリプトと置き換えて, テスト対象の EC-CUBE の起動をチェック
- * する必要がある.
- */
-
-$base_url = getenv('BASE_URL') ? getenv('BASE_URL') : 'http://eccube3/';
-$i = 0;
-echo $base_url;
-while (healthCheck($base_url) === false) {
-    if ($i >= 6) break;
+while (helthCheck() === false) {
     sleep(10);
-    $i++;
 }
 
 /**
@@ -49,8 +35,9 @@ $app->add(new Codeception\Command\DryRun('dry-run'));
 $app->registerCustomCommands();
 $app->run();
 
-function healthCheck($base_url)
+function helthCheck()
 {
+    $base_url = 'http://eccube3/';
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $base_url);
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');

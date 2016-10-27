@@ -2,10 +2,7 @@ FROM php:7-apache
 
 MAINTAINER Kentaro Ohkouchi <nanasess@fsm.ne.jp>
 
-ARG DBSERVER
-ARG PGUSER
-ARG DBPASS
-ARG AUTH_MAGIC
+ENV PGUSER cube3_dev_user
 ENV ECCUBE_PATH /var/www
 
 ARG ECCUBE_REPOS
@@ -26,7 +23,7 @@ COPY config/php.ini ${PHP_INI_DIR}/
 ADD wait-for-postgres.sh /wait-for-postgres.sh
 RUN ["chmod", "+x", "/wait-for-postgres.sh"]
 
-ENTRYPOINT ["/wait-for-postgres.sh", "${DBSERVER}", "${PGUSER}", "${DBPASS}", "${AUTH_MAGIC}"]
+ENTRYPOINT ["/wait-for-postgres.sh", "postgres"]
 
 ## Clone EC-CUBE3
 RUN cd /var && \
