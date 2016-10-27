@@ -26,7 +26,7 @@ COPY config/php.ini ${PHP_INI_DIR}/
 ADD wait-for-postgres.sh /wait-for-postgres.sh
 RUN ["chmod", "+x", "/wait-for-postgres.sh"]
 
-ENTRYPOINT /wait-for-postgres.sh ${DBSERVER} ${PGUSER} ${DBPASS} ${AUTH_MAGIC}
+ENTRYPOINT ["/wait-for-postgres.sh", "${DBSERVER}", "${PGUSER}", "${DBPASS}", "${AUTH_MAGIC}"]
 
 ## Clone EC-CUBE3
 RUN cd /var && \
