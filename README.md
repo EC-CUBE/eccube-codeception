@@ -77,6 +77,21 @@ f5377e65ea82        front_eccube3                              "/wait-for-postgr
 上記の例の場合は、 `vnc://127.0.0.1::32804` へアクセスします。初期パスワードは `secret` です。
 Mac の場合は、 `⌘ + k` で画面共有、 Windows の場合は [TightVNC viewer](http://www14.plala.or.jp/campus-note/vine_linux/server_vnc/tightvnc.html) などを使用すると良いでしょう。
 
+### Chrome や PhantomJS でのテスト
+
+`docker-compose -f` で `docker-compose.<browser>.yml` をオーバーライドすることで、デフォルト以外のブラウザでもテスト可能です。
+この場合、 Codeception の `--env` オプションでもブラウザ種別を指定してください。
+
+*現在のところ、PhantomJS でのテストは JavaScript alert の箇所で失敗してしまいます*
+
+```
+### chrome
+docker-compose -f docker-compose.yml -f docker-compose.chrome.yml --project-name chrome run --rm codecept run -d --env chrome --html report_chrome.html
+
+### PhantomJS
+docker-compose -f docker-compose.yml -f docker-compose.phantomjs.yml --project-name phantomjs run --rm codecept run -d --env phantomjs --html report_phantomjs.html
+```
+
 ## Status
 
     * 2016/10/26 Travis CI にて並列テスト実行環境構築
@@ -87,7 +102,7 @@ Mac の場合は、 `⌘ + k` で画面共有、 Windows の場合は [TightVNC 
 
 ## In near future...
 
-    * 【Acceptance Test】PostgreSQL/MySQL/Firefox/Chrome 各環境の並列テスト実行環境構築
+    * 【Acceptance Test】PostgreSQL/MySQL 各環境の並列テスト実行環境構築
     * 【Acceptance Test】Acceptance Test記述を完了
     * 【Acceptance Test】環境構築用ドキュメント作成
     * 【Deployment - Bootstrapping / Configuration】AWSなど各種クラウド環境へのEC-CUBE3自動デプロイ手法確立

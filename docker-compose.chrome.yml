@@ -1,0 +1,21 @@
+version: "2"
+services:
+  codecept:
+    build:
+      context: codeception
+      args:
+        - ECCUBE_BRANCH=master
+        - ECCUBE_REPOS=https://github.com/EC-CUBE/ec-cube.git
+    depends_on:
+      - chrome
+      - eccube3
+    volumes:
+      - ./tests:/project/tests
+      - ./codeception.yml:/project/codeception.yml
+  chrome:
+    image: selenium/standalone-chrome-debug:2.53.1
+    ports:
+      - 5900
+    dns: 8.8.4.4
+    environment:
+      - no_proxy=localhost

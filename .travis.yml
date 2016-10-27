@@ -7,10 +7,22 @@ services:
 
 env:
   matrix:
-    - TARGET_GROUP=front TARGET_ENV=front DOCKER_COMPOSE_VERSION=1.8.0
-    - TARGET_GROUP=admin01 TARGET_ENV=admin DOCKER_COMPOSE_VERSION=1.8.0
-    - TARGET_GROUP=admin02 TARGET_ENV=admin DOCKER_COMPOSE_VERSION=1.8.0
-    - TARGET_GROUP=admin03 TARGET_ENV=admin DOCKER_COMPOSE_VERSION=1.8.0
+    fast_finish: true
+    include:
+      - BROWSER=firefox TARGET_GROUP=front TARGET_ENV=front DOCKER_COMPOSE_VERSION=1.8.0
+      - BROWSER=firefox TARGET_GROUP=admin01 TARGET_ENV=admin DOCKER_COMPOSE_VERSION=1.8.0
+      - BROWSER=firefox TARGET_GROUP=admin02 TARGET_ENV=admin DOCKER_COMPOSE_VERSION=1.8.0
+      - BROWSER=firefox TARGET_GROUP=admin03 TARGET_ENV=admin DOCKER_COMPOSE_VERSION=1.8.0
+    allow_failures:
+      - BROWSER=chrome TARGET_GROUP=front TARGET_ENV=chrome DOCKER_COMPOSE_VERSION=1.8.0
+      - BROWSER=chrome TARGET_GROUP=admin01 TARGET_ENV=chrome DOCKER_COMPOSE_VERSION=1.8.0
+      - BROWSER=chrome TARGET_GROUP=admin02 TARGET_ENV=chrome DOCKER_COMPOSE_VERSION=1.8.0
+      - BROWSER=chrome TARGET_GROUP=admin03 TARGET_ENV=chrome DOCKER_COMPOSE_VERSION=1.8.0
+      - BROWSER=phantomjs TARGET_GROUP=front TARGET_ENV=phantomjs DOCKER_COMPOSE_VERSION=1.8.0
+      - BROWSER=phantomjs TARGET_GROUP=admin01 TARGET_ENV=phantomjs DOCKER_COMPOSE_VERSION=1.8.0
+      - BROWSER=phantomjs TARGET_GROUP=admin02 TARGET_ENV=phantomjs DOCKER_COMPOSE_VERSION=1.8.0
+      - BROWSER=phantomjs TARGET_GROUP=admin03 TARGET_ENV=phantomjs DOCKER_COMPOSE_VERSION=1.8.0
+
 before_install:
     - sudo apt-get update
     - sudo apt-get -y -q -o Dpkg::Options::="--force-confnew" install docker-engine
@@ -18,6 +30,8 @@ before_install:
     - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
     - chmod +x docker-compose
     - sudo mv docker-compose /usr/local/bin
-    - docker-compose build --no-cache
+    - if [[ $BROWSER = 'firefox' ]]; then docker-compose -f docker-compose.yml --project-name ${BROWSER}_${TARGET_GROUP} build --no-cache ; fi
+    - if [[ $BROWSER != 'firefox' ]]; then docker-compose -f docker-compose.yml -f docker-compose.${BROWSER}.yml --project-name ${BROWSER}_${TARGET_GROUP} build --no-cache ; fi
 script:
-    - docker-compose --project-name ${TARGET_GROUP} run --rm codecept run -d -g ${TARGET_GROUP} --env ${TARGET_ENV}
+    - if [[ $BROWSER = 'firefox' ]]; then docker-compose  -f docker-compose.yml --project-name ${BROWSER}_${TARGET_GROUP} run --rm codecept run -d -g ${TARGET_GROUP} --env ${TARGET_ENV} ; fi
+    - if [[ $BROWSER != 'firefox' ]]; then docker-compose  -f docker-compose.yml -f docker-compose.${BROWSER}.yml --project-name ${BROWSER}_${TARGET_GROUP} run --rm codecept run -d -g ${TARGET_GROUP} --env ${TARGET_ENV} ; fi

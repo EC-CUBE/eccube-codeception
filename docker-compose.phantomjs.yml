@@ -1,0 +1,19 @@
+version: "2"
+services:
+  codecept:
+    build:
+      context: codeception
+      args:
+        - ECCUBE_BRANCH=master
+        - ECCUBE_REPOS=https://github.com/EC-CUBE/ec-cube.git
+    depends_on:
+      - phantomjs
+      - eccube3
+    volumes:
+      - ./tests:/project/tests
+      - ./codeception.yml:/project/codeception.yml
+  phantomjs:
+    image: edvakf/phantomjs-japanese
+    command: --webdriver=0.0.0.0:4444
+    ports:
+      - 5900
