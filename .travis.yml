@@ -21,10 +21,6 @@ env:
 
 matrix:
   fast_finish: true
-    - env: BROWSER=firefox TARGET_GROUP=front TARGET_ENV=front DOCKER_COMPOSE_VERSION=1.8.0
-    - env: BROWSER=firefox TARGET_GROUP=admin01 TARGET_ENV=admin DOCKER_COMPOSE_VERSION=1.8.0
-    - env: BROWSER=firefox TARGET_GROUP=admin02 TARGET_ENV=admin DOCKER_COMPOSE_VERSION=1.8.0
-    - env: BROWSER=firefox TARGET_GROUP=admin03 TARGET_ENV=admin DOCKER_COMPOSE_VERSION=1.8.0
   allow_failures:
     - env: BROWSER=chrome TARGET_GROUP=front TARGET_ENV=chrome DOCKER_COMPOSE_VERSION=1.8.0
     - env: BROWSER=chrome TARGET_GROUP=admin01 TARGET_ENV=chrome DOCKER_COMPOSE_VERSION=1.8.0
