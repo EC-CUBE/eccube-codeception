@@ -125,6 +125,7 @@ class EA07BasicinfoCest
         // 登録
         $I->fillField('#form1 #payment_register_method', 'payment method1');
         $I->fillField('#form1 #payment_register_charge', '100');
+        $I->fillField('#form1 #payment_register_rule_min', '1');
         $I->click('#form1 #aside_column button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->see('payment method1', '#main .container-fluid .table_list table tbody tr td:nth-child(1)');
@@ -253,7 +254,7 @@ class EA07BasicinfoCest
 
         // 登録
         $I->fillField('#form1 #tax_rule_tax_rate', '10');
-        $I->fillField('#form1 #tax_rule_apply_date', date('Y-m-d H:i'));
+        $I->fillField('#form1 #tax_rule_apply_date', date('Y-m-d').' 00:00:00');
         $I->click('#form1 div div div:nth-child(4) button');
         $I->see('税率設定情報を保存しました。', '#main .container-fluid .alert-success');
         $I->see('10%', '#tax_rule_list__tax_rate--2');
@@ -269,13 +270,12 @@ class EA07BasicinfoCest
         // 削除
         $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown a');
         $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown ul li:nth-child(2) a');
-        $I->acceptPopup();
 
         // 個別税率設定
-        $I->selectOption('#form1 div div div:nth-child(1) #tax_rule_option_product_tax_rule input[type=radio]', '有効');
+        $I->selectOption('#form1 #tax_rule_option_product_tax_rule_0', '1'); // 有効
         $I->click('#form1 div div div:nth-child(2) button');
         $I->see('税率設定情報を保存しました。', '#main .container-fluid .alert-success');
-        $value = $I->grabValueFrom('#form1 div div div:nth-child(1) #tax_rule_option_product_tax_rule input[type=radio]');
+        $value = $I->grabValueFrom('#form1 div div div:nth-child(1) #tax_rule_option_product_tax_rule input[type=radio]:checked');
         $I->assertTrue(($value == 1));
     }
 

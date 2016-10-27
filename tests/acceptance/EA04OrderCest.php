@@ -140,7 +140,6 @@ class EA04OrderCest
 
         $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
         $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(3) > a');
-        $I->acceptPopup();
     }
 
     public function order_一括メール通知(\AcceptanceTester $I)

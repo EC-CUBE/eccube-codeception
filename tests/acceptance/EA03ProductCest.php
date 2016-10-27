@@ -191,27 +191,6 @@ class EA03ProductCest
         $I->see('商品規格を更新しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
 
-    public function product_一覧からの商品確認(\AcceptanceTester $I)
-    {
-        $I->wantTo('EA0310-UC05-T01 一覧からの商品確認');
-
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/product');
-        $I->see('商品管理商品マスター', '#main .page-header');
-
-        $I->fillField('#search_form #admin_search_product_id', 'フォーク');
-        $I->click('#search_form button');
-
-        // アイコンクリック
-        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > a');
-        // 確認リンク クリック
-        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > ul > li:nth-child(2) > a');
-
-        /**
-         * 確認をクリックすると、別ウィンドウでフロント側の商品詳細ページが表示される為、phantomjsではハンドリングできない
-         */
-    }
-
     public function product_一覧からの商品複製(\AcceptanceTester $I)
     {
         $I->wantTo('EA0310-UC05-T02 一覧からの商品複製');
@@ -468,5 +447,29 @@ class EA03ProductCest
         // 雛形のダウンロード
         $I->click('#download-button');
         /* ダウンロードファイルの確認は不可*/
+    }
+
+    /**
+     * ATTENTION 後続のテストが失敗するため、最後に実行する
+     */
+    public function product_一覧からの商品確認(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0310-UC05-T01 一覧からの商品確認');
+
+        $config = Fixtures::get('config');
+        $I->amOnPage('/'.$config['admin_route'].'/product');
+        $I->see('商品管理商品マスター', '#main .page-header');
+
+        $I->fillField('#search_form #admin_search_product_id', 'フォーク');
+        $I->click('#search_form button');
+
+        // アイコンクリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > a');
+        // 確認リンク クリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > ul > li:nth-child(2) > a');
+
+        /**
+         * 確認をクリックすると、別ウィンドウでフロント側の商品詳細ページが表示される為、phantomjsではハンドリングできない
+         */
     }
 }

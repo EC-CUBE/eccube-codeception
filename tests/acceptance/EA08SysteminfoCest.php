@@ -3,8 +3,8 @@
 use Codeception\Util\Fixtures;
 
 /**
- * @admin
- * @admin03
+ * @group admin
+ * @group admin03
  * @group systeminformation
  * @group ea8
  */
