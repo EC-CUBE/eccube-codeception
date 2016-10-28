@@ -6,6 +6,7 @@ services:
       args:
         - ECCUBE_BRANCH=master
         - ECCUBE_REPOS=https://github.com/EC-CUBE/ec-cube.git
+        - DBTYPE=pgsql
     depends_on:
       - phantomjs
       - eccube3

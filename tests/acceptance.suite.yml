@@ -13,7 +13,7 @@ modules:
         - Asserts
     config:
         Db:
-            dsn: 'pgsql:host=postgres;dbname=cube3_dev'
+            dsn: 'pgsql:host=db;dbname=cube3_dev'
             user: 'cube3_dev_user'
             password: 'password'
             populate: true
@@ -34,7 +34,7 @@ env:
         modules:
             config:
                 Db:
-                    dsn: 'pgsql:host=postgres;dbname=cube3_dev'
+                    dsn: 'pgsql:host=db;dbname=cube3_dev'
                 WebDriver:
                     port: 4444
                     url: 'http://eccube3'
@@ -42,7 +42,7 @@ env:
         modules:
             config:
                 Db:
-                    dsn: 'pgsql:host=postgres;dbname=cube3_dev'
+                    dsn: 'pgsql:host=db;dbname=cube3_dev'
                 WebDriver:
                     port: 4444
                     url: 'http://eccube3'
@@ -50,7 +50,7 @@ env:
         modules:
             config:
                 Db:
-                    dsn: 'pgsql:host=postgres;dbname=cube3_dev'
+                    dsn: 'pgsql:host=db;dbname=cube3_dev'
                 WebDriver:
                     host: chrome
                     browser: chrome
@@ -60,9 +60,17 @@ env:
         modules:
             config:
                 Db:
-                    dsn: 'pgsql:host=postgres;dbname=cube3_dev'
+                    dsn: 'pgsql:host=db;dbname=cube3_dev'
                 WebDriver:
                     host: phantomjs
                     browser: phantomjs
+                    port: 4444
+                    url: 'http://eccube3'
+    mysql:
+        modules:
+            config:
+                Db:
+                    dsn: 'mysql:host=db;dbname=cube3_dev;charset=utf8'
+                WebDriver:
                     port: 4444
                     url: 'http://eccube3'

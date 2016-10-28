@@ -5,25 +5,26 @@ MAINTAINER Kentaro Ohkouchi <nanasess@fsm.ne.jp>
 ENV PGUSER cube3_dev_user
 ENV ECCUBE_PATH /var/www
 
+ARG DBTYPE
 ARG ECCUBE_REPOS
 ARG ECCUBE_BRANCH
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
-        git curl wget sudo libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libmcrypt-dev libxml2-dev libpq-dev libpq5 postgresql-client \
+        git curl wget sudo libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libmcrypt-dev libxml2-dev libpq-dev libpq5 postgresql-client mysql-client \
         && docker-php-ext-configure \
         gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
         && docker-php-ext-install -j$(nproc) \
-        mbstring zip gd xml pdo pdo_pgsql soap mcrypt \
+        mbstring zip gd xml pdo pdo_pgsql pdo_mysql soap mcrypt \
         && rm -r /var/lib/apt/lists/*
 
 RUN useradd -ms /bin/bash ${PGUSER}
 
 RUN ls -lt ${PHP_INI_DIR}/conf.d/
 COPY config/php.ini ${PHP_INI_DIR}/
-ADD wait-for-postgres.sh /wait-for-postgres.sh
-RUN ["chmod", "+x", "/wait-for-postgres.sh"]
+ADD wait-for-${DBTYPE}.sh /wait-for-db.sh
+RUN chmod +x /wait-for-db.sh
 
-ENTRYPOINT ["/wait-for-postgres.sh", "postgres"]
+ENTRYPOINT /wait-for-db.sh
 
 ## Clone EC-CUBE3
 RUN cd /var && \

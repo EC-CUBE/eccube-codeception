@@ -1,6 +1,6 @@
 version: "2"
 services:
-  postgres:
+  db:
     image: postgres:9.4
     environment:
       - POSTGRES_USER=cube3_dev_user
@@ -12,15 +12,16 @@ services:
       args:
         - ECCUBE_BRANCH=master
         - ECCUBE_REPOS=https://github.com/EC-CUBE/ec-cube.git
+        - DBTYPE=pgsql
     environment:
       - PGPASSWORD=password
       - POSTGRES_ENV_POSTGRES_PASSWORD=password
     ports:
       - 80
     links:
-      - postgres
+      - db
     depends_on:
-      - postgres
+      - db
     restart: unless-stopped
   codecept:
     build:
@@ -28,6 +29,7 @@ services:
       args:
         - ECCUBE_BRANCH=master
         - ECCUBE_REPOS=https://github.com/EC-CUBE/ec-cube.git
+        - DBTYPE=pgsql
     depends_on:
       - firefox
       - eccube3

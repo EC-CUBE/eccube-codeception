@@ -1,0 +1,9 @@
+version: "2"
+services:
+  db:
+    image: mysql:5.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=cube3_dev
+      - MYSQL_USER=cube3_dev_user
+      - MYSQL_PASSWORD=password
