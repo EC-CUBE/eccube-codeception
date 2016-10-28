@@ -34,10 +34,10 @@ matrix:
     - env: BROWSER=phantomjs DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=phantomjs DOCKER_COMPOSE_VERSION=1.8.0
     - env: BROWSER=phantomjs DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=phantomjs DOCKER_COMPOSE_VERSION=1.8.0
     - env: BROWSER=phantomjs DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=phantomjs DOCKER_COMPOSE_VERSION=1.8.0
-    - env: BROWSER=firefox DB=mysql TARGET_GROUP=front TARGET_ENV=front DOCKER_COMPOSE_VERSION=1.8.0
-    - env: BROWSER=firefox DB=mysql TARGET_GROUP=admin01 TARGET_ENV=admin DOCKER_COMPOSE_VERSION=1.8.0
-    - env: BROWSER=firefox DB=mysql TARGET_GROUP=admin02 TARGET_ENV=admin DOCKER_COMPOSE_VERSION=1.8.0
-    - env: BROWSER=firefox DB=mysql TARGET_GROUP=admin03 TARGET_ENV=admin DOCKER_COMPOSE_VERSION=1.8.0
+    - env: BROWSER=firefox DB=mysql TARGET_GROUP=front TARGET_ENV=mysql DOCKER_COMPOSE_VERSION=1.8.0
+    - env: BROWSER=firefox DB=mysql TARGET_GROUP=admin01 TARGET_ENV=mysql DOCKER_COMPOSE_VERSION=1.8.0
+    - env: BROWSER=firefox DB=mysql TARGET_GROUP=admin02 TARGET_ENV=mysql DOCKER_COMPOSE_VERSION=1.8.0
+    - env: BROWSER=firefox DB=mysql TARGET_GROUP=admin03 TARGET_ENV=mysql DOCKER_COMPOSE_VERSION=1.8.0
 
 before_install:
     - sudo apt-get update
@@ -51,5 +51,5 @@ before_install:
     - if [[ $BROWSER != 'firefox' ]]; then docker-compose -f docker-compose.yml -f docker-compose.${BROWSER}.yml --project-name ${BROWSER}_${TARGET_GROUP} build --no-cache ; fi
 script:
     - if [[ $BROWSER = 'firefox' ]] && [[ $DB = 'pgsql' ]]; then docker-compose  -f docker-compose.yml --project-name ${BROWSER}_${TARGET_GROUP} run --rm codecept run -d -g ${TARGET_GROUP} --env ${TARGET_ENV} ; fi
-    - if [[ $BROWSER = 'firefox' ]] && [[ $DB = 'mysql' ]]; then docker-compose  -f docker-compose.yml -f docker-compose.${DB}.yml --project-name ${BROWSER}_${DB}_${TARGET_GROUP} run --rm codecept run -d -g ${TARGET_GROUP} --env ${DB} ; fi
+    - if [[ $BROWSER = 'firefox' ]] && [[ $DB = 'mysql' ]]; then docker-compose  -f docker-compose.yml -f docker-compose.${DB}.yml --project-name ${BROWSER}_${DB}_${TARGET_GROUP} run --rm codecept run -d -g ${TARGET_GROUP} --env ${TARGET_ENV} ; fi
     - if [[ $BROWSER != 'firefox' ]]; then docker-compose  -f docker-compose.yml -f docker-compose.${BROWSER}.yml --project-name ${BROWSER}_${TARGET_GROUP} run --rm codecept run -d -g ${TARGET_GROUP} --env ${TARGET_ENV} ; fi

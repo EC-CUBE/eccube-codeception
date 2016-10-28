@@ -92,6 +92,16 @@ docker-compose -f docker-compose.yml -f docker-compose.chrome.yml --project-name
 docker-compose -f docker-compose.yml -f docker-compose.phantomjs.yml --project-name phantomjs run --rm codecept run -d --env phantomjs --html report_phantomjs.html
 ```
 
+### MySQL でのテスト
+
+`docker-compose -f` で `docker-compose.mysql.yml` をオーバーライドし、 Codeception で `--env mysql` を指定してください。
+*今のところ、 Firefox でのテストのみサポートしています。*
+
+```
+### MySQL
+docker-compose -f docker-compose.yml -f docker-compose.mysql.yml --project-name mysql run --rm codecept run -d --env mysql --html report_mysql.html
+```
+
 ## Status
 
     * 2016/10/26 Travis CI にて並列テスト実行環境構築
@@ -102,7 +112,6 @@ docker-compose -f docker-compose.yml -f docker-compose.phantomjs.yml --project-n
 
 ## In near future...
 
-    * 【Acceptance Test】PostgreSQL/MySQL 各環境の並列テスト実行環境構築
     * 【Acceptance Test】Acceptance Test記述を完了
     * 【Acceptance Test】環境構築用ドキュメント作成
     * 【Deployment - Bootstrapping / Configuration】AWSなど各種クラウド環境へのEC-CUBE3自動デプロイ手法確立
