@@ -74,7 +74,7 @@ f5377e65ea82        front_eccube3                              "/wait-for-postgr
 9f3c7bcc17f9        selenium/standalone-firefox-debug:2.53.1   "/opt/bin/entry_point"   5 minutes ago       Up 5 minutes        4444/tcp, 0.0.0.0:32803->5900/tcp   front_firefox_1
 ```
 
-上記の例の場合は、 `vnc://127.0.0.1::32804` へアクセスします。初期パスワードは `secret` です。
+上記の例の場合は、 `vnc://127.0.0.1::32803` へアクセスします。初期パスワードは `secret` です。
 Mac の場合は、 `⌘ + k` で画面共有、 Windows の場合は [TightVNC viewer](http://www14.plala.or.jp/campus-note/vine_linux/server_vnc/tightvnc.html) などを使用すると良いでしょう。
 
 ### Chrome や PhantomJS でのテスト
