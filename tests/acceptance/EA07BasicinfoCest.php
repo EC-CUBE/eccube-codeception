@@ -1,6 +1,16 @@
 <?php
 
 use Codeception\Util\Fixtures;
+use Page\Admin\CsvSettingsPage;
+use Page\Admin\CustomerAgreementSettingPage;
+use Page\Admin\DeliveryEditPage;
+use Page\Admin\DeliveryManagePage;
+use Page\Admin\MailSettingsPage;
+use Page\Admin\PaymentEditPage;
+use Page\Admin\PaymentManagePage;
+use Page\Admin\ShopSettingPage;
+use Page\Admin\TaxManagePage;
+use Page\Admin\TradelawSettingPage;
 
 /**
  * @group admin
@@ -23,62 +33,50 @@ class EA07BasicinfoCest
     {
         $I->wantTo('EA0701-UC01-T01 ショップマスター');
 
-        // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/shop');
-        $I->see('基本情報設定SHOPマスター', '#main .page-header');
+        ShopSettingPage::go($I)
+            ->入力_会社名('会社名')
+            ->登録();
 
-        // 値変更
-        $I->fillField(['id' => 'shop_master_company_name'], '会社名');
-        $I->click('#point_form #aside_column button');
-        $I->see('基本情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        $I->see('基本情報を保存しました。', ShopSettingPage::$登録完了メッセージ);
     }
 
     public function basicinfo_特定商取引法(\AcceptanceTester $I)
     {
         $I->wantTo('EA0702-UC01-T01 特定商取引法');
 
-        // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/shop/tradelaw');
-        $I->see('ショップ設定特定商取引法', '#main .page-header');
+        TradelawSettingPage::go($I)
+            ->入力_販売業者('販売業者')
+            ->入力_運営責任者('運営責任者')
+            ->入力_郵便番号1('530')
+            ->入力_郵便番号2('0001')
+            ->入力_都道府県('大阪府')
+            ->入力_市区町村名('大阪市北区')
+            ->入力_番地_ビル名('梅田2-4-9 ブリーゼタワー13F')
+            ->入力_電話番号1('111')
+            ->入力_電話番号2('111')
+            ->入力_電話番号3('111')
+            ->入力_Eメール('eccube@ec-cube.net')
+            ->入力_URL('http://www.ec-cube.net')
+            ->入力_商品代金以外の必要料金('term01')
+            ->入力_注文方法('term02')
+            ->入力_支払方法('term03')
+            ->入力_支払期限('term04')
+            ->入力_引き渡し時期('term05')
+            ->入力_返品交換について('term06')
+            ->登録();
 
-        // 値変更
-        $I->fillField(['id' => 'tradelaw_law_company'], '販売業者');
-        $I->fillField(['id' => 'tradelaw_law_manager'], '運営責任者');
-        $I->fillField(['id' => 'tradelaw_law_zip_law_zip01'], '530');
-        $I->fillField(['id' => 'tradelaw_law_zip_law_zip02'], '0001');
-        $I->selectOption(['id' => 'tradelaw_law_address_law_pref'], '大阪府');
-        $I->fillField(['id' => 'tradelaw_law_address_law_addr01'], '大阪市北区');
-        $I->fillField(['id' => 'tradelaw_law_address_law_addr02'], '梅田2-4-9 ブリーゼタワー13F');
-        $I->fillField(['id' => 'tradelaw_law_tel_law_tel01'], '111');
-        $I->fillField(['id' => 'tradelaw_law_tel_law_tel02'], '111');
-        $I->fillField(['id' => 'tradelaw_law_tel_law_tel03'], '111');
-        $I->fillField(['id' => 'tradelaw_law_email'], 'eccube@ec-cube.net');
-        $I->fillField(['id' => 'tradelaw_law_url'], 'http://www.ec-cube.net');
-        $I->fillField(['id' => 'tradelaw_law_term01'], 'term01');
-        $I->fillField(['id' => 'tradelaw_law_term02'], 'term02');
-        $I->fillField(['id' => 'tradelaw_law_term03'], 'term03');
-        $I->fillField(['id' => 'tradelaw_law_term04'], 'term04');
-        $I->fillField(['id' => 'tradelaw_law_term05'], 'term05');
-        $I->fillField(['id' => 'tradelaw_law_term06'], 'term06');
-        $I->click('#tradelaw_form #aside_column button');
-        $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        $I->see('登録が完了しました。', TradelawSettingPage::$登録完了メッセージ);
     }
 
     public function basicinfo_利用規約(\AcceptanceTester $I)
     {
         $I->wantTo('EA0703-UC01-T01 利用規約');
 
-        // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/shop/customer_agreement');
-        $I->see('ショップ設定利用規約管理', '#main .page-header');
+        CustomerAgreementSettingPage::go($I)
+            ->入力_会員規約('会員規約')
+            ->登録();
 
-        // 値変更
-        $I->fillField(['id' => 'customer_agreement_customer_agreement'], '会員規約');
-        $I->click('#form1 #aside_column button');
-        $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        $I->see('登録が完了しました。', CustomerAgreementSettingPage::$登録完了メッセージ);
     }
 
     public function basicinfo_支払方法一覧(\AcceptanceTester $I)
@@ -86,12 +84,10 @@ class EA07BasicinfoCest
         $I->wantTo('EA0704-UC01-T01 支払方法 一覧');
 
         // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/shop/payment');
-        $I->see('ショップ設定支払方法管理', '#main .page-header');
+        $PaymentManagePage = PaymentManagePage::go($I);
 
-        $I->see('支払方法', '#main .container-fluid .box-title');
-        $I->see('郵便振替', '#main .container-fluid .table_list table tbody tr td:nth-child(1)');
+        $I->see('支払方法', PaymentManagePage::$一覧_タイトル);
+        $I->see('郵便振替', $PaymentManagePage->一覧_支払方法(1));
     }
 
     public function basicinfo_支払方法入れ替え(\AcceptanceTester $I)
@@ -99,15 +95,12 @@ class EA07BasicinfoCest
         $I->wantTo('EA0704-UC02-T01 支払方法 入れ替え');
 
         // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/shop/payment');
-        $I->see('ショップ設定支払方法管理', '#main .page-header');
+        $PaymentManagePage = PaymentManagePage::go($I);
 
         // 入れ替え
-        $I->see('郵便振替', '#main .container-fluid .table_list table tbody tr td:nth-child(1)');
-        $I->click('#main .container-fluid .table_list table tbody tr:nth-child(2) td:nth-child(4) a');
-        $I->click('#main .container-fluid .table_list table tbody tr:nth-child(2) td:nth-child(4) ul li:nth-child(4) a'); // 上へ
-        $I->see('ランクの移動が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        $I->see('郵便振替', $PaymentManagePage->一覧_支払方法(1));
+        $PaymentManagePage->一覧_下に(1);
+        $I->see('ランクの移動が完了しました。', PaymentManagePage::$登録完了メッセージ);
     }
 
     public function basicinfo_支払方法登録(\AcceptanceTester $I)
@@ -115,20 +108,20 @@ class EA07BasicinfoCest
         $I->wantTo('EA0705-UC01-T01 支払方法 登録');
 
         // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/shop/payment');
-        $I->see('ショップ設定支払方法管理', '#main .page-header');
-
         // 登録フォーム
-        $I->click('#main .container-fluid div:nth-child(2) .btn_area a');
+        PaymentManagePage::go($I)
+            ->新規入力();
 
         // 登録
-        $I->fillField(['id' => 'payment_register_method'], 'payment method1');
-        $I->fillField(['id' => 'payment_register_charge'], '100');
-        $I->fillField(['id' => 'payment_register_rule_min'], '1');
-        $I->click('#form1 #aside_column button');
-        $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
-        $I->see('payment method1', '#main .container-fluid .table_list table tbody tr td:nth-child(1)');
+        PaymentEditPage::at($I)
+            ->入力_支払方法('payment method1')
+            ->入力_手数料('100')
+            ->入力_利用条件下限('1')
+            ->登録();
+
+        $PaymentManagePage = PaymentManagePage::at($I);
+        $I->see('登録が完了しました。', PaymentManagePage::$登録完了メッセージ);
+        $I->see('payment method1', $PaymentManagePage->一覧_支払方法(1));
     }
 
     public function basicinfo_支払方法編集(\AcceptanceTester $I)
@@ -136,20 +129,18 @@ class EA07BasicinfoCest
         $I->wantTo('EA0705-UC02-T01 支払方法 編集');
 
         // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/shop/payment');
-        $I->see('ショップ設定支払方法管理', '#main .page-header');
-
-        // 編集フォーム
-        $I->click('#main .container-fluid .table_list table tbody tr:nth-child(2) .icon_edit a');
-        $I->click('#main .container-fluid .table_list table tbody tr:nth-child(2) .icon_edit ul li:nth-child(1) a');
+        PaymentManagePage::go($I)
+            ->一覧_編集(1);
 
         // 編集
-        $I->fillField(['id' => 'payment_register_method'], 'payment method2');
-        $I->fillField(['id' => 'payment_register_charge'], '1000');
-        $I->click('#form1 #aside_column button');
-        $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
-        $I->see('payment method2', '#main .container-fluid .table_list table tbody tr td:nth-child(1)');
+        PaymentEditPage::at($I)
+            ->入力_支払方法('payment method2')
+            ->入力_手数料('1000')
+            ->登録();
+
+        $PaymentManagePage = PaymentManagePage::at($I);
+        $I->see('登録が完了しました。', PaymentManagePage::$登録完了メッセージ);
+        $I->see('payment method2', $PaymentManagePage->一覧_支払方法(1));
     }
 
     public function basicinfo_支払方法削除(\AcceptanceTester $I)
@@ -157,13 +148,9 @@ class EA07BasicinfoCest
         $I->wantTo('EA0704-UC03-T01 支払方法 削除');
 
         // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/shop/payment');
-        $I->see('ショップ設定支払方法管理', '#main .page-header');
-
         // 削除
-        $I->click('#main .container-fluid .table_list table tbody tr:nth-child(2) .icon_edit a');
-        $I->click('#main .container-fluid .table_list table tbody tr:nth-child(2) .icon_edit ul li:nth-child(2) a');
+        PaymentManagePage::go($I)
+            ->一覧_削除(1);
         $I->acceptPopup();
     }
 
@@ -172,11 +159,8 @@ class EA07BasicinfoCest
         $I->wantTo('EA0706-UC01-T01 配送方法 一覧');
 
         // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/shop/delivery');
-        $I->see('ショップ設定配送方法管理', '#main .page-header');
+        DeliveryManagePage::go($I);
 
-        $I->see('配送方法一覧', '#main .container-fluid .box-title');
         $I->see('サンプル宅配', '#delivery_list__name--2 a');
     }
 
@@ -185,22 +169,19 @@ class EA07BasicinfoCest
         $I->wantTo('EA0707-UC01-T01 配送方法 登録');
 
         // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/shop/delivery');
-        $I->see('ショップ設定配送方法管理', '#main .page-header');
-
-        // 登録フォーム
-        $I->click('#delivery_list__name--2 > a');
+        DeliveryManagePage::go($I)
+            ->新規登録();
 
         // 登録
-        $I->fillField(['id' => 'delivery_name'], '配送業者名');
-        $I->fillField(['id' => 'delivery_service_name'], '名称');
-        $I->checkOption(['id' => 'delivery_payments_1']);
-        $I->checkOption(['id' => 'delivery_payments_4']);
-        $I->fillField(['id' => 'delivery_free_all'], '100');
-        $I->click('#form1 #set_fee_all');
-        $I->click('#form1 #aside_wrap div:nth-child(2) button');
-        $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        DeliveryEditPage::at($I)
+            ->入力_配送業者名('配送業者名')
+            ->入力_名称('名称')
+            ->入力_支払方法選択(['1', '4'])
+            ->入力_全国一律送料('100')
+            ->登録();
+
+        DeliveryManagePage::at($I);
+        $I->see('登録が完了しました。', DeliveryManagePage::$登録完了メッセージ);
         $I->see('配送業者名', '#delivery_list__name--2 a');
     }
 
@@ -209,18 +190,16 @@ class EA07BasicinfoCest
         $I->wantTo('EA0707-UC02-T01 配送方法 編集');
 
         // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/shop/delivery');
-        $I->see('ショップ設定配送方法管理', '#main .page-header');
-
-        // 編集フォーム
-        $I->click('#main .container-fluid .sortable_list .tableish .item_box:nth-child(1) .icon_edit .dropdown a');
-        $I->click('#main .container-fluid .sortable_list .tableish .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(1) a');
+        DeliveryManagePage::go($I)
+            ->一覧_編集(1);
 
         // 編集
-        $I->fillField(['id' => 'delivery_name'], '配送業者名1');
-        $I->click('#form1 #aside_wrap div:nth-child(2) button');
-        $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        DeliveryEditPage::at($I)
+            ->入力_配送業者名('配送業者名1')
+            ->登録();
+
+        DeliveryManagePage::at($I);
+        $I->see('登録が完了しました。', DeliveryManagePage::$登録完了メッセージ);
         $I->see('配送業者名1', '#main .container-fluid .sortable_list .tableish div:nth-child(1)');
     }
 
@@ -228,14 +207,9 @@ class EA07BasicinfoCest
     {
         $I->wantTo('EA0706-UC03-T01 配送方法 削除');
 
-        // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/shop/delivery');
-        $I->see('ショップ設定配送方法管理', '#main .page-header');
+        DeliveryManagePage::go($I)
+            ->一覧_削除(1);
 
-        // 削除
-        $I->click('#main .container-fluid .sortable_list .tableish .item_box:nth-child(1) .icon_edit .dropdown a');
-        $I->click('#main .container-fluid .sortable_list .tableish .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(2) a');
         $I->acceptPopup();
     }
 
@@ -244,37 +218,37 @@ class EA07BasicinfoCest
         $I->wantTo('EA0708-UC01-T01 税率設定');
 
         // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/shop/tax');
-        $I->see('基本情報設定税率設定', '#main .page-header');
+        $TaxManagePage = TaxManagePage::go($I);
 
         // 一覧
         $I->see('税率一覧', '#form1 div div div:nth-child(5) .box-header h3');
         $I->see('8%', '#tax_rule_list__tax_rate--1');
 
         // 登録
-        $I->fillField(['id' => 'tax_rule_tax_rate'], '10');
-        $I->fillField(['id' => 'tax_rule_apply_date'], date('Y-m-d').' 00:00:00');
-        $I->click('#form1 div div div:nth-child(4) button');
-        $I->see('税率設定情報を保存しました。', '#main .container-fluid .alert-success');
+        $TaxManagePage
+            ->入力_消費税率('10')
+            ->入力_適用日時(date('Y-m-d').' 00:00:00')
+            ->共通税率設定_登録();
         $I->see('10%', '#tax_rule_list__tax_rate--2');
 
         // 編集
-        $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown a');
-        $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown ul li:nth-child(1) a');
-        $I->fillField(['id' => 'tax_rule_tax_rate'], '12');
-        $I->click('#form1 div div div:nth-child(4) button');
-        $I->see('税率設定情報を保存しました。', '#main .container-fluid .alert-success');
+        $TaxManagePage
+            ->一覧_編集(1)
+            ->入力_消費税率(12)
+            ->共通税率設定_登録();
+
+        $I->see('税率設定情報を保存しました。', TaxManagePage::$登録完了メッセージ);
         $I->see('12%', '#tax_rule_list__tax_rate--1');
 
         // 削除
-        $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown a');
-        $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown ul li:nth-child(2) a');
+        $TaxManagePage->一覧_削除(1);
 
         // 個別税率設定
-        $I->selectOption(['id' => 'tax_rule_option_product_tax_rule_0'], '1'); // 有効
-        $I->click('#form1 div div div:nth-child(2) button');
-        $I->see('税率設定情報を保存しました。', '#main .container-fluid .alert-success');
+        $TaxManagePage
+            ->入力_個別税率設定('1')
+            ->個別税率設定_登録();
+
+        $I->see('税率設定情報を保存しました。', TaxManagePage::$登録完了メッセージ);
         $value = $I->grabValueFrom('#form1 div div div:nth-child(1) #tax_rule_option_product_tax_rule input[type=radio]:checked');
         $I->assertTrue(($value == 1));
     }
@@ -284,17 +258,12 @@ class EA07BasicinfoCest
         $I->wantTo('EA0709-UC02-T01  メール設定'); // EA0709-UC01-T01 はメールテンプレート登録機能がないのでテスト不可
 
         // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/shop/mail');
-        $I->see('ショップ設定メール管理', '#main .page-header');
+        MailSettingsPage::go($I)
+            ->入力_テンプレート('ご注文ありがとうございます')
+            ->入力_件名('ご注文有難うございました')
+            ->登録();
 
-        // テンプレートロード
-        $I->selectOption(['id' => 'mail_template'], 'ご注文ありがとうございます');
-
-        // 編集
-        $I->fillField(['id' => 'mail_subject'], 'ご注文有難うございました');
-        $I->click('#form1 #aside_column button');
-        $I->see('メールテンプレート情報を保存しました。', '#main .container-fluid .alert-success');
+        $I->see('メールテンプレート情報を保存しました。', MailSettingsPage::$登録完了メッセージ);
     }
 
     public function basicinfo_CSV出力項目(\AcceptanceTester $I)
@@ -302,17 +271,12 @@ class EA07BasicinfoCest
         $I->wantTo('EA0710-UC01-T01  CSV出力項目設定');
 
         // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/shop/csv');
-        $I->see('システム設定CSV出力項目設定', '#main .page-header');
+        CsvSettingsPage::go($I)
+            ->入力_CSVタイプ('配送CSV')
+            ->選択_出力項目('誕生日')
+            ->削除()
+            ->設定();
 
-        // テンプレートロード
-        $I->selectOption(['id' => 'csv-type'], '配送CSV');
-
-        // 編集
-        $I->selectOption(['id' => 'csv-output'], '誕生日');
-        $I->click('#csv-form #remove');
-        $I->click('#common_button_box__confirm_button button');
-        $I->see('CSV出力を設定しました。', '#main .container-fluid .alert-success');
+        $I->see('CSV出力を設定しました。', CsvSettingsPage::$登録完了メッセージ);
     }
 }

@@ -1,6 +1,14 @@
 <?php
 
 use Codeception\Util\Fixtures;
+use Page\Admin\BlockEditPage;
+use Page\Admin\BlockManagePage;
+use Page\Admin\FileManagePage;
+use Page\Admin\LayoutEditPage;
+use Page\Admin\NewsManagePage;
+use Page\Admin\NewsEditPage;
+use Page\Admin\PageManagePage;
+use Page\Admin\PageEditPage;
 
 /**
  * @group admin
@@ -25,36 +33,31 @@ class EA06ContentsManagementCest
     {
         $I->wantTo('EA0601-UC01-T01(& UC02-T01/UC02-T02/UC03-T01) 新着情報管理（作成・編集・削除）');
 
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/content/news');
-        $I->see('コンテンツ管理新着情報管理', '#main .page-header');
+        NewsManagePage::go($I)->新規登録();
 
-        /* 登録 */
-        $I->click('#main > div > div > div > div.row > div > a');
-        $I->see('新着情報登録・編集', '#aside_wrap > div.col-md-9 > div.box > div > h3');
-        $I->executeJS("$('#admin_news_date').val('".date("Y-m-d")."').change();");
-        $I->fillField(['id' => 'admin_news_title'], 'news_title1');
-        $I->fillField(['id' => 'admin_news_comment'], 'newsnewsnewsnewsnews');
-        $I->click('#aside_column > div > div > div > div > button');
-        $I->see('新着情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        NewsEditPage::of($I)
+            ->入力_日付(date('Y-m-d'))
+            ->入力_タイトル('news_title1')
+            ->入力_本文('newsnewsnewsnewsnews')
+            ->登録();
 
-        /* 編集 */
-        $I->click('#form1 > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
-        $I->click('#form1 > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(1) > a');
-        $I->see('コンテンツ管理新着情報管理', '#main .page-header');
-        $I->fillField(['id' => 'admin_news_title'], 'news_title2');
-        $I->click('#aside_column > div > div > div > div > button');
-        $I->see('新着情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
-        $I->see('news_title2', '#form1 > div > div > table > tbody > tr:nth-child(1) > td:nth-child(3)');
+        $NewsListPage = NewsManagePage::at($I);
+        $I->see('新着情報を保存しました。', NewsManagePage::$登録完了メッセージ);
 
-        /* 上へ下へ */
-        $I->click('#form1 > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
-        $I->click('#form1 > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(3) > a');
-        $I->see('news_title2', '#form1 > div > div > table > tbody > tr:nth-child(2) > td:nth-child(3)');
+        $NewsListPage->一覧_編集(1);
 
-        /* 削除 */
-        $I->click('#form1 > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
-        $I->click('#form1 > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(2) > a');
+        NewsEditPage::of($I)
+            ->入力_タイトル('news_title2')
+            ->登録();
+
+        $NewsListPage = NewsManagePage::at($I);
+        $I->see('新着情報を保存しました。', NewsManagePage::$登録完了メッセージ);
+        $I->see('news_title2', $NewsListPage->一覧_タイトル(1));
+
+        $NewsListPage->一覧_下へ(1);
+        $I->see('news_title2', $NewsListPage->一覧_タイトル(2));
+
+        $NewsListPage->一覧_削除(1);
         $I->acceptPopup();
     }
 
@@ -62,29 +65,21 @@ class EA06ContentsManagementCest
     {
         $I->wantTo('EA0602-UC01-T01(& UC01-T02/UC01-T03/UC01-T04/UC01-T05/UC01-T06/UC01-T07) ファイル管理');
 
+        $FileManagePage = FileManagePage::go($I)
+            ->入力_フォルダ名('folder1')
+            ->フォルダ作成();
+
+        $I->see('folder1', $FileManagePage->ファイル名(1));
+
+        $FileManagePage->一覧_表示(1);
+        $I->see('folder1', $FileManagePage->パンくず(1));
+
         $config = Fixtures::get('config');
         $I->amOnPage('/'.$config['admin_route'].'/content/file_manager');
         $I->see('コンテンツ管理ファイル管理', '#main .page-header');
 
-        /* ファイルのアップロード */
-        /* ファイルダウンロード */
-        /* ファイルの表示 */
-        /* ファイルのファイルの削除 */
-
-        // アップロード・ダウンロードが不可能なのでテスト不可
-
-        /* フォルダ作成 */
-        $I->fillField(['id' => 'form_create_file'], 'folder1');
-        $I->click('#aside_wrap > div.col-md-9 > div > div.box-header.form-horizontal > div.form-group.form-inline > div > a');
-        $I->see('folder1', '#aside_wrap > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(1) > td:nth-child(1)');
-
-        /* フォルダ表示 */
-        $I->click('#aside_wrap > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(1) > td:nth-child(4) > a');
-        $I->see('folder1', '#bread > a:nth-child(3)');
-
-        /* フォルダ削除 */
-        $I->amOnPage('/'.$config['admin_route'].'/content/file_manager');
-        $I->click('#aside_wrap > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(1) > td:nth-child(6) > a');
+        FileManagePage::go($I)
+            ->一覧_削除(1);
         $I->acceptPopup();
     }
 
@@ -92,46 +87,42 @@ class EA06ContentsManagementCest
     {
         $I->wantTo('EA0603-UC01-T01(& UC01-T02/UC01-T03/UC01-T04/UC01-T05) ページ管理');
 
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/content/page');
-        $I->see('コンテンツ管理ページ管理', '#main .page-header');
+        PageManagePage::go($I)->新規入力();
 
         /* 作成 */
-        $I->click('#main > div > div > div > div.row.btn_area2 > div > a');
-        $I->see('ページ詳細編集', '#aside_wrap > div.col-md-9 > div:nth-child(1) > div.box-header > h3');
-        $I->fillField(['id' => 'main_edit_name'], 'page1');
-        $I->fillField(['id' => 'main_edit_url'], 'page1');
-        $I->fillField(['id' => 'main_edit_file_name'], 'page1');
-        $I->fillField(['id' => 'main_edit_tpl_data'], "page1");
-        $I->click('#aside_column > div > div > div > div > button');
-        $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        PageEditPage::at($I)
+            ->入力_名称('page1')
+            ->入力_ファイル名('page1')
+            ->入力_URL('page1')
+            ->入力_内容('page1')
+            ->登録();
+        $I->see('登録が完了しました。', PageEditPage::$登録完了メッセージ);
+
         $I->amOnPage('/user_data/page1');
         $I->see('page1', 'body');
 
         /* 編集 */
-        $I->amOnPage('/'.$config['admin_route'].'/content/page');
-        $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > a');
-        $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > ul > li:nth-child(2) > a');
-        $I->fillField(['id' => 'main_edit_tpl_data'], "{% extends 'default_frame.twig' %}");
-        $I->click('#aside_column > div > div > div > div > button');
-        $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        PageManagePage::go($I)->ページ編集(43);
+        PageEditPage::at($I)
+            ->入力_内容("{% extends 'default_frame.twig' %}")
+            ->登録();
+        $I->see('登録が完了しました。', PageEditPage::$登録完了メッセージ);
+
         $I->amOnPage('/user_data/page1');
+        $config = Fixtures::get('config');
         $I->see($config['shop_name'], '#header > div > div.header_logo_area > h1 > a');
 
         /* レイアウト編集 */
-        $I->amOnPage('/'.$config['admin_route'].'/content/page');
-        $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > a');
-        $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > ul > li:nth-child(1) > a');
+        PageManagePage::go($I)->レイアウト編集(43);
         //$I->dragAndDrop('#position_0 > div:nth-child(1)', '#position_5'); // ちゃんと動かない...ECCUBEが壊れる... ToDo
-        $I->click('#aside_wrap > div.col-md-3 > div > div.box.no-header > div > div > div > button');
-        $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        LayoutEditPage::at($I)->登録();
+
+        $I->see('登録が完了しました。', LayoutEditPage::$登録完了メッセージ);
         $I->amOnPage('/user_data/page1');
         $I->see($config['shop_name'], '#header > div > div.header_logo_area > h1 > a');
 
         /* 削除 */
-        $I->amOnPage('/'.$config['admin_route'].'/content/page');
-        $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > a');
-        $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > ul > li:nth-child(3) > a');
+        PageManagePage::go($I)->削除(43);
         $I->acceptPopup();
     }
 
@@ -139,32 +130,24 @@ class EA06ContentsManagementCest
     {
         $I->wantTo('EA0603-UC01-T01(& UC01-T02/UC01-T03) ブロック管理');
 
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/content/block');
-        $I->see('コンテンツ管理ブロック管理', '#main .page-header');
-
         /* 作成 */
-        $I->click('#content_block_form > div > div > div.row.btn_area2 > div > a');
-        $I->see('ブロック編集', '#aside_wrap > div.col-md-9 > div.box.form-horizontal > div.box-header > h3');
-        $I->fillField(['id' => 'block_name'], 'block1');
-        $I->fillField(['id' => 'block_file_name'], 'block1');
-        $I->fillField(['id' => 'block_block_html'], "<div id='block1'>block1</div>");
-        $I->click('#aside_column > div > div > div > div > button');
-        $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        BlockManagePage::go($I)->新規入力();
+        BlockEditPage::at($I)
+            ->入力_ブロック名('block1')
+            ->入力_ファイル名('block1')
+            ->入力_データ("<div id='block1'>block1</div>")
+            ->登録();
+        $I->see('登録が完了しました。', BlockEditPage::$登録完了メッセージ);
 
         /* 編集 */
-        $I->amOnPage('/'.$config['admin_route'].'/content/block');
-        $I->click('#content_block_form > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(1) > div.icon_edit.td > div > a');
-        $I->click('#content_block_form > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(1) > div.icon_edit.td > div > ul > li:nth-child(1) > a');
-        $I->see('ブロック編集', '#aside_wrap > div.col-md-9 > div.box.form-horizontal > div.box-header > h3');
-        $I->fillField(['id' => 'block_block_html'], "<div id='block1'>welcome</div>");
-        $I->click('#aside_column > div > div > div > div > button');
-        $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        BlockManagePage::go($I)->編集(1);
+        BlockEditPage::at($I)
+            ->入力_データ("<div id='block1'>welcome</div>")
+            ->登録();
+        $I->see('登録が完了しました。', BlockEditPage::$登録完了メッセージ);
 
         /* 削除 */
-        $I->amOnPage('/'.$config['admin_route'].'/content/block');
-        $I->click('#content_block_form > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(1) > div.icon_edit.td > div > a');
-        $I->click('#content_block_form > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(1) > div.icon_edit.td > div > ul > li:nth-child(2) > a');
+        BlockManagePage::go($I)->削除(1);
         $I->acceptPopup();
     }
 }
