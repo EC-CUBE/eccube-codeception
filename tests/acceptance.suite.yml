@@ -30,47 +30,22 @@ modules:
                 unexpectedAlertBehaviour: 'accept'
 
 env:
-    admin:
-        modules:
-            config:
-                Db:
-                    dsn: 'pgsql:host=db;dbname=cube3_dev'
-                WebDriver:
-                    port: 4444
-                    url: 'http://eccube3'
-    front:
-        modules:
-            config:
-                Db:
-                    dsn: 'pgsql:host=db;dbname=cube3_dev'
-                WebDriver:
-                    port: 4444
-                    url: 'http://eccube3'
+    admin: # Backward compatibility
+    front: # Backward compatibility
     chrome:
         modules:
             config:
-                Db:
-                    dsn: 'pgsql:host=db;dbname=cube3_dev'
                 WebDriver:
                     host: chrome
                     browser: chrome
-                    port: 4444
-                    url: 'http://eccube3'
     phantomjs:
         modules:
             config:
-                Db:
-                    dsn: 'pgsql:host=db;dbname=cube3_dev'
                 WebDriver:
                     host: phantomjs
                     browser: phantomjs
-                    port: 4444
-                    url: 'http://eccube3'
     mysql:
         modules:
             config:
                 Db:
                     dsn: 'mysql:host=db;dbname=cube3_dev;charset=utf8'
-                WebDriver:
-                    port: 4444
-                    url: 'http://eccube3'
