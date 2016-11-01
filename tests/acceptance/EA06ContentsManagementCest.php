@@ -33,8 +33,8 @@ class EA06ContentsManagementCest
         $I->click('#main > div > div > div > div.row > div > a');
         $I->see('新着情報登録・編集', '#aside_wrap > div.col-md-9 > div.box > div > h3');
         $I->executeJS("$('#admin_news_date').val('".date("Y-m-d")."').change();");
-        $I->fillField('#admin_news_title', 'news_title1');
-        $I->fillField('#admin_news_comment', 'newsnewsnewsnewsnews');
+        $I->fillField(['id' => 'admin_news_title'], 'news_title1');
+        $I->fillField(['id' => 'admin_news_comment'], 'newsnewsnewsnewsnews');
         $I->click('#aside_column > div > div > div > div > button');
         $I->see('新着情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
 
@@ -42,7 +42,7 @@ class EA06ContentsManagementCest
         $I->click('#form1 > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
         $I->click('#form1 > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(1) > a');
         $I->see('コンテンツ管理新着情報管理', '#main .page-header');
-        $I->fillField('#admin_news_title', 'news_title2');
+        $I->fillField(['id' => 'admin_news_title'], 'news_title2');
         $I->click('#aside_column > div > div > div > div > button');
         $I->see('新着情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->see('news_title2', '#form1 > div > div > table > tbody > tr:nth-child(1) > td:nth-child(3)');
@@ -74,7 +74,7 @@ class EA06ContentsManagementCest
         // アップロード・ダウンロードが不可能なのでテスト不可
 
         /* フォルダ作成 */
-        $I->fillField('#form_create_file', 'folder1');
+        $I->fillField(['id' => 'form_create_file'], 'folder1');
         $I->click('#aside_wrap > div.col-md-9 > div > div.box-header.form-horizontal > div.form-group.form-inline > div > a');
         $I->see('folder1', '#aside_wrap > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(1) > td:nth-child(1)');
 
@@ -99,10 +99,10 @@ class EA06ContentsManagementCest
         /* 作成 */
         $I->click('#main > div > div > div > div.row.btn_area2 > div > a');
         $I->see('ページ詳細編集', '#aside_wrap > div.col-md-9 > div:nth-child(1) > div.box-header > h3');
-        $I->fillField('#main_edit_name', 'page1');
-        $I->fillField('#main_edit_url', 'page1');
-        $I->fillField('#main_edit_file_name', 'page1');
-        $I->fillField('#main_edit_tpl_data', "page1");
+        $I->fillField(['id' => 'main_edit_name'], 'page1');
+        $I->fillField(['id' => 'main_edit_url'], 'page1');
+        $I->fillField(['id' => 'main_edit_file_name'], 'page1');
+        $I->fillField(['id' => 'main_edit_tpl_data'], "page1");
         $I->click('#aside_column > div > div > div > div > button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->amOnPage('/user_data/page1');
@@ -112,7 +112,7 @@ class EA06ContentsManagementCest
         $I->amOnPage('/'.$config['admin_route'].'/content/page');
         $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > a');
         $I->click('#sortable_list_box__item--45 > div.icon_edit.td > div > ul > li:nth-child(2) > a');
-        $I->fillField('#main_edit_tpl_data', "{% extends 'default_frame.twig' %}");
+        $I->fillField(['id' => 'main_edit_tpl_data'], "{% extends 'default_frame.twig' %}");
         $I->click('#aside_column > div > div > div > div > button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->amOnPage('/user_data/page1');
@@ -146,9 +146,9 @@ class EA06ContentsManagementCest
         /* 作成 */
         $I->click('#content_block_form > div > div > div.row.btn_area2 > div > a');
         $I->see('ブロック編集', '#aside_wrap > div.col-md-9 > div.box.form-horizontal > div.box-header > h3');
-        $I->fillField('#block_name', 'block1');
-        $I->fillField('#block_file_name', 'block1');
-        $I->fillField('#block_block_html', "<div id='block1'>block1</div>");
+        $I->fillField(['id' => 'block_name'], 'block1');
+        $I->fillField(['id' => 'block_file_name'], 'block1');
+        $I->fillField(['id' => 'block_block_html'], "<div id='block1'>block1</div>");
         $I->click('#aside_column > div > div > div > div > button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
 
@@ -157,7 +157,7 @@ class EA06ContentsManagementCest
         $I->click('#content_block_form > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(1) > div.icon_edit.td > div > a');
         $I->click('#content_block_form > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(1) > div.icon_edit.td > div > ul > li:nth-child(1) > a');
         $I->see('ブロック編集', '#aside_wrap > div.col-md-9 > div.box.form-horizontal > div.box-header > h3');
-        $I->fillField('#block_block_html', "<div id='block1'>welcome</div>");
+        $I->fillField(['id' => 'block_block_html'], "<div id='block1'>welcome</div>");
         $I->click('#aside_column > div > div > div > div > button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
 

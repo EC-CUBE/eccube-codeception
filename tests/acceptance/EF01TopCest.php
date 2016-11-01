@@ -124,7 +124,7 @@ class EF01TopCest
         $I->amOnPage('/');
 
         // カテゴリを選択する
-        $I->selectOption('#searchform #category_id', '調理器具');
+        $I->selectOption(['id' => 'category_id'], '調理器具');
 
         // 虫眼鏡ボタンを押下する
         $I->click('#searchform .bt_search');
@@ -143,7 +143,7 @@ class EF01TopCest
         $I->amOnPage('/');
 
         // キーワードを入力する
-        $I->fillField('#searchform #name', 'フォーク');
+        $I->fillField(['id' => 'name'], 'フォーク');
 
         // 虫眼鏡ボタンを押下する
         $I->click('#searchform .bt_search');

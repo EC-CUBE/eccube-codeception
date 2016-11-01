@@ -29,7 +29,7 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product');
         $I->see('商品管理商品マスター', '#main .page-header');
 
-        $I->fillField('#search_form #admin_search_product_id', 'フォーク');
+        $I->fillField(['id' => 'admin_search_product_id'], 'フォーク');
         $I->click('#search_form button');
 
         $I->see("検索結果 1 件 が該当しました", "#main .container-fluid .box .box-title");
@@ -44,7 +44,7 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product');
         $I->see('商品管理商品マスター', '#main .page-header');
 
-        $I->fillField('#search_form #admin_search_product_id', 'お箸');
+        $I->fillField(['id' => 'admin_search_product_id'], 'お箸');
         $I->click('#search_form button');
 
         $I->see("検索条件に該当するデータがありませんでした。", "#main .container-fluid .box .box-title");
@@ -84,7 +84,7 @@ class EA03ProductCest
         $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > ul > li:nth-child(2) > a');
 
         $I->see('システム設定CSV出力項目設定', '#main .page-header');
-        $value = $I->grabValueFrom('#csv-form #csv-type');
+        $value = $I->grabValueFrom(['id' => 'csv-type']);
         $I->assertEquals('1', $value);
     }
 
@@ -96,7 +96,7 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product');
         $I->see('商品管理商品マスター', '#main .page-header');
 
-        $I->fillField('#search_form #admin_search_product_id', '規格なし商品');
+        $I->fillField(['id' => 'admin_search_product_id'], '規格なし商品');
         $I->click('#search_form button');
 
         // 規格アイコン クリック
@@ -120,7 +120,7 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product');
         $I->see('商品管理商品マスター', '#main .page-header');
 
-        $I->fillField('#search_form #admin_search_product_id', '規格なし商品');
+        $I->fillField(['id' => 'admin_search_product_id'], '規格なし商品');
         $I->click('#search_form button');
 
         // 規格アイコン クリック
@@ -130,13 +130,13 @@ class EA03ProductCest
 
         $I->see('商品管理商品登録(商品規格)', '#main .page-header');
 
-        $I->selectOption('#form_class_name1', '材質');
+        $I->selectOption(['id' => 'form_class_name1'], '材質');
         $I->click('#main > div > div > div > form > div > div.box-body > button');
 
         $I->see('検索結果 3 件 が該当しました', '#product-class-form > div:nth-child(2) > div > div > div.box-header > h3');
-        $I->checkOption('#form_product_classes_0_add');
-        $I->checkOption('#form_product_classes_1_add');
-        $I->checkOption('#form_product_classes_2_add');
+        $I->checkOption(['id' => 'form_product_classes_0_add']);
+        $I->checkOption(['id' => 'form_product_classes_1_add']);
+        $I->checkOption(['id' => 'form_product_classes_2_add']);
 
         /**
         ボタン押した後POSTされるが、POST処理後同ページにredirectしており、結果をcodeceptionでハンドリングできない...
@@ -154,7 +154,7 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product');
         $I->see('商品管理商品マスター', '#main .page-header');
 
-        $I->fillField('#search_form #admin_search_product_id', 'フォーク');
+        $I->fillField(['id' => 'admin_search_product_id'], 'フォーク');
         $I->click('#search_form button');
 
         // 規格アイコン クリック
@@ -177,7 +177,7 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product');
         $I->see('商品管理商品マスター', '#main .page-header');
 
-        $I->fillField('#search_form #admin_search_product_id', 'フォーク');
+        $I->fillField(['id' => 'admin_search_product_id'], 'フォーク');
         $I->click('#search_form button');
 
         // 規格アイコン クリック
@@ -199,7 +199,7 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product');
         $I->see('商品管理商品マスター', '#main .page-header');
 
-        $I->fillField('#search_form #admin_search_product_id', 'フォーク');
+        $I->fillField(['id' => 'admin_search_product_id'], 'フォーク');
         $I->click('#search_form button');
 
         // アイコンクリック
@@ -217,8 +217,8 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product/product/new');
         $I->see('商品管理商品登録', '#main .page-header');
 
-        $I->fillField('#form1 #admin_product_name', 'test product1');
-        $I->fillField('#form1 #admin_product_class_price02', '1000');
+        $I->fillField(['id' => 'admin_product_name'], 'test product1');
+        $I->fillField(['id' => 'admin_product_class_price02'], '1000');
         $I->click('#form1 #aside_column button:nth-child(1)');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
@@ -231,9 +231,9 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product/product/new');
         $I->see('商品管理商品登録', '#main .page-header');
 
-        $I->fillField('#form1 #admin_product_name', 'test product2');
-        $I->fillField('#form1 #admin_product_class_price02', '1000');
-        $I->selectOption('#form1 #admin_product_Status input[type=radio]', '公開');
+        $I->fillField(['id' => 'admin_product_name'], 'test product2');
+        $I->fillField(['id' => 'admin_product_class_price02'], '1000');
+        $I->selectOption(['id' => 'admin_product_Status_1'], '公開');
         $I->click('#form1 #aside_column button:nth-child(1)');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
@@ -246,13 +246,13 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product');
         $I->see('商品管理商品マスター', '#main .page-header');
 
-        $I->fillField('#search_form #admin_search_product_id', 'test product1');
+        $I->fillField(['id' => 'admin_search_product_id'], 'test product1');
         $I->click('#search_form button');
 
         $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(3) > a');
 
         $I->see('商品管理商品登録', '#main .page-header');
-        $I->fillField('#form1 #admin_product_name', 'test product11');
+        $I->fillField(['id' => 'admin_product_name'], 'test product11');
         $I->click('#form1 #aside_column button:nth-child(1)');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
@@ -274,7 +274,7 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product');
         $I->see('商品管理商品マスター', '#main .page-header');
 
-        $I->fillField('#search_form #admin_search_product_id', 'test product2');
+        $I->fillField(['id' => 'admin_search_product_id'], 'test product2');
         $I->click('#search_form button');
 
         // アイコンクリック
@@ -293,7 +293,7 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product/class_name');
         $I->see('商品管理規格編集', '#main .page-header');
 
-        $I->fillField('#admin_class_name_name', 'test class1');
+        $I->fillField(['id' => 'admin_class_name_name'], 'test class1');
         $I->click('#form1 > div > div > button');
 
         $I->see('規格を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
@@ -314,7 +314,7 @@ class EA03ProductCest
 
         $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown a');
         $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(2) a');
-        $value = $I->grabValueFrom('#admin_class_name_name');
+        $value = $I->grabValueFrom(['id' => 'admin_class_name_name']);
         $I->assertEquals('test class1', $value);
         $I->click('#form1 > div > div > button');
 
@@ -343,7 +343,7 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product/class_name');
         $I->see('商品管理規格編集', '#main .page-header');
 
-        $I->fillField('#admin_class_name_name', 'test class2');
+        $I->fillField(['id' => 'admin_class_name_name'], 'test class2');
         $I->click('#form1 > div > div > button');
         $I->see('規格を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
 
@@ -351,14 +351,14 @@ class EA03ProductCest
         $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(1) a');
         $I->see('規格名： test class2', '#main > div > div:nth-child(1) > div > div > div.box-header > h3');
 
-        $I->fillField('#admin_class_category_name', 'test class2 category1');
+        $I->fillField(['id' => 'admin_class_category_name'], 'test class2 category1');
         $I->click('#form1 > div > div > button');
 
         $I->see('分類を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
 
         $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown a');
         $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(1) a');
-        $value = $I->grabValueFrom('#admin_class_category_name');
+        $value = $I->grabValueFrom(['id' => 'admin_class_category_name']);
         $I->assertEquals('test class2 category1', $value);
         $I->click('#form1 > div > div > button');
 
@@ -377,7 +377,7 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product/category');
         $I->see('商品管理カテゴリ編集', '#main .page-header');
 
-        $I->fillField('#admin_category_name', 'test category1');
+        $I->fillField(['id' => 'admin_category_name'], 'test category1');
         $I->click('#form1 > div > div > button');
         $I->see('カテゴリを保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
 
@@ -385,7 +385,7 @@ class EA03ProductCest
         $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(1) a');
         $I->see('test category1', '#main > div > div > div.col-md-9 > div > div.box-header > div > a:nth-child(3)');
 
-        $I->fillField('#admin_category_name', 'test category11');
+        $I->fillField(['id' => 'admin_category_name'], 'test category11');
         $I->click('#form1 > div > div > button');
         $I->see('カテゴリを保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
 
@@ -404,7 +404,7 @@ class EA03ProductCest
         $I->click('#main > div > div > div.col-md-9 > div > div:nth-child(2) > div > div.dl_dropdown.col-md-3 > div > a');
         $I->click('#main > div > div > div.col-md-9 > div > div:nth-child(2) > div > div.dl_dropdown.col-md-3 > div > ul > li:nth-child(2) > a');
         $I->see('システム設定CSV出力項目設定', '#main .page-header');
-        $value = $I->grabValueFrom('#csv-form #csv-type');
+        $value = $I->grabValueFrom(['id' => 'csv-type']);
         $I->assertEquals('5', $value);
 
         // サブカテゴリ EA0305-UC01-03 & UC01-04
@@ -414,7 +414,7 @@ class EA03ProductCest
         $I->click('#main > div > div > div.col-md-9 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(1) > div.item_pattern.td > a');
         $I->see('test category11', '#main > div > div > div.col-md-9 > div > div.box-header > div > a:nth-child(3)');
 
-        $I->fillField('#admin_category_name', 'test category11-1');
+        $I->fillField(['id' => 'admin_category_name'], 'test category11-1');
         $I->click('#form1 > div > div > button');
         $I->see('カテゴリを保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
@@ -460,7 +460,7 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product');
         $I->see('商品管理商品マスター', '#main .page-header');
 
-        $I->fillField('#search_form #admin_search_product_id', 'フォーク');
+        $I->fillField(['id' => 'admin_search_product_id'], 'フォーク');
         $I->click('#search_form button');
 
         // アイコンクリック
