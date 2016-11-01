@@ -131,7 +131,7 @@ class AcceptanceTester extends \Codeception\Actor
     public function buyThis($num = 1)
     {
         $I = $this;
-        $I->fillField("#form1 #quantity", $num);
+        $I->fillField(['id' => "quantity"], $num);
         $I->click('#form1 .btn_area button');
     }
 
