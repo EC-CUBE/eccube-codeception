@@ -347,6 +347,7 @@ class EA03ProductCest
         // サブカテゴリ EA0305-UC01-03 & UC01-04
         $CategoryPage = CategoryManagePage::go($I)
             ->一覧_選択(1);
+
         $I->see('test category11', CategoryManagePage::$パンくず_1階層);
 
         $CategoryPage
