@@ -43,19 +43,19 @@ class EA01TopCest
         // 入金待ちをクリックすると「受注管理＞入金待ち」のページに遷移することを確認
         $I->click('#order_info .link_list .tableish a:nth-child(2)');
         $I->see('受注マスター', '#main .page-header');
-        $I->seeInField('#search_form #admin_search_order_status', '2'/*入金待ち*/);
+        $I->seeInField(['id' => 'admin_search_order_status'], '2'/*入金待ち*/);
         $I->goToAdminPage();
 
         // 入金済みをクリックすると「受注管理＞入金済み」のページに遷移することを確認
         $I->click('#order_info .link_list .tableish a:nth-child(3)');
         $I->see('受注マスター', '#main .page-header');
-        $I->seeInField('#search_form #admin_search_order_status', '6'/*入金済み*/);
+        $I->seeInField(['id' => 'admin_search_order_status'], '6'/*入金済み*/);
         $I->goToAdminPage();
 
         // 取り寄せ中をクリックすると「受注管理＞取り寄せ」のページに遷移することを確認
         $I->click('#order_info .link_list .tableish a:nth-child(4)');
         $I->see('受注マスター', '#main .page-header');
-        $I->seeInField('#search_form #admin_search_order_status', '4'/*取り寄せ中*/);
+        $I->seeInField(['id' => 'admin_search_order_status'], '4'/*取り寄せ中*/);
         $I->goToAdminPage();
 
         // お知らせの記事をクリックすると設定されたURLに遷移することを確認
@@ -75,7 +75,7 @@ class EA01TopCest
         // ショップ情報の会員数をクリックすると会員管理に遷移することを確認
         $I->click('#shop_info .link_list .tableish a:nth-child(2)');
         $I->see('会員マスター', '#main .page-header');
-        $I->dontSeeCheckboxIsChecked('#search_form #admin_search_customer_customer_status_0');
-        $I->seeCheckboxIsChecked('#search_form #admin_search_customer_customer_status_1');
+        $I->dontSeeCheckboxIsChecked(['id' => 'admin_search_customer_customer_status_0']);
+        $I->seeCheckboxIsChecked(['id' => 'admin_search_customer_customer_status_1']);
     }
 }
