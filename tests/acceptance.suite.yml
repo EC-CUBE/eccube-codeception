@@ -28,6 +28,28 @@ modules:
                 unexpectedAlertBehaviour: 'accept'
 
 env:
+    default:
+        modules:
+            config:
+                WebDriver:
+                    browser: firefox
+                Db:
+                    dsn: 'pgsql:host=db;dbname=cube3_dev'
+
+    front: # Backward compatibility
+        modules:
+            config:
+                WebDriver:
+                    browser: firefox
+                Db:
+                    dsn: 'pgsql:host=db;dbname=cube3_dev'
+    admin: # Backward compatibility
+        modules:
+            config:
+                WebDriver:
+                    browser: firefox
+                Db:
+                    dsn: 'pgsql:host=db;dbname=cube3_dev'
     firefox:
         modules:
             config:
