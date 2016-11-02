@@ -1,7 +1,7 @@
 version: "2"
 services:
   db:
-    image: postgres:latest
+    image: nanasess/postgres84
     environment:
       - POSTGRES_USER=cube3_dev_user
       - POSTGRES_PASSWORD=password
