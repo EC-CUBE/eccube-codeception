@@ -117,7 +117,7 @@ class EF05MypageCest
         $I->click('#main_middle .local_nav ul li:nth-child(3) a');
 
         // 会員情報フォームに既存の登録情報が表示される
-        $I->seeInField('#main_middle form #entry_name_name01', $customer->getName01());
+        $I->seeInField(['id' => 'entry_name_name01'], $customer->getName01());
 
         // 会員情報フォームに会員情報を入力する
         $I->submitForm("#main_middle form",[

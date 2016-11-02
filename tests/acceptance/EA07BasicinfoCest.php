@@ -29,7 +29,7 @@ class EA07BasicinfoCest
         $I->see('基本情報設定SHOPマスター', '#main .page-header');
 
         // 値変更
-        $I->fillField('#point_form #shop_master_company_name', '会社名');
+        $I->fillField(['id' => 'shop_master_company_name'], '会社名');
         $I->click('#point_form #aside_column button');
         $I->see('基本情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
@@ -44,24 +44,24 @@ class EA07BasicinfoCest
         $I->see('ショップ設定特定商取引法', '#main .page-header');
 
         // 値変更
-        $I->fillField('#tradelaw_form #tradelaw_law_company', '販売業者');
-        $I->fillField('#tradelaw_form #tradelaw_law_manager', '運営責任者');
-        $I->fillField('#tradelaw_form #tradelaw_law_zip_law_zip01', '530');
-        $I->fillField('#tradelaw_form #tradelaw_law_zip_law_zip02', '0001');
-        $I->selectOption('#tradelaw_form #tradelaw_law_address_law_pref', '大阪府');
-        $I->fillField('#tradelaw_form #tradelaw_law_address_law_addr01', '大阪市北区');
-        $I->fillField('#tradelaw_form #tradelaw_law_address_law_addr02', '梅田2-4-9 ブリーゼタワー13F');
-        $I->fillField('#tradelaw_form #tradelaw_law_tel_law_tel01', '111');
-        $I->fillField('#tradelaw_form #tradelaw_law_tel_law_tel02', '111');
-        $I->fillField('#tradelaw_form #tradelaw_law_tel_law_tel03', '111');
-        $I->fillField('#tradelaw_form #tradelaw_law_email', 'eccube@ec-cube.net');
-        $I->fillField('#tradelaw_form #tradelaw_law_url', 'http://www.ec-cube.net');
-        $I->fillField('#tradelaw_form #tradelaw_law_term01', 'term01');
-        $I->fillField('#tradelaw_form #tradelaw_law_term02', 'term02');
-        $I->fillField('#tradelaw_form #tradelaw_law_term03', 'term03');
-        $I->fillField('#tradelaw_form #tradelaw_law_term04', 'term04');
-        $I->fillField('#tradelaw_form #tradelaw_law_term05', 'term05');
-        $I->fillField('#tradelaw_form #tradelaw_law_term06', 'term06');
+        $I->fillField(['id' => 'tradelaw_law_company'], '販売業者');
+        $I->fillField(['id' => 'tradelaw_law_manager'], '運営責任者');
+        $I->fillField(['id' => 'tradelaw_law_zip_law_zip01'], '530');
+        $I->fillField(['id' => 'tradelaw_law_zip_law_zip02'], '0001');
+        $I->selectOption(['id' => 'tradelaw_law_address_law_pref'], '大阪府');
+        $I->fillField(['id' => 'tradelaw_law_address_law_addr01'], '大阪市北区');
+        $I->fillField(['id' => 'tradelaw_law_address_law_addr02'], '梅田2-4-9 ブリーゼタワー13F');
+        $I->fillField(['id' => 'tradelaw_law_tel_law_tel01'], '111');
+        $I->fillField(['id' => 'tradelaw_law_tel_law_tel02'], '111');
+        $I->fillField(['id' => 'tradelaw_law_tel_law_tel03'], '111');
+        $I->fillField(['id' => 'tradelaw_law_email'], 'eccube@ec-cube.net');
+        $I->fillField(['id' => 'tradelaw_law_url'], 'http://www.ec-cube.net');
+        $I->fillField(['id' => 'tradelaw_law_term01'], 'term01');
+        $I->fillField(['id' => 'tradelaw_law_term02'], 'term02');
+        $I->fillField(['id' => 'tradelaw_law_term03'], 'term03');
+        $I->fillField(['id' => 'tradelaw_law_term04'], 'term04');
+        $I->fillField(['id' => 'tradelaw_law_term05'], 'term05');
+        $I->fillField(['id' => 'tradelaw_law_term06'], 'term06');
         $I->click('#tradelaw_form #aside_column button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
@@ -76,7 +76,7 @@ class EA07BasicinfoCest
         $I->see('ショップ設定利用規約管理', '#main .page-header');
 
         // 値変更
-        $I->fillField('#form1 #customer_agreement_customer_agreement', '会員規約');
+        $I->fillField(['id' => 'customer_agreement_customer_agreement'], '会員規約');
         $I->click('#form1 #aside_column button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
     }
@@ -123,9 +123,9 @@ class EA07BasicinfoCest
         $I->click('#main .container-fluid div:nth-child(2) .btn_area a');
 
         // 登録
-        $I->fillField('#form1 #payment_register_method', 'payment method1');
-        $I->fillField('#form1 #payment_register_charge', '100');
-        $I->fillField('#form1 #payment_register_rule_min', '1');
+        $I->fillField(['id' => 'payment_register_method'], 'payment method1');
+        $I->fillField(['id' => 'payment_register_charge'], '100');
+        $I->fillField(['id' => 'payment_register_rule_min'], '1');
         $I->click('#form1 #aside_column button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->see('payment method1', '#main .container-fluid .table_list table tbody tr td:nth-child(1)');
@@ -145,8 +145,8 @@ class EA07BasicinfoCest
         $I->click('#main .container-fluid .table_list table tbody tr:nth-child(2) .icon_edit ul li:nth-child(1) a');
 
         // 編集
-        $I->fillField('#form1 #payment_register_method', 'payment method2');
-        $I->fillField('#form1 #payment_register_charge', '1000');
+        $I->fillField(['id' => 'payment_register_method'], 'payment method2');
+        $I->fillField(['id' => 'payment_register_charge'], '1000');
         $I->click('#form1 #aside_column button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->see('payment method2', '#main .container-fluid .table_list table tbody tr td:nth-child(1)');
@@ -193,11 +193,11 @@ class EA07BasicinfoCest
         $I->click('#delivery_list__name--2 > a');
 
         // 登録
-        $I->fillField('#form1 #delivery_name', '配送業者名');
-        $I->fillField('#form1 #delivery_service_name', '名称');
-        $I->checkOption('#form1 #delivery_payments_1');
-        $I->checkOption('#form1 #delivery_payments_4');
-        $I->fillField('#form1 #delivery_free_all', '100');
+        $I->fillField(['id' => 'delivery_name'], '配送業者名');
+        $I->fillField(['id' => 'delivery_service_name'], '名称');
+        $I->checkOption(['id' => 'delivery_payments_1']);
+        $I->checkOption(['id' => 'delivery_payments_4']);
+        $I->fillField(['id' => 'delivery_free_all'], '100');
         $I->click('#form1 #set_fee_all');
         $I->click('#form1 #aside_wrap div:nth-child(2) button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
@@ -218,7 +218,7 @@ class EA07BasicinfoCest
         $I->click('#main .container-fluid .sortable_list .tableish .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(1) a');
 
         // 編集
-        $I->fillField('#form1 #delivery_name', '配送業者名1');
+        $I->fillField(['id' => 'delivery_name'], '配送業者名1');
         $I->click('#form1 #aside_wrap div:nth-child(2) button');
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->see('配送業者名1', '#main .container-fluid .sortable_list .tableish div:nth-child(1)');
@@ -253,8 +253,8 @@ class EA07BasicinfoCest
         $I->see('8%', '#tax_rule_list__tax_rate--1');
 
         // 登録
-        $I->fillField('#form1 #tax_rule_tax_rate', '10');
-        $I->fillField('#form1 #tax_rule_apply_date', date('Y-m-d').' 00:00:00');
+        $I->fillField(['id' => 'tax_rule_tax_rate'], '10');
+        $I->fillField(['id' => 'tax_rule_apply_date'], date('Y-m-d').' 00:00:00');
         $I->click('#form1 div div div:nth-child(4) button');
         $I->see('税率設定情報を保存しました。', '#main .container-fluid .alert-success');
         $I->see('10%', '#tax_rule_list__tax_rate--2');
@@ -262,7 +262,7 @@ class EA07BasicinfoCest
         // 編集
         $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown a');
         $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown ul li:nth-child(1) a');
-        $I->fillField('#form1 #tax_rule_tax_rate', '12');
+        $I->fillField(['id' => 'tax_rule_tax_rate'], '12');
         $I->click('#form1 div div div:nth-child(4) button');
         $I->see('税率設定情報を保存しました。', '#main .container-fluid .alert-success');
         $I->see('12%', '#tax_rule_list__tax_rate--1');
@@ -272,7 +272,7 @@ class EA07BasicinfoCest
         $I->click('#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(1) .icon_edit .dropdown ul li:nth-child(2) a');
 
         // 個別税率設定
-        $I->selectOption('#form1 #tax_rule_option_product_tax_rule_0', '1'); // 有効
+        $I->selectOption(['id' => 'tax_rule_option_product_tax_rule_0'], '1'); // 有効
         $I->click('#form1 div div div:nth-child(2) button');
         $I->see('税率設定情報を保存しました。', '#main .container-fluid .alert-success');
         $value = $I->grabValueFrom('#form1 div div div:nth-child(1) #tax_rule_option_product_tax_rule input[type=radio]:checked');
@@ -289,10 +289,10 @@ class EA07BasicinfoCest
         $I->see('ショップ設定メール管理', '#main .page-header');
 
         // テンプレートロード
-        $I->selectOption('#form1 #mail_template', 'ご注文ありがとうございます');
+        $I->selectOption(['id' => 'mail_template'], 'ご注文ありがとうございます');
 
         // 編集
-        $I->fillField('#form1 #mail_subject', 'ご注文有難うございました');
+        $I->fillField(['id' => 'mail_subject'], 'ご注文有難うございました');
         $I->click('#form1 #aside_column button');
         $I->see('メールテンプレート情報を保存しました。', '#main .container-fluid .alert-success');
     }
@@ -307,10 +307,10 @@ class EA07BasicinfoCest
         $I->see('システム設定CSV出力項目設定', '#main .page-header');
 
         // テンプレートロード
-        $I->selectOption('#csv-form #csv-type', '配送CSV');
+        $I->selectOption(['id' => 'csv-type'], '配送CSV');
 
         // 編集
-        $I->selectOption('#csv-form #csv-output', '誕生日');
+        $I->selectOption(['id' => 'csv-output'], '誕生日');
         $I->click('#csv-form #remove');
         $I->click('#common_button_box__confirm_button button');
         $I->see('CSV出力を設定しました。', '#main .container-fluid .alert-success');

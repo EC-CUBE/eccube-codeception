@@ -57,13 +57,13 @@ class EA08SysteminfoCest
         $I->click('#main .container-fluid .btn_area a');
         $I->see('メンバー登録・編集', '#main .container-fluid div:nth-child(1) .box-header .box-title');
 
-        $I->fillField('#form1 #admin_member_name', 'admintest');
-        $I->fillField('#form1 #admin_member_department', 'admintest department');
-        $I->fillField('#form1 #admin_member_login_id', 'admintest');
-        $I->fillField('#form1 #admin_member_password_first', 'password');
-        $I->fillField('#form1 #admin_member_password_second', 'password');
-        $I->selectOption('#form1 #admin_member_Authority', 'システム管理者');
-        $I->selectOption('#form1 #admin_member_Work_1', '稼働');
+        $I->fillField(['id' => 'admin_member_name'], 'admintest');
+        $I->fillField(['id' => 'admin_member_department'], 'admintest department');
+        $I->fillField(['id' => 'admin_member_login_id'], 'admintest');
+        $I->fillField(['id' => 'admin_member_password_first'], 'password');
+        $I->fillField(['id' => 'admin_member_password_second'], 'password');
+        $I->selectOption(['id' => 'admin_member_Authority'], 'システム管理者');
+        $I->selectOption(['id' => 'admin_member_Work_1'], '稼働');
         $I->click('#aside_column button');
         $I->see('メンバーを保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
 
@@ -83,13 +83,13 @@ class EA08SysteminfoCest
         $I->click('#main .container-fluid .btn_area a');
         $I->see('メンバー登録・編集', '#main .container-fluid div:nth-child(1) .box-header .box-title');
 
-        $I->fillField('#form1 #admin_member_name', 'admintest2');
-        $I->fillField('#form1 #admin_member_department', 'admintest department');
-        $I->fillField('#form1 #admin_member_login_id', 'admintest');
-        $I->fillField('#form1 #admin_member_password_first', 'password');
-        $I->fillField('#form1 #admin_member_password_second', 'password');
-        $I->selectOption('#form1 #admin_member_Authority', 'システム管理者');
-        $I->selectOption('#form1 #admin_member_Work_1', '稼働');
+        $I->fillField(['id' => 'admin_member_name'], 'admintest2');
+        $I->fillField(['id' => 'admin_member_department'], 'admintest department');
+        $I->fillField(['id' => 'admin_member_login_id'], 'admintest');
+        $I->fillField(['id' => 'admin_member_password_first'], 'password');
+        $I->fillField(['id' => 'admin_member_password_second'], 'password');
+        $I->selectOption(['id' => 'admin_member_Authority'], 'システム管理者');
+        $I->selectOption(['id' => 'admin_member_Work_1'], '稼働');
         $I->click('#aside_wrap .btn_area a');
 
         $I->see('メンバー管理', '#main .container-fluid div:nth-child(1) .box-header .box-title');
@@ -125,7 +125,7 @@ class EA08SysteminfoCest
         $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(5) .dropdown .dropdown-menu li:nth-child(1) a');
         $I->see('メンバー登録・編集', '#main .container-fluid div:nth-child(1) .box-header .box-title');
 
-        $I->fillField('#form1 #admin_member_name', 'administrator');
+        $I->fillField(['id' => 'admin_member_name'], 'administrator');
         $I->click('#aside_column button');
         $I->see('メンバーを保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
 
@@ -146,7 +146,7 @@ class EA08SysteminfoCest
         $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(5) .dropdown .dropdown-menu li:nth-child(1) a');
         $I->see('メンバー登録・編集', '#main .container-fluid div:nth-child(1) .box-header .box-title');
 
-        $I->fillField('#form1 #admin_member_name', 'administrator2');
+        $I->fillField(['id' => 'admin_member_name'], 'administrator2');
         $I->click('#aside_wrap .btn_area a');
 
         $I->see('メンバー管理', '#main .container-fluid div:nth-child(1) .box-header .box-title');
@@ -166,7 +166,7 @@ class EA08SysteminfoCest
         $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(5) .dropdown .dropdown-menu li:nth-child(1) a');
         $I->see('メンバー登録・編集', '#main .container-fluid div:nth-child(1) .box-header .box-title');
 
-        $I->fillField('#form1 #admin_member_name', '');
+        $I->fillField(['id' => 'admin_member_name'], '');
         $I->click('#aside_column button');
 
         $I->see('入力されていません。', '#form1 div:nth-child(1) div');
@@ -256,12 +256,12 @@ class EA08SysteminfoCest
         $I->amOnPage('/'.$config['admin_route'].'/setting/system/security');
         $I->see('システム設定セキュリティ管理', '#main .page-header');
 
-        $I->fillField('form #admin_security_admin_route_dir', 'test');
+        $I->fillField(['id' => 'admin_security_admin_route_dir'], 'test');
         $I->click('#aside_column div div div div div button');
         $I->loginAsAdmin('', '', 'test');
 
         $I->amOnPage('/test/setting/system/security');
-        $I->fillField('form #admin_security_admin_route_dir', $config['admin_route']);
+        $I->fillField(['id' => 'admin_security_admin_route_dir'], $config['admin_route']);
         $I->click('#aside_column div div div div div button');
         $I->loginAsAdmin();
     }
@@ -330,7 +330,7 @@ class EA08SysteminfoCest
         $expect = "site_".date('Y-m-d').".log";
         $I->assertEquals($expect, $log);
 
-        $I->fillField('#line-max', '1');
+        $I->fillField(['id' => 'line-max'], '1');
         $I->click('#form1 button');
 
         $I->dontSeeElement('#main .container-fluid .box table tbody tr:nth-child(2)');
@@ -345,7 +345,7 @@ class EA08SysteminfoCest
         $I->amOnPage('/'.$config['admin_route'].'/setting/system/masterdata');
         $I->see('システム設定マスターデータ管理', '#main .page-header');
 
-        $I->selectOption('#form1 #admin_system_masterdata_masterdata', 'mtb_sex');
+        $I->selectOption(['id' => 'admin_system_masterdata_masterdata'], 'mtb_sex');
         $I->click('#form1 button');
 
         $I->fillField('#form2 table tbody tr:nth-child(4) td:nth-child(1) input', '3');
@@ -370,7 +370,7 @@ class EA08SysteminfoCest
         $I->amOnPage('/'.$config['admin_route'].'/setting/system/security');
         $I->see('システム設定セキュリティ管理', '#main .page-header');
 
-        $I->fillField('form #admin_security_admin_allow_host', '1.1.1.1');
+        $I->fillField(['id' => 'admin_security_admin_allow_host'], '1.1.1.1');
         $I->click('#aside_column div div div div div button');
 
         $I->amOnPage('/'.$config['admin_route']);

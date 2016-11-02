@@ -239,14 +239,14 @@ class EF03OrderCest
 
         // お客様情報変更
         $I->click('#main_middle #shopping-form #confirm_main #customer');
-        $I->fillField('#main_middle #shopping-form #confirm_main .address #edit0', '姓0301');
+        $I->fillField(['id' => 'edit0'], '姓0301');
         $I->click('#main_middle #shopping-form #confirm_main #customer-ok button');
         $I->see('姓0301', '#main_middle #shopping-form #confirm_main .address');
 
         // 配送情報
         $I->click('#main_middle #shopping-form #confirm_main .btn-shipping-edit');
         $I->see('お届け先の追加', '#main_middle .page-heading');
-        $I->fillField('#main_middle form #shopping_shipping_name_name01', '姓0302');
+        $I->fillField(['id' => 'shopping_shipping_name_name01'], '姓0302');
         $I->click('#main_middle form .btn_group p:nth-child(1) button');
         $I->see('姓0302', '#main_middle #shopping-form #confirm_main .address');
 

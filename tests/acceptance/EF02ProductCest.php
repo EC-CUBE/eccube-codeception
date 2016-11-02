@@ -65,8 +65,8 @@ class EF02ProductCest
         $I->assertTrue(($pPos < $fPos));
 
         // ソート条件の選択リストを変更する 価格順->新着順
-        $I->selectOption("#page_navi_top select[name = 'disp_number']", '30件');
-        $I->selectOption("#page_navi_top select[name = 'orderby']", '新着順');
+        $I->selectOption(['css' => "#page_navi_top select[name = 'disp_number']"], '30件');
+        $I->selectOption(['css' => "#page_navi_top select[name = 'orderby']"], '新着順');
 
         // 変更されたソート条件に従い、商品がソートされる
         $products = $I->grabMultiple('#item_list .col-sm-3 .product_item a dl dt');
@@ -103,7 +103,7 @@ class EF02ProductCest
         $I->assertTrue((count($products) == $itemNum));
 
         // 表示件数の選択リストを変更する
-        $I->selectOption("#page_navi_top select[name = 'disp_number']", '30件');
+        $I->selectOption(['css' => "#page_navi_top select[name = 'disp_number']"], '30件');
 
         // 変更された表示件数分が1画面に表示される
         $itemNum = ($productNum >= 30) ? 30 : $productNum;
@@ -240,8 +240,8 @@ class EF02ProductCest
         $I->amOnPage('/products/detail/1');
 
         // 「カートに入れる」ボタンを押下する
-        $I->selectOption("#form1 #classcategory_id1", 'プラチナ');
-        $I->selectOption("#form1 #classcategory_id2", '150cm');
+        $I->selectOption(['id' => "classcategory_id1"], 'プラチナ');
+        $I->selectOption(['id' => "classcategory_id2"], '150cm');
         $I->buyThis(1);
 
         // 入力された個数分が、カート画面の対象商品に追加されている。
@@ -259,8 +259,8 @@ class EF02ProductCest
         $I->amOnPage('/products/detail/1');
 
         // 「カートに入れる」ボタンを押下する
-        $I->selectOption("#form1 #classcategory_id1", 'プラチナ');
-        $I->selectOption("#form1 #classcategory_id2", '150cm');
+        $I->selectOption(['id' => "classcategory_id1"], 'プラチナ');
+        $I->selectOption(['id' => "classcategory_id2"], '150cm');
         $I->buyThis(3);
 
         // 入力された個数分が、カート画面の対象商品に追加されている。
@@ -281,8 +281,8 @@ class EF02ProductCest
         $I->amOnPage('/products/detail/1');
 
         // 「カートに入れる」ボタンを押下する
-        $I->selectOption("#form1 #classcategory_id1", 'プラチナ');
-        $I->selectOption("#form1 #classcategory_id2", '150cm');
+        $I->selectOption(['id' => "classcategory_id1"], 'プラチナ');
+        $I->selectOption(['id' => "classcategory_id2"], '150cm');
         $I->buyThis(12);
 
         // 入力された個数分が、カート画面の対象商品に追加されている。
