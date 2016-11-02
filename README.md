@@ -7,7 +7,7 @@
 
 ## 実行方法
 
-以下のコマンドで、 PostgreSQL, EC-CUBE3, Codeception の各コンテナが生成され、テストを実行します。
+以下のコマンドで、 PostgreSQL, Selenium/Firefox, EC-CUBE3, Codeception の各コンテナが生成され、テストを実行します。
 `--env default` は 必ず指定して下さい。(変更方法は後述)
 テストレポートは `tests/_output` 以下へ保存されます。
 
@@ -78,10 +78,10 @@ f5377e65ea82        front_eccube3                              "/wait-for-postgr
 上記の例の場合は、 `vnc://127.0.0.1::32803` へアクセスします。初期パスワードは `secret` です。
 Mac の場合は、 `⌘ + k` で画面共有、 Windows の場合は [TightVNC viewer](http://www14.plala.or.jp/campus-note/vine_linux/server_vnc/tightvnc.html) などを使用すると良いでしょう。
 
-### 異る環境でのテスト
+### 異なる環境でのテスト
 
-`docker-compose -f` で `docker-compose.<browser>.yml` 及び `docker-compose.<db>.yml` をオーバーライドすることで、デフォルト以外のブラウザ, RDBMS でもテスト可能です。
-この場合、 Codeception の `--env` オプションにもブラウザ種別, RDBMS を指定してください。
+`docker-compose -f` で `docker-compose.<browser>.yml` 及び `docker-compose.<db>.yml` をオーバーライドすることで、デフォルト以外のブラウザ, データベースでもテスト可能です。
+この場合、 Codeception の `--env` オプションにもブラウザ種別, データベースを指定してください。
 
 *現在のところ、PhantomJS でのテストは JavaScript alert の箇所で失敗してしまいます*
 
@@ -93,13 +93,13 @@ docker-compose -f docker-compose.yml -f docker-compose.chrome.yml -f docker-comp
 docker-compose -f docker-compose.yml -f docker-compose.phantomjs.yml -f docker-compose.pgsql.yml --project-name phantomjs_pgsql run --rm codecept run -d --env phantomjs,pgsql --html report_phantomjs.html
 ```
 
-ブラウザ種別は、以下の選択が可能です。
+ブラウザ種別は、以下を選択可能です。
 
 - firefox
 - chrome
 - phantomjs
 
-RDBMS は、以下の選択が可能です。
+データベースは、以下を選択可能です。
 
 - pgsql
 - mysql
