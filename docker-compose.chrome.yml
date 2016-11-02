@@ -4,7 +4,7 @@ services:
     build:
       context: codeception
       args:
-        - ECCUBE_BRANCH=master
+        - ECCUBE_BRANCH=3.0.12
         - ECCUBE_REPOS=https://github.com/EC-CUBE/ec-cube.git
         - DBTYPE=pgsql
     depends_on:
