@@ -74,7 +74,7 @@ f5377e65ea82        front_eccube3                              "/wait-for-postgr
 9f3c7bcc17f9        selenium/standalone-firefox-debug:2.53.1   "/opt/bin/entry_point"   5 minutes ago       Up 5 minutes        4444/tcp, 0.0.0.0:32803->5900/tcp   front_firefox_1
 ```
 
-上記の例の場合は、 `vnc://127.0.0.1::32804` へアクセスします。初期パスワードは `secret` です。
+上記の例の場合は、 `vnc://127.0.0.1::32803` へアクセスします。初期パスワードは `secret` です。
 Mac の場合は、 `⌘ + k` で画面共有、 Windows の場合は [TightVNC viewer](http://www14.plala.or.jp/campus-note/vine_linux/server_vnc/tightvnc.html) などを使用すると良いでしょう。
 
 ### Chrome や PhantomJS でのテスト
@@ -92,21 +92,30 @@ docker-compose -f docker-compose.yml -f docker-compose.chrome.yml --project-name
 docker-compose -f docker-compose.yml -f docker-compose.phantomjs.yml --project-name phantomjs run --rm codecept run -d --env phantomjs --html report_phantomjs.html
 ```
 
+### MySQL でのテスト
+
+`docker-compose -f` で `docker-compose.mysql.yml` をオーバーライドし、 Codeception で `--env mysql` を指定してください。
+*今のところ、 Firefox でのテストのみサポートしています。*
+
+```
+### MySQL
+docker-compose -f docker-compose.yml -f docker-compose.mysql.yml --project-name mysql run --rm codecept run -d --env mysql --html report_mysql.html
+```
+
 ## Status
 
-    * 2016/10/26 Travis CI にて並列テスト実行環境構築
-    * 2015/11/27 本repository作成および並列テスト実行環境に関して検証中
-    * 2015/11/20 EC-CUBE3 Ver.3.0.6に対応(Acception Test記述: フロント側 100% / 管理画面 40%)
-    * 2015/11/13 [eccube3-doc](https://github.com/EC-CUBE/eccube3-doc)のIntegrationTestにあるテスト項目を順次Acception Testとして記述
-    * 2015/11/06 Acception Test作成に[Codeception](http://codeception.com/)を採用
+- 2016/10/26 Travis CI にて並列テスト実行環境構築
+- 2015/11/27 本repository作成および並列テスト実行環境に関して検証中
+- 2015/11/20 EC-CUBE3 Ver.3.0.6に対応(Acception Test記述: フロント側 100% / 管理画面 40%)
+- 2015/11/13 [eccube3-doc](https://github.com/EC-CUBE/eccube3-doc)のIntegrationTestにあるテスト項目を順次Acception Testとして記述
+- 2015/11/06 Acception Test作成に[Codeception](http://codeception.com/)を採用
 
 ## In near future...
 
-    * 【Acceptance Test】PostgreSQL/MySQL 各環境の並列テスト実行環境構築
-    * 【Acceptance Test】Acceptance Test記述を完了
-    * 【Acceptance Test】環境構築用ドキュメント作成
-    * 【Deployment - Bootstrapping / Configuration】AWSなど各種クラウド環境へのEC-CUBE3自動デプロイ手法確立
-    * 【Deployment - Bootstrapping / Configuration】EC-CUBE3自動デプロイ手法実装
+- 【Acceptance Test】Acceptance Test記述を完了
+- 【Acceptance Test】環境構築用ドキュメント作成
+- 【Deployment - Bootstrapping / Configuration】AWSなど各種クラウド環境へのEC-CUBE3自動デプロイ手法確立
+- 【Deployment - Bootstrapping / Configuration】EC-CUBE3自動デプロイ手法実装
 
 
 ## See Also.
