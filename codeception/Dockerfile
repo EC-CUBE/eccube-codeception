@@ -1,4 +1,4 @@
-FROM nanasess/php7-ext-codeception
+FROM eccube/php7-ext-codeception
 
 MAINTAINER Kentaro Ohkouchi <nanasess@fsm.ne.jp>
 
