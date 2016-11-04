@@ -31,12 +31,12 @@ services:
         - ECCUBE_REPOS=https://github.com/EC-CUBE/ec-cube.git
         - DBTYPE=pgsql
     depends_on:
-      - firefox
+      - browser
       - eccube3
     volumes:
       - ./tests:/project/tests
       - ./codeception.yml:/project/codeception.yml
-  firefox:
+  browser:
     image: selenium/standalone-firefox-debug:2.53.1
     ports:
       - 5900

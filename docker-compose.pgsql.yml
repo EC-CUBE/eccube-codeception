@@ -1,0 +1,16 @@
+version: "2"
+services:
+  db:
+    image: postgres:9.4
+    environment:
+      - POSTGRES_USER=cube3_dev_user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=cube3_dev
+  eccube3:
+    build:
+      args:
+        - DBTYPE=pgsql
+  codecept:
+    build:
+      args:
+        - DBTYPE=pgsql

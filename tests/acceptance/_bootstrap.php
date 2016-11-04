@@ -5,51 +5,12 @@ use Faker\Factory as Faker;
 $config = parse_ini_file('tests/acceptance/config.ini',true);
 
 /**
- * envで指定された値を読み、config.iniなどのの切り替えに使う
- */
-$argv = $_SERVER['argv'];
-$check = false;
-$env = '';
-foreach ($argv as $arg) {
-    if (!$check && $arg == '--env') {
-        $check = true;
-        continue;
-    }
-    if ($check) {
-        $env = $arg;
-        break;
-    }
-}
-if ($env != '') {
-    if (isset($config[$env])) {
-        $config['eccube_path'] = $config[$env]['eccube_path'];
-        $config['hostname'] = $config[$env]['hostname'];
-        $config['db'] = $config[$env]['db'];
-        $config['dbhost'] = $config[$env]['dbhost'];
-        $config['dbport'] = $config[$env]['dbport'];
-        $config['user'] = $config[$env]['user'];
-        $config['password'] = $config[$env]['password'];
-        $config['charset'] = $config[$env]['charset'];
-    }
-}
-
-/**
  * create fixture
  * このデータは$appを使って直接eccubeのデータベースに作成される
  * よってCodeceptionの設定によってコントロールされず、テスト後もデータベース内にこのデータは残る
  * データの件数によって、作成するかどうか判定される
  */
 require_once $config['eccube_path'].'autoload.php';
-use Symfony\Component\Yaml\Yaml;
-$dbyml = $config['eccube_path'].'app/config/eccube/database.yml';
-$database = $database_org = Yaml::parse(file_get_contents($dbyml));
-$database['database']['dbname'] = $config['db'];
-$database['database']['host'] = $config['dbhost'];
-$database['database']['port'] = ($config['dbport']) ? $config['dbport'] : null;
-$database['database']['user'] = $config['user'];
-$database['database']['password'] = ($config['password']) ? $config['password'] : '';
-$database['database']['charset'] = $config['charset'];
-file_put_contents($dbyml,Yaml::dump($database));
 
 $app = Eccube\Application::getInstance();
 // Disable to TransactionListener.
@@ -59,7 +20,6 @@ $app->initializePlugin();
 $app->register(new \Eccube\Tests\ServiceProvider\FixtureServiceProvider());
 $app->boot();
 Fixtures::add('app', $app);
-file_put_contents($dbyml,Yaml::dump($database_org));
 
 use Eccube\Common\Constant;
 use Eccube\Entity\Customer;

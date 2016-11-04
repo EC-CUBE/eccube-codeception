@@ -7,11 +7,12 @@
 
 ## 実行方法
 
-以下のコマンドで、 PostgreSQL, EC-CUBE3, Codeception の各コンテナが生成され、テストを実行します。
+以下のコマンドで、 PostgreSQL, Selenium/Firefox, EC-CUBE3, Codeception の各コンテナが生成され、テストを実行します。
+`--env default` は 必ず指定して下さい。(変更方法は後述)
 テストレポートは `tests/_output` 以下へ保存されます。
 
 ```
-docker-compose run --rm codecept run -d --html report.html
+docker-compose run --rm codecept run -d --env default --html report.html
 ```
 
 ### テスト対象 EC-CUBE バージョンの変更方法
@@ -22,7 +23,7 @@ docker-compose run --rm codecept run -d --html report.html
 
 ```
 docker-compose build --no-cache
-docker-compose run --rm codecept run -d --html report.html
+docker-compose run --rm codecept run -d --env default --html report.html
 ```
 
 ### 並列実行
@@ -30,9 +31,9 @@ docker-compose run --rm codecept run -d --html report.html
 `--project-name <project name> run -d` オプションで並列実行が可能です。
 
 ```
-docker-compose --project-name front run -d --rm codecept run -d -g front --env front --html report-front.html & \
-  docker-compose --project-name admin01 run -d --rm codecept run -d -g admin01 --env admin01 --html report-admin01.html & \
-  docker-compose --project-name admin02 run -d --rm codecept run -d -g admin02 --env admin02 --html report-admin02.html
+docker-compose --project-name front run -d --rm codecept run -d -g front --env default  --html report-front.html & \
+  docker-compose --project-name admin01 run -d --rm codecept run -d -g admin01 --env default --html report-admin01.html & \
+  docker-compose --project-name admin02 run -d --rm codecept run -d -g admin02 --env default --html report-admin02.html
 ```
 
 `logs -f` で実行中のログを参照できます。
@@ -77,30 +78,31 @@ f5377e65ea82        front_eccube3                              "/wait-for-postgr
 上記の例の場合は、 `vnc://127.0.0.1::32803` へアクセスします。初期パスワードは `secret` です。
 Mac の場合は、 `⌘ + k` で画面共有、 Windows の場合は [TightVNC viewer](http://www14.plala.or.jp/campus-note/vine_linux/server_vnc/tightvnc.html) などを使用すると良いでしょう。
 
-### Chrome や PhantomJS でのテスト
+### 異なる環境でのテスト
 
-`docker-compose -f` で `docker-compose.<browser>.yml` をオーバーライドすることで、デフォルト以外のブラウザでもテスト可能です。
-この場合、 Codeception の `--env` オプションでもブラウザ種別を指定してください。
+`docker-compose -f` で `docker-compose.<browser>.yml` 及び `docker-compose.<db>.yml` をオーバーライドすることで、デフォルト以外のブラウザ, データベースでもテスト可能です。
+この場合、 Codeception の `--env` オプションにもブラウザ種別, データベースを指定してください。
 
 *現在のところ、PhantomJS でのテストは JavaScript alert の箇所で失敗してしまいます*
 
 ```
-### chrome
-docker-compose -f docker-compose.yml -f docker-compose.chrome.yml --project-name chrome run --rm codecept run -d --env chrome --html report_chrome.html
+### Chrome, MySQL
+docker-compose -f docker-compose.yml -f docker-compose.chrome.yml -f docker-compose.mysql.yml --project-name chrome_mysql run --rm codecept run -d --env chrome,mysql --html report_chrome.html
 
-### PhantomJS
-docker-compose -f docker-compose.yml -f docker-compose.phantomjs.yml --project-name phantomjs run --rm codecept run -d --env phantomjs --html report_phantomjs.html
+### PhantomJS, PostgreSQL
+docker-compose -f docker-compose.yml -f docker-compose.phantomjs.yml -f docker-compose.pgsql.yml --project-name phantomjs_pgsql run --rm codecept run -d --env phantomjs,pgsql --html report_phantomjs.html
 ```
 
-### MySQL でのテスト
+ブラウザ種別は、以下を選択可能です。
 
-`docker-compose -f` で `docker-compose.mysql.yml` をオーバーライドし、 Codeception で `--env mysql` を指定してください。
-*今のところ、 Firefox でのテストのみサポートしています。*
+- firefox
+- chrome
+- phantomjs
 
-```
-### MySQL
-docker-compose -f docker-compose.yml -f docker-compose.mysql.yml --project-name mysql run --rm codecept run -d --env mysql --html report_mysql.html
-```
+データベースは、以下を選択可能です。
+
+- pgsql
+- mysql
 
 ## Status
 

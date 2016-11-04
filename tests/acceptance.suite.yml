@@ -13,64 +13,66 @@ modules:
         - Asserts
     config:
         Db:
-            dsn: 'pgsql:host=db;dbname=cube3_dev'
             user: 'cube3_dev_user'
             password: 'password'
             populate: true
             cleanup: false
             reconnect: true
         WebDriver:
-            host: firefox                 # Selenium ContainerのIP/hostname
+            host: browser                 # Selenium ContainerのIP/hostname
             port: 4444                      # Selenium Container内部の4444portにmapしたport番号
             url: 'http://eccube3'    # テスト対象のurl
-            browser: firefox
             window_size: 1680x3000
             wait: 10
             capabilities:
                 unexpectedAlertBehaviour: 'accept'
 
 env:
-    admin:
+    default:
         modules:
             config:
+                WebDriver:
+                    browser: firefox
                 Db:
                     dsn: 'pgsql:host=db;dbname=cube3_dev'
-                WebDriver:
-                    port: 4444
-                    url: 'http://eccube3'
-    front:
+
+    front: # Backward compatibility
         modules:
             config:
+                WebDriver:
+                    browser: firefox
                 Db:
                     dsn: 'pgsql:host=db;dbname=cube3_dev'
+    admin: # Backward compatibility
+        modules:
+            config:
                 WebDriver:
-                    port: 4444
-                    url: 'http://eccube3'
+                    browser: firefox
+                Db:
+                    dsn: 'pgsql:host=db;dbname=cube3_dev'
+    firefox:
+        modules:
+            config:
+                WebDriver:
+                    browser: firefox
+
     chrome:
         modules:
             config:
-                Db:
-                    dsn: 'pgsql:host=db;dbname=cube3_dev'
                 WebDriver:
-                    host: chrome
                     browser: chrome
-                    port: 4444
-                    url: 'http://eccube3'
     phantomjs:
         modules:
             config:
-                Db:
-                    dsn: 'pgsql:host=db;dbname=cube3_dev'
                 WebDriver:
-                    host: phantomjs
                     browser: phantomjs
-                    port: 4444
-                    url: 'http://eccube3'
     mysql:
         modules:
             config:
                 Db:
                     dsn: 'mysql:host=db;dbname=cube3_dev;charset=utf8'
-                WebDriver:
-                    port: 4444
-                    url: 'http://eccube3'
+    pgsql:
+        modules:
+            config:
+                Db:
+                    dsn: 'pgsql:host=db;dbname=cube3_dev'
