@@ -151,6 +151,7 @@ class EF02ProductCest
 
         // 商品詳細の関連カテゴリに表示されている、カテゴリリンクを押下する
         $I->moveMouseOver(['css' => '#category .category-nav li:nth-child(2)']);
+        $I->wait(3);
         $I->click('#header #category ul li:nth-child(2) ul li:nth-child(1) a');
 
         // 登録商品がカテゴリごとに一覧表示される
