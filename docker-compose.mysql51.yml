@@ -1,7 +1,7 @@
 version: "2"
 services:
   db:
-    image: mysql:latest
+    image: eccube/mysql51
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=cube3_dev
