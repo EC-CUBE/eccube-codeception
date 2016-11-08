@@ -57,6 +57,8 @@ class EA06ContentsManagementCest
         $NewsListPage->一覧_下へ(1);
         $I->see('news_title2', $NewsListPage->一覧_タイトル(2));
 
+        // TODO [漏れ] 上に
+
         $NewsListPage->一覧_削除(1);
         $I->acceptPopup();
     }
@@ -64,6 +66,11 @@ class EA06ContentsManagementCest
     public function contentsmanagement_ファイル管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0602-UC01-T01(& UC01-T02/UC01-T03/UC01-T04/UC01-T05/UC01-T06/UC01-T07) ファイル管理');
+
+        // TODO [upload] EA0602-UC01-T01 ファイル管理 アップロード
+        // TODO [download] EA0602-UC01-T02 ファイル管理 ダウンロード
+        // TODO [漏れ] EA0602-UC01-T03 ファイル管理 ファイル表示
+        // TODO [漏れ] EA0602-UC01-T04	ファイル管理 ファイル削除
 
         $FileManagePage = FileManagePage::go($I)
             ->入力_フォルダ名('folder1')
@@ -114,8 +121,10 @@ class EA06ContentsManagementCest
 
         /* レイアウト編集 */
         PageManagePage::go($I)->レイアウト編集(43);
-        //$I->dragAndDrop('#position_0 > div:nth-child(1)', '#position_5'); // ちゃんと動かない...ECCUBEが壊れる... ToDo
+        //$I->dragAndDrop('#position_0 > div:nth-child(1)', '#position_5'); // TODO [other] ちゃんと動かない...ECCUBEが壊れる...
         LayoutEditPage::at($I)->登録();
+
+        // TODO [new window] EA0603-UC01-T05	レイアウトプレビュー
 
         $I->see('登録が完了しました。', LayoutEditPage::$登録完了メッセージ);
         $I->amOnPage('/user_data/page1');
@@ -149,5 +158,7 @@ class EA06ContentsManagementCest
         /* 削除 */
         BlockManagePage::go($I)->削除(1);
         $I->acceptPopup();
+
+        // TODO [漏れ] レイアウト管理でブロックが表示/変更/非表示になるかどうか
     }
 }

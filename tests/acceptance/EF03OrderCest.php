@@ -48,7 +48,7 @@ class EF03OrderCest
 
         // 削除
         $I->makeEmptyCart();
-        /* ToDo: popup */
+        /* ToDo: [popup] */
         // 空にした後の状況を確認すること(popupの処理はmakeEmptyCart()内で)
         // 「現在カート内に商品はございません。」など
     }
@@ -148,6 +148,8 @@ class EF03OrderCest
         // topへ
         $I->click('#main_middle #deliveradd_input .btn_group p a');
         $I->see('新着情報', '#contents_bottom #news_area h2');
+
+        // TODO [mail] メール確認
     }
 
     public function order_ゲスト購入(\AcceptanceTester $I)
@@ -216,6 +218,8 @@ class EF03OrderCest
         // topへ
         $I->click('#main_middle #deliveradd_input .btn_group p a');
         $I->see('新着情報', '#contents_bottom #news_area h2');
+
+        // TODO [mail] メール確認
     }
 
     public function order_ゲスト購入情報変更(\AcceptanceTester $I)
@@ -301,5 +305,7 @@ class EF03OrderCest
         // topへ
         $I->click('#main_middle #deliveradd_input .btn_group p a');
         $I->see('新着情報', '#contents_bottom #news_area h2');
+
+        // TODO [mail] メール確認
     }
 }

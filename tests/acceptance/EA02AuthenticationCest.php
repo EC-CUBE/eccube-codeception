@@ -34,4 +34,6 @@ class EA02AuthenticationCest
 
         $I->see('ログインできませんでした。', '.login-box #form1 .text-danger');
     }
+
+    // TODO [漏れ] 最終ログイン時間が正常であることを確認
 }

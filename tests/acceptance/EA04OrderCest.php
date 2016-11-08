@@ -52,7 +52,7 @@ class EA04OrderCest
         $OrderListPage = OrderManagePage::go($I)->検索();
         $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
-        /* ダウンロード（ダウンロードはチェックできないので、テスト不可） */
+        /* TODO [download] ダウンロード（ダウンロードはチェックできないので、テスト不可） */
         $OrderListPage->受注CSVダウンロード実行();
         $OrderListPage->配送CSVダウンロード実行();
 
@@ -136,6 +136,8 @@ class EA04OrderCest
 
         $OrderListPage->一覧_削除(1);
         $I->acceptPopup();
+
+        // TODO [漏れ] UC08-T02 削除キャンセル
     }
 
     public function order_受注メール通知(\AcceptanceTester $I)
@@ -151,6 +153,8 @@ class EA04OrderCest
         $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
         $OrderListPage->一覧_メール通知(1);
+
+        // TODO [mail] メール確認
     }
 
     public function order_一括メール通知(\AcceptanceTester $I)
@@ -169,7 +173,9 @@ class EA04OrderCest
             ->一覧_全選択()
             ->メール一括通知();
 
-        // TODO メール確認
+        // TODO [mail] メール確認
+
+        // TODO [mail] UC02-T02 一括メール通知（異常系）
     }
 
     public function order_受注登録(\AcceptanceTester $I)

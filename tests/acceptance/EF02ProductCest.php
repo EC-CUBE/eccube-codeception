@@ -82,7 +82,7 @@ class EF02ProductCest
                 $fPos = $key;
             }
         }
-        // ToDo
+        // ToDo [issue]
         // まだバグ修正前 https://github.com/EC-CAUBE/ec-cube/issues/1118
         // 修正されたら以下を追加
         //$I->assertTrue(($pPos > $fPos));
