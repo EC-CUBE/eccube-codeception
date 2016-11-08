@@ -146,29 +146,6 @@ class EA03ProductCest
         */
     }
 
-    public function product_一覧からの規格編集規格あり1(\AcceptanceTester $I)
-    {
-        $I->wantTo('EA0310-UC02-T01 一覧からの規格編集 規格あり1');
-
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/product');
-        $I->see('商品管理商品マスター', '#main .page-header');
-
-        $I->fillField(['id' => 'admin_search_product_id'], 'フォーク');
-        $I->click('#search_form button');
-
-        // 規格アイコン クリック
-        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(4) > div > a');
-        // 規格リンク クリック
-        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(4) > div > ul > li:nth-child(1) > a');
-
-        $I->see('商品管理商品登録(商品規格)', '#main .page-header');
-
-        // TODO 削除すると後続のテストが失敗する
-        // $I->click('#delete');
-        // $I->acceptPopup();
-    }
-
     public function product_一覧からの規格編集規格あり2(\AcceptanceTester $I)
     {
         $I->wantTo('EA0310-UC02-T02 一覧からの規格編集 規格あり2');
@@ -177,7 +154,12 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product');
         $I->see('商品管理商品マスター', '#main .page-header');
 
-        $I->fillField(['id' => 'admin_search_product_id'], 'フォーク');
+        $findProducts = Fixtures::get('findProducts');
+        $Products = array_filter($findProducts(), function ($Product) {
+            return $Product->hasProductClass();
+        });
+        $Product = array_pop($Products);
+        $I->fillField(['id' => 'admin_search_product_id'], $Product->getName());
         $I->click('#search_form button');
 
         // 規格アイコン クリック
@@ -199,13 +181,48 @@ class EA03ProductCest
         $I->amOnPage('/'.$config['admin_route'].'/product');
         $I->see('商品管理商品マスター', '#main .page-header');
 
-        $I->fillField(['id' => 'admin_search_product_id'], 'フォーク');
+        $findProducts = Fixtures::get('findProducts');
+        $Products = array_filter($findProducts(), function ($Product) {
+            return $Product->hasProductClass();
+        });
+        $Product = array_pop($Products);
+        $I->fillField(['id' => 'admin_search_product_id'], $Product->getName());
         $I->click('#search_form button');
 
         // アイコンクリック
         $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > a');
         // 複製リンク クリック
         $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > ul > li:nth-child(3) > a');
+        $I->acceptPopup();
+    }
+
+    /**
+     * ATTENTION 削除すると後続の規格編集関連のテストが失敗するため、最後に実行する
+     */
+    public function product_一覧からの規格編集規格あり1(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0310-UC02-T01 一覧からの規格編集 規格あり1');
+
+        $config = Fixtures::get('config');
+        $I->amOnPage('/'.$config['admin_route'].'/product');
+        $I->see('商品管理商品マスター', '#main .page-header');
+
+        $findProducts = Fixtures::get('findProducts');
+        $Products = array_filter($findProducts(), function ($Product) {
+            return $Product->hasProductClass();
+        });
+        $Product = array_pop($Products);
+        $I->fillField(['id' => 'admin_search_product_id'], $Product->getName());
+        $I->click('#search_form button');
+
+        // 規格アイコン クリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(4) > div > a');
+        // 規格リンク クリック
+        $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(1) > div:nth-child(4) > div > ul > li:nth-child(1) > a');
+
+        $I->see('商品管理商品登録(商品規格)', '#main .page-header');
+
+        $I->click('#delete');
         $I->acceptPopup();
     }
 
@@ -389,11 +406,6 @@ class EA03ProductCest
         $I->click('#form1 > div > div > button');
         $I->see('カテゴリを保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
 
-        $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown a');
-        // TODO 削除すると後続のテストが失敗する
-        // $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(2) a');
-        // $I->acceptPopup();
-
         // csv EA0305-UC04-T01
         $I->click('#main > div > div > div.col-md-9 > div > div:nth-child(2) > div > div.dl_dropdown.col-md-3 > div > a');
         $I->click('#main > div > div > div.col-md-9 > div > div:nth-child(2) > div > div.dl_dropdown.col-md-3 > div > ul > li:nth-child(1) a');
@@ -417,6 +429,11 @@ class EA03ProductCest
         $I->fillField(['id' => 'admin_category_name'], 'test category11-1');
         $I->click('#form1 > div > div > button');
         $I->see('カテゴリを保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+
+        // カテゴリ削除
+        $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown a');
+        $I->click('#main .container-fluid .box .box-body .item_box:nth-child(1) .icon_edit .dropdown ul li:nth-child(2) a');
+        $I->acceptPopup();
     }
 
     public function product_商品CSV登録(\AcceptanceTester $I)

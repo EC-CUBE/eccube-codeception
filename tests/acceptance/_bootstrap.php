@@ -142,3 +142,12 @@ $findOrders = function () use ($app) {
     ->getResult();
 };
 Fixtures::add('findOrders', $findOrders);
+
+$findProducts = function () use ($app) {
+    return $app['orm.em']->getRepository('Eccube\Entity\Product')
+        ->createQueryBuilder('p')
+        ->where('p.del_flg = 0')
+        ->getQuery()
+        ->getResult();
+};
+Fixtures::add('findProducts', $findProducts);
