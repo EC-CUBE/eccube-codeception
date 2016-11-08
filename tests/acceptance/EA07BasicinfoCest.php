@@ -216,6 +216,8 @@ class EA07BasicinfoCest
         $I->acceptPopup();
     }
 
+    // TODO [漏れ] EA0706-UC02-T01	配送方法一覧の順序入れ替え
+
     public function basicinfo_税率設定(\AcceptanceTester $I)
     {
         $I->wantTo('EA0708-UC01-T01 税率設定');

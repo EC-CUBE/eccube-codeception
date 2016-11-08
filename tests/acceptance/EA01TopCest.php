@@ -49,7 +49,7 @@ class EA01TopCest
         });
         $I->see(count($NewOrders), TopPage::$受付状況_新規受付数);
 
-        // FIXME ソート順が指定されていないのでテストが失敗する
+        // FIXME [issue] ソート順が指定されていないのでテストが失敗する
         // https://github.com/EC-CUBE/ec-cube/issues/1908
         // // 入金待ちをクリックすると「受注管理＞入金待ち」のページに遷移することを確認
         // $I->click(TopPage::$受付状況_入金待ち);
@@ -71,7 +71,7 @@ class EA01TopCest
 
         // お知らせの記事をクリックすると設定されたURLに遷移することを確認
         /*
-        該当のiframe要素にname属性がないのでアクセスできない...
+        FIXME [other] 該当のiframe要素にname属性がないのでアクセスできない...
         eccube側のtemplateを修正の上で実行
         $I->switchToIFrame(".link_list_wrap");
         $I->click('#newsarea .link_list .tableish a:nth-child(3)');

@@ -76,7 +76,7 @@ class EA05CustomerCest
         $I->see('会員情報を保存しました。', CustomerEditPage::$登録完了メッセージ);
 
         $CustomerRegisterPage->登録();
-        /* ブラウザによるhtml5のエラーなのでハンドリング不可 */
+        /* TODO [html5] ブラウザによるhtml5のエラーなのでハンドリング不可 */
     }
 
     public function customer_会員編集(\AcceptanceTester $I)
@@ -101,7 +101,7 @@ class EA05CustomerCest
         $CustomerRegisterPage
             ->入力_姓('')
             ->登録();
-        /* ブラウザによるhtml5のエラーなのでハンドリング不可 */
+        /* TODO [html5] ブラウザによるhtml5のエラーなのでハンドリング不可 */
     }
 
     public function customer_会員削除(\AcceptanceTester $I)
@@ -116,6 +116,8 @@ class EA05CustomerCest
             ->一覧_削除(1);
 
         $I->acceptPopup();
+
+        // TODO [漏れ] UC03-T02 会員削除キャンセル
     }
 
     public function customer_CSV出力(\AcceptanceTester $I)
@@ -127,7 +129,7 @@ class EA05CustomerCest
             ->CSVダウンロード();
 
         /**
-         * clientに指定しているphantomjsのdockerコンテナにダウンロードされているかどうかは現在確認不可
+         * TODO [download] clientに指定しているphantomjsのdockerコンテナにダウンロードされているかどうかは現在確認不可
          */
     }
 

@@ -214,7 +214,7 @@ class EA08SysteminfoCest
         $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(5) .dropdown a');
         $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(5) .dropdown .dropdown-menu li:nth-child(2) a');
         $I->acceptPopup();
-        /* ToDo: popup
+        /* ToDo: [popup] popup
            alertによる確認あり
         $I->see('メンバーを削除しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->see('管理者', '#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(1)');
@@ -271,10 +271,11 @@ class EA08SysteminfoCest
         $I->wantTo('EA0804-UC01-T04 セキュリティ管理 - SSL強制');
 
         /**
-         * ToDo: SSL環境を用意してテストすべし。今はナイ。。
+         * ToDo: [other] SSL環境を用意してテストすべし。今はナイ。。
          */
     }
 
+    // TODO [漏れ] EA0805-UC01-T01/UC01-T02/UC02-T01/UC02-T02/UC03-T01/UC03-T02/UC04-T01 テストケースが変わってる？
     public function systeminfo_権限管理追加(\AcceptanceTester $I)
     {
         $I->wantTo('EA0805-UC01-T01 権限管理 - 追加');
@@ -296,6 +297,7 @@ class EA08SysteminfoCest
         $I->see('権限設定を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->dontSee('コンテンツ管理', '#side ul');
         $I->dontSee('オーナーズストア', '#side ul');
+
     }
 
     public function systeminfo_権限管理削除(\AcceptanceTester $I)
@@ -317,6 +319,7 @@ class EA08SysteminfoCest
         $I->see('オーナーズストア', '#side ul');
     }
 
+    // TODO [漏れ] EA0806-UC01-T02/EA0806-UC02-T01/EA0806-UC02-T02/EA0806-UC02-T03/EA0806-UC02-T04/EA0806-UC02-T04
     public function systeminfo_ログ表示(\AcceptanceTester $I)
     {
         $I->wantTo('EA0806-UC01-T01 ログ表示');
@@ -336,6 +339,7 @@ class EA08SysteminfoCest
         $I->dontSeeElement('#main .container-fluid .box table tbody tr:nth-child(2)');
     }
 
+    // TODO [漏れ] EA0807-UC01-T02/EA0807-UC02-T01/EA0807-UC02-T02/EA0807-UC03-T01/EA0807-UC04-T01
     public function systeminfo_マスターデータ管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0807-UC01-T01 マスターデータ管理');

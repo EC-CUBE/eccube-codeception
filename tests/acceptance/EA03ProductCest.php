@@ -62,7 +62,7 @@ class EA03ProductCest
         $I->click(ProductManagePage::$検索結果_CSVダウンロード_CSVダウンロード);
 
         /**
-         * clientに指定しているphantomjsのdockerコンテナにダウンロードされているかどうかは現在確認不可
+         * TODO [download] clientに指定しているphantomjsのdockerコンテナにダウンロードされているかどうかは現在確認不可
          */
     }
 
@@ -95,7 +95,7 @@ class EA03ProductCest
         $I->click('#main > div > div > div > form > div > div.box-body > button');
         $I->cantSee('検索結果 3 件 が該当しました', '#product-class-form > div:nth-child(2) > div > div > div.box-header > h3');
         /**
-         エラーになるが、html5のブラウザによるエラーハンドリングなのでチェックできない
+         TODO [html5] エラーになるが、html5のブラウザによるエラーハンドリングなのでチェックできない
          */
     }
 
@@ -118,7 +118,7 @@ class EA03ProductCest
         $I->checkOption(['id' => 'form_product_classes_2_add']);
 
         /**
-        ボタン押した後POSTされるが、POST処理後同ページにredirectしており、結果をcodeceptionでハンドリングできない...
+        TODO [other] ボタン押した後POSTされるが、POST処理後同ページにredirectしており、結果をcodeceptionでハンドリングできない...
         $I->click("#product-class-form div:nth-child(3) .btn_area button");
         $I->see('商品規格を登録しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->see('商品規格を初期化', '#delete');
@@ -227,7 +227,7 @@ class EA03ProductCest
         $I->wantTo('EA0302-UC01-T04 商品編集 規格あり');
 
         /**
-         * テストの意味が不明？旧バージョンの内容？
+         * TODO [other] テストの意味が不明？旧バージョンの内容？
          */
     }
 
@@ -256,6 +256,7 @@ class EA03ProductCest
     public function product_規格登録未登録時(\AcceptanceTester $I)
     {
         $I->wantTo('EA0303-UC01-T02 規格登録 未登録時');
+        // TODO [fixture] 規格が1件も登録されていない状態にする
     }
 
     public function product_規格編集(\AcceptanceTester $I)
@@ -280,6 +281,8 @@ class EA03ProductCest
 
         $I->acceptPopup();
     }
+
+    // TODO [漏れ] EA0308-UC01-T01 規格表示順の変更
 
     public function product_分類登録(\AcceptanceTester $I)
     {
@@ -310,6 +313,8 @@ class EA03ProductCest
         $ProductClassCategoryPage->一覧_削除(1);
         $I->acceptPopup();
     }
+
+    // TODO [漏れ] EA0311-UC01-T01 分類表示順の変更
 
     public function product_カテゴリ登録(\AcceptanceTester $I)
     {
@@ -360,17 +365,19 @@ class EA03ProductCest
         $I->acceptPopup();
     }
 
+    // TODO [漏れ] EA0309-UC01-T01 カテゴリ表示順の変更
+
     public function product_商品CSV登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0306-UC01-T01(& UC01-T02) 商品CSV登録');
 
         $ProductCsvUploadPage = ProductCsvUploadPage::go($I);
 
-        /* CSVのアップロードは不可 */
+        /* TODO [upload] CSVのアップロードは不可 */
 
         // 雛形のダウンロード
         $ProductCsvUploadPage->雛形ダウンロード();
-        /* ダウンロードファイルの確認は不可*/
+        /* TODO [download] ダウンロードファイルの確認は不可*/
     }
 
     public function product_カテゴリCSV登録(\AcceptanceTester $I)
@@ -379,15 +386,15 @@ class EA03ProductCest
 
         $CategoryCsvUploadPage = CategoryCsvUploadPage::go($I);
 
-        /* CSVのアップロードは不可 */
+        /* TODO [upload] CSVのアップロードは不可 */
 
         // 雛形のダウンロード
         $CategoryCsvUploadPage->雛形ダウンロード();
-        /* ダウンロードファイルの確認は不可*/
+        /* TODO [download] ダウンロードファイルの確認は不可*/
     }
 
     /**
-     * XXX 確認リンクをクリックすると別ウィンドウが立ち上がるため、後続のテストが失敗してしまう...
+     * XXX [new window] 確認リンクをクリックすると別ウィンドウが立ち上がるため、後続のテストが失敗してしまう...
      */
     public function product_一覧からの商品確認(\AcceptanceTester $I)
     {
