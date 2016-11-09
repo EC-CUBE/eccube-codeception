@@ -6,6 +6,10 @@ MAINTAINER Kentaro Ohkouchi <nanasess@fsm.ne.jp>
 
 RUN echo "date.timezone = Asia/Tokyo" >> /usr/local/etc/php/php.ini
 
+## Add mailcatcher-codeception-module
+WORKDIR /repo
+RUN composer require captbaritone/mailcatcher-codeception-module "1.*"
+
 ## Clone EC-CUBE3
 
 ENV ECCUBE_PATH /var/www
@@ -22,6 +26,8 @@ RUN composer install
 ENV DBSERVER db
 ENV DBPASS password
 ENV AUTH_MAGIC XjosAXOzO1B3mE0egwQA
+ENV MAIL_HOST mailcatcher
+ENV MAIL_PORT 1025
 
 ## create config yaml files
 RUN php /var/www/eccube_install.php ${DBTYPE} none --skip-createdb --skip-initdb --verbose

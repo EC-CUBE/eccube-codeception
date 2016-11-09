@@ -20,8 +20,10 @@ services:
       - 80
     links:
       - db
+      - mailcatcher
     depends_on:
       - db
+      - mailcatcher
     restart: unless-stopped
   codecept:
     build:
@@ -30,6 +32,8 @@ services:
         - ECCUBE_BRANCH=master
         - ECCUBE_REPOS=https://github.com/EC-CUBE/ec-cube.git
         - DBTYPE=pgsql
+    links:
+      - mailcatcher
     depends_on:
       - browser
       - eccube3
@@ -43,3 +47,8 @@ services:
     dns: 8.8.4.4
     environment:
       - no_proxy=localhost
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - 1080
+      - 1025
