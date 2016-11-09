@@ -17,7 +17,7 @@ class EF05MypageCest
     {
     }
 
-    public function _mypage_初期表示(\AcceptanceTester $I)
+    public function mypage_初期表示(\AcceptanceTester $I)
     {
         $I->wantTo('EF0501-UC01-T01 Mypage 初期表示');
         $app = Fixtures::get('app');
@@ -35,7 +35,7 @@ class EF05MypageCest
         $I->see('退会手続き', '#main_middle .local_nav ul li:nth-child(5) a');
     }
 
-    public function _mypage_ご注文履歴(\AcceptanceTester $I)
+    public function mypage_ご注文履歴(\AcceptanceTester $I)
     {
         $I->wantTo('EF0502-UC01-T01 Mypage ご注文履歴');
         $app = Fixtures::get('app');
@@ -52,7 +52,7 @@ class EF05MypageCest
         $I->see('詳細を見る', '#main_middle .historylist_column p a');
     }
 
-    public function _mypage_ご注文履歴詳細(\AcceptanceTester $I)
+    public function mypage_ご注文履歴詳細(\AcceptanceTester $I)
     {
         $I->wantTo('EF0503-UC01-T01 Mypage ご注文履歴詳細');
         $app = Fixtures::get('app');
@@ -105,7 +105,7 @@ class EF05MypageCest
         $I->acceptPopup();
     }
 
-    public function _mypage_会員情報編集(\AcceptanceTester $I)
+    public function mypage_会員情報編集(\AcceptanceTester $I)
     {
         $I->wantTo('EF0504-UC01-T01 Mypage 会員情報編集');
         $app = Fixtures::get('app');
@@ -149,7 +149,7 @@ class EF05MypageCest
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
 
-    public function _mypage_お届け先編集表示(\AcceptanceTester $I)
+    public function mypage_お届け先編集表示(\AcceptanceTester $I)
     {
         $I->wantTo('EF0506-UC01-T01 Mypage お届け先編集表示');
         $app = Fixtures::get('app');
@@ -163,7 +163,7 @@ class EF05MypageCest
         $I->see('お届け先編集', '#main_middle .page-heading');
     }
 
-    public function _mypage_お届け先編集作成(\AcceptanceTester $I)
+    public function mypage_お届け先編集作成(\AcceptanceTester $I)
     {
         $I->wantTo('EF0506-UC01-T02 Mypage お届け先編集作成');
         $app = Fixtures::get('app');
@@ -200,7 +200,7 @@ class EF05MypageCest
         $I->see('大阪市北区', '#main_middle #deliveradd_select .address_table .addr_box');
     }
 
-    public function _mypage_お届け先編集変更(\AcceptanceTester $I)
+    public function mypage_お届け先編集変更(\AcceptanceTester $I)
     {
         $I->wantTo('EF0506-UC02-T01 Mypage お届け先編集変更');
         $app = Fixtures::get('app');
@@ -237,7 +237,7 @@ class EF05MypageCest
         $I->see('大阪市南区', '#main_middle #deliveradd_select .address_table .addr_box');
     }
 
-    public function _mypage_お届け先編集削除(\AcceptanceTester $I)
+    public function mypage_お届け先編集削除(\AcceptanceTester $I)
     {
         $I->wantTo('EF0503-UC01-T01 Mypage お届け先編集削除');
         $app = Fixtures::get('app');
@@ -270,20 +270,14 @@ class EF05MypageCest
 
         // ×マークをクリック
         $I->click('#main_middle #deliveradd_select .address_table:nth-child(2) .addr_box .icon_edit a');
-
-        /*
-            ToDo: popup
-            PhantomJSではpopupをハンドリングできない。。よって現状はテスト不可
-        // 確認alertでOK
         $I->acceptPopup();
 
         // 確認
-        $I->see('大阪市南区', '#main_middle #deliveradd_select .address_table .addr_box');
-        $I->dontSee('大阪市西区', '#main_middle #deliveradd_select .address_table .addr_box');
-        */
+        $I->see('大阪市西区', '#main_middle #deliveradd_select .address_table .addr_box');
+        $I->dontSee('大阪市南区', '#main_middle #deliveradd_select .address_table .addr_box');
     }
 
-    public function _mypage_退会手続き未実施(\AcceptanceTester $I)
+    public function mypage_退会手続き未実施(\AcceptanceTester $I)
     {
         $I->wantTo('EF0507-UC03-T01 Mypage 退会手続き 未実施');
         $app = Fixtures::get('app');
@@ -303,7 +297,7 @@ class EF05MypageCest
         $I->see('ご注文履歴', '#main_middle .page-heading');
     }
 
-    public function _mypage_退会手続き(\AcceptanceTester $I)
+    public function mypage_退会手続き(\AcceptanceTester $I)
     {
         $I->wantTo('EF0507-UC03-T02 Mypage 退会手続き');
         $app = Fixtures::get('app');

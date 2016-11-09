@@ -76,12 +76,28 @@ class EF06OtherCest
         // 「次のページへ」ボタンを押下する
         $app = Fixtures::get('app');
         $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(2);
+        $I->resetEmails();
         $I->submitForm('#form1',[
             'login_email' => $customer->getEmail()
         ]);
         $I->see('パスワード発行メールの送信 完了', '#main .page-heading');
 
-        // メールは受け取れないので、新しいパスワードでのログインテストは不可
+        $I->seeEmailCount(2);
+        foreach (array($customer->getEmail(), 'admin@example.com') as $email) {
+            $I->seeInLastEmailSubjectTo($email, 'パスワード変更のご確認');
+        }
+        $config = Fixtures::get('test_config');
+        $url = $I->grabFromLastEmailTo($customer->getEmail(), '@/forgot/reset/(.*)@');
+
+        $I->resetEmails();
+        $I->amOnPage($url);
+        $I->see('パスワード変更(完了ページ)', '#contents #main h1');
+        $I->seeEmailCount(2);
+        foreach (array($customer->getEmail(), 'admin@example.com') as $email) {
+            $I->seeInLastEmailSubjectTo($email, 'パスワード変更のお知らせ');
+        }
+        $new_password = $I->grabFromLastEmailTo($customer->getEmail(), '@新しいパスワード：(.*)@');
+        $I->loginAsMember($customer->getEmail(), trim(str_replace('新しいパスワード：', '', $new_password)));
     }
 
     public function other_ログアウト(\AcceptanceTester $I)
@@ -130,10 +146,40 @@ class EF06OtherCest
     {
         $I->wantTo('EF0607-UC01-T01 お問い合わせ');
         $I->amOnPage('/');
+        $I->resetEmails();
 
         $I->click('#footer ul li:nth-child(4) a');
         $I->see('お問い合わせ', '#main h1');
 
-        // メールは受け取れないので、テスト不可
+        $I->submitForm("#form1",[
+            'contact[name][name01]' => '姓',
+            'contact[name][name02]' => '名',
+            'contact[kana][kana01]' => 'セイ',
+            'contact[kana][kana02]' => 'メイ',
+            'contact[zip][zip01]' => '530',
+            'contact[zip][zip02]' => '0001',
+            'contact[address][pref]' => 27,
+            'contact[address][addr01]' => '大阪市北区',
+            'contact[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
+            'contact[tel][tel01]' => '111',
+            'contact[tel][tel02]' => '111',
+            'contact[tel][tel03]' => '111',
+            'contact[email]' => 'acctest@ec-cube.net',
+            'contact[contents]' => 'お問い合わせ内容の送信'
+        ]);
+
+        $I->see('お問い合わせ', '#main h1');
+        $I->click('#confirm_box__confirm_button > button');
+
+        // 完了ページ
+        $I->see('お問い合わせ完了', '#main h1');
+
+        // メールチェック
+        $I->seeEmailCount(2);
+        foreach (array('acctest@ec-cube.net', 'admin@example.com') as $email) {
+            $I->seeInLastEmailSubjectTo($email, 'お問い合わせを受け付けました');
+            $I->seeInLastEmailTo($email, '姓 名 様');
+            $I->seeInLastEmailTo($email, 'お問い合わせ内容の送信');
+        }
     }
 }

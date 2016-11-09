@@ -160,6 +160,8 @@ class EA04OrderCest
 
         $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
         $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(3) > a');
+
+        // TODO メール一括送信のテスト
     }
 
     public function order_一括メール通知(\AcceptanceTester $I)
@@ -180,6 +182,8 @@ class EA04OrderCest
         $I->click('#dropmenu > a');
         $I->click('#dropmenu > ul > li > a');
         $I->acceptPopup();
+
+        // TODO メール一括送信のテスト
     }
 
     public function order_受注登録(\AcceptanceTester $I)

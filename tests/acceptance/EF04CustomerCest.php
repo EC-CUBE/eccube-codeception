@@ -48,13 +48,22 @@ class EF04CustomerCest
         $I->see('111 - 111 - 111', '#main_middle form .dl_table dl:nth-child(5) dd');
         $I->see('acctest@ec-cube.net', '#main_middle form .dl_table dl:nth-child(7) dd');
 
+        $I->resetEmails();
         // 「会員登録をする」ボタンを押下する
         $I->click('#main_middle form .btn_group p:nth-child(1) button');
+
+        $I->seeEmailCount(2);
+        foreach (array('acctest@ec-cube.net', 'admin@example.com') as $email) {
+            $I->seeInLastEmailSubjectTo($email, '会員登録のご確認');
+            $I->seeInLastEmailTo($email, '姓 名 様');
+            $I->seeInLastEmailTo($email, 'この度は会員登録依頼をいただきまして、有り難うございます。');
+        }
 
         // 「トップページへ」ボタンを押下する
         $I->click('#main_middle .btn_group p a');
         $I->see('新着情報', '#contents_bottom #news_area h2');
 
+        $I->resetEmails();
         // 仮会員情報取得
         $app = Fixtures::get('app');
         $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->findOneBy(array('name01' => '姓'));
@@ -63,6 +72,14 @@ class EF04CustomerCest
         // アクティベートURLからトップページへ
         $I->amOnPage($activateUrl);
         $I->see('新規会員登録（完了）', '#contents #main #main_middle h1');
+
+        $I->seeEmailCount(2);
+        foreach (array('acctest@ec-cube.net', 'admin@example.com') as $email) {
+            $I->seeInLastEmailSubjectTo($email, '会員登録が完了しました。');
+            $I->seeInLastEmailTo($email, '姓 名 様');
+            $I->seeInLastEmailTo($email, '本会員登録が完了いたしました。');
+        }
+
         $I->click('#main_middle .btn_group p a');
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }

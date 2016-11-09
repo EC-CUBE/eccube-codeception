@@ -166,7 +166,7 @@ class EA05CustomerCest
     public function customer_仮会員メール再送(\AcceptanceTester $I)
     {
         $I->wantTo('EA0501-UC06-T01(& UC06-T02) 仮会員メール再送');
-
+        $I->resetEmails();
         $config = Fixtures::get('config');
         $I->amOnPage('/'.$config['admin_route'].'/customer');
         $I->see('会員管理会員マスター', '#main .page-header');
@@ -177,5 +177,12 @@ class EA05CustomerCest
         $I->click('#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr > td.icon_edit > div > a');
         $I->click('#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr > td.icon_edit > div > ul > li:nth-child(3) > a');
         $I->acceptPopup();
+        $I->wait(10);
+
+        $I->seeEmailCount(2);
+        foreach (array('test@test.test', 'admin@example.com') as $email) {
+            $I->seeInLastEmailSubjectTo($email, '会員登録のご確認');
+            $I->seeInLastEmailTo($email, 'testuser-1 testuser 様');
+        }
     }
 }
