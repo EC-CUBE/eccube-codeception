@@ -81,6 +81,7 @@ class EF06OtherCest
             'login_email' => $customer->getEmail()
         ]);
         $I->see('パスワード発行メールの送信 完了', '#main .page-heading');
+        $I->wait(10);
 
         $I->seeEmailCount(2);
         foreach (array($customer->getEmail(), 'admin@example.com') as $email) {

@@ -265,8 +265,10 @@ class EF03OrderCest
 
         // お客様情報変更
         $I->click('#main_middle #shopping-form #confirm_main #customer');
+        $I->wait(10);
         $I->fillField(['id' => 'edit0'], '姓0301');
         $I->click('#main_middle #shopping-form #confirm_main #customer-ok button');
+        $I->wait(10);
         $I->see('姓0301', '#main_middle #shopping-form #confirm_main .address');
 
         // 配送情報
