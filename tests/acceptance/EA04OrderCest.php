@@ -1,6 +1,9 @@
 <?php
 
 use Codeception\Util\Fixtures;
+use Page\Admin\CsvSettingsPage;
+use Page\Admin\OrderManagePage;
+use Page\Admin\OrderEditPage;
 
 /**
  * @group admin
@@ -26,19 +29,15 @@ class EA04OrderCest
         $I->wantTo('EA0401-UC01-T01(& UC01-T02) 受注検索');
 
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/order');
-        $I->see('受注管理受注マスター', '#main .page-header');
-
         $findOrders = Fixtures::get('findOrders'); // Closure
         $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
             return $Order->getOrderStatus()->getId() != $config['order_processing'];
         });
-        $I->click('#search_form > div.row.btn_area > div > button');
-        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
+        OrderManagePage::go($I)->検索();
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
-        $I->fillField(['id' => 'admin_search_order_multi'], 'gege@gege.com');
-        $I->click('#search_form > div.row.btn_area > div > button');
-        $I->see('検索条件に該当するデータがありませんでした。', '#main > div > div.row > div > div > div > h3');
+        OrderManagePage::go($I)->検索('gege@gege.com');
+        $I->see('検索条件に該当するデータがありませんでした。', OrderManagePage::$検索結果_メッセージ);
     }
 
     public function order_CSVダウンロード(\AcceptanceTester $I)
@@ -46,32 +45,30 @@ class EA04OrderCest
         $I->wantTo('EA0401-UC02-T01(& UC02-T02/UC03-T01/UC03-T2) CSVダウンロード');
 
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/order');
-        $I->see('受注管理受注マスター', '#main .page-header');
-
         $findOrders = Fixtures::get('findOrders'); // Closure
         $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
             return $Order->getOrderStatus()->getId() != $config['order_processing'];
         });
-        $I->click('#search_form > div.row.btn_area > div > button');
-        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
+        $OrderListPage = OrderManagePage::go($I)->検索();
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
         /* ダウンロード（ダウンロードはチェックできないので、テスト不可） */
-        $I->click('#main > div > div.row > div > div > div.box-body > div > div > ul > li:nth-child(2) > a');
-        $I->click('#main > div > div.row > div > div > div.box-body > div > div > ul > li.dropdown.open > ul > li:nth-child(1) > a');
-        $I->click('#main > div > div.row > div > div > div.box-body > div > div > ul > li.dropdown.open > ul > li:nth-child(2) > a');
+        $OrderListPage->受注CSVダウンロード実行();
+        $OrderListPage->配送CSVダウンロード実行();
 
         /* 項目設定 */
-        $I->click('#main > div > div.row > div > div > div.box-body > div > div > ul > li.dropdown.open > ul > li:nth-child(3) > a');
-        $I->see('システム設定CSV出力項目設定', '#main .page-header');
-        $value = $I->grabValueFrom(['id' => 'csv-type']);
+        $OrderListPage->受注CSV出力項目設定();
+
+        CsvSettingsPage::at($I);
+        $value = $I->grabValueFrom(CsvSettingsPage::$CSVタイプ);
         $I->assertEquals(3, $value);
-        $I->amOnPage('/'.$config['admin_route'].'/order');
-        $I->click('#search_form > div.row.btn_area > div > button');
-        $I->click('#main > div > div.row > div > div > div.box-body > div > div > ul > li:nth-child(2) > a');
-        $I->click('#main > div > div.row > div > div > div.box-body > div > div > ul > li.dropdown.open > ul > li:nth-child(4) > a');
-        $I->see('システム設定CSV出力項目設定', '#main .page-header');
-        $value = $I->grabValueFrom(['id' => 'csv-type']);
+
+        OrderManagePage::go($I)
+            ->検索()
+            ->配送CSV出力項目設定();
+
+        CsvSettingsPage::at($I);
+        $value = $I->grabValueFrom(CsvSettingsPage::$CSVタイプ);
         $I->assertEquals(4, $value);
     }
 
@@ -80,47 +77,48 @@ class EA04OrderCest
         $I->wantTo('EA0401-UC05-T01(& UC05-T02/UC06-T01) 受注編集');
 
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/order');
-        $I->see('受注管理受注マスター', '#main .page-header');
-
         $findOrders = Fixtures::get('findOrders'); // Closure
         $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
             return $Order->getOrderStatus()->getId() != $config['order_processing'];
         });
-        $I->click('#search_form > div.row.btn_area > div > button');
-        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
+        $OrderListPage = OrderManagePage::go($I)->検索();
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
         /* 編集 */
-        $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
-        $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(1) > a');
-        $I->see('受注管理受注登録・編集', '#main .page-header');
+        $OrderListPage->一覧_編集(1);
+
+        $OrderRegisterPage = OrderEditPage::at($I)
+            ->入力_姓('')
+            ->受注情報登録();
 
         /* 異常系 */
-        $I->fillField(['id' => 'order_name_name01'], '');
-        $I->click('#aside_wrap > form > div > div.row.btn_area > p > button');
-        $I->see('入力されていません。', '#aside_wrap > form > div > div:nth-child(2) > div.box-body.accpanel > div > div:nth-child(2) > div > span > ul > p');
+        $I->see('入力されていません。', OrderEditPage::$姓_エラーメッセージ);
 
         /* 正常系 */
-        $I->fillField(['id' => 'order_name_name01'], 'aaa');
-        $I->fillField(['id' => 'order_kana_kana01'], 'アアア');
-        $I->fillField(['id' => 'order_kana_kana02'], 'アアア');
-        $I->fillField(['id' => 'order_zip_zip01'], '111');
-        $I->fillField(['id' => 'order_zip_zip02'], '1111');
-        $I->fillField(['id' => 'order_address_addr01'], 'bbb');
-        $I->fillField(['id' => 'order_address_addr02'], 'bbb');
-        $I->fillField(['id' => 'order_tel_tel01'], '111');
-        $I->fillField(['id' => 'order_tel_tel02'], '111');
-        $I->fillField(['id' => 'order_tel_tel03'], '111');
-        $I->selectOption(['id' => 'order_Payment'], 4);
-        $I->click('#aside_wrap > form > div > div:nth-child(5) > div.box-body.accpanel > div > div.btn_area > ul > li > a');
-        $I->selectOption(['id' => 'order_Shippings_0_Delivery'], 1);
-        $I->click('#aside_wrap > form > div > div.row.btn_area > p > button');
-        $I->see('受注情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        $OrderRegisterPage
+            ->入力_姓('aaa')
+            ->入力_セイ('アアア')
+            ->入力_メイ('アアア')
+            ->入力_郵便番号1('111')
+            ->入力_郵便番号2('1111')
+            ->入力_市区町村名('bbb')
+            ->入力_番地_ビル名('bbb')
+            ->入力_電話番号1('111')
+            ->入力_電話番号2('111')
+            ->入力_電話番号3('111')
+            ->入力_支払方法(['4' => '郵便振替'])
+            ->注文者情報をコピー()
+            ->入力_配送業者(['1' => 'サンプル業者'])
+            ->受注情報登録();
+
+        $I->see('受注情報を保存しました。', OrderEditPage::$登録完了メッセージ);
 
         /* ステータス変更 */
-        $I->selectOption(['id' => 'order_OrderStatus'], 2);
-        $I->click('#aside_wrap > form > div > div.row.btn_area > p > button');
-        $I->see('受注情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        $OrderRegisterPage
+            ->入力_受注ステータス(['2' => '入金待ち'])
+            ->受注情報登録();
+
+        $I->see('受注情報を保存しました。', OrderEditPage::$登録完了メッセージ);
     }
 
     public function order_受注削除(\AcceptanceTester $I)
@@ -128,18 +126,15 @@ class EA04OrderCest
         $I->wantTo('EA0401-UC08-T01(& UC08-T02) 受注削除');
 
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/order');
-        $I->see('受注管理受注マスター', '#main .page-header');
-
         $findOrders = Fixtures::get('findOrders'); // Closure
         $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
             return $Order->getOrderStatus()->getId() != $config['order_processing'];
         });
-        $I->click('#search_form > div.row.btn_area > div > button');
-        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
 
-        $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
-        $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(2) > a');
+        $OrderListPage = OrderManagePage::go($I)->検索();
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
+
+        $OrderListPage->一覧_削除(1);
         $I->acceptPopup();
     }
 
@@ -148,18 +143,14 @@ class EA04OrderCest
         $I->wantTo('EA0402-UC01-T01 受注メール通知');
 
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/order');
-        $I->see('受注管理受注マスター', '#main .page-header');
-
         $findOrders = Fixtures::get('findOrders'); // Closure
         $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
             return $Order->getOrderStatus()->getId() != $config['order_processing'];
         });
-        $I->click('#search_form > div.row.btn_area > div > button');
-        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
+        $OrderListPage = OrderManagePage::go($I)->検索();
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
-        $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
-        $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(3) > a');
+        $OrderListPage->一覧_メール通知(1);
     }
 
     public function order_一括メール通知(\AcceptanceTester $I)
@@ -167,57 +158,54 @@ class EA04OrderCest
         $I->wantTo('EA0402-UC02-T01(& UC02-T02) 一括メール通知');
 
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/order');
-        $I->see('受注管理受注マスター', '#main .page-header');
-
         $findOrders = Fixtures::get('findOrders'); // Closure
         $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
             return $Order->getOrderStatus()->getId() != $config['order_processing'];
         });
-        $I->click('#search_form > div.row.btn_area > div > button');
-        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
+        $OrderListPage = OrderManagePage::go($I)->検索();
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
-        $I->click('#dropmenu > a');
-        $I->click('#dropmenu > ul > li > a');
-        $I->acceptPopup();
+        $OrderListPage
+            ->一覧_全選択()
+            ->メール一括通知();
+
+        // TODO メール確認
     }
 
     public function order_受注登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0405-UC01-T01(& UC01-T02) 受注登録');
 
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/order/new');
-        $I->see('受注管理受注登録・編集', '#main .page-header');
+        $OrderRegisterPage = OrderEditPage::go($I)
+            ->受注情報登録();
 
         /* 異常系 */
-        $I->click('#aside_wrap > form > div > div.row.btn_area > p > button');
-        $I->dontSee('受注情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        $I->dontSee('受注情報を保存しました。', OrderEditPage::$登録完了メッセージ);
+
 
         /* 正常系 */
-        $I->selectOption(['id' => 'order_OrderStatus'], 1);
-        $I->fillField(['id' => 'order_name_name01'], 'order1');
-        $I->fillField(['id' => 'order_name_name02'], 'order1');
-        $I->fillField(['id' => 'order_kana_kana01'], 'アアア');
-        $I->fillField(['id' => 'order_kana_kana02'], 'アアア');
-        $I->fillField(['id' => 'order_zip_zip01'], '111');
-        $I->fillField(['id' => 'order_zip_zip02'], '1111');
-        $I->selectOption(['id' => 'order_address_pref'], 1);
-        $I->fillField(['id' => 'order_address_addr01'], 'bbb');
-        $I->fillField(['id' => 'order_address_addr02'], 'bbb');
-        $I->fillField(['id' => 'order_email'], 'test@test.com');
-        $I->fillField(['id' => 'order_tel_tel01'], '111');
-        $I->fillField(['id' => 'order_tel_tel02'], '111');
-        $I->fillField(['id' => 'order_tel_tel03'], '111');
-        $I->click('#aside_wrap > form > div > div:nth-child(3) > div.box-body.accpanel > div > div.btn_area > ul > li:nth-child(1) > a');
-        $I->fillField(['id' => 'admin_search_product_id'], 'パーコレータ');
-        $I->click('#searchProductModalButton');
-        $I->click('#searchProductModalList > div > table > tbody > tr > td.text-right > button');
-        $I->selectOption(['id' => 'order_Payment'], 4);
-        $I->click('#aside_wrap > form > div > div:nth-child(5) > div.box-body.accpanel > div > div.btn_area > ul > li > a');
-        $I->selectOption(['id' => 'order_Shippings_0_Delivery'], 1);
-        $I->click('#aside_wrap > form > div > div.row.btn_area > p > button');
-        $I->see('受注情報を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        $OrderRegisterPage
+            ->入力_受注ステータス(['1' => '新規受付'])
+            ->入力_姓('order1')
+            ->入力_名('order1')
+            ->入力_セイ('アアア')
+            ->入力_メイ('アアア')
+            ->入力_郵便番号1('111')
+            ->入力_郵便番号2('1111')
+            ->入力_都道府県(['1' => '北海道'])
+            ->入力_市区町村名('bbb')
+            ->入力_番地_ビル名('bbb')
+            ->入力_Eメール('test@test.com')
+            ->入力_電話番号1('111')
+            ->入力_電話番号2('111')
+            ->入力_電話番号3('111')
+            ->商品検索('パーコレーター')
+            ->商品検索結果_選択(1)
+            ->入力_支払方法(['4'=> '郵便振替'])
+            ->注文者情報をコピー()
+            ->入力_配送業者(['1' => 'サンプル業者'])
+            ->受注情報登録();
 
+        $I->see('受注情報を保存しました。', OrderEditPage::$登録完了メッセージ);
     }
 }
