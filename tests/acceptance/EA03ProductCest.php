@@ -50,32 +50,33 @@ class EA03ProductCest
         $I->see("検索条件に該当するデータがありませんでした。", ProductManagePage::$検索結果_メッセージ);
     }
 
+    /**
+     * @env firefox
+     * @env chrome
+     */
     public function product_CSV出力(\AcceptanceTester $I)
     {
         $I->wantTo('EA0301-UC02-T01 CSV出力');
 
-        ProductManagePage::go($I)->検索();
+        $findProducts = Fixtures::get('findProducts');
+        $Products = $findProducts();
+        ProductManagePage::go($I)
+            ->検索()
+            ->CSVダウンロード();
 
-        // 「CSVダウンロード」ドロップダウン
-        $I->click(ProductManagePage::$検索結果_CSVダウンロード);
-        // 「CSVダウンロード」リンク
-        $I->click(ProductManagePage::$検索結果_CSVダウンロード_CSVダウンロード);
+        $I->see("検索結果 ".count($Products)." 件 が該当しました", ProductManagePage::$検索結果_メッセージ);
 
-        /**
-         * TODO [download] clientに指定しているphantomjsのdockerコンテナにダウンロードされているかどうかは現在確認不可
-         */
+        $ProductCSV = $I->getLastDownloadFile('/^product_\d{14}\.csv$/');
+        $I->assertGreaterOrEquals(count($Products), count(file($ProductCSV)), '検索結果以上の行数があるはず');
     }
 
     public function product_CSV出力項目設定(\AcceptanceTester $I)
     {
         $I->wantTo('EA0301-UC02-T02 CSV出力項目設定');
 
-        ProductManagePage::go($I)->検索();
-
-        // 「CSVダウンロード」ドロップダウン
-        $I->click(ProductManagePage::$検索結果_CSVダウンロード);
-        // 「CSV出力項目設定」リンク
-        $I->click(ProductManagePage::$検索結果_CSVダウンロード_出力項目設定);
+        ProductManagePage::go($I)
+            ->検索()
+            ->CSV出力項目設定();
 
         $I->see('システム設定CSV出力項目設定', self::ページタイトル);
         $value = $I->grabValueFrom(CsvSettingsPage::$CSVタイプ);
@@ -369,28 +370,45 @@ class EA03ProductCest
 
     public function product_商品CSV登録(\AcceptanceTester $I)
     {
-        $I->wantTo('EA0306-UC01-T01(& UC01-T02) 商品CSV登録');
+        $I->wantTo('EA0306-UC01-T01 商品CSV登録');
 
-        $ProductCsvUploadPage = ProductCsvUploadPage::go($I);
+        ProductCsvUploadPage::go($I);
 
         /* TODO [upload] CSVのアップロードは不可 */
+    }
 
-        // 雛形のダウンロード
-        $ProductCsvUploadPage->雛形ダウンロード();
-        /* TODO [download] ダウンロードファイルの確認は不可*/
+    /**
+     * @env firefox
+     * @env chrome
+     */
+    public function product_商品CSV登録雛形ファイルダウンロード(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0306-UC01-T02 商品CSV登録雛形ファイルダウンロード');
+
+        ProductCsvUploadPage::go($I)->雛形ダウンロード();
+        $ProductTemplateCSV = $I->getLastDownloadFile('/^product\.csv$/');
+        $I->assertEquals(1, count(file($ProductTemplateCSV)), 'ヘッダ行だけのファイル');
     }
 
     public function product_カテゴリCSV登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0307-UC01-T01(& UC01-T02) カテゴリCSV登録');
 
-        $CategoryCsvUploadPage = CategoryCsvUploadPage::go($I);
+        CategoryCsvUploadPage::go($I);
+    }
 
-        /* TODO [upload] CSVのアップロードは不可 */
+    /**
+     * @env firefox
+     * @env chrome
+     */
+    public function product_カテゴリCSV登録雛形ファイルダウンロード(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0307-UC01-T02 カテゴリCSV登録雛形ファイルダウンロード');
 
         // 雛形のダウンロード
-        $CategoryCsvUploadPage->雛形ダウンロード();
-        /* TODO [download] ダウンロードファイルの確認は不可*/
+        CategoryCsvUploadPage::go($I)->雛形ダウンロード();
+        $CategoryTemplateCSV = $I->getLastDownloadFile('/^category\.csv$/');
+        $I->assertEquals(1, count(file($CategoryTemplateCSV)), 'ヘッダ行だけのファイル');
     }
 
     /**

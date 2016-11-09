@@ -40,6 +40,8 @@ services:
     volumes:
       - ./tests:/project/tests
       - ./codeception.yml:/project/codeception.yml
+      - ./ff_profile.zip.b64:/root/ff_profile.zip.b64
+      - ./tests/_support/_downloads:/project/downloads
   browser:
     image: selenium/standalone-firefox-debug:2.53.1
     ports:
@@ -47,6 +49,8 @@ services:
     dns: 8.8.4.4
     environment:
       - no_proxy=localhost
+    volumes:
+      - ./tests/_support/_downloads:/home/seluser/Downloads
   mailcatcher:
     image: schickling/mailcatcher
     ports:

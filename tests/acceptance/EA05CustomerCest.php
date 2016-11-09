@@ -113,17 +113,21 @@ class EA05CustomerCest
         // TODO [漏れ] UC03-T02 会員削除キャンセル
     }
 
+    /**
+     * @env firefox
+     * @env chrome
+     */
     public function customer_CSV出力(\AcceptanceTester $I)
     {
         $I->wantTo('EA0501-UC05-T01 CSV出力');
 
+        $findCustomers = Fixtures::get('findCustomers');
         CustomerManagePage::go($I)
             ->検索()
             ->CSVダウンロード();
 
-        /**
-         * TODO [download] clientに指定しているphantomjsのdockerコンテナにダウンロードされているかどうかは現在確認不可
-         */
+        $CustomerCSV = $I->getLastDownloadFile('/^customer_\d{14}\.csv$/');
+        $I->assertEquals(count($findCustomers()) + 1, count(file($CustomerCSV)));
     }
 
     public function customer_CSV出力項目設定(\AcceptanceTester $I)
