@@ -54,6 +54,11 @@ class TaxManagePage extends AbstractAdminPage
         return $this;
     }
 
+    public function 一覧_税率($rowNum)
+    {
+        return "#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(${rowNum}) td:nth-child(2)";
+    }
+
     public function 共通税率設定_登録()
     {
         $this->tester->click('#form1 div div div:nth-child(4) button');

@@ -229,7 +229,7 @@ class EA07BasicinfoCest
             ->入力_消費税率('10')
             ->入力_適用日時(date('Y-m-d').' 00:00:00')
             ->共通税率設定_登録();
-        $I->see('10%', '#tax_rule_list__tax_rate--2');
+        $I->see('10%', $TaxManagePage->一覧_税率(2));
 
         // 編集
         $TaxManagePage
@@ -238,7 +238,7 @@ class EA07BasicinfoCest
             ->共通税率設定_登録();
 
         $I->see('税率設定情報を保存しました。', TaxManagePage::$登録完了メッセージ);
-        $I->see('12%', '#tax_rule_list__tax_rate--1');
+        $I->see('12%', $TaxManagePage->一覧_税率(1));
 
         // 削除
         $TaxManagePage->一覧_削除(1);
@@ -249,7 +249,7 @@ class EA07BasicinfoCest
             ->個別税率設定_登録();
 
         $I->see('税率設定情報を保存しました。', TaxManagePage::$登録完了メッセージ);
-        $value = $I->grabValueFrom('#form1 div div div:nth-child(1) #tax_rule_option_product_tax_rule input[type=radio]:checked');
+        $value = $I->grabValueFrom(['css' => '#tax_rule_option_product_tax_rule input[type=radio]:checked']);
         $I->assertTrue(($value == 1));
     }
 
