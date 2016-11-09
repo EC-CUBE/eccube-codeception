@@ -25,7 +25,7 @@ use Eccube\Common\Constant;
 use Eccube\Entity\Customer;
 use Eccube\Entity\Master\CustomerStatus;
 
-
+$faker = Faker::create('ja_JP');
 $num = $app['orm.em']->getRepository('Eccube\Entity\Customer')
     ->createQueryBuilder('o')
     ->select('count(o.id)')
@@ -35,8 +35,8 @@ $num = $app['orm.em']->getRepository('Eccube\Entity\Customer')
 if ($num < $config['fixture_customer_num']) {
     $num = $config['fixture_customer_num'] - $num;
     for ($i = 0; $i < $num; $i++) {
-        $customer = createCustomer($app);
-        $order = createOrder($app, $customer);
+        $email = microtime(true).'.'.$faker->safeEmail;
+        $customer = createCustomer($app, $email);
     }
     createCustomer($app, null, false); // non-active member
 }
@@ -48,12 +48,27 @@ $num = $app['orm.em']->getRepository('Eccube\Entity\Product')
     ->getQuery()
     ->getSingleScalarResult();
 // 受注生成件数 + 初期データの商品が生成されているはず
-if($num==($config['fixture_customer_num']+2)) {
+if ($num < ($config['fixture_customer_num']+2)) {
     // 規格なしも含め $config['fixture_product_num'] の分だけ生成する
     for ($i = 0; $i < $config['fixture_product_num'] - 1; $i++) {
         createProduct($app);
     }
     createProduct($app, '規格なし商品', 0);
+}
+
+$Customers = $app['orm.em']->getRepository('Eccube\Entity\Customer')->findAll();
+$Products = $app['orm.em']->getRepository('Eccube\Entity\Product')->findAll();
+$Deliveries = $app['orm.em']->getRepository('Eccube\Entity\Delivery')->findAll();
+foreach ($Customers as $Customer) {
+    $Delivery = $Deliveries[$faker->numberBetween(0, count($Deliveries) - 1)];
+    $Product = $Products[$faker->numberBetween(0, count($Products) - 1)];
+    $charge = $faker->randomNumber(4);
+    $discount = $faker->randomNumber(4);
+    for ($i = 0; $i < $config['fixture_order_num']; $i++) {
+        $Status = $app['eccube.repository.order_status']->find($faker->numberBetween(1, 8));
+        $OrdeDate = $faker->dateTimeThisYear();
+        createOrder($app, $Customer, $Product->getProductClasses()->toArray(), $Delivery, $charge, $discount, $Status, $OrderDate);
+    }
 }
 
 function createCustomer($app, $email = null, $active = true)
@@ -74,10 +89,11 @@ function createProduct($app, $product_name = null, $product_class_num = 3)
     return $app['eccube.fixture.generator']->createProduct($product_name, $product_class_num);
 }
 
-function createOrder($app, Customer $Customer)
+function createOrder($app, Customer $Customer, array $ProductClasses, $Delivery, $charge, $discount, $Status, $OrderDate)
 {
-    $Order = $app['eccube.fixture.generator']->createOrder($Customer);
-    $Order->setOrderStatus($app['eccube.repository.order_status']->find($app['config']['order_new']));
+    $Order = $app['eccube.fixture.generator']->createOrder($Customer, $ProductClasses, $Delivery, $charge, $discount);
+    $Order->setOrderStatus($Status);
+    $Order->setOrderDate($OrderDate);
     $app['orm.em']->flush($Order);
     return $Order;
 }
@@ -117,3 +133,21 @@ $news = $app['orm.em']->getRepository('Eccube\Entity\News')
     ->getQuery()
     ->getResult();
 Fixtures::add('news', $news);
+
+$findOrders = function () use ($app) {
+    return $app['orm.em']->getRepository('Eccube\Entity\Order')
+    ->createQueryBuilder('o')
+    ->where('o.del_flg = 0')
+    ->getQuery()
+    ->getResult();
+};
+Fixtures::add('findOrders', $findOrders);
+
+$findProducts = function () use ($app) {
+    return $app['orm.em']->getRepository('Eccube\Entity\Product')
+        ->createQueryBuilder('p')
+        ->where('p.del_flg = 0')
+        ->getQuery()
+        ->getResult();
+};
+Fixtures::add('findProducts', $findProducts);

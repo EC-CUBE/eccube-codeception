@@ -37,8 +37,12 @@ class EA01TopCest
         $I->goToAdminPage();
 
         // 購入された商品が受注管理画面のページにて反映されていることを確認
-        $config = Fixtures::get('test_config');
-        $I->see($config['fixture_customer_num'], '.container-fluid #order_info .link_list .tableish a:nth-child(1) .item_number');
+        $config = Fixtures::get('config');
+        $findOrders = Fixtures::get('findOrders');
+        $NewOrders = array_filter($findOrders(), function ($Order) use ($config) {
+            return $Order->getOrderStatus()->getId() == $config['order_new'];
+        });
+        $I->see(count($NewOrders), '.container-fluid #order_info .link_list .tableish a:nth-child(1) .item_number');
 
         // FIXME ソート順が指定されていないのでテストが失敗する
         // https://github.com/EC-CUBE/ec-cube/issues/1908

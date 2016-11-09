@@ -29,8 +29,12 @@ class EA04OrderCest
         $I->amOnPage('/'.$config['admin_route'].'/order');
         $I->see('受注管理受注マスター', '#main .page-header');
 
+        $findOrders = Fixtures::get('findOrders'); // Closure
+        $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
+            return $Order->getOrderStatus()->getId() != $config['order_processing'];
+        });
         $I->click('#search_form > div.row.btn_area > div > button');
-        $I->see('検索結果 3 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
 
         $I->fillField(['id' => 'admin_search_order_multi'], 'gege@gege.com');
         $I->click('#search_form > div.row.btn_area > div > button');
@@ -45,8 +49,12 @@ class EA04OrderCest
         $I->amOnPage('/'.$config['admin_route'].'/order');
         $I->see('受注管理受注マスター', '#main .page-header');
 
+        $findOrders = Fixtures::get('findOrders'); // Closure
+        $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
+            return $Order->getOrderStatus()->getId() != $config['order_processing'];
+        });
         $I->click('#search_form > div.row.btn_area > div > button');
-        $I->see('検索結果 3 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
 
         /* ダウンロード（ダウンロードはチェックできないので、テスト不可） */
         $I->click('#main > div > div.row > div > div > div.box-body > div > div > ul > li:nth-child(2) > a');
@@ -75,8 +83,12 @@ class EA04OrderCest
         $I->amOnPage('/'.$config['admin_route'].'/order');
         $I->see('受注管理受注マスター', '#main .page-header');
 
+        $findOrders = Fixtures::get('findOrders'); // Closure
+        $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
+            return $Order->getOrderStatus()->getId() != $config['order_processing'];
+        });
         $I->click('#search_form > div.row.btn_area > div > button');
-        $I->see('検索結果 3 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
 
         /* 編集 */
         $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
@@ -119,8 +131,12 @@ class EA04OrderCest
         $I->amOnPage('/'.$config['admin_route'].'/order');
         $I->see('受注管理受注マスター', '#main .page-header');
 
+        $findOrders = Fixtures::get('findOrders'); // Closure
+        $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
+            return $Order->getOrderStatus()->getId() != $config['order_processing'];
+        });
         $I->click('#search_form > div.row.btn_area > div > button');
-        $I->see('検索結果 3 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
 
         $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
         $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(2) > a');
@@ -135,8 +151,12 @@ class EA04OrderCest
         $I->amOnPage('/'.$config['admin_route'].'/order');
         $I->see('受注管理受注マスター', '#main .page-header');
 
+        $findOrders = Fixtures::get('findOrders'); // Closure
+        $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
+            return $Order->getOrderStatus()->getId() != $config['order_processing'];
+        });
         $I->click('#search_form > div.row.btn_area > div > button');
-        $I->see('検索結果 2 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
 
         $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > a');
         $I->click('#dropdown-form > div > div > table > tbody > tr:nth-child(1) > td.icon_edit > div > ul > li:nth-child(3) > a');
@@ -150,8 +170,12 @@ class EA04OrderCest
         $I->amOnPage('/'.$config['admin_route'].'/order');
         $I->see('受注管理受注マスター', '#main .page-header');
 
+        $findOrders = Fixtures::get('findOrders'); // Closure
+        $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
+            return $Order->getOrderStatus()->getId() != $config['order_processing'];
+        });
         $I->click('#search_form > div.row.btn_area > div > button');
-        $I->see('検索結果 2 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', '#main > div > div.row > div > div > div.box-header.with-arrow > h3');
 
         $I->click('#dropmenu > a');
         $I->click('#dropmenu > ul > li > a');

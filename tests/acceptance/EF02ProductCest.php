@@ -97,7 +97,7 @@ class EF02ProductCest
 
         // 各商品のサムネイルが表示される
         $config = Fixtures::get('test_config');
-        $productNum = $config['fixture_product_num'] + $config['fixture_customer_num'] + 2;
+        $productNum = $config['fixture_product_num'] + 2;
         $itemNum = ($productNum >= 15) ? 15 : $productNum;
         $products = $I->grabMultiple('#item_list .product_item');
         $I->assertTrue((count($products) == $itemNum));
@@ -106,9 +106,10 @@ class EF02ProductCest
         $I->selectOption(['css' => "#page_navi_top select[name = 'disp_number']"], '30件');
 
         // 変更された表示件数分が1画面に表示される
-        $itemNum = ($productNum >= 30) ? 30 : $productNum;
+        $expected = ($productNum >= 30) ? 30 : $productNum;
         $products = $I->grabMultiple('#item_list .product_item');
-        $I->assertTrue((count($products) == $itemNum));
+        $actual = count($products);
+        $I->assertEquals($expected, $actual, $expected.' と '.$actual.' が異なります');
     }
 
     public function product_商品一覧ページング(\AcceptanceTester $I)
