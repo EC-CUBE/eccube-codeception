@@ -24,6 +24,7 @@ class EF02ProductCest
 
         // TOPページ>商品一覧（ヘッダーのいずれかのカテゴリを選択）へ遷移
         $I->moveMouseOver(['css' => '#category .category-nav li:nth-child(2)']);
+        $I->wait(3);
         $I->click('#header #category ul li:nth-child(2) ul li:nth-child(1) a');
 
         // 登録商品がカテゴリごとに一覧表示される
@@ -48,6 +49,7 @@ class EF02ProductCest
 
         // TOPページ>商品一覧（ヘッダーのいずれかのカテゴリを選択）へ遷移
         $I->moveMouseOver(['css' => '#category .category-nav li:nth-child(2)']);
+        $I->wait(3);
         $I->click('#header #category ul li:nth-child(2) a');
 
         // 各商品のサムネイルが表示される デフォルトは価格順
@@ -93,6 +95,7 @@ class EF02ProductCest
 
         // TOPページ>商品一覧（ヘッダーのいずれかのカテゴリを選択）へ遷移
         $I->moveMouseOver(['css' => '#category .category-nav li:nth-child(2)']);
+        $I->wait(3);
         $I->click('#header #category ul li:nth-child(2) a');
 
         // 各商品のサムネイルが表示される
@@ -119,6 +122,7 @@ class EF02ProductCest
 
         // TOPページ>商品一覧（ヘッダーのいずれかのカテゴリを選択）へ遷移
         $I->moveMouseOver(['css' => '#category .category-nav li:nth-child(2)']);
+        $I->wait(3);
         $I->click('#header #category ul li:nth-child(2) a');
 
         // 絞込検索条件では、検索数が多い場合、「次へ」「前へ」「ページ番号」が表示される
