@@ -151,3 +151,12 @@ $findProducts = function () use ($app) {
         ->getResult();
 };
 Fixtures::add('findProducts', $findProducts);
+
+$createCustomer = function ($email = null, $active = true) use ($app, $faker) {
+    if (is_null($email)) {
+        $email = microtime(true).'.'.$faker->safeEmail;
+    }
+    return createCustomer($app, $email, $active);
+};
+Fixtures::add('createCustomer', $createCustomer);
+

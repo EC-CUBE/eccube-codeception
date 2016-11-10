@@ -74,14 +74,13 @@ class EF06OtherCest
 
         // メールアドレスを入力する
         // 「次のページへ」ボタンを押下する
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(2);
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
         $I->resetEmails();
         $I->submitForm('#form1',[
             'login_email' => $customer->getEmail()
         ]);
         $I->see('パスワード発行メールの送信 完了', '#main .page-heading');
-        $I->wait(10);
 
         $I->seeEmailCount(2);
         foreach (array($customer->getEmail(), 'admin@example.com') as $email) {
