@@ -138,9 +138,6 @@ class EA05CustomerCest
         $I->assertEquals('2', $value);
     }
 
-    /**
-     * @group mail
-     */
     public function customer_仮会員メール再送(\AcceptanceTester $I)
     {
         $I->wantTo('EA0501-UC06-T01(& UC06-T02) 仮会員メール再送');

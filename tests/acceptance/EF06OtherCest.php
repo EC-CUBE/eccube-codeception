@@ -86,7 +86,6 @@ class EF06OtherCest
         foreach (array($customer->getEmail(), 'admin@example.com') as $email) {
             $I->seeInLastEmailSubjectTo($email, 'パスワード変更のご確認');
         }
-        $config = Fixtures::get('test_config');
         $url = $I->grabFromLastEmailTo($customer->getEmail(), '@/forgot/reset/(.*)@');
 
         $I->resetEmails();

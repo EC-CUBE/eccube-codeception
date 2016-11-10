@@ -38,7 +38,6 @@ class EF03OrderCest
     public function order_カート削除(\AcceptanceTester $I)
     {
         $I->wantTo('EF0301-UC01-T02 カート 削除');
-        $app = Fixtures::get('app');
         $createCustomer = Fixtures::get('createCustomer');
         $customer = $createCustomer();
         $I->loginAsMember($customer->getEmail(), 'password');
