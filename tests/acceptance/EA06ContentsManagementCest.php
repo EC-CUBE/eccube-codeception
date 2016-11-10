@@ -63,14 +63,33 @@ class EA06ContentsManagementCest
         $I->acceptPopup();
     }
 
+    /**
+     * @env firefox
+     * @env chrome
+     */
     public function contentsmanagement_ファイル管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0602-UC01-T01(& UC01-T02/UC01-T03/UC01-T04/UC01-T05/UC01-T06/UC01-T07) ファイル管理');
 
-        // TODO [upload] EA0602-UC01-T01 ファイル管理 アップロード
-        // TODO [download] EA0602-UC01-T02 ファイル管理 ダウンロード
-        // TODO [漏れ] EA0602-UC01-T03 ファイル管理 ファイル表示
-        // TODO [漏れ] EA0602-UC01-T04	ファイル管理 ファイル削除
+        /** @var FileManagePage $FileManagePage */
+        $FileManagePage = FileManagePage::go($I)
+            ->入力_ファイル('upload.txt')
+            ->アップロード();
+
+        $I->see('upload.txt', $FileManagePage->ファイル名(1));
+
+        $FileManagePage->一覧_ダウンロード(1);
+        $UploadedFile = $I->getLastDownloadFile('/^upload\.txt$/');
+        $I->assertEquals('This is uploaded file.', file_get_contents($UploadedFile));
+
+        $FileManagePage->一覧_表示(1);
+        $I->switchToNewWindow();
+        $I->see('This is uploaded file.');
+
+        FileManagePage::go($I)
+            ->一覧_削除(1);
+        $I->acceptPopup();
+        $I->dontSee('upload.txt', $FileManagePage->ファイル名(1));
 
         $FileManagePage = FileManagePage::go($I)
             ->入力_フォルダ名('folder1')

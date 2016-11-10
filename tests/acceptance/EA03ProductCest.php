@@ -372,9 +372,16 @@ class EA03ProductCest
     {
         $I->wantTo('EA0306-UC01-T01 商品CSV登録');
 
-        ProductCsvUploadPage::go($I);
+        ProductManagePage::go($I)->検索('アップロード商品');
+        $I->see('検索条件に該当するデータがありませんでした。', ProductManagePage::$検索結果_メッセージ);
 
-        /* TODO [upload] CSVのアップロードは不可 */
+        ProductCsvUploadPage::go($I)
+            ->入力_CSVファイル('product.csv')
+            ->CSVアップロード();
+        $I->see('商品登録CSVファイルをアップロードしました', CategoryCsvUploadPage::$完了メッセージ);
+
+        ProductManagePage::go($I)->検索('アップロード商品');
+        $I->see('検索結果 3 件 が該当しました', ProductManagePage::$検索結果_メッセージ);
     }
 
     /**
@@ -394,7 +401,19 @@ class EA03ProductCest
     {
         $I->wantTo('EA0307-UC01-T01(& UC01-T02) カテゴリCSV登録');
 
-        CategoryCsvUploadPage::go($I);
+        CategoryManagePage::go($I);
+        $I->dontSeeElement(['xpath' => '//div[@id="sortable_list_box"]//a[contains(text(), "アップロードカテゴリ")]']);
+
+        CategoryCsvUploadPage::go($I)
+            ->入力_CSVファイル('category.csv')
+            ->CSVアップロード();
+
+        $I->see('カテゴリ登録CSVファイルをアップロードしました', CategoryCsvUploadPage::$完了メッセージ);
+
+        CategoryManagePage::go($I);
+        $I->seeElement(['xpath' => '//div[@id="sortable_list_box"]//a[contains(text(), "アップロードカテゴリ1")]']);
+        $I->seeElement(['xpath' => '//div[@id="sortable_list_box"]//a[contains(text(), "アップロードカテゴリ2")]']);
+        $I->seeElement(['xpath' => '//div[@id="sortable_list_box"]//a[contains(text(), "アップロードカテゴリ3")]']);
     }
 
     /**
