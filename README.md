@@ -26,6 +26,11 @@ docker-compose build --no-cache
 docker-compose run --rm codecept run -d --env default --html report.html
 ```
 
+ローカルでの確認用にポートを固定したい場合は、`docker-compose.dev.yml`も読み込んでください。(並列実行時には利用できません。)
+```
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm codecept run -d --env default --html report.html
+```
+
 ### 並列実行
 
 `--project-name <project name> run -d` オプションで並列実行が可能です。
