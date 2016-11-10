@@ -182,4 +182,18 @@ class AcceptanceTester extends \Codeception\Actor
             $webdriver->switchTo()->window($last_window);
         });
     }
+
+    /**
+     * dontSeeElementが遅いのでJSで存在チェックを行う。
+     * @param array|$arrayOfSelector IDセレクタの配列
+     */
+    public function dontSeeElements($arrayOfSelector)
+    {
+        $self = $this;
+        $result = array_filter($arrayOfSelector, function($element) use ($self) {
+            $id = $element['id'];
+            return $self->executeJS("return document.getElementById('${id}') != null;");
+        });
+        $this->assertTrue(empty($result));
+    }
 }

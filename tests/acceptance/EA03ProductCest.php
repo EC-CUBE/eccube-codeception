@@ -223,9 +223,40 @@ class EA03ProductCest
     {
         $I->wantTo('EA0302-UC01-T04 商品編集 規格あり');
 
-        /**
-         * TODO [other] テストの意味が不明？旧バージョンの内容？
-         */
+        // 規格なし商品では商品種別等が編集可能
+        ProductManagePage::go($I)
+            ->検索('パーコレーター')
+            ->検索結果_選択(1);
+        ProductEditPage::at($I);
+
+        $I->click(['css' => '#detail_box__price01 > a']);
+        $I->click(['css' => '#sub_detail_box__toggle > h3']);
+        $I->seeElement(ProductEditPage::$商品種別);
+        $I->seeElement(ProductEditPage::$販売価格);
+        $I->waitForElement(ProductEditPage::$通常価格);
+        $I->seeElement(ProductEditPage::$在庫数);
+        $I->waitForElement(ProductEditPage::$商品コード);
+        $I->seeElement(ProductEditPage::$販売制限数);
+        $I->seeElement(ProductEditPage::$お届可能日);
+
+        // 規格あり商品では商品種別等が編集不可
+        ProductManagePage::go($I)
+            ->検索('ディナーフォーク')
+            ->検索結果_選択(1);
+        $ProductEditPage = ProductEditPage::at($I);
+
+        $I->dontSeeElements([
+            ProductEditPage::$商品種別,
+            ProductEditPage::$販売価格,
+            ProductEditPage::$通常価格,
+            ProductEditPage::$在庫数,
+            ProductEditPage::$商品コード,
+            ProductEditPage::$販売制限数,
+            ProductEditPage::$お届可能日
+        ]);
+
+        $ProductEditPage->登録();
+        $I->see('登録が完了しました。', ProductEditPage::$登録結果メッセージ);
     }
 
     public function product_一覧からの商品削除(\AcceptanceTester $I)
