@@ -116,12 +116,10 @@ class EA03ProductCest
         $I->checkOption(['id' => 'form_product_classes_1_add']);
         $I->checkOption(['id' => 'form_product_classes_2_add']);
 
-        /**
-        TODO [other] ボタン押した後POSTされるが、POST処理後同ページにredirectしており、結果をcodeceptionでハンドリングできない...
         $I->click("#product-class-form div:nth-child(3) .btn_area button");
+        $I->waitForElement(['css' => '#main .container-fluid div:nth-child(1) .alert-success']);
         $I->see('商品規格を登録しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->see('商品規格を初期化', '#delete');
-        */
     }
 
     public function product_一覧からの規格編集規格あり2(\AcceptanceTester $I)
