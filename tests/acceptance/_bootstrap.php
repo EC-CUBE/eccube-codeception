@@ -26,6 +26,7 @@ use Eccube\Entity\Customer;
 use Eccube\Entity\Master\CustomerStatus;
 
 $faker = Faker::create('ja_JP');
+Fixtures::add('faker', $faker);
 $num = $app['orm.em']->getRepository('Eccube\Entity\Customer')
     ->createQueryBuilder('o')
     ->select('count(o.id)')
@@ -66,7 +67,7 @@ foreach ($Customers as $Customer) {
     $discount = $faker->randomNumber(4);
     for ($i = 0; $i < $config['fixture_order_num']; $i++) {
         $Status = $app['eccube.repository.order_status']->find($faker->numberBetween(1, 8));
-        $OrdeDate = $faker->dateTimeThisYear();
+        $OrderDate = $faker->dateTimeThisYear();
         createOrder($app, $Customer, $Product->getProductClasses()->toArray(), $Delivery, $charge, $discount, $Status, $OrderDate);
     }
 }
@@ -160,3 +161,17 @@ $createCustomer = function ($email = null, $active = true) use ($app, $faker) {
 };
 Fixtures::add('createCustomer', $createCustomer);
 
+$createOrders = function ($Customer, $numberOfOrders = 5) use ($app, $faker) {
+    $Orders = array();
+    for ($i = 0; $i < $numberOfOrders; $i++) {
+        $Order = $app['eccube.fixture.generator']->createOrder($Customer);
+        $Status = $app['eccube.repository.order_status']->find($faker->numberBetween(1, 7));
+        $OrderDate = $faker->dateTimeThisYear();
+        $Order->setOrderStatus($Status);
+        $Order->setOrderDate($OrderDate);
+        $app['orm.em']->flush($Order);
+        $Orders[] = $Order;
+    }
+    return $Orders;
+};
+Fixtures::add('createOrders', $createOrders);

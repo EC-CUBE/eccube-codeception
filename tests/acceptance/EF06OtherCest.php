@@ -23,8 +23,8 @@ class EF06OtherCest
         $I->wantTo('EF0601-UC01-T01 ログイン 正常パターン');
         $I->logoutAsMember();
 
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(3);
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
         $I->loginAsMember($customer->getEmail(), 'password');
     }
 
@@ -33,8 +33,8 @@ class EF06OtherCest
         $I->wantTo('EF0601-UC01-T02 ログイン 異常パターン(仮会員)');
         $I->logoutAsMember();
 
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->findOneBy(array('Status' => CustomerStatus::NONACTIVE));
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer(null, false);
 
         $I->amOnPage('/mypage/login');
         $I->submitForm('#login_mypage', [
@@ -105,8 +105,8 @@ class EF06OtherCest
         $I->wantTo('EF0603-UC01-T01 ログアウト');
         $I->logoutAsMember();
 
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(3);
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
         $I->loginAsMember($customer->getEmail(), 'password');
 
         $I->logoutAsMember();

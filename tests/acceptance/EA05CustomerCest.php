@@ -29,8 +29,8 @@ class EA05CustomerCest
         $I->amOnPage('/'.$config['admin_route'].'/customer');
         $I->see('会員管理会員マスター', '#main .page-header');
 
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(1);
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
 
         $I->fillField(['id' => 'admin_search_customer_multi'], $customer->getEmail());
         $I->click('#search_form > div.search-box > div.row.btn_area > div > button');
@@ -118,8 +118,8 @@ class EA05CustomerCest
         $I->amOnPage('/'.$config['admin_route'].'/customer');
         $I->see('会員管理会員マスター', '#main .page-header');
 
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(1);
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
 
         $I->fillField(['id' => 'admin_search_customer_multi'], $customer->getEmail());
         $I->click('#search_form > div.search-box > div.row.btn_area > div > button');

@@ -20,8 +20,8 @@ class EF03OrderCest
     public function order_カート買い物を続ける(\AcceptanceTester $I)
     {
         $I->wantTo('EF0301-UC01-T01 カート 買い物を続ける');
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(3);
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // 商品詳細パーコレータ カートへ
@@ -39,7 +39,8 @@ class EF03OrderCest
     {
         $I->wantTo('EF0301-UC01-T02 カート 削除');
         $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(3);
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // 商品詳細パーコレータ カートへ
@@ -56,8 +57,9 @@ class EF03OrderCest
     public function order_カート数量増やす(\AcceptanceTester $I)
     {
         $I->wantTo('EF0301-UC01-T03 カート 数量増やす');
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(3);
+
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // 商品詳細パーコレータ カートへ
@@ -75,8 +77,8 @@ class EF03OrderCest
     public function order_カート数量減らす(\AcceptanceTester $I)
     {
         $I->wantTo('EF0301-UC01-T04 カート 数量減らす');
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(3);
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // 商品詳細パーコレータ カートへ
@@ -94,8 +96,8 @@ class EF03OrderCest
     {
         $I->wantTo('EF0302-UC01-T01 ログインユーザ購入');
         $I->logoutAsMember();
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(3);
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
 
         // 商品詳細パーコレータ カートへ
         $I->amOnPage('products/detail/2');
