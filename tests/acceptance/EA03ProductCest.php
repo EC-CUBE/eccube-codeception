@@ -94,10 +94,8 @@ class EA03ProductCest
         $I->see('商品管理商品登録(商品規格)', self::ページタイトル);
 
         $I->click('#main > div > div > div > form > div > div.box-body > button');
-        $I->cantSee('検索結果 3 件 が該当しました', '#product-class-form > div:nth-child(2) > div > div > div.box-header > h3');
-        /**
-         TODO [html5] エラーになるが、html5のブラウザによるエラーハンドリングなのでチェックできない
-         */
+        $I->seeElement(['css' => '#form_class_name1:invalid']); //規格1がエラー
+        $I->dontSeeElement(['id' => 'result_box__list']);
     }
 
     public function product_一覧からの規格編集規格なし(\AcceptanceTester $I)

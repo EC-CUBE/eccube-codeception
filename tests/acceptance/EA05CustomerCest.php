@@ -55,7 +55,7 @@ class EA05CustomerCest
         $faker = Fixtures::get('faker');
         $email = microtime(true).'.'.$faker->safeEmail;
 
-        $CustomerRegisterPage = CustomerEditPage::go($I)
+        CustomerEditPage::go($I)
             ->入力_姓('testuser')
             ->入力_名('testuser')
             ->入力_セイ('テストユーザー')
@@ -74,14 +74,21 @@ class EA05CustomerCest
             ->登録();
 
         $I->see('会員情報を保存しました。', CustomerEditPage::$登録完了メッセージ);
+    }
 
-        $CustomerRegisterPage->登録();
-        /* TODO [html5] ブラウザによるhtml5のエラーなのでハンドリング不可 */
+    public function customer_会員登録_必須項目未入力(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0502-UC01-T02 会員登録_必須項目未入力');
+
+        CustomerEditPage::go($I)->登録();
+
+        $I->seeElement(['css' => '#admin_customer_name_name01:invalid']); // 姓がエラー
+        $I->dontSeeElement(CustomerEditPage::$登録完了メッセージ);
     }
 
     public function customer_会員編集(\AcceptanceTester $I)
     {
-        $I->wantTo('EA0502-UC02-T02(& UC02-T02) 会員編集');
+        $I->wantTo('EA0502-UC02-T01 会員編集');
 
         $createCustomer = Fixtures::get('createCustomer');
         $customer = $createCustomer();
@@ -101,7 +108,25 @@ class EA05CustomerCest
         $CustomerRegisterPage
             ->入力_姓('')
             ->登録();
-        /* TODO [html5] ブラウザによるhtml5のエラーなのでハンドリング不可 */
+    }
+
+    public function customer_会員編集_必須項目未入力(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0502-UC02-T02 会員編集_必須項目未入力');
+
+        $CustomerListPage = CustomerManagePage::go($I)
+            ->検索('test@test.test');
+
+        $I->see('検索結果 1 件 が該当しました',CustomerManagePage::$検索結果メッセージ);
+
+        $CustomerListPage->一覧_編集(1);
+
+        CustomerEditPage::at($I)
+            ->入力_姓('')
+            ->登録();
+
+        $I->seeElement(['css' => '#admin_customer_name_name01:invalid']);
+        $I->dontSeeElement(CustomerEditPage::$登録完了メッセージ);
     }
 
     public function customer_会員削除(\AcceptanceTester $I)
