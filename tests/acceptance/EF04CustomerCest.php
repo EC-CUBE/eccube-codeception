@@ -89,6 +89,9 @@ class EF04CustomerCest
         $I->wantTo('EF0401-UC01-T02 会員登録 異常パターン 重複');
         $I->amOnPage('/entry');
 
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
+
         // 会員情報入力フォームに、会員情報を入力する
         // 「同意する」ボタンを押下する
         $I->submitForm("#main_middle form",[
@@ -104,8 +107,8 @@ class EF04CustomerCest
             'entry[tel][tel01]' => '111',
             'entry[tel][tel02]' => '111',
             'entry[tel][tel03]' => '111',
-            'entry[email][first]' => 'acctest@ec-cube.net',
-            'entry[email][second]' => 'acctest@ec-cube.net',
+            'entry[email][first]' => $customer->getEmail(), // 会員登録済みのメールアドレスを入力する
+            'entry[email][second]' => $customer->getEmail(),
             'entry[password][first]' => 'password',
             'entry[password][second]' => 'password',
         ]);
