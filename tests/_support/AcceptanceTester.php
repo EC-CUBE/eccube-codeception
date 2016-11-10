@@ -147,7 +147,7 @@ class AcceptanceTester extends \Codeception\Actor
      * @return string ファイルパス
      * @throws FileNotFoundException 指定したパターンにマッチするファイルがない場合
      */
-    public function getLastDownloadFile($fileNameRegex)
+    public function getLastDownloadFile($fileNameRegex, $retryCount = 3)
     {
         $downloadDir = __DIR__ . '/_downloads/';
         $files = scandir($downloadDir);
@@ -162,6 +162,10 @@ class AcceptanceTester extends \Codeception\Actor
         });
 
         if (empty($files)) {
+            if ($retryCount > 0) {
+                $this->wait(3);
+                return $this->getLastDownloadFile($fileNameRegex, $retryCount - 1);
+            }
             throw new FileNotFoundException($fileNameRegex);
         }
         return end($files);
