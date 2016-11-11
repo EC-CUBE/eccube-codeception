@@ -48,9 +48,6 @@ class EF03OrderCest
 
         // 削除
         $I->makeEmptyCart();
-        /* ToDo: [popup] */
-        // 空にした後の状況を確認すること(popupの処理はmakeEmptyCart()内で)
-        // 「現在カート内に商品はございません。」など
     }
 
     public function order_カート数量増やす(\AcceptanceTester $I)
