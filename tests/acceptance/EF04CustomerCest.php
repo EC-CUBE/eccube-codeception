@@ -201,8 +201,8 @@ class EF04CustomerCest
         $I->amOnPage('/entry');
 
         $I->click('#main_middle form .form_terms_link a');
-        // TODO [new window] 別ウィンドウで開く
-        // codeceptionのwebdriverでは名前なしの別ウィンドウにアクセスできない...
-        //$I->see('利用規約', '#main .page-heading');
+
+        $I->switchToNewWindow();
+        $I->seeInCurrentUrl('/help/agreement');
     }
 }
