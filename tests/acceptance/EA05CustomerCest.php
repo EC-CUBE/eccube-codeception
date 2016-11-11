@@ -87,7 +87,7 @@ class EA05CustomerCest
         $customer = $createCustomer();
 
         $CustomerListPage = CustomerManagePage::go($I)
-            ->検索($Customer->getEmail());
+            ->検索($customer->getEmail());
 
         $I->see('検索結果 1 件 が該当しました',CustomerManagePage::$検索結果メッセージ);
 
