@@ -269,9 +269,24 @@ class EA08SysteminfoCest
     {
         $I->wantTo('EA0804-UC01-T04 セキュリティ管理 - SSL強制');
 
-        /**
-         * ToDo: [other] SSL環境を用意してテストすべし。今はナイ。。
-         */
+        $testConfig = Fixtures::get('test_config');
+
+        $I->amOnUrl('http://'.$testConfig['hostname'].'/');
+        $I->assertRegExp('/^http:\/\//', $I->executeJS('return location.href'), 'httpsにリダイレクトされない');
+
+        $config = Fixtures::get('config');
+        $I->amOnUrl('https://'.$testConfig['hostname'].'/'.$config['admin_route'].'/setting/system/security');
+        $I->checkOption(['id' => 'admin_security_force_ssl']);
+        $I->click('#aside_column div div div div div button');
+
+        // httpでアクセスしたらhttpsにリダイレクトされる
+        $I->amOnUrl('http://'.$testConfig['hostname'].'/');
+        $I->assertRegExp('/^https:\/\//', $I->executeJS('return location.href'), 'httpsにリダイレクトされる');
+
+        // 後続テストのために戻しておく
+        $I->amOnUrl('https://'.$testConfig['hostname'].'/'.$config['admin_route'].'/setting/system/security');
+        $I->uncheckOption(['id' => 'admin_security_force_ssl']);
+        $I->click('#aside_column div div div div div button');
     }
 
     // TODO [漏れ] EA0805-UC01-T01/UC01-T02/UC02-T01/UC02-T02/UC03-T01/UC03-T02/UC04-T01 テストケースが変わってる？
