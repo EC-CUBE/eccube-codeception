@@ -457,22 +457,15 @@ class EA03ProductCest
         $I->assertEquals(1, count(file($CategoryTemplateCSV)), 'ヘッダ行だけのファイル');
     }
 
-    /**
-     * XXX [new window] 確認リンクをクリックすると別ウィンドウが立ち上がるため、後続のテストが失敗してしまう...
-     */
     public function product_一覧からの商品確認(\AcceptanceTester $I)
     {
         $I->wantTo('EA0310-UC05-T01 一覧からの商品確認');
 
         ProductManagePage::go($I)
-            ->検索('フォーク')
-            ->検索結果_選択(1);
+            ->検索('パーコレーター')
+            ->検索結果_確認(1);
 
-        // 確認リンク クリック
-        // $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > ul > li:nth-child(2) > a');
-
-        /**
-         * 確認をクリックすると、別ウィンドウでフロント側の商品詳細ページが表示される為、phantomjsではハンドリングできない
-         */
+        $I->switchToNewWindow();
+        $I->seeInCurrentUrl('/products/detail/');
     }
 }

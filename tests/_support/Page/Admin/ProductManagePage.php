@@ -69,6 +69,18 @@ class ProductManagePage extends AbstractAdminPage
     }
 
     /**
+     * 検索結果の指定した行の確認。
+     * @param int $rowNum 検索結果の行番号(1から始まる)
+     * @return $this
+     */
+    public function 検索結果_確認($rowNum)
+    {
+        $this->検索結果_オプション($rowNum);
+        $this->tester->click("#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(2) > a");
+        return $this;
+    }
+
+    /**
      * 検索結果の指定した行を選択。
      * @param int $rowNum 検索結果の行番号(1から始まる)
      * @return $this
