@@ -22,6 +22,7 @@ class EF04CustomerCest
         $I->wantTo('EF0401-UC01-T01 会員登録 正常パターン');
         $I->amOnPage('/entry');
         $faker = Fixtures::get('faker');
+        $BaseInfo = Fixtures::get('baseinfo');
         $new_email = microtime(true).'.'.$faker->safeEmail;
         // 会員情報入力フォームに、会員情報を入力する
         // 「同意する」ボタンを押下する
@@ -54,7 +55,7 @@ class EF04CustomerCest
         $I->click('#main_middle form .btn_group p:nth-child(1) button');
 
         $I->seeEmailCount(2);
-        foreach (array($new_email, 'admin@example.com') as $email) {
+        foreach (array($new_email, $BaseInfo->getEmail01()) as $email) {
             $I->seeInLastEmailSubjectTo($email, '会員登録のご確認');
             $I->seeInLastEmailTo($email, '姓 名 様');
             $I->seeInLastEmailTo($email, 'この度は会員登録依頼をいただきまして、有り難うございます。');
@@ -74,7 +75,7 @@ class EF04CustomerCest
         $I->see('新規会員登録（完了）', '#contents #main #main_middle h1');
 
         $I->seeEmailCount(2);
-        foreach (array($new_email, 'admin@example.com') as $email) {
+        foreach (array($new_email, $BaseInfo->getEmail01()) as $email) {
             $I->seeInLastEmailSubjectTo($email, '会員登録が完了しました。');
             $I->seeInLastEmailTo($email, '姓 名 様');
             $I->seeInLastEmailTo($email, '本会員登録が完了いたしました。');
@@ -122,6 +123,9 @@ class EF04CustomerCest
         $I->wantTo('EF0401-UC01-T03 会員登録 異常パターン 入力ミス');
         $I->amOnPage('/entry');
 
+        $faker = Fixtures::get('faker');
+        $new_email = microtime(true).'.'.$faker->safeEmail;
+
         // 会員情報入力フォームに、会員情報を入力する
         // 「同意する」ボタンを押下する
         $I->submitForm("#main_middle form",[
@@ -137,8 +141,8 @@ class EF04CustomerCest
             'entry[tel][tel01]' => '111',
             'entry[tel][tel02]' => '111',
             'entry[tel][tel03]' => '111',
-            'entry[email][first]' => 'acctest@ec-cube.net',
-            'entry[email][second]' => 'acctest@ec-cube.net',
+            'entry[email][first]' => $new_email,
+            'entry[email][second]' => $new_email,
             'entry[password][first]' => 'password',
             'entry[password][second]' => 'password',
         ]);
@@ -161,6 +165,9 @@ class EF04CustomerCest
         $I->wantTo('EF0401-UC01-T05 会員登録 戻るボタン');
         $I->amOnPage('/entry');
 
+        $faker = Fixtures::get('faker');
+        $new_email = microtime(true).'.'.$faker->safeEmail;
+
         // 会員情報入力フォームに、会員情報を入力する
         // 「同意する」ボタンを押下する
         $I->submitForm("#main_middle form",[
@@ -176,8 +183,8 @@ class EF04CustomerCest
             'entry[tel][tel01]' => '111',
             'entry[tel][tel02]' => '111',
             'entry[tel][tel03]' => '111',
-            'entry[email][first]' => 'acctest2@ec-cube.net',
-            'entry[email][second]' => 'acctest2@ec-cube.net',
+            'entry[email][first]' => $new_email,
+            'entry[email][second]' => $new_email,
             'entry[password][first]' => 'password',
             'entry[password][second]' => 'password',
         ]);

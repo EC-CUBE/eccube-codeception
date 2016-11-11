@@ -97,6 +97,7 @@ class EF03OrderCest
         $I->logoutAsMember();
         $createCustomer = Fixtures::get('createCustomer');
         $customer = $createCustomer();
+        $BaseInfo = Fixtures::get('baseinfo');
 
         // 商品詳細パーコレータ カートへ
         $I->amOnPage('products/detail/2');
@@ -134,7 +135,7 @@ class EF03OrderCest
 
         // メール確認
         $I->seeEmailCount(2);
-        foreach (array($customer->getEmail(), 'admin@example.com') as $email) {
+        foreach (array($customer->getEmail(), $BaseInfo->getEmail01()) as $email) {
             // TODO 注文した商品の内容もチェックしたい
             $I->seeInLastEmailSubjectTo($email, 'ご注文ありがとうございます');
             $I->seeInLastEmailTo($email, $customer->getName01().' '.$customer->getName02().' 様');
@@ -154,6 +155,10 @@ class EF03OrderCest
     {
         $I->wantTo('EF0302-UC02-T01 ゲスト購入');
         $I->logoutAsMember();
+
+        $faker = Fixtures::get('faker');
+        $new_email = microtime(true).'.'.$faker->safeEmail;
+        $BaseInfo = Fixtures::get('baseinfo');
 
         // 商品詳細パーコレータ カートへ
         $I->amOnPage('products/detail/2');
@@ -180,8 +185,8 @@ class EF03OrderCest
             'nonmember[tel][tel01]' => '111',
             'nonmember[tel][tel02]' => '111',
             'nonmember[tel][tel03]' => '111',
-            'nonmember[email][first]' => 'acctest03@ec-cube.net',
-            'nonmember[email][second]' => 'acctest03@ec-cube.net',
+            'nonmember[email][first]' => $new_email,
+            'nonmember[email][second]' => $new_email,
         ]);
 
         // 確認
@@ -203,7 +208,7 @@ class EF03OrderCest
         // 確認
         $I->see('ご注文完了', '#main_middle .page-heading');
         $I->seeEmailCount(2);
-        foreach (array('acctest03@ec-cube.net', 'admin@example.com') as $email) {
+        foreach (array($new_email, $BaseInfo->getEmail01()) as $email) {
             // TODO 注文した商品の内容もチェックしたい
             $I->seeInLastEmailSubjectTo($email, 'ご注文ありがとうございます');
             $I->seeInLastEmailTo($email, '姓03 名03 様');
@@ -211,7 +216,7 @@ class EF03OrderCest
             $I->seeInLastEmailTo($email, '郵便番号：〒530-0001');
             $I->seeInLastEmailTo($email, '住所　　：大阪府大阪市北区梅田2-4-9 ブリーゼタワー13F');
             $I->seeInLastEmailTo($email, '電話番号：111-111-111');
-            $I->seeInLastEmailTo($email, 'メールアドレス：acctest03@ec-cube.net');
+            $I->seeInLastEmailTo($email, 'メールアドレス：'.$new_email);
         }
         // topへ
         $I->click('#main_middle #deliveradd_input .btn_group p a');
@@ -222,6 +227,10 @@ class EF03OrderCest
     {
         $I->wantTo('EF0305-UC02-T01 ゲスト購入 情報変更'); // EF0305-UC04-T01も一緒にテスト
         $I->logoutAsMember();
+
+        $faker = Fixtures::get('faker');
+        $new_email = microtime(true).'.'.$faker->safeEmail;
+        $BaseInfo = Fixtures::get('baseinfo');
 
         // 商品詳細パーコレータ カートへ
         $I->amOnPage('products/detail/2');
@@ -248,8 +257,8 @@ class EF03OrderCest
             'nonmember[tel][tel01]' => '111',
             'nonmember[tel][tel02]' => '111',
             'nonmember[tel][tel03]' => '111',
-            'nonmember[email][first]' => 'acctest03@ec-cube.net',
-            'nonmember[email][second]' => 'acctest03@ec-cube.net',
+            'nonmember[email][first]' => $new_email,
+            'nonmember[email][second]' => $new_email,
         ]);
 
         // 確認
@@ -287,7 +296,7 @@ class EF03OrderCest
         $I->see('ご注文完了', '#main_middle .page-heading');
 
         $I->seeEmailCount(2);
-        foreach (array('acctest03@ec-cube.net', 'admin@example.com') as $email) {
+        foreach (array($new_email, $BaseInfo->getEmail01()) as $email) {
             // TODO 注文した商品の内容もチェックしたい
             $I->seeInLastEmailSubjectTo($email, 'ご注文ありがとうございます');
             $I->seeInLastEmailTo($email, '姓0301 名03 様');
@@ -295,7 +304,7 @@ class EF03OrderCest
             $I->seeInLastEmailTo($email, '郵便番号：〒530-0001');
             $I->seeInLastEmailTo($email, '住所　　：大阪府大阪市北区梅田2-4-9 ブリーゼタワー13F');
             $I->seeInLastEmailTo($email, '電話番号：111-111-111');
-            $I->seeInLastEmailTo($email, 'メールアドレス：acctest03@ec-cube.net');
+            $I->seeInLastEmailTo($email, 'メールアドレス：'.$new_email);
         }
 
         // topへ

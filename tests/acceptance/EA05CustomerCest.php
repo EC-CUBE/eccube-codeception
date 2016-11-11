@@ -41,15 +41,19 @@ class EA05CustomerCest
     public function customer_検索結果なし(\AcceptanceTester $I)
     {
         $I->wantTo('EA0501-UC01-T02 検索 結果なし');
+        $faker = Fixtures::get('faker');
+        $email = microtime(true).'.'.$faker->safeEmail;
 
         CustomerManagePage::go($I)
-            ->検索('testacount@ec-cube.com');
+            ->検索($email);
         $I->see('検索条件に該当するデータがありませんでした。', CustomerManagePage::$検索結果メッセージ);
     }
 
     public function customer_会員登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0502-UC01-T02(& UC01-T02) 会員登録');
+        $faker = Fixtures::get('faker');
+        $email = microtime(true).'.'.$faker->safeEmail;
 
         $CustomerRegisterPage = CustomerEditPage::go($I)
             ->入力_姓('testuser')
@@ -61,7 +65,7 @@ class EA05CustomerCest
             ->入力_郵便番号2('0001')
             ->入力_市区町村名('大阪市北区梅田2-4-9')
             ->入力_番地_ビル名('ブリーゼタワー13F')
-            ->入力_Eメール('test@test.test')
+            ->入力_Eメール($email)
             ->入力_電話番号1('111')
             ->入力_電話番号2('111')
             ->入力_電話番号3('111')
@@ -79,8 +83,11 @@ class EA05CustomerCest
     {
         $I->wantTo('EA0502-UC02-T02(& UC02-T02) 会員編集');
 
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
+
         $CustomerListPage = CustomerManagePage::go($I)
-            ->検索('test@test.test');
+            ->検索($Customer->getEmail());
 
         $I->see('検索結果 1 件 が該当しました',CustomerManagePage::$検索結果メッセージ);
 
@@ -146,6 +153,7 @@ class EA05CustomerCest
 
         $createCustomer = Fixtures::get('createCustomer');
         $customer = $createCustomer(null, false);
+        $BaseInfo = Fixtures::get('baseinfo');
 
         CustomerManagePage::go($I)
             ->検索($customer->getEmail())
@@ -154,7 +162,7 @@ class EA05CustomerCest
         $I->wait(10);
 
         $I->seeEmailCount(2);
-        foreach (array($customer->getEmail(), 'admin@example.com') as $email) {
+        foreach (array($customer->getEmail(), $BaseInfo->getEmail01()) as $email) {
             $I->seeInLastEmailSubjectTo($email, '会員登録のご確認');
             $I->seeInLastEmailTo($email, $customer->getName01().' '.$customer->getName02().' 様');
         }
