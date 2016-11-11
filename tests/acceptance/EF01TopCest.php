@@ -92,6 +92,7 @@ class EF01TopCest
 
         // カテゴリを選択、そのまま続けて子カテゴリを選択する
         $I->moveMouseOver(['css' => '#category .category-nav li:nth-child(2)']);
+        $I->wait(3);
         $I->click('#header #category ul li:nth-child(2) ul li:nth-child(1) a');
 
         // 商品一覧の上部に、選択されたカテゴリとその親カテゴリのリンクが表示される

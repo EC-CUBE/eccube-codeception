@@ -21,7 +21,8 @@ class EF04CustomerCest
     {
         $I->wantTo('EF0401-UC01-T01 会員登録 正常パターン');
         $I->amOnPage('/entry');
-
+        $faker = Fixtures::get('faker');
+        $new_email = microtime(true).'.'.$faker->safeEmail;
         // 会員情報入力フォームに、会員情報を入力する
         // 「同意する」ボタンを押下する
         $I->submitForm("#main_middle form",[
@@ -37,8 +38,8 @@ class EF04CustomerCest
             'entry[tel][tel01]' => '111',
             'entry[tel][tel02]' => '111',
             'entry[tel][tel03]' => '111',
-            'entry[email][first]' => 'acctest@ec-cube.net',
-            'entry[email][second]' => 'acctest@ec-cube.net',
+            'entry[email][first]' => $new_email,
+            'entry[email][second]' => $new_email,
             'entry[password][first]' => 'password',
             'entry[password][second]' => 'password',
         ]);
@@ -46,23 +47,39 @@ class EF04CustomerCest
         // 入力した会員情報を確認する。
         $I->see('姓 名', '#main_middle form .dl_table dl:nth-child(1) dd');
         $I->see('111 - 111 - 111', '#main_middle form .dl_table dl:nth-child(5) dd');
-        $I->see('acctest@ec-cube.net', '#main_middle form .dl_table dl:nth-child(7) dd');
+        $I->see($new_email, '#main_middle form .dl_table dl:nth-child(7) dd');
 
+        $I->resetEmails();
         // 「会員登録をする」ボタンを押下する
         $I->click('#main_middle form .btn_group p:nth-child(1) button');
+
+        $I->seeEmailCount(2);
+        foreach (array($new_email, 'admin@example.com') as $email) {
+            $I->seeInLastEmailSubjectTo($email, '会員登録のご確認');
+            $I->seeInLastEmailTo($email, '姓 名 様');
+            $I->seeInLastEmailTo($email, 'この度は会員登録依頼をいただきまして、有り難うございます。');
+        }
 
         // 「トップページへ」ボタンを押下する
         $I->click('#main_middle .btn_group p a');
         $I->see('新着情報', '#contents_bottom #news_area h2');
 
-        // 仮会員情報取得
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->findOneBy(array('name01' => '姓'));
-        $activateUrl = $app->path('entry_activate', array('secret_key' => $customer->getSecretKey()));
+
+        // アクティベートURL取得
+        $activateUrl = $I->grabFromLastEmailTo($new_email, '@/entry/activate/(.*)@');
+        $I->resetEmails();
 
         // アクティベートURLからトップページへ
         $I->amOnPage($activateUrl);
         $I->see('新規会員登録（完了）', '#contents #main #main_middle h1');
+
+        $I->seeEmailCount(2);
+        foreach (array($new_email, 'admin@example.com') as $email) {
+            $I->seeInLastEmailSubjectTo($email, '会員登録が完了しました。');
+            $I->seeInLastEmailTo($email, '姓 名 様');
+            $I->seeInLastEmailTo($email, '本会員登録が完了いたしました。');
+        }
+
         $I->click('#main_middle .btn_group p a');
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
@@ -72,6 +89,9 @@ class EF04CustomerCest
         $I->wantTo('EF0401-UC01-T02 会員登録 異常パターン 重複');
         $I->amOnPage('/entry');
 
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
+
         // 会員情報入力フォームに、会員情報を入力する
         // 「同意する」ボタンを押下する
         $I->submitForm("#main_middle form",[
@@ -87,8 +107,8 @@ class EF04CustomerCest
             'entry[tel][tel01]' => '111',
             'entry[tel][tel02]' => '111',
             'entry[tel][tel03]' => '111',
-            'entry[email][first]' => 'acctest@ec-cube.net',
-            'entry[email][second]' => 'acctest@ec-cube.net',
+            'entry[email][first]' => $customer->getEmail(), // 会員登録済みのメールアドレスを入力する
+            'entry[email][second]' => $customer->getEmail(),
             'entry[password][first]' => 'password',
             'entry[password][second]' => 'password',
         ]);

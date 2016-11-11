@@ -19,6 +19,7 @@ $app->initialize();
 $app->initializePlugin();
 $app->register(new \Eccube\Tests\ServiceProvider\FixtureServiceProvider());
 $app->boot();
+// この Fixture は Cest ではできるだけ使用せず, 用途に応じた Fixture を使用すること
 Fixtures::add('app', $app);
 
 use Eccube\Common\Constant;
@@ -26,6 +27,7 @@ use Eccube\Entity\Customer;
 use Eccube\Entity\Master\CustomerStatus;
 
 $faker = Faker::create('ja_JP');
+Fixtures::add('faker', $faker);
 $num = $app['orm.em']->getRepository('Eccube\Entity\Customer')
     ->createQueryBuilder('o')
     ->select('count(o.id)')
@@ -66,7 +68,7 @@ foreach ($Customers as $Customer) {
     $discount = $faker->randomNumber(4);
     for ($i = 0; $i < $config['fixture_order_num']; $i++) {
         $Status = $app['eccube.repository.order_status']->find($faker->numberBetween(1, 8));
-        $OrdeDate = $faker->dateTimeThisYear();
+        $OrderDate = $faker->dateTimeThisYear();
         createOrder($app, $Customer, $Product->getProductClasses()->toArray(), $Delivery, $charge, $discount, $Status, $OrderDate);
     }
 }
@@ -106,24 +108,28 @@ function createOrder($app, Customer $Customer, array $ProductClasses, $Delivery,
  * ちなみに、Fixturesとは関係なく、CodeceptionのDbモジュールで直接データベースを利用する場合は、
  * [codeception path]/codeception.ymlのDbセクションに対象eccubeで利用しているデータベースへの接続情報を記述して利用する
  */
+
+/** 管理画面アカウント情報. */
 Fixtures::add('admin_account',array(
     'member' => $config['admin_user'],
     'password' => $config['admin_password'],
 ));
+/** $app['config'] 情報. */
 Fixtures::add('config', $app['config']);
+
+/** config.ini 情報. */
 Fixtures::add('test_config', $config);
 
-$baseinfo = $app['orm.em']->getRepository('Eccube\Entity\BaseInfo')
-    ->createQueryBuilder('o')
-    ->getQuery()
-    ->getResult();
-Fixtures::add('baseinfo', $baseinfo[0]);
+$baseinfo = $app['orm.em']->getRepository('Eccube\Entity\BaseInfo')->get();
+/** BaseInfo. */
+Fixtures::add('baseinfo', $baseinfo);
 
 $categories = $app['orm.em']->getRepository('Eccube\Entity\Category')
     ->createQueryBuilder('o')
     ->where('o.del_flg = 0')
     ->getQuery()
     ->getResult();
+/** カテゴリ一覧の配列. */
 Fixtures::add('categories', $categories);
 
 $news = $app['orm.em']->getRepository('Eccube\Entity\News')
@@ -132,6 +138,7 @@ $news = $app['orm.em']->getRepository('Eccube\Entity\News')
     ->orderBy('o.date', 'DESC')
     ->getQuery()
     ->getResult();
+/** 新着情報一覧. */
 Fixtures::add('news', $news);
 
 $findOrders = function () use ($app) {
@@ -141,6 +148,7 @@ $findOrders = function () use ($app) {
     ->getQuery()
     ->getResult();
 };
+/** 受注を検索するクロージャ. */
 Fixtures::add('findOrders', $findOrders);
 
 $findProducts = function () use ($app) {
@@ -150,4 +158,30 @@ $findProducts = function () use ($app) {
         ->getQuery()
         ->getResult();
 };
+/** 商品を検索するクロージャ. */
 Fixtures::add('findProducts', $findProducts);
+
+$createCustomer = function ($email = null, $active = true) use ($app, $faker) {
+    if (is_null($email)) {
+        $email = microtime(true).'.'.$faker->safeEmail;
+    }
+    return createCustomer($app, $email, $active);
+};
+/** 会員を生成するクロージャ. */
+Fixtures::add('createCustomer', $createCustomer);
+
+$createOrders = function ($Customer, $numberOfOrders = 5) use ($app, $faker) {
+    $Orders = array();
+    for ($i = 0; $i < $numberOfOrders; $i++) {
+        $Order = $app['eccube.fixture.generator']->createOrder($Customer);
+        $Status = $app['eccube.repository.order_status']->find($faker->numberBetween(1, 7));
+        $OrderDate = $faker->dateTimeThisYear();
+        $Order->setOrderStatus($Status);
+        $Order->setOrderDate($OrderDate);
+        $app['orm.em']->flush($Order);
+        $Orders[] = $Order;
+    }
+    return $Orders;
+};
+/** 受注を生成するクロージャ. */
+Fixtures::add('createOrders', $createOrders);

@@ -31,8 +31,8 @@ class EA05CustomerCest
 
         $CustomerListPage = CustomerManagePage::go($I);
 
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(1);
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
 
         $CustomerListPage->検索($customer->getEmail());
         $I->see('検索結果 1 件 が該当しました', CustomerManagePage::$検索結果メッセージ);
@@ -101,8 +101,8 @@ class EA05CustomerCest
     {
         $I->wantTo('EA0501-UC03-T01(& UC03-T02) 会員削除');
 
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(1);
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
 
         CustomerManagePage::go($I)
             ->検索($customer->getEmail())
@@ -142,10 +142,21 @@ class EA05CustomerCest
     {
         $I->wantTo('EA0501-UC06-T01(& UC06-T02) 仮会員メール再送');
 
-        CustomerManagePage::go($I)
-            ->検索('test@test.test')
-            ->一覧_仮会員メール再送(1);
+        $I->resetEmails();
 
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer(null, false);
+
+        CustomerManagePage::go($I)
+            ->検索($customer->getEmail())
+            ->一覧_仮会員メール再送(1);
         $I->acceptPopup();
+        $I->wait(10);
+
+        $I->seeEmailCount(2);
+        foreach (array($customer->getEmail(), 'admin@example.com') as $email) {
+            $I->seeInLastEmailSubjectTo($email, '会員登録のご確認');
+            $I->seeInLastEmailTo($email, $customer->getName01().' '.$customer->getName02().' 様');
+        }
     }
 }

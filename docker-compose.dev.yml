@@ -6,3 +6,7 @@ services:
   browser:
     ports:
       - "5900:5900"
+  mailcatcher:
+    ports:
+      - "1080:1080"
+      - "1025:1025"

@@ -11,6 +11,7 @@ modules:
         - Db
         - WebDriver
         - Asserts
+        - MailCatcher
     config:
         Db:
             user: 'cube3_dev_user'
@@ -26,6 +27,9 @@ modules:
             wait: 10
             capabilities:
                 unexpectedAlertBehaviour: 'accept'
+        MailCatcher:
+            url: mailcatcher
+            port: 1080
 
 env:
     default:

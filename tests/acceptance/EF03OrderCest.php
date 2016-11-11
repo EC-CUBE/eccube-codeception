@@ -20,8 +20,8 @@ class EF03OrderCest
     public function order_カート買い物を続ける(\AcceptanceTester $I)
     {
         $I->wantTo('EF0301-UC01-T01 カート 買い物を続ける');
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(3);
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // 商品詳細パーコレータ カートへ
@@ -35,11 +35,11 @@ class EF03OrderCest
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
 
-    public function _order_カート削除(\AcceptanceTester $I)
+    public function order_カート削除(\AcceptanceTester $I)
     {
         $I->wantTo('EF0301-UC01-T02 カート 削除');
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(3);
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // 商品詳細パーコレータ カートへ
@@ -53,11 +53,12 @@ class EF03OrderCest
         // 「現在カート内に商品はございません。」など
     }
 
-    public function _order_カート数量増やす(\AcceptanceTester $I)
+    public function order_カート数量増やす(\AcceptanceTester $I)
     {
         $I->wantTo('EF0301-UC01-T03 カート 数量増やす');
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(3);
+
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // 商品詳細パーコレータ カートへ
@@ -72,11 +73,11 @@ class EF03OrderCest
 
     }
 
-    public function _order_カート数量減らす(\AcceptanceTester $I)
+    public function order_カート数量減らす(\AcceptanceTester $I)
     {
         $I->wantTo('EF0301-UC01-T04 カート 数量減らす');
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(3);
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // 商品詳細パーコレータ カートへ
@@ -90,12 +91,12 @@ class EF03OrderCest
         $I->see('1', '#main_middle .cart_item .item_box:nth-child(1) .item_quantity');
     }
 
-    public function _order_ログインユーザ購入(\AcceptanceTester $I)
+    public function order_ログインユーザ購入(\AcceptanceTester $I)
     {
         $I->wantTo('EF0302-UC01-T01 ログインユーザ購入');
         $I->logoutAsMember();
-        $app = Fixtures::get('app');
-        $customer = $app['orm.em']->getRepository('Eccube\Entity\Customer')->find(3);
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
 
         // 商品詳細パーコレータ カートへ
         $I->amOnPage('products/detail/2');
@@ -123,18 +124,33 @@ class EF03OrderCest
         $I->see('送料', '#main_middle #shopping-form #confirm_side');
         $I->see('合計', '#main_middle #shopping-form #confirm_side');
 
+        $I->resetEmails();
+
         // 注文
         $I->click('#main_middle #shopping-form #confirm_side .total_amount p:nth-child(2) button');
 
         // 確認
         $I->see('ご注文完了', '#main_middle .page-heading');
 
+        // メール確認
+        $I->seeEmailCount(2);
+        foreach (array($customer->getEmail(), 'admin@example.com') as $email) {
+            // TODO 注文した商品の内容もチェックしたい
+            $I->seeInLastEmailSubjectTo($email, 'ご注文ありがとうございます');
+            $I->seeInLastEmailTo($email, $customer->getName01().' '.$customer->getName02().' 様');
+            $I->seeInLastEmailTo($email, 'お名前　：'.$customer->getName01().$customer->getName02().'　様');
+            $I->seeInLastEmailTo($email, '郵便番号：〒'.$customer->getZip01().'-'.$customer->getZip02());
+            $I->seeInLastEmailTo($email, '住所　　：'.$customer->getPref()->getName().$customer->getAddr01().$customer->getAddr02());
+            $I->seeInLastEmailTo($email, '電話番号：'.$customer->getTel01().'-'.$customer->getTel02().'-'.$customer->getTel03());
+            $I->seeInLastEmailTo($email, 'メールアドレス：'.$customer->getEmail());
+        }
+
         // topへ
         $I->click('#main_middle #deliveradd_input .btn_group p a');
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
 
-    public function _order_ゲスト購入(\AcceptanceTester $I)
+    public function order_ゲスト購入(\AcceptanceTester $I)
     {
         $I->wantTo('EF0302-UC02-T01 ゲスト購入');
         $I->logoutAsMember();
@@ -180,18 +196,29 @@ class EF03OrderCest
         $I->see('送料', '#main_middle #shopping-form #confirm_side');
         $I->see('合計', '#main_middle #shopping-form #confirm_side');
 
+        $I->resetEmails();
         // 注文
         $I->click('#main_middle #shopping-form #confirm_side .total_amount p:nth-child(2) button');
 
         // 確認
         $I->see('ご注文完了', '#main_middle .page-heading');
-
+        $I->seeEmailCount(2);
+        foreach (array('acctest03@ec-cube.net', 'admin@example.com') as $email) {
+            // TODO 注文した商品の内容もチェックしたい
+            $I->seeInLastEmailSubjectTo($email, 'ご注文ありがとうございます');
+            $I->seeInLastEmailTo($email, '姓03 名03 様');
+            $I->seeInLastEmailTo($email, 'お名前　：姓03名03　様');
+            $I->seeInLastEmailTo($email, '郵便番号：〒530-0001');
+            $I->seeInLastEmailTo($email, '住所　　：大阪府大阪市北区梅田2-4-9 ブリーゼタワー13F');
+            $I->seeInLastEmailTo($email, '電話番号：111-111-111');
+            $I->seeInLastEmailTo($email, 'メールアドレス：acctest03@ec-cube.net');
+        }
         // topへ
         $I->click('#main_middle #deliveradd_input .btn_group p a');
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
 
-    public function _order_ゲスト購入情報変更(\AcceptanceTester $I)
+    public function order_ゲスト購入情報変更(\AcceptanceTester $I)
     {
         $I->wantTo('EF0305-UC02-T01 ゲスト購入 情報変更'); // EF0305-UC04-T01も一緒にテスト
         $I->logoutAsMember();
@@ -239,8 +266,10 @@ class EF03OrderCest
 
         // お客様情報変更
         $I->click('#main_middle #shopping-form #confirm_main #customer');
+        $I->wait(10);
         $I->fillField(['id' => 'edit0'], '姓0301');
         $I->click('#main_middle #shopping-form #confirm_main #customer-ok button');
+        $I->wait(10);
         $I->see('姓0301', '#main_middle #shopping-form #confirm_main .address');
 
         // 配送情報
@@ -250,11 +279,24 @@ class EF03OrderCest
         $I->click('#main_middle form .btn_group p:nth-child(1) button');
         $I->see('姓0302', '#main_middle #shopping-form #confirm_main .address');
 
+        $I->resetEmails();
         // 注文
         $I->click('#main_middle #shopping-form #confirm_side .total_amount p:nth-child(2) button');
 
         // 確認
         $I->see('ご注文完了', '#main_middle .page-heading');
+
+        $I->seeEmailCount(2);
+        foreach (array('acctest03@ec-cube.net', 'admin@example.com') as $email) {
+            // TODO 注文した商品の内容もチェックしたい
+            $I->seeInLastEmailSubjectTo($email, 'ご注文ありがとうございます');
+            $I->seeInLastEmailTo($email, '姓0301 名03 様');
+            $I->seeInLastEmailTo($email, 'お名前　：姓0302名03　様', '変更後のお届け先');
+            $I->seeInLastEmailTo($email, '郵便番号：〒530-0001');
+            $I->seeInLastEmailTo($email, '住所　　：大阪府大阪市北区梅田2-4-9 ブリーゼタワー13F');
+            $I->seeInLastEmailTo($email, '電話番号：111-111-111');
+            $I->seeInLastEmailTo($email, 'メールアドレス：acctest03@ec-cube.net');
+        }
 
         // topへ
         $I->click('#main_middle #deliveradd_input .btn_group p a');

@@ -6,6 +6,8 @@ cmd="$@"
 
 export DBSERVER=db
 export AUTH_MAGIC=XjosAXOzO1B3mE0egwQA
+export MAIL_HOST=mailcatcher
+export MAIL_PORT=1025
 
 echo "Waiting for mysql"
 until mysql -h db --password=password -uroot &> /dev/null
