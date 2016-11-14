@@ -276,7 +276,7 @@ class EA03ProductCest
 
         ProductClassPage::go($I)
             ->入力_規格名('test class1')
-            ->企画作成();
+            ->規格作成();
 
         $I->see('規格を保存しました。', ProductClassPage::$登録完了メッセージ);
     }
@@ -296,7 +296,7 @@ class EA03ProductCest
         $value = $I->grabValueFrom(ProductClassPage::$規格名);
         $I->assertEquals('test class1', $value);
 
-        $ProductClassPage->企画作成();
+        $ProductClassPage->規格作成();
 
         $I->see('規格を保存しました。', ProductClassPage::$登録完了メッセージ);
     }
@@ -366,7 +366,7 @@ class EA03ProductCest
 
         $ProductClassPage = ProductClassPage::go($I)
             ->入力_規格名('test class2')
-            ->企画作成();
+            ->規格作成();
 
         $I->see('規格を保存しました。', ProductClassPage::$登録完了メッセージ);
 
@@ -439,7 +439,35 @@ class EA03ProductCest
         $I->acceptPopup();
     }
 
-    // TODO [漏れ] EA0309-UC01-T01 カテゴリ表示順の変更
+    public function product_カテゴリ表示順の変更(\AcceptanceTester $I)
+    {
+        $I->wantTo("EA0309-UC01-T01 カテゴリ表示順の変更");
+
+        $CategoryPage = CategoryManagePage::go($I);
+        $I->see('インテリア', $CategoryPage->一覧_名称(2));
+        $I->see('キッチンツール', $CategoryPage->一覧_名称(3));
+        $I->see('新入荷', $CategoryPage->一覧_名称(4));
+
+        $CategoryPage->一覧_下に(2);
+        $I->see('キッチンツール', $CategoryPage->一覧_名称(2));
+        $I->see('インテリア', $CategoryPage->一覧_名称(3));
+        $I->see('新入荷', $CategoryPage->一覧_名称(4));
+
+        $CategoryPage->一覧_下に(3);
+        $I->see('キッチンツール', $CategoryPage->一覧_名称(2));
+        $I->see('新入荷', $CategoryPage->一覧_名称(3));
+        $I->see('インテリア', $CategoryPage->一覧_名称(4));
+
+        $CategoryPage->一覧_上に(4);
+        $I->see('キッチンツール', $CategoryPage->一覧_名称(2));
+        $I->see('インテリア', $CategoryPage->一覧_名称(3));
+        $I->see('新入荷', $CategoryPage->一覧_名称(4));
+
+        $CategoryPage->一覧_上に(3);
+        $I->see('インテリア', $CategoryPage->一覧_名称(2));
+        $I->see('キッチンツール', $CategoryPage->一覧_名称(3));
+        $I->see('新入荷', $CategoryPage->一覧_名称(4));
+    }
 
     public function product_商品CSV登録(\AcceptanceTester $I)
     {

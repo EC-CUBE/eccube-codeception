@@ -32,7 +32,7 @@ class ProductClassPage extends AbstractAdminPage
         return $this;
     }
 
-    public function 企画作成()
+    public function 規格作成()
     {
         $this->tester->click('#form1 > div > div > button');
         return $this;
