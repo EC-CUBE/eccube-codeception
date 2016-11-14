@@ -143,14 +143,18 @@ class EA06ContentsManagementCest
 
         /* レイアウト編集 */
         PageManagePage::go($I)->レイアウト編集(43);
-        //$I->dragAndDrop('#position_0 > div:nth-child(1)', '#position_5'); // TODO [other] ちゃんと動かない...ECCUBEが壊れる...
+        $I->dragAndDrop('#position_0 > div:nth-child(1)', '#position_5');
         LayoutEditPage::at($I)->登録();
-
-        // TODO [new window] EA0603-UC01-T05	レイアウトプレビュー
 
         $I->see('登録が完了しました。', LayoutEditPage::$登録完了メッセージ);
         $I->amOnPage('/user_data/page1');
         $I->see($config['shop_name'], '#header > div > div.header_logo_area > h1 > a');
+
+        PageManagePage::go($I)->レイアウト編集(43);
+        $I->dragAndDrop('#detail_box__layout_item--7', '#position_0');
+        LayoutEditPage::at($I)->プレビュー();
+
+        $I->switchToNewWindow();
 
         /* 削除 */
         PageManagePage::go($I)->削除(43);
