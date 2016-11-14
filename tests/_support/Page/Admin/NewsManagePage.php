@@ -49,10 +49,17 @@ class NewsManagePage extends AbstractAdminPage
 
     public function 一覧_タイトル($rowNum)
     {
-        return "#form1 > div > div > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(3)";
+        return $this->tester->grabTextFrom(['css' => "#form1 > div > div > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(3)"]);
     }
 
     public function 一覧_下へ($rowNum)
+    {
+        $this->一覧_メニュー($rowNum);
+        $this->tester->click("#form1 > div > div > table > tbody > tr:nth-child(${rowNum}) > td.icon_edit > div > ul > li:nth-child(3) > a");
+        return $this;
+    }
+
+    public function 一覧_上へ($rowNum)
     {
         $this->一覧_メニュー($rowNum);
         $this->tester->click("#form1 > div > div > table > tbody > tr:nth-child(${rowNum}) > td.icon_edit > div > ul > li:nth-child(3) > a");
