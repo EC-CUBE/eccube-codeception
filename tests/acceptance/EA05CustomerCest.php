@@ -131,18 +131,35 @@ class EA05CustomerCest
 
     public function customer_会員削除(\AcceptanceTester $I)
     {
-        $I->wantTo('EA0501-UC03-T01(& UC03-T02) 会員削除');
+        $I->wantTo('EA0501-UC03-T01 会員削除');
 
         $createCustomer = Fixtures::get('createCustomer');
         $customer = $createCustomer();
 
-        CustomerManagePage::go($I)
-            ->検索($customer->getEmail())
-            ->一覧_削除(1);
+        $CustomerManagePage = CustomerManagePage::go($I)
+            ->検索($customer->getEmail());
 
+        $CustomerManagePage->一覧_削除(1);
         $I->acceptPopup();
 
-        // TODO [漏れ] UC03-T02 会員削除キャンセル
+        $I->see('検索条件に該当するデータがありませんでした', CustomerManagePage::$検索結果メッセージ);
+    }
+
+    public function customer_会員削除キャンセル(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0501-UC03-T02 会員削除キャンセル');
+
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
+
+        $CustomerManagePage = CustomerManagePage::go($I)
+            ->検索($customer->getEmail());
+
+        $CustomerIdForNotDel = $CustomerManagePage->一覧_会員ID(1);
+        $CustomerManagePage->一覧_削除(1);
+        $I->cancelPopup();
+
+        $I->assertEquals($CustomerIdForNotDel, $CustomerManagePage->一覧_会員ID(1));
     }
 
     /**
