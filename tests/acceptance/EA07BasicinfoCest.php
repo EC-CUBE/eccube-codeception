@@ -206,23 +206,6 @@ class EA07BasicinfoCest
         $I->see('配送業者名1', $DeliveryManagePage->一覧_名称(1));
     }
 
-    public function basicinfo_配送方法一覧順序変更(\AcceptanceTester $I)
-    {
-        $I->wantTo('EA0706-UC02-T01 配送方法一覧順序変更');
-
-        $DeliveryManagePage = DeliveryManagePage::go($I);
-        $I->see('配送業者名1', $DeliveryManagePage->一覧_名称(1));
-        $I->see('サンプル業者', $DeliveryManagePage->一覧_名称(2));
-
-        $DeliveryManagePage->一覧_下に(1);
-        $I->see('サンプル業者', $DeliveryManagePage->一覧_名称(1));
-        $I->see('配送業者名1', $DeliveryManagePage->一覧_名称(2));
-
-        $DeliveryManagePage->一覧_上に(2);
-        $I->see('配送業者名1', $DeliveryManagePage->一覧_名称(1));
-        $I->see('サンプル業者', $DeliveryManagePage->一覧_名称(2));
-    }
-
     public function basicinfo_配送方法削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0706-UC03-T01 配送方法 削除');
@@ -231,6 +214,23 @@ class EA07BasicinfoCest
             ->一覧_削除(1);
 
         $I->acceptPopup();
+    }
+
+    public function basicinfo_配送方法一覧順序変更(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0706-UC02-T01 配送方法一覧順序変更');
+
+        $DeliveryManagePage = DeliveryManagePage::go($I);
+        $I->see('サンプル宅配', $DeliveryManagePage->一覧_名称(1));
+        $I->see('サンプル業者', $DeliveryManagePage->一覧_名称(2));
+
+        $DeliveryManagePage->一覧_下に(1);
+        $I->see('サンプル業者', $DeliveryManagePage->一覧_名称(1));
+        $I->see('サンプル宅配', $DeliveryManagePage->一覧_名称(2));
+
+        $DeliveryManagePage->一覧_上に(2);
+        $I->see('サンプル宅配', $DeliveryManagePage->一覧_名称(1));
+        $I->see('サンプル業者', $DeliveryManagePage->一覧_名称(2));
     }
 
     public function basicinfo_税率設定(\AcceptanceTester $I)
