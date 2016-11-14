@@ -206,7 +206,7 @@ class EA04OrderCest
 
         $I->resetEmails();
 
-        $OrderListPage = OrderManagePage::go($I)->検索('1000');
+        $OrderListPage = OrderManagePage::go($I)->検索('100');
         $I->see('検索結果 1 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
         $OrderListPage->一覧_メール通知(1);
@@ -217,14 +217,14 @@ class EA04OrderCest
 
         $I->seeEmailCount(2);
 
-        foreach (array('1479090757.2227.kudo.taro@example.net', 'admin@example.com') as $email) {
-            $I->seeInLastEmailSubjectTo($email, 'ご注文ありがとうございます');
-        }
+        $I->seeInLastEmailSubjectTo('admin@example.com', 'ご注文ありがとうございます');
     }
 
     public function order_一括メール通知(\AcceptanceTester $I)
     {
         $I->wantTo('EA0402-UC02-T01(& UC02-T02) 一括メール通知');
+
+        $I->resetEmails();
 
         $config = Fixtures::get('config');
         $findOrders = Fixtures::get('findOrders'); // Closure

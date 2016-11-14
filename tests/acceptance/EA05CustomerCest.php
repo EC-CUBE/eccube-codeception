@@ -114,8 +114,11 @@ class EA05CustomerCest
     {
         $I->wantTo('EA0502-UC02-T02 会員編集_必須項目未入力');
 
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
+
         $CustomerListPage = CustomerManagePage::go($I)
-            ->検索('test@test.test');
+            ->検索($customer->getEmail());
 
         $I->see('検索結果 1 件 が該当しました',CustomerManagePage::$検索結果メッセージ);
 

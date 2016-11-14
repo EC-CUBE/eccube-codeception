@@ -146,8 +146,6 @@ class EF03OrderCest
         // topへ
         $I->click('#main_middle #deliveradd_input .btn_group p a');
         $I->see('新着情報', '#contents_bottom #news_area h2');
-
-        // TODO [mail] メール確認
     }
 
     public function order_ゲスト購入(\AcceptanceTester $I)
@@ -220,8 +218,6 @@ class EF03OrderCest
         // topへ
         $I->click('#main_middle #deliveradd_input .btn_group p a');
         $I->see('新着情報', '#contents_bottom #news_area h2');
-
-        // TODO [mail] メール確認
     }
 
     public function order_ゲスト購入情報変更(\AcceptanceTester $I)
@@ -311,7 +307,5 @@ class EF03OrderCest
         // topへ
         $I->click('#main_middle #deliveradd_input .btn_group p a');
         $I->see('新着情報', '#contents_bottom #news_area h2');
-
-        // TODO [mail] メール確認
     }
 }
