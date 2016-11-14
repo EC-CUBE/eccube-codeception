@@ -174,6 +174,13 @@ class EA06ContentsManagementCest
             ->登録();
         $I->see('登録が完了しました。', BlockEditPage::$登録完了メッセージ);
 
+        PageManagePage::go($I)->レイアウト編集(1);
+        $I->dragAndDrop('#position_0 > div:nth-child(1) > label', '#position_1');
+        LayoutEditPage::at($I)->登録();
+
+        $I->amOnPage('/');
+        $I->see('block1', ['id' => 'block1']);
+
         /* 編集 */
         BlockManagePage::go($I)->編集(1);
         BlockEditPage::at($I)
@@ -181,10 +188,14 @@ class EA06ContentsManagementCest
             ->登録();
         $I->see('登録が完了しました。', BlockEditPage::$登録完了メッセージ);
 
+        $I->amOnPage('/');
+        $I->see('welcome', ['id' => 'block1']);
+
         /* 削除 */
         BlockManagePage::go($I)->削除(1);
         $I->acceptPopup();
 
-        // TODO [漏れ] レイアウト管理でブロックが表示/変更/非表示になるかどうか
+        $I->amOnPage('/');
+        $I->dontSeeElement(['id' => 'block1']);
     }
 }
