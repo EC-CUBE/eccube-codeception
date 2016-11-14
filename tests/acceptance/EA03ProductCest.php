@@ -327,6 +327,39 @@ class EA03ProductCest
         $I->see("材質", $ProductClassPage->一覧_名称(2));
     }
 
+    public function product_分類表示順の変更(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0311-UC01-T01 分類表示順の変更');
+
+        ProductClassPage::go($I)
+            ->一覧_分類登録(1);
+
+        $ProductClassCategoryPage = ProductClassCategoryPage::at($I);
+        $I->see('150cm', $ProductClassCategoryPage->一覧_名称(1));
+        $I->see('170mm', $ProductClassCategoryPage->一覧_名称(2));
+        $I->see('120mm', $ProductClassCategoryPage->一覧_名称(3));
+
+        $ProductClassCategoryPage->一覧_下に(1);
+        $I->see('170mm', $ProductClassCategoryPage->一覧_名称(1));
+        $I->see('150cm', $ProductClassCategoryPage->一覧_名称(2));
+        $I->see('120mm', $ProductClassCategoryPage->一覧_名称(3));
+
+        $ProductClassCategoryPage->一覧_下に(2);
+        $I->see('170mm', $ProductClassCategoryPage->一覧_名称(1));
+        $I->see('120mm', $ProductClassCategoryPage->一覧_名称(2));
+        $I->see('150cm', $ProductClassCategoryPage->一覧_名称(3));
+
+        $ProductClassCategoryPage->一覧_上に(3);
+        $I->see('170mm', $ProductClassCategoryPage->一覧_名称(1));
+        $I->see('150cm', $ProductClassCategoryPage->一覧_名称(2));
+        $I->see('120mm', $ProductClassCategoryPage->一覧_名称(3));
+
+        $ProductClassCategoryPage->一覧_上に(2);
+        $I->see('150cm', $ProductClassCategoryPage->一覧_名称(1));
+        $I->see('170mm', $ProductClassCategoryPage->一覧_名称(2));
+        $I->see('120mm', $ProductClassCategoryPage->一覧_名称(3));
+    }
+
     public function product_分類登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0304-UC01-T01(& UC01-T02/UC02-T01/UC03-T01) 分類登録/編集/削除');
@@ -356,8 +389,6 @@ class EA03ProductCest
         $ProductClassCategoryPage->一覧_削除(1);
         $I->acceptPopup();
     }
-
-    // TODO [漏れ] EA0311-UC01-T01 分類表示順の変更
 
     public function product_カテゴリ登録(\AcceptanceTester $I)
     {
