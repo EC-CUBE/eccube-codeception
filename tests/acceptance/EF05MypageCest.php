@@ -281,6 +281,7 @@ class EF05MypageCest
 
         // ×マークをクリック
         $I->click('#main_middle #deliveradd_select .address_table:nth-child(2) .addr_box .icon_edit a');
+
         $I->acceptPopup();
 
         // 確認

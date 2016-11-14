@@ -50,32 +50,33 @@ class EA03ProductCest
         $I->see("検索条件に該当するデータがありませんでした。", ProductManagePage::$検索結果_メッセージ);
     }
 
+    /**
+     * @env firefox
+     * @env chrome
+     */
     public function product_CSV出力(\AcceptanceTester $I)
     {
         $I->wantTo('EA0301-UC02-T01 CSV出力');
 
-        ProductManagePage::go($I)->検索();
+        $findProducts = Fixtures::get('findProducts');
+        $Products = $findProducts();
+        ProductManagePage::go($I)
+            ->検索()
+            ->CSVダウンロード();
 
-        // 「CSVダウンロード」ドロップダウン
-        $I->click(ProductManagePage::$検索結果_CSVダウンロード);
-        // 「CSVダウンロード」リンク
-        $I->click(ProductManagePage::$検索結果_CSVダウンロード_CSVダウンロード);
+        $I->see("検索結果 ".count($Products)." 件 が該当しました", ProductManagePage::$検索結果_メッセージ);
 
-        /**
-         * clientに指定しているphantomjsのdockerコンテナにダウンロードされているかどうかは現在確認不可
-         */
+        $ProductCSV = $I->getLastDownloadFile('/^product_\d{14}\.csv$/');
+        $I->assertGreaterOrEquals(count($Products), count(file($ProductCSV)), '検索結果以上の行数があるはず');
     }
 
     public function product_CSV出力項目設定(\AcceptanceTester $I)
     {
         $I->wantTo('EA0301-UC02-T02 CSV出力項目設定');
 
-        ProductManagePage::go($I)->検索();
-
-        // 「CSVダウンロード」ドロップダウン
-        $I->click(ProductManagePage::$検索結果_CSVダウンロード);
-        // 「CSV出力項目設定」リンク
-        $I->click(ProductManagePage::$検索結果_CSVダウンロード_出力項目設定);
+        ProductManagePage::go($I)
+            ->検索()
+            ->CSV出力項目設定();
 
         $I->see('システム設定CSV出力項目設定', self::ページタイトル);
         $value = $I->grabValueFrom(CsvSettingsPage::$CSVタイプ);
@@ -95,7 +96,7 @@ class EA03ProductCest
         $I->click('#main > div > div > div > form > div > div.box-body > button');
         $I->cantSee('検索結果 3 件 が該当しました', '#product-class-form > div:nth-child(2) > div > div > div.box-header > h3');
         /**
-         エラーになるが、html5のブラウザによるエラーハンドリングなのでチェックできない
+         TODO [html5] エラーになるが、html5のブラウザによるエラーハンドリングなのでチェックできない
          */
     }
 
@@ -118,7 +119,7 @@ class EA03ProductCest
         $I->checkOption(['id' => 'form_product_classes_2_add']);
 
         /**
-        ボタン押した後POSTされるが、POST処理後同ページにredirectしており、結果をcodeceptionでハンドリングできない...
+        TODO [other] ボタン押した後POSTされるが、POST処理後同ページにredirectしており、結果をcodeceptionでハンドリングできない...
         $I->click("#product-class-form div:nth-child(3) .btn_area button");
         $I->see('商品規格を登録しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->see('商品規格を初期化', '#delete');
@@ -227,7 +228,7 @@ class EA03ProductCest
         $I->wantTo('EA0302-UC01-T04 商品編集 規格あり');
 
         /**
-         * テストの意味が不明？旧バージョンの内容？
+         * TODO [other] テストの意味が不明？旧バージョンの内容？
          */
     }
 
@@ -256,6 +257,7 @@ class EA03ProductCest
     public function product_規格登録未登録時(\AcceptanceTester $I)
     {
         $I->wantTo('EA0303-UC01-T02 規格登録 未登録時');
+        // TODO [fixture] 規格が1件も登録されていない状態にする
     }
 
     public function product_規格編集(\AcceptanceTester $I)
@@ -280,6 +282,8 @@ class EA03ProductCest
 
         $I->acceptPopup();
     }
+
+    // TODO [漏れ] EA0308-UC01-T01 規格表示順の変更
 
     public function product_分類登録(\AcceptanceTester $I)
     {
@@ -310,6 +314,8 @@ class EA03ProductCest
         $ProductClassCategoryPage->一覧_削除(1);
         $I->acceptPopup();
     }
+
+    // TODO [漏れ] EA0311-UC01-T01 分類表示順の変更
 
     public function product_カテゴリ登録(\AcceptanceTester $I)
     {
@@ -347,6 +353,7 @@ class EA03ProductCest
         // サブカテゴリ EA0305-UC01-03 & UC01-04
         $CategoryPage = CategoryManagePage::go($I)
             ->一覧_選択(1);
+
         $I->see('test category11', CategoryManagePage::$パンくず_1階層);
 
         $CategoryPage
@@ -359,34 +366,53 @@ class EA03ProductCest
         $I->acceptPopup();
     }
 
+    // TODO [漏れ] EA0309-UC01-T01 カテゴリ表示順の変更
+
     public function product_商品CSV登録(\AcceptanceTester $I)
     {
-        $I->wantTo('EA0306-UC01-T01(& UC01-T02) 商品CSV登録');
+        $I->wantTo('EA0306-UC01-T01 商品CSV登録');
 
-        $ProductCsvUploadPage = ProductCsvUploadPage::go($I);
+        ProductCsvUploadPage::go($I);
 
-        /* CSVのアップロードは不可 */
+        /* TODO [upload] CSVのアップロードは不可 */
+    }
 
-        // 雛形のダウンロード
-        $ProductCsvUploadPage->雛形ダウンロード();
-        /* ダウンロードファイルの確認は不可*/
+    /**
+     * @env firefox
+     * @env chrome
+     */
+    public function product_商品CSV登録雛形ファイルダウンロード(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0306-UC01-T02 商品CSV登録雛形ファイルダウンロード');
+
+        ProductCsvUploadPage::go($I)->雛形ダウンロード();
+        $ProductTemplateCSV = $I->getLastDownloadFile('/^product\.csv$/');
+        $I->assertEquals(1, count(file($ProductTemplateCSV)), 'ヘッダ行だけのファイル');
     }
 
     public function product_カテゴリCSV登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0307-UC01-T01(& UC01-T02) カテゴリCSV登録');
 
-        $CategoryCsvUploadPage = CategoryCsvUploadPage::go($I);
-
-        /* CSVのアップロードは不可 */
-
-        // 雛形のダウンロード
-        $CategoryCsvUploadPage->雛形ダウンロード();
-        /* ダウンロードファイルの確認は不可*/
+        CategoryCsvUploadPage::go($I);
     }
 
     /**
-     * XXX 確認リンクをクリックすると別ウィンドウが立ち上がるため、後続のテストが失敗してしまう...
+     * @env firefox
+     * @env chrome
+     */
+    public function product_カテゴリCSV登録雛形ファイルダウンロード(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0307-UC01-T02 カテゴリCSV登録雛形ファイルダウンロード');
+
+        // 雛形のダウンロード
+        CategoryCsvUploadPage::go($I)->雛形ダウンロード();
+        $CategoryTemplateCSV = $I->getLastDownloadFile('/^category\.csv$/');
+        $I->assertEquals(1, count(file($CategoryTemplateCSV)), 'ヘッダ行だけのファイル');
+    }
+
+    /**
+     * XXX [new window] 確認リンクをクリックすると別ウィンドウが立ち上がるため、後続のテストが失敗してしまう...
      */
     public function product_一覧からの商品確認(\AcceptanceTester $I)
     {

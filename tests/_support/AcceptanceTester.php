@@ -141,4 +141,33 @@ class AcceptanceTester extends \Codeception\Actor
         $I->click('#form_cart .item_box .icon_edit a');
         $I->acceptPopup();
     }
+
+    /**
+     * @param string|$fileNameRegex ファイル名のパターン(CI環境で同時実行したときに区別するため)
+     * @return string ファイルパス
+     * @throws FileNotFoundException 指定したパターンにマッチするファイルがない場合
+     */
+    public function getLastDownloadFile($fileNameRegex, $retryCount = 3)
+    {
+        $downloadDir = __DIR__ . '/_downloads/';
+        $files = scandir($downloadDir);
+        $files = array_map(function($fileName) use ($downloadDir) {
+            return $downloadDir.$fileName;
+        }, $files);
+        $files = array_filter($files, function($f) use ($fileNameRegex){
+            return is_file($f) && preg_match($fileNameRegex, basename($f));
+        });
+        usort($files, function($l, $r) {
+            return filemtime($l) - filemtime($r);
+        });
+
+        if (empty($files)) {
+            if ($retryCount > 0) {
+                $this->wait(3);
+                return $this->getLastDownloadFile($fileNameRegex, $retryCount - 1);
+            }
+            throw new FileNotFoundException($fileNameRegex);
+        }
+        return end($files);
+    }
 }

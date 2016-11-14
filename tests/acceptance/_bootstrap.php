@@ -185,3 +185,12 @@ $createOrders = function ($Customer, $numberOfOrders = 5) use ($app, $faker) {
 };
 /** 受注を生成するクロージャ. */
 Fixtures::add('createOrders', $createOrders);
+
+$findCustomers = function () use ($app) {
+    return $app['orm.em']->getRepository('Eccube\Entity\Customer')
+        ->createQueryBuilder('c')
+        ->where('c.del_flg = 0')
+        ->getQuery()
+        ->getResult();
+};
+Fixtures::add('findCustomers', $findCustomers);

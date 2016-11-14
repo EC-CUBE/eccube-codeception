@@ -149,6 +149,8 @@ class EF04CustomerCest
 
         // 入力した会員情報を確認する。
         $I->see('新規会員登録', '#main_middle h1');
+
+        // TODO [fixture] 確認画面のあとでのメールアドレス重複エラー
     }
 
     public function customer_会員登録同意しない(\AcceptanceTester $I)
@@ -199,7 +201,7 @@ class EF04CustomerCest
         $I->amOnPage('/entry');
 
         $I->click('#main_middle form .form_terms_link a');
-        // 別ウィンドウで開く
+        // TODO [new window] 別ウィンドウで開く
         // codeceptionのwebdriverでは名前なしの別ウィンドウにアクセスできない...
         //$I->see('利用規約', '#main .page-heading');
     }
