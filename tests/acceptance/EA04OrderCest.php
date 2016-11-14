@@ -184,10 +184,20 @@ class EA04OrderCest
         $OrderListPage = OrderManagePage::go($I)->検索();
         $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
+        // 削除
+        $OrderNumForDel = $OrderListPage->一覧_注文番号(1);
         $OrderListPage->一覧_削除(1);
         $I->acceptPopup();
 
-        // TODO [漏れ] UC08-T02 削除キャンセル
+        $I->see('受注情報を削除しました', ['css' => '#main > div > div:nth-child(1) > div']);
+        $I->assertNotEquals($OrderNumForDel, $OrderListPage->一覧_注文番号(1));
+
+        // 削除キャンセル
+        $OrderNumForDontDel = $OrderListPage->一覧_注文番号(1);
+        $OrderListPage->一覧_削除(1);
+        $I->cancelPopup();
+
+        $I->assertEquals($OrderNumForDontDel, $OrderListPage->一覧_注文番号(1));
     }
 
     public function order_受注メール通知(\AcceptanceTester $I)
