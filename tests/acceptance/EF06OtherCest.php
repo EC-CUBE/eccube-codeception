@@ -38,7 +38,7 @@ class EF06OtherCest
 
         $I->amOnPage('/mypage/login');
         $I->submitForm('#login_mypage', [
-            'login_email' => 'gege@ec-cube.net',
+            'login_email' => $customer->getEmail(),
             'login_pass' => 'password'
         ]);
 
@@ -50,9 +50,12 @@ class EF06OtherCest
         $I->wantTo('EF0601-UC01-T03 ログイン 異常パターン(入力ミス)');
         $I->logoutAsMember();
 
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer(null, false);
+
         $I->amOnPage('/mypage/login');
         $I->submitForm('#login_mypage', [
-            'login_email' => 'gege@ec-cube.net',
+            'login_email' => $customer->getEmail().'.bad',
             'login_pass' => 'password'
         ]);
 
@@ -63,6 +66,7 @@ class EF06OtherCest
     {
         $I->wantTo('EF0602-UC01-T01 パスワード再発行');
         $I->logoutAsMember();
+        $BaseInfo = Fixtures::get('baseinfo');
 
         // TOPページ→ログイン（「ログイン情報をお忘れですか？」リンクを押下する）→パスワード再発行
         $I->amOnPage('/mypage/login');
@@ -83,7 +87,7 @@ class EF06OtherCest
         $I->see('パスワード発行メールの送信 完了', '#main .page-heading');
 
         $I->seeEmailCount(2);
-        foreach (array($customer->getEmail(), 'admin@example.com') as $email) {
+        foreach (array($customer->getEmail(), $BaseInfo->getEmail01()) as $email) {
             $I->seeInLastEmailSubjectTo($email, 'パスワード変更のご確認');
         }
         $url = $I->grabFromLastEmailTo($customer->getEmail(), '@/forgot/reset/(.*)@');
@@ -92,7 +96,7 @@ class EF06OtherCest
         $I->amOnPage($url);
         $I->see('パスワード変更(完了ページ)', '#contents #main h1');
         $I->seeEmailCount(2);
-        foreach (array($customer->getEmail(), 'admin@example.com') as $email) {
+        foreach (array($customer->getEmail(), $BaseInfo->getEmail01()) as $email) {
             $I->seeInLastEmailSubjectTo($email, 'パスワード変更のお知らせ');
         }
         $new_password = $I->grabFromLastEmailTo($customer->getEmail(), '@新しいパスワード：(.*)@');
@@ -146,6 +150,9 @@ class EF06OtherCest
         $I->wantTo('EF0607-UC01-T01 お問い合わせ');
         $I->amOnPage('/');
         $I->resetEmails();
+        $faker = Fixtures::get('faker');
+        $new_email = microtime(true).'.'.$faker->safeEmail;
+        $BaseInfo = Fixtures::get('baseinfo');
 
         $I->click('#footer ul li:nth-child(4) a');
         $I->see('お問い合わせ', '#main h1');
@@ -163,7 +170,7 @@ class EF06OtherCest
             'contact[tel][tel01]' => '111',
             'contact[tel][tel02]' => '111',
             'contact[tel][tel03]' => '111',
-            'contact[email]' => 'acctest@ec-cube.net',
+            'contact[email]' => $new_email,
             'contact[contents]' => 'お問い合わせ内容の送信'
         ]);
 
@@ -175,7 +182,7 @@ class EF06OtherCest
 
         // メールチェック
         $I->seeEmailCount(2);
-        foreach (array('acctest@ec-cube.net', 'admin@example.com') as $email) {
+        foreach (array($new_email, $BaseInfo->getEmail01()) as $email) {
             $I->seeInLastEmailSubjectTo($email, 'お問い合わせを受け付けました');
             $I->seeInLastEmailTo($email, '姓 名 様');
             $I->seeInLastEmailTo($email, 'お問い合わせ内容の送信');

@@ -44,6 +44,9 @@ class EA07BasicinfoCest
     {
         $I->wantTo('EA0702-UC01-T01 特定商取引法');
 
+        $faker = Fixtures::get('faker');
+        $email = microtime(true).'.'.$faker->safeEmail;
+
         TradelawSettingPage::go($I)
             ->入力_販売業者('販売業者')
             ->入力_運営責任者('運営責任者')
@@ -55,7 +58,7 @@ class EA07BasicinfoCest
             ->入力_電話番号1('111')
             ->入力_電話番号2('111')
             ->入力_電話番号3('111')
-            ->入力_Eメール('eccube@ec-cube.net')
+            ->入力_Eメール($email)
             ->入力_URL('http://www.ec-cube.net')
             ->入力_商品代金以外の必要料金('term01')
             ->入力_注文方法('term02')
