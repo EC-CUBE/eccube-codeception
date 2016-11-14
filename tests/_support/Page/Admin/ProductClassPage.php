@@ -12,8 +12,6 @@ class ProductClassPage extends AbstractAdminPage
     public static $登録完了メッセージ = '#main .container-fluid div:nth-child(1) .alert-success';
     public static $規格名 = ['id' => 'admin_class_name_name'];
 
-    protected $tester;
-
     /**
      * ProductClassPage constructor.
      */
@@ -40,6 +38,11 @@ class ProductClassPage extends AbstractAdminPage
         return $this;
     }
 
+    public function 一覧_名称($rowNum)
+    {
+        return "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.item_pattern > a";
+    }
+
     public function 一覧_分類登録($rowNum)
     {
         $this->一覧_オプション($rowNum);
@@ -64,5 +67,23 @@ class ProductClassPage extends AbstractAdminPage
     private function 一覧_オプション($rowNum)
     {
         $this->tester->click("#main .container-fluid .box .box-body .item_box:nth-child(${rowNum}) .icon_edit .dropdown a");
+    }
+
+    public function 一覧_上に($rowNum)
+    {
+        $dragTo = $rowNum - 1;
+        $this->tester->dragAndDrop(
+            "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.icon_sortable",
+            "#main .container-fluid .box .box-body .item_box:nth-child($dragTo) div.icon_sortable");
+        return $this;
+    }
+
+    public function 一覧_下に($rowNum)
+    {
+        $dragTo = $rowNum + 1;
+        $this->tester->dragAndDrop(
+            "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.item_pattern > a",
+            "#main .container-fluid .box .box-body .item_box:nth-child($dragTo) div.item_pattern > a");
+        return $this;
     }
 }

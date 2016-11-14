@@ -310,7 +310,22 @@ class EA03ProductCest
         $I->acceptPopup();
     }
 
-    // TODO [漏れ] EA0308-UC01-T01 規格表示順の変更
+    public function product_規格表示順の変更(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0308-UC01-T01 規格表示順の変更');
+
+        $ProductClassPage = ProductClassPage::go($I);
+        $I->see("サイズ", $ProductClassPage->一覧_名称(1));
+        $I->see("材質", $ProductClassPage->一覧_名称(2));
+
+        $ProductClassPage->一覧_下に(1);
+        $I->see("材質", $ProductClassPage->一覧_名称(1));
+        $I->see("サイズ", $ProductClassPage->一覧_名称(2));
+
+        $ProductClassPage->一覧_上に(2);
+        $I->see("サイズ", $ProductClassPage->一覧_名称(1));
+        $I->see("材質", $ProductClassPage->一覧_名称(2));
+    }
 
     public function product_分類登録(\AcceptanceTester $I)
     {
