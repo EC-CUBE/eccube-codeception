@@ -204,17 +204,22 @@ class EA04OrderCest
     {
         $I->wantTo('EA0402-UC01-T01 受注メール通知');
 
-        $config = Fixtures::get('config');
-        $findOrders = Fixtures::get('findOrders'); // Closure
-        $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
-            return $Order->getOrderStatus()->getId() != $config['order_processing'];
-        });
-        $OrderListPage = OrderManagePage::go($I)->検索();
-        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
+        $I->resetEmails();
+
+        $OrderListPage = OrderManagePage::go($I)->検索('1000');
+        $I->see('検索結果 1 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
         $OrderListPage->一覧_メール通知(1);
 
-        // TODO [mail] メール確認
+        $I->selectOption(['id' => 'template-change'], ['1' => 'ご注文ありがとうございます']);
+        $I->click(['css' => '#button_box__button_menu > button']);
+        $I->click(['css' => '#confirm_box__button_menu > p:nth-child(2) > button']);
+
+        $I->seeEmailCount(2);
+
+        foreach (array('1479090757.2227.kudo.taro@example.net', 'admin@example.com') as $email) {
+            $I->seeInLastEmailSubjectTo($email, 'ご注文ありがとうございます');
+        }
     }
 
     public function order_一括メール通知(\AcceptanceTester $I)
@@ -233,9 +238,11 @@ class EA04OrderCest
             ->一覧_全選択()
             ->メール一括通知();
 
-        // TODO [mail] メール確認
+        $I->selectOption(['id' => 'template-change'], ['1' => 'ご注文ありがとうございます']);
+        $I->click(['css' => '#top_box__button_menu > button']);
+        $I->click(['css' => '#confirm_box__button_menu > p:nth-child(2) > button']);
 
-        // TODO [mail] UC02-T02 一括メール通知（異常系）
+        $I->seeEmailCount(20);
     }
 
     public function order_受注登録(\AcceptanceTester $I)
