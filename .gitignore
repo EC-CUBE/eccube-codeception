@@ -1,4 +1,5 @@
-/tests/_data
-/tests/_output
+/tests/_data/*
+!/tests/_data/plugin_fixtures.php
+/tests/_output/*
 composer.phar
 /vendor
