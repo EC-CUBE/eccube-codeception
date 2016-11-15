@@ -22,7 +22,7 @@ modules:
         WebDriver:
             host: browser                 # Selenium ContainerのIP/hostname
             port: 4444                      # Selenium Container内部の4444portにmapしたport番号
-            url: 'http://eccube3'    # テスト対象のurl
+            url: '%BASE_URL%'    # テスト対象のurl
             window_size: 1680x3000
             wait: 10
             capabilities:

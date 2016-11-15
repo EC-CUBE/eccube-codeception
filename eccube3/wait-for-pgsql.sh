@@ -16,7 +16,7 @@ until psql -h db -U "cube3_dev_user" -d "template1" -c '\l'; do
 done
 
 >&2 echo "Postgres is up - executing command"
-/var/www/exec_env.sh
-php /var/www/eccube_install.php pgsql none --skip-createdb --verbose
-chown -R www-data:www-data /var/www
+${ECCUBE_PATH}/exec_env.sh
+php ${ECCUBE_PATH}/eccube_install.php pgsql none --skip-createdb --verbose
+chown -R www-data:www-data ${ECCUBE_PATH}
 apache2-foreground
