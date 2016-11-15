@@ -20,8 +20,8 @@ RUN chmod +x /wait-for-db.sh
 ENTRYPOINT /wait-for-db.sh
 
 ## Clone EC-CUBE3
-COPY clone-${DIRTYPE}.sh /clone.sh
-RUN chmod +x /clone.sh && /clone.sh
+ADD clone-${DIRTYPE}.sh /clone.sh
+RUN /clone.sh
 
 WORKDIR ${ECCUBE_PATH}
 RUN composer install
