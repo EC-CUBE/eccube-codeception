@@ -3,8 +3,9 @@ coverage:
     enabled: true
     remote: true
     c3_url: 'http://eccube3/index_cover.php'
-    include:
-        - src/Eccube/*
+    whitelist:
+        include:
+            - src/Eccube/*
 paths:
     tests: tests
     log: tests/_output

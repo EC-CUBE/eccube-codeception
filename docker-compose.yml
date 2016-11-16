@@ -26,6 +26,8 @@ services:
       - db
       - mailcatcher
     restart: unless-stopped
+    volumes:
+      - ./tests/acceptance.suite.yml:/var/www/tests/acceptance.suite.yml
   codecept:
     build:
       context: codeception
