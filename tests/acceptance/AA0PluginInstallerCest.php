@@ -38,11 +38,11 @@ class AA00PluginInstallerCest
             if (file_exists($datadir.'/'.$plugin['file'])) {
                 unlink($datadir.'/'.$plugin['file']);
             }
-            $I->wantTo($plugin['file'].' を '.$plugin['url'].' からダウンロードします.');
+            $I->amGoingTo($plugin['file'].' を '.$plugin['url'].' からダウンロードします.');
             $archive = file_get_contents($plugin['url']);
             $save_path = $datadir.'/'.$plugin['file'];
             file_put_contents($save_path, $archive);
-            $I->wantTo($plugin['file'].' を '.$save_path.' に保存しました.');
+            $I->amGoingTo($plugin['file'].' を '.$save_path.' に保存しました.');
 
             $I->attachFile(['id' => 'plugin_local_install_plugin_archive'],  $plugin['file']);
             $I->click('#aside_column button');

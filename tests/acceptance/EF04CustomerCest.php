@@ -17,7 +17,10 @@ class EF04CustomerCest
     {
     }
 
-    public function customer_会員登録正常(\AcceptanceTester $I)
+    /**
+     * @group register
+     */
+    public function customer_会員登録正常(\AcceptanceTester $I, \Codeception\Scenario $scenario)
     {
         $I->wantTo('EF0401-UC01-T01 会員登録 正常パターン');
         $I->amOnPage('/entry');
@@ -26,7 +29,7 @@ class EF04CustomerCest
         $new_email = microtime(true).'.'.$faker->safeEmail;
         // 会員情報入力フォームに、会員情報を入力する
         // 「同意する」ボタンを押下する
-        $I->submitForm("#main_middle form",[
+        $form = [
             'entry[name][name01]' => '姓',
             'entry[name][name02]' => '名',
             'entry[kana][kana01]' => 'セイ',
@@ -43,7 +46,14 @@ class EF04CustomerCest
             'entry[email][second]' => $new_email,
             'entry[password][first]' => 'password',
             'entry[password][second]' => 'password',
-        ]);
+        ];
+        $findPluginByCode = Fixtures::get('findPluginByCode');
+        $Plugin = $findPluginByCode('MailMagazine');
+        if ($Plugin) {
+            $I->amGoingTo('メルマガプラグインを発見したため、メルマガを購読します');
+            $form['entry[mailmaga_flg]'] = '1';
+        }
+        $I->submitForm("#main_middle form", $form);
 
         // 入力した会員情報を確認する。
         $I->see('姓 名', '#main_middle form .dl_table dl:nth-child(1) dd');
@@ -160,6 +170,9 @@ class EF04CustomerCest
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
 
+    /**
+     * @group register
+     */
     public function customer_会員登録戻る(\AcceptanceTester $I)
     {
         $I->wantTo('EF0401-UC01-T05 会員登録 戻るボタン');
@@ -170,7 +183,7 @@ class EF04CustomerCest
 
         // 会員情報入力フォームに、会員情報を入力する
         // 「同意する」ボタンを押下する
-        $I->submitForm("#main_middle form",[
+        $form = [
             'entry[name][name01]' => '姓',
             'entry[name][name02]' => '名',
             'entry[kana][kana01]' => 'セイ',
@@ -187,7 +200,15 @@ class EF04CustomerCest
             'entry[email][second]' => $new_email,
             'entry[password][first]' => 'password',
             'entry[password][second]' => 'password',
-        ]);
+        ];
+
+        $findPluginByCode = Fixtures::get('findPluginByCode');
+        $Plugin = $findPluginByCode('MailMagazine');
+        if ($Plugin) {
+            $I->amGoingTo('メルマガプラグインを発見したため、メルマガを購読します');
+            $form['entry[mailmaga_flg]'] = '1';
+        }
+        $I->submitForm("#main_middle form", $form);
 
         $I->click('#main_middle form .btn_group p:nth-child(2) button');
         $I->see('新規会員登録', '#main_middle h1');

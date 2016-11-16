@@ -16,9 +16,9 @@ class ProductManagePage extends AbstractAdminPage
     public static $検索結果_メッセージ = '#main .container-fluid .box .box-title';
     public static $検索結果_一覧 = "#main .container-fluid .box-body .item_list";
 
-    public static $検索結果_CSVダウンロード = '#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > a';
-    public static $検索結果_CSVダウンロード_CSVダウンロード = '#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > ul > li:nth-child(1) > a';
-    public static $検索結果_CSVダウンロード_出力項目設定 = '#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > ul > li:nth-child(2) > a';
+    public static $検索結果_CSVダウンロード = '#main #result_list__csv_menu > a';
+    public static $検索結果_CSVダウンロード_CSVダウンロード = '#main #result_list__csv_menu > ul > li:nth-child(1) > a';
+    public static $検索結果_CSVダウンロード_出力項目設定 = '#main #result_list__csv_menu > ul > li:nth-child(2) > a';
 
     protected $tester;
 
@@ -57,7 +57,7 @@ class ProductManagePage extends AbstractAdminPage
     public function 検索結果_規格設定($rowNum)
     {
         $this->検索結果_オプション($rowNum);
-        $this->tester->click("#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(1) > a");
+        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(1) > a");
     }
 
     /**
@@ -68,7 +68,7 @@ class ProductManagePage extends AbstractAdminPage
     public function 検索結果_複製($rowNum)
     {
         $this->検索結果_オプション($rowNum);
-        $this->tester->click("#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(3) > a");
+        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(3) > a");
         return $this;
     }
 
@@ -80,7 +80,7 @@ class ProductManagePage extends AbstractAdminPage
     public function 検索結果_選択($rowNum)
     {
         $this->検索結果_オプション($rowNum);
-        $this->tester->click("#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(${rowNum}) > div:nth-child(3) > a");
+        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(3) > a");
         return $this;
     }
 
@@ -92,7 +92,7 @@ class ProductManagePage extends AbstractAdminPage
     public function 検索結果_削除($rowNum)
     {
         $this->検索結果_オプション($rowNum);
-        $this->tester->click("#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(4) > a");
+        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(4) > a");
         return $this;
     }
 
@@ -103,7 +103,7 @@ class ProductManagePage extends AbstractAdminPage
      */
     private function 検索結果_オプション($rowNum)
     {
-        $this->tester->click("#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > a");
+        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > a");
         return $this;
     }
 }

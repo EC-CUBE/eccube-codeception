@@ -19,7 +19,7 @@ return [
     ],
     3 => [
         'name' => 'MailMagazine',
-        'code' => 'MailMaga',
+        'code' => 'MailMagazine',
         'file' => 'MailMaga_v0.0.3.tar.gz',
         'url' => 'https://github.com/EC-CUBE/mail-magazine-plugin/releases/download/0.0.3/MailMaga_v0.0.3.tar.gz'
     ],
