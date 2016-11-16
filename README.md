@@ -26,9 +26,24 @@ docker-compose build --no-cache
 docker-compose run --rm codecept run -d --env default --html report.html
 ```
 
+### http/vncのポート固定
 ローカルでの確認用にポートを固定したい場合は、`docker-compose.dev.yml`も読み込んでください。(並列実行時には利用できません。)
 ```
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm codecept run -d --env default --html report.html
+```
+
+### サブディレクトリにデプロイした環境でのテスト実行方法
+
+htmlディレクトリありの場合(http://locahost:8080/ec-cube/html/)
+```
+docker-compose -f docker-compose.yml -f docker-compose.subdir.yml build && \
+docker-compose -f docker-compose.yml -f docker-compose.subdir.yml run --rm codecept run -d --env default --html report.html
+```
+
+htmlディレクトリなしの場合(http://locahost:8080/ec-cube/)
+```
+docker-compose -f docker-compose.yml -f docker-compose.withouthtml.yml build && \
+docker-compose -f docker-compose.yml -f docker-compose.withouthtml.yml run --rm codecept run -d --env default --html report.html
 ```
 
 ### 並列実行
