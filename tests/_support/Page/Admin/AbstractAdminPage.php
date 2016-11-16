@@ -7,7 +7,7 @@ use Codeception\Util\Fixtures;
 
 abstract class AbstractAdminPage
 {
-
+    /** @var \AcceptanceTester $tester */
     protected $tester;
 
     /**

@@ -46,6 +46,29 @@ class DeliveryManagePage extends AbstractAdminPage
 
     public function 新規登録()
     {
-        $this->tester->click('#delivery_list__name--2 > a');
+        $this->tester->click('#delivery_list_footer__button_area > a');
+    }
+
+    public function 一覧_名称($rowNum)
+    {
+        return ['css' => "#main .container-fluid .sortable_list .tableish .item_box:nth-child($rowNum) div.item_pattern a"];
+    }
+
+    public function 一覧_上に($rowNum)
+    {
+        $dragTo = $rowNum - 1;
+        $this->tester->dragAndDrop(
+            "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.icon_sortable",
+            "#main .container-fluid .box .box-body .item_box:nth-child($dragTo) div.icon_sortable");
+        return $this;
+    }
+
+    public function 一覧_下に($rowNum)
+    {
+        $dragTo = $rowNum + 1;
+        $this->tester->dragAndDrop(
+            "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.item_pattern > a",
+            "#main .container-fluid .box .box-body .item_box:nth-child($dragTo) div.item_pattern > a");
+        return $this;
     }
 }

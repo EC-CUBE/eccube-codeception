@@ -34,4 +34,15 @@ class EA02AuthenticationCest
 
         $I->see('ログインできませんでした。', '.login-box #form1 .text-danger');
     }
+
+    public function authentication_最終ログイン日時確認(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0201-UC01-T01 最終ログイン日時確認');
+
+        $I->click(['css' => '.navbar-menu .dropdown-toggle']);
+        $loginText = $I->grabTextFrom(['css' => '.navbar-menu .dropdown-menu']);
+        $lastLogin = preg_replace('/.*(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}).*/s', '$1', $loginText);
+        // 表示されるログイン日時では秒数がわからないため、タイミングによっては1分ちょっと変わる
+        $I->assertTrue((strtotime('now') - strtotime($lastLogin)) < 70, '最終ログイン日時が正しい');
+    }
 }

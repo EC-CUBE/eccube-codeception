@@ -1,6 +1,7 @@
 <?php
 
 use Codeception\Util\Fixtures;
+use Page\Admin\AuthorityManagePage;
 
 /**
  * @group admin
@@ -214,11 +215,9 @@ class EA08SysteminfoCest
         $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(5) .dropdown a');
         $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(5) .dropdown .dropdown-menu li:nth-child(2) a');
         $I->acceptPopup();
-        /* ToDo: popup
-           alertによる確認あり
+
         $I->see('メンバーを削除しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->see('管理者', '#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(1)');
-        */
     }
 
     public function systeminfo_メンバー管理自ユーザー削除(\AcceptanceTester $I)
@@ -270,30 +269,37 @@ class EA08SysteminfoCest
     {
         $I->wantTo('EA0804-UC01-T04 セキュリティ管理 - SSL強制');
 
-        /**
-         * ToDo: SSL環境を用意してテストすべし。今はナイ。。
-         */
+        $testConfig = Fixtures::get('test_config');
+
+        $I->amOnUrl('http://'.$testConfig['hostname'].'/');
+        $I->assertRegExp('/^http:\/\//', $I->executeJS('return location.href'), 'httpsにリダイレクトされない');
+
+        $config = Fixtures::get('config');
+        $I->amOnUrl('https://'.$testConfig['hostname'].'/'.$config['admin_route'].'/setting/system/security');
+        $I->checkOption(['id' => 'admin_security_force_ssl']);
+        $I->click('#aside_column div div div div div button');
+
+        // httpでアクセスしたらhttpsにリダイレクトされる
+        $I->amOnUrl('http://'.$testConfig['hostname'].'/');
+        $I->assertRegExp('/^https:\/\//', $I->executeJS('return location.href'), 'httpsにリダイレクトされる');
+
+        // 後続テストのために戻しておく
+        $I->amOnUrl('https://'.$testConfig['hostname'].'/'.$config['admin_route'].'/setting/system/security');
+        $I->uncheckOption(['id' => 'admin_security_force_ssl']);
+        $I->click('#aside_column div div div div div button');
     }
 
     public function systeminfo_権限管理追加(\AcceptanceTester $I)
     {
         $I->wantTo('EA0805-UC01-T01 権限管理 - 追加');
 
-        // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/authority');
-        $I->see('システム設定権限管理', '#main .page-header');
+        AuthorityManagePage::go($I)
+            ->行追加()
+            ->入力(1, ['0' => 'システム管理者'], '/content')
+            ->入力(2, ['0' => 'システム管理者'], '/store')
+            ->登録();
 
-        $I->click('form .add');
-
-        $I->selectOption('form #table-authority tbody tr:nth-child(1) td:nth-child(1) select', 'システム管理者');
-        $I->fillField('form #table-authority tbody tr:nth-child(1) td:nth-child(2) input', '/content');
-        $I->selectOption('form #table-authority tbody tr:nth-child(2) td:nth-child(1) select', 'システム管理者');
-        $I->fillField('form #table-authority tbody tr:nth-child(2) td:nth-child(2) input', '/store');
-
-        $I->click('form #aside_column button');
-
-        $I->see('権限設定を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        $I->see('権限設定を保存しました。', AuthorityManagePage::$完了メッセージ);
         $I->dontSee('コンテンツ管理', '#side ul');
         $I->dontSee('オーナーズストア', '#side ul');
     }
@@ -302,17 +308,12 @@ class EA08SysteminfoCest
     {
         $I->wantTo('EA0805-UC02-T01 権限管理 - 削除');
 
-        // 表示
-        $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/authority');
-        $I->see('システム設定権限管理', '#main .page-header');
+        AuthorityManagePage::go($I)
+            ->行削除(2)
+            ->行削除(1)
+            ->登録();
 
-        $I->click('form #table-authority tbody tr:nth-child(1) td:nth-child(3) button');
-        $I->click('form #table-authority tbody tr:nth-child(1) td:nth-child(3) button');
-
-        $I->click('form #aside_column button');
-
-        $I->see('権限設定を保存しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        $I->see('権限設定を保存しました。', AuthorityManagePage::$完了メッセージ);
         $I->see('コンテンツ管理', '#side ul');
         $I->see('オーナーズストア', '#side ul');
     }
@@ -326,14 +327,14 @@ class EA08SysteminfoCest
         $I->amOnPage('/'.$config['admin_route'].'/setting/system/log');
         $I->see('システム設定EC-CUBE ログ表示', '#main .page-header');
 
-        $log = $I->grabValueFrom('#form1 #admin_system_log_files');
+        $log = $I->grabValueFrom(['id' => 'admin_system_log_files']);
         $expect = "site_".date('Y-m-d').".log";
         $I->assertEquals($expect, $log);
 
         $I->fillField(['id' => 'line-max'], '1');
-        $I->click('#form1 button');
+        $I->click(['css' => '#form1 button']);
 
-        $I->dontSeeElement('#main .container-fluid .box table tbody tr:nth-child(2)');
+        $I->dontSeeElement(['css' => '#main .container-fluid .box table tbody tr:nth-child(2)']);
     }
 
     public function systeminfo_マスターデータ管理(\AcceptanceTester $I)
@@ -345,13 +346,13 @@ class EA08SysteminfoCest
         $I->amOnPage('/'.$config['admin_route'].'/setting/system/masterdata');
         $I->see('システム設定マスターデータ管理', '#main .page-header');
 
-        $I->selectOption(['id' => 'admin_system_masterdata_masterdata'], 'mtb_sex');
+        $I->selectOption(['id' => 'admin_system_masterdata_masterdata'], ['Eccube-Entity-Master-Sex' => 'mtb_sex']);
         $I->click('#form1 button');
 
-        $I->fillField('#form2 table tbody tr:nth-child(4) td:nth-child(1) input', '3');
-        $I->fillField('#form2 table tbody tr:nth-child(4) td:nth-child(2) input', '無回答');
+        $I->fillField(['css' => '#form2 table tbody tr:nth-child(4) td:nth-child(1) input'], '3');
+        $I->fillField(['css' => '#form2 table tbody tr:nth-child(4) td:nth-child(2) input'], '無回答');
 
-        $I->click('#form2 #aside_column button');
+        $I->click(['css' => '#form2 #aside_column button']);
 
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->amOnPage('/'.$config['admin_route'].'/customer/new');

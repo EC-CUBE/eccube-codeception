@@ -57,4 +57,27 @@ class ProductClassCategoryPage extends AbstractAdminPage
         $this->tester->click("#main .container-fluid .box .box-body .item_box:nth-child(${rowNum}) .icon_edit .dropdown a");
         return $this;
     }
+
+    public function 一覧_上に($rowNum)
+    {
+        $dragTo = $rowNum - 1;
+        $this->tester->dragAndDrop(
+            "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.icon_sortable",
+            "#main .container-fluid .box .box-body .item_box:nth-child($dragTo) div.icon_sortable");
+        return $this;
+    }
+
+    public function 一覧_下に($rowNum)
+    {
+        $dragTo = $rowNum + 1;
+        $this->tester->dragAndDrop(
+            "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.item_pattern > a",
+            "#main .container-fluid .box .box-body .item_box:nth-child($dragTo) div.item_pattern > a");
+        return $this;
+    }
+
+    public function 一覧_名称($rowNum)
+    {
+        return "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.item_pattern > a";
+    }
 }

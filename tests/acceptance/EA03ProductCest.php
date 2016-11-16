@@ -50,32 +50,33 @@ class EA03ProductCest
         $I->see("検索条件に該当するデータがありませんでした。", ProductManagePage::$検索結果_メッセージ);
     }
 
+    /**
+     * @env firefox
+     * @env chrome
+     */
     public function product_CSV出力(\AcceptanceTester $I)
     {
         $I->wantTo('EA0301-UC02-T01 CSV出力');
 
-        ProductManagePage::go($I)->検索();
+        $findProducts = Fixtures::get('findProducts');
+        $Products = $findProducts();
+        ProductManagePage::go($I)
+            ->検索()
+            ->CSVダウンロード();
 
-        // 「CSVダウンロード」ドロップダウン
-        $I->click(ProductManagePage::$検索結果_CSVダウンロード);
-        // 「CSVダウンロード」リンク
-        $I->click(ProductManagePage::$検索結果_CSVダウンロード_CSVダウンロード);
+        $I->see("検索結果 ".count($Products)." 件 が該当しました", ProductManagePage::$検索結果_メッセージ);
 
-        /**
-         * clientに指定しているphantomjsのdockerコンテナにダウンロードされているかどうかは現在確認不可
-         */
+        $ProductCSV = $I->getLastDownloadFile('/^product_\d{14}\.csv$/');
+        $I->assertGreaterOrEquals(count($Products), count(file($ProductCSV)), '検索結果以上の行数があるはず');
     }
 
     public function product_CSV出力項目設定(\AcceptanceTester $I)
     {
         $I->wantTo('EA0301-UC02-T02 CSV出力項目設定');
 
-        ProductManagePage::go($I)->検索();
-
-        // 「CSVダウンロード」ドロップダウン
-        $I->click(ProductManagePage::$検索結果_CSVダウンロード);
-        // 「CSV出力項目設定」リンク
-        $I->click(ProductManagePage::$検索結果_CSVダウンロード_出力項目設定);
+        ProductManagePage::go($I)
+            ->検索()
+            ->CSV出力項目設定();
 
         $I->see('システム設定CSV出力項目設定', self::ページタイトル);
         $value = $I->grabValueFrom(CsvSettingsPage::$CSVタイプ);
@@ -93,10 +94,8 @@ class EA03ProductCest
         $I->see('商品管理商品登録(商品規格)', self::ページタイトル);
 
         $I->click('#main > div > div > div > form > div > div.box-body > button');
-        $I->cantSee('検索結果 3 件 が該当しました', '#product-class-form > div:nth-child(2) > div > div > div.box-header > h3');
-        /**
-         エラーになるが、html5のブラウザによるエラーハンドリングなのでチェックできない
-         */
+        $I->seeElement(['css' => '#form_class_name1:invalid']); //規格1がエラー
+        $I->dontSeeElement(['id' => 'result_box__list']);
     }
 
     public function product_一覧からの規格編集規格なし(\AcceptanceTester $I)
@@ -117,12 +116,10 @@ class EA03ProductCest
         $I->checkOption(['id' => 'form_product_classes_1_add']);
         $I->checkOption(['id' => 'form_product_classes_2_add']);
 
-        /**
-        ボタン押した後POSTされるが、POST処理後同ページにredirectしており、結果をcodeceptionでハンドリングできない...
         $I->click("#product-class-form div:nth-child(3) .btn_area button");
+        $I->waitForElement(['css' => '#main .container-fluid div:nth-child(1) .alert-success']);
         $I->see('商品規格を登録しました。', '#main .container-fluid div:nth-child(1) .alert-success');
         $I->see('商品規格を初期化', '#delete');
-        */
     }
 
     public function product_一覧からの規格編集規格あり2(\AcceptanceTester $I)
@@ -226,9 +223,40 @@ class EA03ProductCest
     {
         $I->wantTo('EA0302-UC01-T04 商品編集 規格あり');
 
-        /**
-         * テストの意味が不明？旧バージョンの内容？
-         */
+        // 規格なし商品では商品種別等が編集可能
+        ProductManagePage::go($I)
+            ->検索('パーコレーター')
+            ->検索結果_選択(1);
+        ProductEditPage::at($I);
+
+        $I->click(['css' => '#detail_box__price01 > a']);
+        $I->click(['css' => '#sub_detail_box__toggle > h3']);
+        $I->seeElement(ProductEditPage::$商品種別);
+        $I->seeElement(ProductEditPage::$販売価格);
+        $I->waitForElement(ProductEditPage::$通常価格);
+        $I->seeElement(ProductEditPage::$在庫数);
+        $I->waitForElement(ProductEditPage::$商品コード);
+        $I->seeElement(ProductEditPage::$販売制限数);
+        $I->seeElement(ProductEditPage::$お届可能日);
+
+        // 規格あり商品では商品種別等が編集不可
+        ProductManagePage::go($I)
+            ->検索('ディナーフォーク')
+            ->検索結果_選択(1);
+        $ProductEditPage = ProductEditPage::at($I);
+
+        $I->dontSeeElements([
+            ProductEditPage::$商品種別,
+            ProductEditPage::$販売価格,
+            ProductEditPage::$通常価格,
+            ProductEditPage::$在庫数,
+            ProductEditPage::$商品コード,
+            ProductEditPage::$販売制限数,
+            ProductEditPage::$お届可能日
+        ]);
+
+        $ProductEditPage->登録();
+        $I->see('登録が完了しました。', ProductEditPage::$登録結果メッセージ);
     }
 
     public function product_一覧からの商品削除(\AcceptanceTester $I)
@@ -248,7 +276,7 @@ class EA03ProductCest
 
         ProductClassPage::go($I)
             ->入力_規格名('test class1')
-            ->企画作成();
+            ->規格作成();
 
         $I->see('規格を保存しました。', ProductClassPage::$登録完了メッセージ);
     }
@@ -256,6 +284,7 @@ class EA03ProductCest
     public function product_規格登録未登録時(\AcceptanceTester $I)
     {
         $I->wantTo('EA0303-UC01-T02 規格登録 未登録時');
+        // TODO [fixture] 規格が1件も登録されていない状態にする
     }
 
     public function product_規格編集(\AcceptanceTester $I)
@@ -267,7 +296,7 @@ class EA03ProductCest
         $value = $I->grabValueFrom(ProductClassPage::$規格名);
         $I->assertEquals('test class1', $value);
 
-        $ProductClassPage->企画作成();
+        $ProductClassPage->規格作成();
 
         $I->see('規格を保存しました。', ProductClassPage::$登録完了メッセージ);
     }
@@ -281,13 +310,63 @@ class EA03ProductCest
         $I->acceptPopup();
     }
 
+    public function product_規格表示順の変更(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0308-UC01-T01 規格表示順の変更');
+
+        $ProductClassPage = ProductClassPage::go($I);
+        $I->see("サイズ", $ProductClassPage->一覧_名称(1));
+        $I->see("材質", $ProductClassPage->一覧_名称(2));
+
+        $ProductClassPage->一覧_下に(1);
+        $I->see("材質", $ProductClassPage->一覧_名称(1));
+        $I->see("サイズ", $ProductClassPage->一覧_名称(2));
+
+        $ProductClassPage->一覧_上に(2);
+        $I->see("サイズ", $ProductClassPage->一覧_名称(1));
+        $I->see("材質", $ProductClassPage->一覧_名称(2));
+    }
+
+    public function product_分類表示順の変更(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0311-UC01-T01 分類表示順の変更');
+
+        ProductClassPage::go($I)
+            ->一覧_分類登録(1);
+
+        $ProductClassCategoryPage = ProductClassCategoryPage::at($I);
+        $I->see('150cm', $ProductClassCategoryPage->一覧_名称(1));
+        $I->see('170mm', $ProductClassCategoryPage->一覧_名称(2));
+        $I->see('120mm', $ProductClassCategoryPage->一覧_名称(3));
+
+        $ProductClassCategoryPage->一覧_下に(1);
+        $I->see('170mm', $ProductClassCategoryPage->一覧_名称(1));
+        $I->see('150cm', $ProductClassCategoryPage->一覧_名称(2));
+        $I->see('120mm', $ProductClassCategoryPage->一覧_名称(3));
+
+        $ProductClassCategoryPage->一覧_下に(2);
+        $I->see('170mm', $ProductClassCategoryPage->一覧_名称(1));
+        $I->see('120mm', $ProductClassCategoryPage->一覧_名称(2));
+        $I->see('150cm', $ProductClassCategoryPage->一覧_名称(3));
+
+        $ProductClassCategoryPage->一覧_上に(3);
+        $I->see('170mm', $ProductClassCategoryPage->一覧_名称(1));
+        $I->see('150cm', $ProductClassCategoryPage->一覧_名称(2));
+        $I->see('120mm', $ProductClassCategoryPage->一覧_名称(3));
+
+        $ProductClassCategoryPage->一覧_上に(2);
+        $I->see('150cm', $ProductClassCategoryPage->一覧_名称(1));
+        $I->see('170mm', $ProductClassCategoryPage->一覧_名称(2));
+        $I->see('120mm', $ProductClassCategoryPage->一覧_名称(3));
+    }
+
     public function product_分類登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0304-UC01-T01(& UC01-T02/UC02-T01/UC03-T01) 分類登録/編集/削除');
 
         $ProductClassPage = ProductClassPage::go($I)
             ->入力_規格名('test class2')
-            ->企画作成();
+            ->規格作成();
 
         $I->see('規格を保存しました。', ProductClassPage::$登録完了メッセージ);
 
@@ -347,6 +426,7 @@ class EA03ProductCest
         // サブカテゴリ EA0305-UC01-03 & UC01-04
         $CategoryPage = CategoryManagePage::go($I)
             ->一覧_選択(1);
+
         $I->see('test category11', CategoryManagePage::$パンくず_1階層);
 
         $CategoryPage
@@ -359,48 +439,107 @@ class EA03ProductCest
         $I->acceptPopup();
     }
 
+    public function product_カテゴリ表示順の変更(\AcceptanceTester $I)
+    {
+        $I->wantTo("EA0309-UC01-T01 カテゴリ表示順の変更");
+
+        $CategoryPage = CategoryManagePage::go($I);
+        $I->see('インテリア', $CategoryPage->一覧_名称(2));
+        $I->see('キッチンツール', $CategoryPage->一覧_名称(3));
+        $I->see('新入荷', $CategoryPage->一覧_名称(4));
+
+        $CategoryPage->一覧_下に(2);
+        $I->see('キッチンツール', $CategoryPage->一覧_名称(2));
+        $I->see('インテリア', $CategoryPage->一覧_名称(3));
+        $I->see('新入荷', $CategoryPage->一覧_名称(4));
+
+        $CategoryPage->一覧_下に(3);
+        $I->see('キッチンツール', $CategoryPage->一覧_名称(2));
+        $I->see('新入荷', $CategoryPage->一覧_名称(3));
+        $I->see('インテリア', $CategoryPage->一覧_名称(4));
+
+        $CategoryPage->一覧_上に(4);
+        $I->see('キッチンツール', $CategoryPage->一覧_名称(2));
+        $I->see('インテリア', $CategoryPage->一覧_名称(3));
+        $I->see('新入荷', $CategoryPage->一覧_名称(4));
+
+        $CategoryPage->一覧_上に(3);
+        $I->see('インテリア', $CategoryPage->一覧_名称(2));
+        $I->see('キッチンツール', $CategoryPage->一覧_名称(3));
+        $I->see('新入荷', $CategoryPage->一覧_名称(4));
+    }
+
     public function product_商品CSV登録(\AcceptanceTester $I)
     {
-        $I->wantTo('EA0306-UC01-T01(& UC01-T02) 商品CSV登録');
+        $I->wantTo('EA0306-UC01-T01 商品CSV登録');
 
-        $ProductCsvUploadPage = ProductCsvUploadPage::go($I);
+        ProductManagePage::go($I)->検索('アップロード商品');
+        $I->see('検索条件に該当するデータがありませんでした。', ProductManagePage::$検索結果_メッセージ);
 
-        /* CSVのアップロードは不可 */
+        ProductCsvUploadPage::go($I)
+            ->入力_CSVファイル('product.csv')
+            ->CSVアップロード();
+        $I->see('商品登録CSVファイルをアップロードしました', CategoryCsvUploadPage::$完了メッセージ);
 
-        // 雛形のダウンロード
-        $ProductCsvUploadPage->雛形ダウンロード();
-        /* ダウンロードファイルの確認は不可*/
+        ProductManagePage::go($I)->検索('アップロード商品');
+        $I->see('検索結果 3 件 が該当しました', ProductManagePage::$検索結果_メッセージ);
+    }
+
+    /**
+     * @env firefox
+     * @env chrome
+     */
+    public function product_商品CSV登録雛形ファイルダウンロード(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0306-UC01-T02 商品CSV登録雛形ファイルダウンロード');
+
+        ProductCsvUploadPage::go($I)->雛形ダウンロード();
+        $ProductTemplateCSV = $I->getLastDownloadFile('/^product\.csv$/');
+        $I->assertEquals(1, count(file($ProductTemplateCSV)), 'ヘッダ行だけのファイル');
     }
 
     public function product_カテゴリCSV登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0307-UC01-T01(& UC01-T02) カテゴリCSV登録');
 
-        $CategoryCsvUploadPage = CategoryCsvUploadPage::go($I);
+        CategoryManagePage::go($I);
+        $I->dontSeeElement(['xpath' => '//div[@id="sortable_list_box"]//a[contains(text(), "アップロードカテゴリ")]']);
 
-        /* CSVのアップロードは不可 */
+        CategoryCsvUploadPage::go($I)
+            ->入力_CSVファイル('category.csv')
+            ->CSVアップロード();
 
-        // 雛形のダウンロード
-        $CategoryCsvUploadPage->雛形ダウンロード();
-        /* ダウンロードファイルの確認は不可*/
+        $I->see('カテゴリ登録CSVファイルをアップロードしました', CategoryCsvUploadPage::$完了メッセージ);
+
+        CategoryManagePage::go($I);
+        $I->seeElement(['xpath' => '//div[@id="sortable_list_box"]//a[contains(text(), "アップロードカテゴリ1")]']);
+        $I->seeElement(['xpath' => '//div[@id="sortable_list_box"]//a[contains(text(), "アップロードカテゴリ2")]']);
+        $I->seeElement(['xpath' => '//div[@id="sortable_list_box"]//a[contains(text(), "アップロードカテゴリ3")]']);
     }
 
     /**
-     * XXX 確認リンクをクリックすると別ウィンドウが立ち上がるため、後続のテストが失敗してしまう...
+     * @env firefox
+     * @env chrome
      */
+    public function product_カテゴリCSV登録雛形ファイルダウンロード(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0307-UC01-T02 カテゴリCSV登録雛形ファイルダウンロード');
+
+        // 雛形のダウンロード
+        CategoryCsvUploadPage::go($I)->雛形ダウンロード();
+        $CategoryTemplateCSV = $I->getLastDownloadFile('/^category\.csv$/');
+        $I->assertEquals(1, count(file($CategoryTemplateCSV)), 'ヘッダ行だけのファイル');
+    }
+
     public function product_一覧からの商品確認(\AcceptanceTester $I)
     {
         $I->wantTo('EA0310-UC05-T01 一覧からの商品確認');
 
         ProductManagePage::go($I)
-            ->検索('フォーク')
-            ->検索結果_選択(1);
+            ->検索('パーコレーター')
+            ->検索結果_確認(1);
 
-        // 確認リンク クリック
-        // $I->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div > div:nth-child(4) > div > ul > li:nth-child(2) > a');
-
-        /**
-         * 確認をクリックすると、別ウィンドウでフロント側の商品詳細ページが表示される為、phantomjsではハンドリングできない
-         */
+        $I->switchToNewWindow();
+        $I->seeInCurrentUrl('/products/detail/');
     }
 }
