@@ -48,21 +48,21 @@ return [
         'url' => 'https://github.com/EC-CUBE/Recommend-plugin/releases/download/1.0.3/Recommend_v1.0.3.tar.gz'
     ],
     8 => [
-        'name' => '売上集計プラグイン',
-        'code' => 'SalesReport',
-        'file' => 'SalesReport_v0.0.2.tar.gz',
-        'url' => 'https://github.com/EC-CUBE/sales-report-plugin/releases/download/0.0.2/SalesReport_v0.0.2.tar.gz'
-    ],
-    9 => [
         'name' => 'リスティング広告入稿用CSV作成プラグイン',
         'code' => 'ListingAdCsv',
         'file' => 'ListingAdCsv_20160204.tar.gz',
         'url' => 'https://github.com/EC-CUBE/listing-ad-plugin/releases/download/v.1.0.1/ListingAdCsv_20160204.tar.gz'
     ],
-    10 => [
+    9 => [
         'name' => '関連商品プラグイン',
         'code' => 'RelatedProduct',
         'file' => 'RelatedProduct_v0.0.2.tar.gz',
         'url' => 'https://github.com/EC-CUBE/related-product-plugin/releases/download/0.0.2/RelatedProduct_v0.0.2.tar.gz'
+    ],
+    10 => [
+        'name' => '売上集計プラグイン',
+        'code' => 'SalesReport',
+        'file' => 'SalesReport_v0.0.2.tar.gz',
+        'url' => 'https://github.com/EC-CUBE/sales-report-plugin/releases/download/0.0.2/SalesReport_v0.0.2.tar.gz'
     ],
 ];
