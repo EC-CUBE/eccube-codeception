@@ -70,12 +70,17 @@ class EA05CustomerCest
             ->入力_電話番号2('111')
             ->入力_電話番号3('111')
             ->入力_パスワード('password')
-            ->入力_パスワード確認('password')
-            ->登録();
+            ->入力_パスワード確認('password');
 
-        $I->see('会員情報を保存しました。', CustomerEditPage::$登録完了メッセージ);
+        $findPluginByCode = Fixtures::get('findPluginByCode');
+        $Plugin = $findPluginByCode('MailMagazine');
+        if ($Plugin) {
+            $I->amGoingTo('メルマガプラグインを発見したため、メルマガを購読します');
+            $CustomerRegisterPage->tester->click('#admin_customer_mailmaga_flg_0');
+        }
 
         $CustomerRegisterPage->登録();
+        $I->see('会員情報を保存しました。', CustomerEditPage::$登録完了メッセージ);
         /* ブラウザによるhtml5のエラーなのでハンドリング不可 */
     }
 
@@ -94,8 +99,16 @@ class EA05CustomerCest
         $CustomerListPage->一覧_編集(1);
 
         $CustomerRegisterPage = CustomerEditPage::at($I)
-            ->入力_姓('testuser-1')
-            ->登録();
+            ->入力_姓('testuser-1');
+
+        $findPluginByCode = Fixtures::get('findPluginByCode');
+        $Plugin = $findPluginByCode('MailMagazine');
+        if ($Plugin) {
+            $I->amGoingTo('メルマガプラグインを発見したため、メルマガを購読します');
+            $CustomerRegisterPage->tester->click('#admin_customer_mailmaga_flg_0');
+        }
+
+        $CustomerRegisterPage->登録();
         $I->see('会員情報を保存しました。', CustomerEditPage::$登録完了メッセージ);
 
         $CustomerRegisterPage
