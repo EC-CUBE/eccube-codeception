@@ -36,6 +36,7 @@ RUN sed -i.bak -e 's/5.3.9/5.4.0/g' ${ECCUBE_PATH}/composer.json
 RUN composer install
 RUN composer require codeception/codeception "2.*"
 RUN curl https://raw.githubusercontent.com/Codeception/c3/2.0/c3.php -o ${ECCUBE_PATH}/c3.php
+RUN sed -i -e "159i header('Content-Type: application/octet-stream');" ${ECCUBE_PATH}/c3.php
 
 COPY html/index_cover.php ${ECCUBE_PATH}/html/index_cover.php
 
