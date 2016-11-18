@@ -197,3 +197,13 @@ $findPluginByCode = function ($code = null) use ($app) {
 };
 /** プラグインを検索するクロージャ */
 Fixtures::add('findPluginByCode', $findPluginByCode);
+
+$findCustomers = function () use ($app) {
+    return $app['orm.em']->getRepository('Eccube\Entity\Customer')
+        ->createQueryBuilder('c')
+        ->where('c.del_flg = 0')
+        ->getQuery()
+        ->getResult();
+};
+/** 会員を検索するクロージャ */
+Fixtures::add('findCustomers', $findCustomers);

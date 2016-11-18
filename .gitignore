@@ -1,5 +1,7 @@
 /tests/_data/*
 !/tests/_data/plugin_fixtures.php
 /tests/_output/*
+/tests/_support/_downloads/*
 composer.phar
 /vendor
+!.gitkeep

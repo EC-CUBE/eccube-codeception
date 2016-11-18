@@ -49,7 +49,7 @@ class EA01TopCest
         });
         $I->see(count($NewOrders), TopPage::$受付状況_新規受付数);
 
-        // FIXME ソート順が指定されていないのでテストが失敗する
+        // FIXME [issue] ソート順が指定されていないのでテストが失敗する
         // https://github.com/EC-CUBE/ec-cube/issues/1908
         // // 入金待ちをクリックすると「受注管理＞入金待ち」のページに遷移することを確認
         // $I->click(TopPage::$受付状況_入金待ち);
@@ -70,13 +70,13 @@ class EA01TopCest
         // $I->goToAdminPage();
 
         // お知らせの記事をクリックすると設定されたURLに遷移することを確認
-        /*
-        該当のiframe要素にname属性がないのでアクセスできない...
-        eccube側のtemplateを修正の上で実行
-        $I->switchToIFrame(".link_list_wrap");
-        $I->click('#newsarea .link_list .tableish a:nth-child(3)');
+        $I->executeJS('document.querySelector("iframe.link_list_wrap").setAttribute("name", "news_frame")');
+        $I->switchToIFrame("news_frame");
+        $I->click(['css' => '.news_area .link_list .tableish a:nth-child(3)']);
+        $I->switchToNewWindow();
+        $I->seeInTitle("全商品 / ECサイト構築・リニューアルは「ECオープンプラットフォームEC-CUBE」");
+        $I->switchToWindow();
         $I->switchToIFrame();
-        */
 
         // ショップ情報の在庫切れ商品をクリックすると商品管理ページに遷移することを確認
         $I->click(TopPage::$ショップ状況_在庫切れ商品);

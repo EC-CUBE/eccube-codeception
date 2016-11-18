@@ -21,6 +21,18 @@ class FileManagePage extends AbstractAdminPage
         return $page->goPage('/content/file_manager', 'コンテンツ管理ファイル管理');
     }
 
+    public function 入力_ファイル($fileName)
+    {
+        $this->tester->attachFile(['id' => 'form_file'], $fileName);
+        return $this;
+    }
+
+    public function アップロード()
+    {
+        $this->tester->click(['xpath' => '//div[@id="upload_box__file"]//a']);
+        return $this;
+    }
+
     public function 入力_フォルダ名($value)
     {
         $this->tester->fillField(['id' => 'form_create_file'], $value);
@@ -36,6 +48,12 @@ class FileManagePage extends AbstractAdminPage
     public function ファイル名($rowNum)
     {
         return "#aside_wrap > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(1)";
+    }
+
+    public function 一覧_ダウンロード($rowNum)
+    {
+        $this->tester->click("#aside_wrap > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(5) > a");
+        return $this;
     }
 
     public function 一覧_表示($rowNum)

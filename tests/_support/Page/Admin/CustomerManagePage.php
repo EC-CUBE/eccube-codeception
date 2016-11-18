@@ -75,4 +75,9 @@ class CustomerManagePage extends AbstractAdminPage
     {
         $this->tester->click('#search_form > div.row > div > div > div.box-body > div.row > div > ul > li:nth-child(2) > a');
     }
+
+    public function 一覧_会員ID($rowNum)
+    {
+        return $this->tester->grabTextFrom("#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr:nth-child($rowNum) > td.member_id");
+    }
 }

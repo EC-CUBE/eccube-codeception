@@ -3,11 +3,12 @@ FROM eccube/php7-ext-apache
 MAINTAINER Kentaro Ohkouchi <nanasess@fsm.ne.jp>
 
 ENV PGUSER cube3_dev_user
-ENV ECCUBE_PATH /var/www
-
+ARG ECCUBE_PATH=/var/www
 ARG DBTYPE
 ARG ECCUBE_REPOS
 ARG ECCUBE_BRANCH
+ARG DIRTYPE="root"
+ENV ECCUBE_PATH=${ECCUBE_PATH}
 
 RUN useradd -ms /bin/bash ${PGUSER}
 
@@ -19,9 +20,8 @@ RUN chmod +x /wait-for-db.sh
 ENTRYPOINT /wait-for-db.sh
 
 ## Clone EC-CUBE3
-RUN cd /var && \
-    rm -r /var/www && \
-    git clone --depth=50 -b ${ECCUBE_BRANCH} ${ECCUBE_REPOS} ${ECCUBE_PATH}
+ADD clone-${DIRTYPE}.sh /clone.sh
+RUN /clone.sh
 
 WORKDIR ${ECCUBE_PATH}
 RUN composer install
@@ -29,5 +29,10 @@ COPY config/exec_env.sh ${ECCUBE_PATH}/exec_env.sh
 RUN chmod +x ${ECCUBE_PATH}/exec_env.sh
 RUN ls -lt ${ECCUBE_PATH}/
 
-EXPOSE 80
+# Enable SSL
+RUN a2enmod ssl
+RUN ln -s ${APACHE_CONFDIR}/sites-available/default-ssl.conf ${APACHE_CONFDIR}/sites-enabled/default-ssl.conf
+
+EXPOSE 80 443
+
 

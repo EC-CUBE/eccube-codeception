@@ -55,7 +55,7 @@ class EA05CustomerCest
         $faker = Fixtures::get('faker');
         $email = microtime(true).'.'.$faker->safeEmail;
 
-        $CustomerRegisterPage = CustomerEditPage::go($I)
+        CustomerEditPage::go($I)
             ->入力_姓('testuser')
             ->入力_名('testuser')
             ->入力_セイ('テストユーザー')
@@ -80,13 +80,22 @@ class EA05CustomerCest
         }
 
         $CustomerRegisterPage->登録();
-        $I->see('会員情報を保存しました。', CustomerEditPage::$登録完了メッセージ);
         /* ブラウザによるhtml5のエラーなのでハンドリング不可 */
+        $I->see('会員情報を保存しました。', CustomerEditPage::$登録完了メッセージ);    }
+
+    public function customer_会員登録_必須項目未入力(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0502-UC01-T02 会員登録_必須項目未入力');
+
+        CustomerEditPage::go($I)->登録();
+
+        $I->seeElement(['css' => '#admin_customer_name_name01:invalid']); // 姓がエラー
+        $I->dontSeeElement(CustomerEditPage::$登録完了メッセージ);
     }
 
     public function customer_会員編集(\AcceptanceTester $I)
     {
-        $I->wantTo('EA0502-UC02-T02(& UC02-T02) 会員編集');
+        $I->wantTo('EA0502-UC02-T01 会員編集');
 
         $createCustomer = Fixtures::get('createCustomer');
         $customer = $createCustomer();
@@ -114,34 +123,78 @@ class EA05CustomerCest
         $CustomerRegisterPage
             ->入力_姓('')
             ->登録();
-        /* ブラウザによるhtml5のエラーなのでハンドリング不可 */
     }
 
-    public function customer_会員削除(\AcceptanceTester $I)
+    public function customer_会員編集_必須項目未入力(\AcceptanceTester $I)
     {
-        $I->wantTo('EA0501-UC03-T01(& UC03-T02) 会員削除');
+        $I->wantTo('EA0502-UC02-T02 会員編集_必須項目未入力');
 
         $createCustomer = Fixtures::get('createCustomer');
         $customer = $createCustomer();
 
-        CustomerManagePage::go($I)
-            ->検索($customer->getEmail())
-            ->一覧_削除(1);
+        $CustomerListPage = CustomerManagePage::go($I)
+            ->検索($customer->getEmail());
 
-        $I->acceptPopup();
+        $I->see('検索結果 1 件 が該当しました',CustomerManagePage::$検索結果メッセージ);
+
+        $CustomerListPage->一覧_編集(1);
+
+        CustomerEditPage::at($I)
+            ->入力_姓('')
+            ->登録();
+
+        $I->seeElement(['css' => '#admin_customer_name_name01:invalid']);
+        $I->dontSeeElement(CustomerEditPage::$登録完了メッセージ);
     }
 
+    public function customer_会員削除(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0501-UC03-T01 会員削除');
+
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
+
+        $CustomerManagePage = CustomerManagePage::go($I)
+            ->検索($customer->getEmail());
+
+        $CustomerManagePage->一覧_削除(1);
+        $I->acceptPopup();
+
+        $I->see('検索条件に該当するデータがありませんでした', CustomerManagePage::$検索結果メッセージ);
+    }
+
+    public function customer_会員削除キャンセル(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0501-UC03-T02 会員削除キャンセル');
+
+        $createCustomer = Fixtures::get('createCustomer');
+        $customer = $createCustomer();
+
+        $CustomerManagePage = CustomerManagePage::go($I)
+            ->検索($customer->getEmail());
+
+        $CustomerIdForNotDel = $CustomerManagePage->一覧_会員ID(1);
+        $CustomerManagePage->一覧_削除(1);
+        $I->cancelPopup();
+
+        $I->assertEquals($CustomerIdForNotDel, $CustomerManagePage->一覧_会員ID(1));
+    }
+
+    /**
+     * @env firefox
+     * @env chrome
+     */
     public function customer_CSV出力(\AcceptanceTester $I)
     {
         $I->wantTo('EA0501-UC05-T01 CSV出力');
 
+        $findCustomers = Fixtures::get('findCustomers');
         CustomerManagePage::go($I)
             ->検索()
             ->CSVダウンロード();
 
-        /**
-         * clientに指定しているphantomjsのdockerコンテナにダウンロードされているかどうかは現在確認不可
-         */
+        $CustomerCSV = $I->getLastDownloadFile('/^customer_\d{14}\.csv$/');
+        $I->assertEquals(count($findCustomers()) + 1, count(file($CustomerCSV)));
     }
 
     public function customer_CSV出力項目設定(\AcceptanceTester $I)

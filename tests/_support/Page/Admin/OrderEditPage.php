@@ -125,6 +125,7 @@ class OrderEditPage extends AbstractAdminPage
 
     public function 注文者情報をコピー()
     {
+        $this->tester->executeJS('window.scrollTo(0, 1700);');
         $this->tester->click('#main #detail_wrap a.copyCustomerToShippingButton');
         return $this;
     }
@@ -137,7 +138,9 @@ class OrderEditPage extends AbstractAdminPage
 
     public function 商品検索($value = '')
     {
+        $this->tester->executeJS('window.scrollTo(0, 900);');
         $this->tester->click('#aside_wrap > form > div > div:nth-child(3) > div.box-body.accpanel > div > div.btn_area > ul > li:nth-child(1) > a');
+        $this->tester->waitForElement(['id' => 'search_product_modal_box']);
         $this->tester->fillField(['id' => 'admin_search_product_id'], $value);
         $this->tester->click('#searchProductModalButton');
         return $this;

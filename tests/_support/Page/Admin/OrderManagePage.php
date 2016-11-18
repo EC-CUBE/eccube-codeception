@@ -22,6 +22,12 @@ class OrderManagePage extends AbstractAdminPage
         return $page->goPage('/order', '受注管理受注マスター');
     }
 
+    public static function at(\AcceptanceTester $I)
+    {
+        $page = new self($I);
+        return $page->atPage('受注管理受注マスター');
+    }
+
     public function 検索($value = '')
     {
         $this->tester->fillField(['id' => 'admin_search_order_multi'], $value);
@@ -102,5 +108,10 @@ class OrderManagePage extends AbstractAdminPage
     {
         $this->その他メニュー();
         $this->tester->click('#dropmenu > ul > li > a');
+    }
+
+    public function 一覧_注文番号($rowNum)
+    {
+        return $this->tester->grabTextFrom("#dropdown-form > div > div > table > tbody > tr:nth-child($rowNum) > td:nth-child(3) > a");
     }
 }

@@ -40,9 +40,13 @@ class EA04OrderCest
         $I->see('検索条件に該当するデータがありませんでした。', OrderManagePage::$検索結果_メッセージ);
     }
 
-    public function order_CSVダウンロード(\AcceptanceTester $I)
+    /**
+     * @env firefox
+     * @env chrome
+     */
+    public function order_受注CSVダウンロード(\AcceptanceTester $I)
     {
-        $I->wantTo('EA0401-UC02-T01(& UC02-T02/UC03-T01/UC03-T2) CSVダウンロード');
+        $I->wantTo('EA0401-UC02-T01 受注CSVダウンロード');
 
         $config = Fixtures::get('config');
         $findOrders = Fixtures::get('findOrders'); // Closure
@@ -52,9 +56,22 @@ class EA04OrderCest
         $OrderListPage = OrderManagePage::go($I)->検索();
         $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
-        /* ダウンロード（ダウンロードはチェックできないので、テスト不可） */
         $OrderListPage->受注CSVダウンロード実行();
-        $OrderListPage->配送CSVダウンロード実行();
+        $OrderCSV = $I->getLastDownloadFile('/^order_\d{14}\.csv$/');
+        $I->assertGreaterOrEquals(count($TargetOrders), count(file($OrderCSV)), '検索結果以上の行数があるはず');
+    }
+
+    public function order_受注情報のCSV出力項目変更設定(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0401-UC02-T02 受注情報のCSV出力項目変更設定');
+
+        $config = Fixtures::get('config');
+        $findOrders = Fixtures::get('findOrders'); // Closure
+        $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
+            return $Order->getOrderStatus()->getId() != $config['order_processing'];
+        });
+        $OrderListPage = OrderManagePage::go($I)->検索();
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
         /* 項目設定 */
         $OrderListPage->受注CSV出力項目設定();
@@ -62,10 +79,43 @@ class EA04OrderCest
         CsvSettingsPage::at($I);
         $value = $I->grabValueFrom(CsvSettingsPage::$CSVタイプ);
         $I->assertEquals(3, $value);
+    }
 
-        OrderManagePage::go($I)
-            ->検索()
-            ->配送CSV出力項目設定();
+    /**
+     * @env firefox
+     * @env chrome
+     */
+    public function order_配送CSVダウンロード(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0401-UC03-T01 配送CSVダウンロード');
+
+        $config = Fixtures::get('config');
+        $findOrders = Fixtures::get('findOrders'); // Closure
+        $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
+            return $Order->getOrderStatus()->getId() != $config['order_processing'];
+        });
+        $OrderListPage = OrderManagePage::go($I)->検索();
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
+
+        $OrderListPage->配送CSVダウンロード実行();
+        $ShippingCSV = $I->getLastDownloadFile('/^shipping_\d{14}\.csv$/');
+        $I->assertGreaterOrEquals(count($TargetOrders), count(file($ShippingCSV)), '検索結果以上の行数があるはず');
+    }
+
+    public function order_配送情報のCSV出力項目変更設定(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0401-UC03-T02 配送情報のCSV出力項目変更設定');
+
+        $config = Fixtures::get('config');
+        $findOrders = Fixtures::get('findOrders'); // Closure
+        $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
+            return $Order->getOrderStatus()->getId() != $config['order_processing'];
+        });
+        $OrderListPage = OrderManagePage::go($I)->検索();
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
+
+        /* 項目設定 */
+        $OrderListPage->配送CSV出力項目設定();
 
         CsvSettingsPage::at($I);
         $value = $I->grabValueFrom(CsvSettingsPage::$CSVタイプ);
@@ -134,28 +184,47 @@ class EA04OrderCest
         $OrderListPage = OrderManagePage::go($I)->検索();
         $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
+        // 削除
+        $OrderNumForDel = $OrderListPage->一覧_注文番号(1);
         $OrderListPage->一覧_削除(1);
         $I->acceptPopup();
+
+        $I->see('受注情報を削除しました', ['css' => '#main > div > div:nth-child(1) > div']);
+        $I->assertNotEquals($OrderNumForDel, $OrderListPage->一覧_注文番号(1));
+
+        // 削除キャンセル
+        $OrderNumForDontDel = $OrderListPage->一覧_注文番号(1);
+        $OrderListPage->一覧_削除(1);
+        $I->cancelPopup();
+
+        $I->assertEquals($OrderNumForDontDel, $OrderListPage->一覧_注文番号(1));
     }
 
     public function order_受注メール通知(\AcceptanceTester $I)
     {
         $I->wantTo('EA0402-UC01-T01 受注メール通知');
 
-        $config = Fixtures::get('config');
-        $findOrders = Fixtures::get('findOrders'); // Closure
-        $TargetOrders = array_filter($findOrders(), function ($Order) use ($config) {
-            return $Order->getOrderStatus()->getId() != $config['order_processing'];
-        });
-        $OrderListPage = OrderManagePage::go($I)->検索();
-        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
+        $I->resetEmails();
+
+        $OrderListPage = OrderManagePage::go($I)->検索('100');
+        $I->see('検索結果 1 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
         $OrderListPage->一覧_メール通知(1);
+
+        $I->selectOption(['id' => 'template-change'], ['1' => 'ご注文ありがとうございます']);
+        $I->click(['css' => '#button_box__button_menu > button']);
+        $I->click(['css' => '#confirm_box__button_menu > p:nth-child(2) > button']);
+
+        $I->seeEmailCount(2);
+
+        $I->seeInLastEmailSubjectTo('admin@example.com', 'ご注文ありがとうございます');
     }
 
     public function order_一括メール通知(\AcceptanceTester $I)
     {
         $I->wantTo('EA0402-UC02-T01(& UC02-T02) 一括メール通知');
+
+        $I->resetEmails();
 
         $config = Fixtures::get('config');
         $findOrders = Fixtures::get('findOrders'); // Closure
@@ -169,7 +238,11 @@ class EA04OrderCest
             ->一覧_全選択()
             ->メール一括通知();
 
-        // TODO メール確認
+        $I->selectOption(['id' => 'template-change'], ['1' => 'ご注文ありがとうございます']);
+        $I->click(['css' => '#top_box__button_menu > button']);
+        $I->click(['css' => '#confirm_box__button_menu > p:nth-child(2) > button']);
+
+        $I->seeEmailCount(20);
     }
 
     public function order_受注登録(\AcceptanceTester $I)
@@ -208,4 +281,5 @@ class EA04OrderCest
 
         $I->see('受注情報を保存しました。', OrderEditPage::$登録完了メッセージ);
     }
+
 }

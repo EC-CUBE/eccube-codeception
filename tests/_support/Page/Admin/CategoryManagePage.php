@@ -83,4 +83,27 @@ class CategoryManagePage extends AbstractAdminPage
         $this->CSVダウンロードメニュー();
         $this->tester->click('#main > div > div > div.col-md-9 > div > div:nth-child(2) > div > div.dl_dropdown.col-md-3 > div > ul > li:nth-child(2) > a');
     }
+
+    public function 一覧_上に($rowNum)
+    {
+        $dragTo = $rowNum - 1;
+        $this->tester->dragAndDrop(
+            "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.icon_sortable",
+            "#main .container-fluid .box .box-body .item_box:nth-child($dragTo) div.icon_sortable");
+        return $this;
+    }
+
+    public function 一覧_下に($rowNum)
+    {
+        $dragTo = $rowNum + 1;
+        $this->tester->dragAndDrop(
+            "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.item_pattern > a",
+            "#main .container-fluid .box .box-body .item_box:nth-child($dragTo) div.item_pattern > a");
+        return $this;
+    }
+
+    public function 一覧_名称($rowNum)
+    {
+        return "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.item_pattern > a";
+    }
 }

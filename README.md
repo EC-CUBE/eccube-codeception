@@ -26,9 +26,24 @@ docker-compose build --no-cache
 docker-compose run --rm codecept run -d --env default --html report.html
 ```
 
+### http/vncのポート固定
 ローカルでの確認用にポートを固定したい場合は、`docker-compose.dev.yml`も読み込んでください。(並列実行時には利用できません。)
 ```
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm codecept run -d --env default --html report.html
+```
+
+### サブディレクトリにデプロイした環境でのテスト実行方法
+
+htmlディレクトリありの場合(http://locahost:8080/ec-cube/html/)
+```
+docker-compose -f docker-compose.yml -f docker-compose.subdir.yml build && \
+docker-compose -f docker-compose.yml -f docker-compose.subdir.yml run --rm codecept run -d --env default --html report.html
+```
+
+htmlディレクトリなしの場合(http://locahost:8080/ec-cube/)
+```
+docker-compose -f docker-compose.yml -f docker-compose.withouthtml.yml build && \
+docker-compose -f docker-compose.yml -f docker-compose.withouthtml.yml run --rm codecept run -d --env default --html report.html
 ```
 
 ### 並列実行
@@ -45,6 +60,15 @@ docker-compose --project-name front run -d --rm codecept run -d -g front --env d
 
 ```
 docker-compose --project-name front logs -f
+```
+
+### プラグインをインストールした状態でのテスト実行方法
+
+`-g plugin_installer -g plugin_uninstaller` をグループに追加してください。
+インストールするプラグインは tests/_data/plugin_fixtures.php で指定可能です。
+
+```
+docker-compose run --rm codecept run -d --env default -g plugin_installer -g plugin_uninstaller -g front --html report.html
 ```
 
 ### コンテナの削除

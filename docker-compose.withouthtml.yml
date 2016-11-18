@@ -1,0 +1,12 @@
+version: "2"
+services:
+  eccube3:
+    build:
+      args:
+        - DIRTYPE=withouthtml
+        - ECCUBE_PATH=/var/www/html/ec-cube
+    environment:
+      - ROOT_URLPATH=/ec-cube/
+  codecept:
+    environment:
+      - BASE_URL=http://eccube3/ec-cube/

@@ -7,10 +7,14 @@ namespace Page\Admin;
 
 class ProductEditPage extends AbstractAdminPage
 {
-
-    protected $tester;
-
     public static $登録結果メッセージ = '#main .container-fluid div:nth-child(1) .alert-success';
+    public static $商品種別 = ['id' => 'admin_product_class_product_type'];
+    public static $通常価格 = ['id' => 'admin_product_class_price01'];
+    public static $販売価格 = ['id' => 'admin_product_class_price02'];
+    public static $在庫数 = ['id' => 'admin_product_class_stock'];
+    public static $商品コード = ['id' => 'admin_product_class_code'];
+    public static $販売制限数 = ['id' => 'admin_product_class_sale_limit'];
+    public static $お届可能日 = ['id' => 'admin_product_class_delivery_date'];
 
     /**
      * ProductRegisterPage constructor.
@@ -41,7 +45,7 @@ class ProductEditPage extends AbstractAdminPage
 
     public function 入力_販売価格($value)
     {
-        $this->tester->fillField(['id' => 'admin_product_class_price02'], $value);
+        $this->tester->fillField(self::$販売価格, $value);
         return $this;
     }
 
