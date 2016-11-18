@@ -76,7 +76,7 @@ class ProductManagePage extends AbstractAdminPage
     public function 検索結果_確認($rowNum)
     {
         $this->検索結果_オプション($rowNum);
-        $this->tester->click("#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(2) > a");
+        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(2) > a");
         return $this;
     }
 
@@ -111,6 +111,7 @@ class ProductManagePage extends AbstractAdminPage
      */
     private function 検索結果_オプション($rowNum)
     {
+
         $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > a");
         return $this;
     }
