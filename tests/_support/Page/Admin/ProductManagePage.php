@@ -124,8 +124,8 @@ class ProductManagePage extends AbstractAdminPage
 
     public function CSV出力項目設定()
     {
+        $this->tester->click('#main #result_list__csv_menu > a');
         $this->tester->click('#main #result_list__csv_menu > ul > li:nth-child(2) > a');
-        $this->tester->click('#main #result_list__csv_menu > ul > li:nth-child(2) > ul > li:nth-child(2) > a');
         return $this;
     }
 }
