@@ -55,7 +55,7 @@ class EA05CustomerCest
         $faker = Fixtures::get('faker');
         $email = microtime(true).'.'.$faker->safeEmail;
 
-        CustomerEditPage::go($I)
+        $CustomerRegisterPage = CustomerEditPage::go($I)
             ->入力_姓('testuser')
             ->入力_名('testuser')
             ->入力_セイ('テストユーザー')
