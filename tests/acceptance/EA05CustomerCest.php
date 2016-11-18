@@ -76,7 +76,7 @@ class EA05CustomerCest
         $Plugin = $findPluginByCode('MailMagazine');
         if ($Plugin) {
             $I->amGoingTo('メルマガプラグインを発見したため、メルマガを購読します');
-            $CustomerRegisterPage->tester->click('#admin_customer_mailmaga_flg_0');
+            $I->click('#admin_customer_mailmaga_flg_0');
         }
 
         $CustomerRegisterPage->登録();
@@ -105,7 +105,7 @@ class EA05CustomerCest
         $Plugin = $findPluginByCode('MailMagazine');
         if ($Plugin) {
             $I->amGoingTo('メルマガプラグインを発見したため、メルマガを購読します');
-            $CustomerRegisterPage->tester->click('#admin_customer_mailmaga_flg_0');
+            $I->click('#admin_customer_mailmaga_flg_0');
         }
 
         $CustomerRegisterPage->登録();
