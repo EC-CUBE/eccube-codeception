@@ -205,8 +205,13 @@ class EA04OrderCest
         $I->wantTo('EA0402-UC01-T01 受注メール通知');
 
         $I->resetEmails();
-
-        $OrderListPage = OrderManagePage::go($I)->検索('100');
+        $config = Fixtures::get('config');
+        $findOrders = Fixtures::get('findOrders');
+        $NewOrders = array_filter($findOrders(), function ($Order) use ($config) {
+            return $Order->getOrderStatus()->getId() == $config['order_new'];
+        });
+        $Order = array_pop($NewOrders);
+        $OrderListPage = OrderManagePage::go($I)->検索($Order->getId());
         $I->see('検索結果 1 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
         $OrderListPage->一覧_メール通知(1);
