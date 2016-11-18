@@ -17,9 +17,6 @@ class EF04CustomerCest
     {
     }
 
-    /**
-     * @group register
-     */
     public function customer_会員登録正常(\AcceptanceTester $I, \Codeception\Scenario $scenario)
     {
         $I->wantTo('EF0401-UC01-T01 会員登録 正常パターン');
@@ -172,9 +169,6 @@ class EF04CustomerCest
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
 
-    /**
-     * @group register
-     */
     public function customer_会員登録戻る(\AcceptanceTester $I)
     {
         $I->wantTo('EF0401-UC01-T05 会員登録 戻るボタン');

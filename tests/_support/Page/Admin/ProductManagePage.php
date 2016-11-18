@@ -117,15 +117,15 @@ class ProductManagePage extends AbstractAdminPage
 
     public function CSVダウンロード()
     {
-        $this->tester->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > a');
-        $this->tester->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > ul > li:nth-child(1) > a');
+        $this->tester->click('#main #result_list__csv_menu > a');
+        $this->tester->click('#main #result_list__csv_menu > ul > li:nth-child(1) > a');
         return $this;
     }
 
     public function CSV出力項目設定()
     {
-        $this->tester->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > a');
-        $this->tester->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > ul > li:nth-child(2) > a');
+        $this->tester->click('#main #result_list__csv_menu > ul > li:nth-child(2) > a');
+        $this->tester->click('#main #result_list__csv_menu > ul > li:nth-child(2) > ul > li:nth-child(2) > a');
         return $this;
     }
 }
