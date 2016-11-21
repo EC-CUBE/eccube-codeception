@@ -28,6 +28,7 @@ modules:
             capabilities:
                 unexpectedAlertBehaviour: 'accept'
                 firefox_profile: '/root/ff_profile.zip.b64'
+                elementScrollBehavior: 1
         MailCatcher:
             url: mailcatcher
             port: 1080
