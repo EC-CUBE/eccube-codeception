@@ -2,6 +2,9 @@
 
 namespace Page\Admin;
 
+use Facebook\WebDriver\Interactions\WebDriverActions;
+use Facebook\WebDriver\WebDriverBy;
+
 class CategoryManagePage extends AbstractAdminPage
 {
 
@@ -10,8 +13,6 @@ class CategoryManagePage extends AbstractAdminPage
     public static $パンくず_2階層 = '#main > div > div > div.col-md-9 > div > div.box-header > div > a:nth-child(5)';
     public static $パンくず_3階層 = '#main > div > div > div.col-md-9 > div > div.box-header > div > a:nth-child(7)';
     public static $パンくず_4階層 = '#main > div > div > div.col-md-9 > div > div.box-header > div > a:nth-child(9)';
-
-    protected $tester;
 
     /**
      * CategoryPage constructor.
@@ -86,19 +87,21 @@ class CategoryManagePage extends AbstractAdminPage
 
     public function 一覧_上に($rowNum)
     {
-        $dragTo = $rowNum - 1;
-        $this->tester->dragAndDrop(
-            "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.icon_sortable",
-            "#main .container-fluid .box .box-body .item_box:nth-child($dragTo) div.icon_sortable");
+        $this->tester->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webDriver) use ($rowNum) {
+            $node = $webDriver->findElement(WebDriverBy::cssSelector("#main .container-fluid .box .box-body .item_box:nth-child($rowNum)"));
+            $action = new WebDriverActions($webDriver);
+            $action->dragAndDropBy($node, 0, -60)->perform();
+        });
         return $this;
     }
 
     public function 一覧_下に($rowNum)
     {
-        $dragTo = $rowNum + 1;
-        $this->tester->dragAndDrop(
-            "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.item_pattern > a",
-            "#main .container-fluid .box .box-body .item_box:nth-child($dragTo) div.item_pattern > a");
+        $this->tester->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webDriver) use ($rowNum) {
+            $node = $webDriver->findElement(WebDriverBy::cssSelector("#main .container-fluid .box .box-body .item_box:nth-child($rowNum)"));
+            $action = new WebDriverActions($webDriver);
+            $action->dragAndDropBy($node, 0, 60)->perform();
+        });
         return $this;
     }
 

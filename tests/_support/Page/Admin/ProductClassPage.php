@@ -1,6 +1,8 @@
 <?php
 
 namespace Page\Admin;
+use Facebook\WebDriver\Interactions\WebDriverActions;
+use Facebook\WebDriver\WebDriverBy;
 
 /**
  * 商品管理規格編集
@@ -71,19 +73,21 @@ class ProductClassPage extends AbstractAdminPage
 
     public function 一覧_上に($rowNum)
     {
-        $dragTo = $rowNum - 1;
-        $this->tester->dragAndDrop(
-            "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.icon_sortable",
-            "#main .container-fluid .box .box-body .item_box:nth-child($dragTo) div.icon_sortable");
+        $this->tester->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webDriver) use ($rowNum) {
+            $node = $webDriver->findElement(WebDriverBy::cssSelector("#main .container-fluid .box .box-body .item_box:nth-child($rowNum)"));
+            $action = new WebDriverActions($webDriver);
+            $action->dragAndDropBy($node, 0, -60)->perform();
+        });
         return $this;
     }
 
     public function 一覧_下に($rowNum)
     {
-        $dragTo = $rowNum + 1;
-        $this->tester->dragAndDrop(
-            "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.item_pattern > a",
-            "#main .container-fluid .box .box-body .item_box:nth-child($dragTo) div.item_pattern > a");
+        $this->tester->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webDriver) use ($rowNum) {
+            $node = $webDriver->findElement(WebDriverBy::cssSelector("#main .container-fluid .box .box-body .item_box:nth-child($rowNum)"));
+            $action = new WebDriverActions($webDriver);
+            $action->dragAndDropBy($node, 0, 60)->perform();
+        });
         return $this;
     }
 }
