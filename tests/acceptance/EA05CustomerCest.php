@@ -55,7 +55,7 @@ class EA05CustomerCest
         $faker = Fixtures::get('faker');
         $email = microtime(true).'.'.$faker->safeEmail;
 
-        CustomerEditPage::go($I)
+        $CustomerRegisterPage = CustomerEditPage::go($I)
             ->入力_姓('testuser')
             ->入力_名('testuser')
             ->入力_セイ('テストユーザー')
@@ -70,11 +70,18 @@ class EA05CustomerCest
             ->入力_電話番号2('111')
             ->入力_電話番号3('111')
             ->入力_パスワード('password')
-            ->入力_パスワード確認('password')
-            ->登録();
+            ->入力_パスワード確認('password');
 
-        $I->see('会員情報を保存しました。', CustomerEditPage::$登録完了メッセージ);
-    }
+        $findPluginByCode = Fixtures::get('findPluginByCode');
+        $Plugin = $findPluginByCode('MailMagazine');
+        if ($Plugin) {
+            $I->amGoingTo('メルマガプラグインを発見したため、メルマガを購読します');
+            $I->click('#admin_customer_mailmaga_flg_0');
+        }
+
+        $CustomerRegisterPage->登録();
+        /* ブラウザによるhtml5のエラーなのでハンドリング不可 */
+        $I->see('会員情報を保存しました。', CustomerEditPage::$登録完了メッセージ);    }
 
     public function customer_会員登録_必須項目未入力(\AcceptanceTester $I)
     {
@@ -101,8 +108,16 @@ class EA05CustomerCest
         $CustomerListPage->一覧_編集(1);
 
         $CustomerRegisterPage = CustomerEditPage::at($I)
-            ->入力_姓('testuser-1')
-            ->登録();
+            ->入力_姓('testuser-1');
+
+        $findPluginByCode = Fixtures::get('findPluginByCode');
+        $Plugin = $findPluginByCode('MailMagazine');
+        if ($Plugin) {
+            $I->amGoingTo('メルマガプラグインを発見したため、メルマガを購読します');
+            $I->click('#admin_customer_mailmaga_flg_0');
+        }
+
+        $CustomerRegisterPage->登録();
         $I->see('会員情報を保存しました。', CustomerEditPage::$登録完了メッセージ);
 
         $CustomerRegisterPage

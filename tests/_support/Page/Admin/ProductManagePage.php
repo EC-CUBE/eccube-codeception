@@ -53,7 +53,7 @@ class ProductManagePage extends AbstractAdminPage
     public function 検索結果_規格設定($rowNum)
     {
         $this->検索結果_オプション($rowNum);
-        $this->tester->click("#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(1) > a");
+        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(1) > a");
     }
 
     /**
@@ -64,7 +64,7 @@ class ProductManagePage extends AbstractAdminPage
     public function 検索結果_複製($rowNum)
     {
         $this->検索結果_オプション($rowNum);
-        $this->tester->click("#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(3) > a");
+        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(3) > a");
         return $this;
     }
 
@@ -76,7 +76,7 @@ class ProductManagePage extends AbstractAdminPage
     public function 検索結果_確認($rowNum)
     {
         $this->検索結果_オプション($rowNum);
-        $this->tester->click("#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(2) > a");
+        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(2) > a");
         return $this;
     }
 
@@ -88,7 +88,7 @@ class ProductManagePage extends AbstractAdminPage
     public function 検索結果_選択($rowNum)
     {
         $this->検索結果_オプション($rowNum);
-        $this->tester->click("#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(${rowNum}) > div:nth-child(3) > a");
+        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(3) > a");
         return $this;
     }
 
@@ -100,7 +100,7 @@ class ProductManagePage extends AbstractAdminPage
     public function 検索結果_削除($rowNum)
     {
         $this->検索結果_オプション($rowNum);
-        $this->tester->click("#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(4) > a");
+        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(4) > a");
         return $this;
     }
 
@@ -111,21 +111,22 @@ class ProductManagePage extends AbstractAdminPage
      */
     private function 検索結果_オプション($rowNum)
     {
-        $this->tester->click("#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > a");
+
+        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > a");
         return $this;
     }
 
     public function CSVダウンロード()
     {
-        $this->tester->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > a');
-        $this->tester->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > ul > li:nth-child(1) > a');
+        $this->tester->click('#main #result_list__csv_menu > a');
+        $this->tester->click('#main #result_list__csv_menu > ul > li:nth-child(1) > a');
         return $this;
     }
 
     public function CSV出力項目設定()
     {
-        $this->tester->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > a');
-        $this->tester->click('#main > div > div > div > div > div > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(2) > ul > li:nth-child(2) > a');
+        $this->tester->click('#main #result_list__csv_menu > a');
+        $this->tester->click('#main #result_list__csv_menu > ul > li:nth-child(2) > a');
         return $this;
     }
 }

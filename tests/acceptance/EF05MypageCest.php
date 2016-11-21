@@ -130,8 +130,7 @@ class EF05MypageCest
         // 会員情報フォームに既存の登録情報が表示される
         $I->seeInField(['id' => 'entry_name_name01'], $customer->getName01());
 
-        // 会員情報フォームに会員情報を入力する
-        $I->submitForm("#main_middle form",[
+        $form = [
             'entry[name][name01]' => '姓05',
             'entry[name][name02]' => '名05',
             'entry[kana][kana01]' => 'セイ',
@@ -148,7 +147,18 @@ class EF05MypageCest
             'entry[email][second]' => $new_email,
             'entry[password][first]' => 'password',
             'entry[password][second]' => 'password',
-        ]);
+        ];
+
+        $findPluginByCode = Fixtures::get('findPluginByCode');
+        $Plugin = $findPluginByCode('MailMagazine');
+        if ($Plugin) {
+            $I->amGoingTo('メルマガプラグインを発見したため、メルマガを購読します');
+            // 必須入力が効いてない https://github.com/EC-CUBE/mail-magazine-plugin/issues/29
+            $form['entry[mailmaga_flg]'] = '1';
+        }
+        // 会員情報フォームに会員情報を入力する
+        $I->submitForm("#main_middle form", $form);
+
 
         // 会員情報編集（完了）画面が表示される
         $I->see('会員情報編集(完了)', '#main_middle .page-heading');
@@ -281,7 +291,6 @@ class EF05MypageCest
 
         // ×マークをクリック
         $I->click('#main_middle #deliveradd_select .address_table:nth-child(2) .addr_box .icon_edit a');
-
         $I->acceptPopup();
 
         // 確認

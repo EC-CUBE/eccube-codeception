@@ -186,6 +186,18 @@ $createOrders = function ($Customer, $numberOfOrders = 5) use ($app, $faker) {
 /** 受注を生成するクロージャ. */
 Fixtures::add('createOrders', $createOrders);
 
+$findPlugins = function () use ($app) {
+    return $app['orm.em']->getRepository('Eccube\Entity\Plugin')->findAll();
+};
+/** プラグインを検索するクロージャ */
+Fixtures::add('findPlugins', $findPlugins);
+
+$findPluginByCode = function ($code = null) use ($app) {
+    return $app['orm.em']->getRepository('Eccube\Entity\Plugin')->findOneBy(['code' => $code]);
+};
+/** プラグインを検索するクロージャ */
+Fixtures::add('findPluginByCode', $findPluginByCode);
+
 $findCustomers = function () use ($app) {
     return $app['orm.em']->getRepository('Eccube\Entity\Customer')
         ->createQueryBuilder('c')
@@ -193,4 +205,5 @@ $findCustomers = function () use ($app) {
         ->getQuery()
         ->getResult();
 };
+/** 会員を検索するクロージャ */
 Fixtures::add('findCustomers', $findCustomers);

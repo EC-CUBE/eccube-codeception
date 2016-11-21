@@ -125,7 +125,7 @@ class EF03OrderCest
         $I->resetEmails();
 
         // 注文
-        $I->click('#main_middle #shopping-form #confirm_side .total_amount p:nth-child(2) button');
+        $I->click('#main_middle #shopping-form #order-button');
 
         // 確認
         $I->see('ご注文完了', '#main_middle .page-heading');

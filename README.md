@@ -62,6 +62,15 @@ docker-compose --project-name front run -d --rm codecept run -d -g front --env d
 docker-compose --project-name front logs -f
 ```
 
+### プラグインをインストールした状態でのテスト実行方法
+
+`-g plugin_installer -g plugin_uninstaller` をグループに追加してください。
+インストールするプラグインは tests/_data/plugin_fixtures.php で指定可能です。
+
+```
+docker-compose run --rm codecept run -d --env default -g plugin_installer -g plugin_uninstaller -g front --html report.html
+```
+
 ### コンテナの削除
 
 本テスト環境は、データベースをロールバックしません。
