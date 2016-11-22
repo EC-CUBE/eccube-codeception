@@ -61,21 +61,13 @@ class ProductClassCategoryPage extends AbstractAdminPage
 
     public function 一覧_上に($rowNum)
     {
-        $this->tester->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webDriver) use ($rowNum) {
-            $node = $webDriver->findElement(WebDriverBy::cssSelector("#main .container-fluid .box .box-body .item_box:nth-child($rowNum)"));
-            $action = new WebDriverActions($webDriver);
-            $action->dragAndDropBy($node, 0, -60)->perform();
-        });
+        $this->tester->dragAndDropBy("#main .container-fluid .box .box-body .item_box:nth-child($rowNum)", 0, -55);
         return $this;
     }
 
     public function 一覧_下に($rowNum)
     {
-        $this->tester->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webDriver) use ($rowNum) {
-            $node = $webDriver->findElement(WebDriverBy::cssSelector("#main .container-fluid .box .box-body .item_box:nth-child($rowNum)"));
-            $action = new WebDriverActions($webDriver);
-            $action->dragAndDropBy($node, 0, 60)->perform();
-        });
+        $this->tester->dragAndDropBy("#main .container-fluid .box .box-body .item_box:nth-child($rowNum)", 0, 55);
         return $this;
     }
 
