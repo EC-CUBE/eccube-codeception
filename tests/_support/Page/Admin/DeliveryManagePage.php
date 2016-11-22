@@ -56,19 +56,13 @@ class DeliveryManagePage extends AbstractAdminPage
 
     public function 一覧_上に($rowNum)
     {
-        $dragTo = $rowNum - 1;
-        $this->tester->dragAndDrop(
-            "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.icon_sortable",
-            "#main .container-fluid .box .box-body .item_box:nth-child($dragTo) div.icon_sortable");
+        $this->tester->dragAndDropBy("#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.icon_sortable", 0, -55);
         return $this;
     }
 
     public function 一覧_下に($rowNum)
     {
-        $dragTo = $rowNum + 1;
-        $this->tester->dragAndDrop(
-            "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.item_pattern > a",
-            "#main .container-fluid .box .box-body .item_box:nth-child($dragTo) div.item_pattern > a");
+        $this->tester->dragAndDropBy("#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.icon_sortable", 0, 55);
         return $this;
     }
 }

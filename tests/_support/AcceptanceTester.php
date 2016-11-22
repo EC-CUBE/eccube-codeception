@@ -1,6 +1,7 @@
 <?php
 use Codeception\Util\Fixtures;
 use Eccube\Common\Constant;
+use Interactions\DragAndDropBy;
 
 /**
  * Inherited Methods
@@ -195,5 +196,14 @@ class AcceptanceTester extends \Codeception\Actor
             return $self->executeJS("return document.getElementById('${id}') != null;");
         });
         $this->assertTrue(empty($result));
+    }
+
+    public function dragAndDropBy($selector, $x_offset, $y_offset)
+    {
+        $this->executeInSelenium(function(\Facebook\WebDriver\Remote\RemoteWebDriver $webDriver) use ($selector, $x_offset, $y_offset) {
+            $node = $webDriver->findElement(WebDriverBy::cssSelector($selector));
+            $action = new DragAndDropBy($webDriver, $node, $x_offset, $y_offset);
+            $action->perform();
+        });
     }
 }
