@@ -26,21 +26,21 @@ class PageManagePage extends AbstractAdminPage
         $this->tester->click('#main > div > div > div > div.row.btn_area2 > div > a');
     }
 
-    public function レイアウト編集($rowNum)
+    public function レイアウト編集($pageName)
     {
-        $this->tester->click("div.item_box.tr:nth-child(${rowNum}) > div.icon_edit.td > div > a");
-        $this->tester->click("div.item_box.tr:nth-child(${rowNum}) > div.icon_edit.td > div > ul > li:nth-child(1) > a");
+        $this->tester->click(['xpath' => "//*[@id='sortable_list_box__list']//div[@class='item_box tr']/div[@class='item_pattern td'][contains(text(),'${pageName}')]/parent::node()/div[@class='icon_edit td']/div/a"]);
+        $this->tester->click(['xpath' => "//*[@id='sortable_list_box__list']//div[@class='item_box tr']/div[@class='item_pattern td'][contains(text(),'${pageName}')]/parent::node()/div[@class='icon_edit td']/div/ul/li[1]/a"]);
     }
 
-    public function ページ編集($rowNum)
+    public function ページ編集($pageName)
     {
-        $this->tester->click("div.item_box.tr:nth-child(${rowNum}) > div.icon_edit.td > div > a");
-        $this->tester->click("div.item_box.tr:nth-child(${rowNum}) > div.icon_edit.td > div > ul > li:nth-child(2) > a");
+        $this->tester->click(['xpath' => "//*[@id='sortable_list_box__list']//div[@class='item_box tr']/div[@class='item_pattern td'][contains(text(),'${pageName}')]/parent::node()/div[@class='icon_edit td']/div/a"]);
+        $this->tester->click(['xpath' => "//*[@id='sortable_list_box__list']//div[@class='item_box tr']/div[@class='item_pattern td'][contains(text(),'${pageName}')]/parent::node()/div[@class='icon_edit td']/div/ul/li[2]/a"]);
     }
 
-    public function 削除($rowNum)
+    public function 削除($pageName)
     {
-        $this->tester->click("div.item_box.tr:nth-child(${rowNum}) > div.icon_edit.td > div > a");
-        $this->tester->click("div.item_box.tr:nth-child(${rowNum}) > div.icon_edit.td > div > ul > li:nth-child(3) > a");
+        $this->tester->click(['xpath' => "//*[@id='sortable_list_box__list']//div[@class='item_box tr']/div[@class='item_pattern td'][contains(text(),'${pageName}')]/parent::node()/div[@class='icon_edit td']/div/a"]);
+        $this->tester->click(['xpath' => "//*[@id='sortable_list_box__list']//div[@class='item_box tr']/div[@class='item_pattern td'][contains(text(),'${pageName}')]/parent::node()/div[@class='icon_edit td']/div/ul/li[3]/a"]);
     }
 }
