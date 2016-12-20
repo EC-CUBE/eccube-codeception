@@ -116,21 +116,6 @@ class EA06ContentsManagementCest
     {
         $I->wantTo('EA0603-UC01-T01(& UC01-T02/UC01-T03/UC01-T04/UC01-T05) ページ管理');
 
-        $findPluginByCode = Fixtures::get('findPluginByCode');
-        $row = 43;
-
-        $CouponPlugin = $findPluginByCode('Coupon');
-        if ($CouponPlugin) {
-            $I->amGoingTo('クーポンプラグインを発見したため、ページを追加します');
-            $row++;
-        }
-
-        $PointPlugin = $findPluginByCode('Point');
-        if ($PointPlugin) {
-            $I->amGoingTo('ポイントプラグインを発見したため、ページを追加します');
-            $row++;
-        }
-
         PageManagePage::go($I)->新規入力();
 
         /* 作成 */
@@ -146,7 +131,7 @@ class EA06ContentsManagementCest
         $I->see('page1', 'body');
 
         /* 編集 */
-        PageManagePage::go($I)->ページ編集($row);
+        PageManagePage::go($I)->ページ編集('page1');
         PageEditPage::at($I)
             ->入力_内容("{% extends 'default_frame.twig' %}")
             ->登録();
@@ -157,7 +142,7 @@ class EA06ContentsManagementCest
         $I->see($config['shop_name'], '#header > div > div.header_logo_area > h1 > a');
 
         /* レイアウト編集 */
-        PageManagePage::go($I)->レイアウト編集($row);
+        PageManagePage::go($I)->レイアウト編集('page1');
         $I->dragAndDrop('#position_0 > div:nth-child(1)', '#position_5');
         LayoutEditPage::at($I)->登録();
 
@@ -165,14 +150,14 @@ class EA06ContentsManagementCest
         $I->amOnPage('/user_data/page1');
         $I->see($config['shop_name'], '#header > div > div.header_logo_area > h1 > a');
 
-        PageManagePage::go($I)->レイアウト編集(43);
+        PageManagePage::go($I)->レイアウト編集('page1');
         $I->dragAndDrop('#detail_box__layout_item--7', '#position_0');
         LayoutEditPage::at($I)->プレビュー();
 
         $I->switchToNewWindow();
 
         /* 削除 */
-        PageManagePage::go($I)->削除($row);
+        PageManagePage::go($I)->削除('page1');
         $I->acceptPopup();
     }
 
@@ -189,7 +174,8 @@ class EA06ContentsManagementCest
             ->登録();
         $I->see('登録が完了しました。', BlockEditPage::$登録完了メッセージ);
 
-        PageManagePage::go($I)->レイアウト編集(1);
+        // TOPページにブロックを配置
+        PageManagePage::go($I)->レイアウト編集('TOPページ');
         $I->dragAndDrop('#position_0 > div:nth-child(1) > label', '#position_1');
         LayoutEditPage::at($I)->登録();
 

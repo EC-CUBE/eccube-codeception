@@ -22,6 +22,7 @@ ENTRYPOINT /wait-for-db.sh
 ## Clone EC-CUBE3
 ADD clone-${DIRTYPE}.sh /clone.sh
 RUN /clone.sh
+RUN (cd ${ECCUBE_PATH} && echo "Current revision: $(git log -n 1 --format=%H) ($(git rev-parse --abbrev-ref HEAD))")
 
 WORKDIR ${ECCUBE_PATH}
 RUN composer install

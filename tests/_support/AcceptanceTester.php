@@ -177,6 +177,7 @@ class AcceptanceTester extends \Codeception\Actor
      */
     public function switchToNewWindow()
     {
+        $this->wait(1);
         $this->executeInSelenium(function($webdriver) {
             $handles=$webdriver->getWindowHandles();
             $last_window = end($handles);
