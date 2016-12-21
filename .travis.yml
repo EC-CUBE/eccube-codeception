@@ -7,51 +7,61 @@ services:
 
 env:
   ## Firefox, PostgreSQL
-  - BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=firefox DB=pgsql84 TARGET_GROUP=front TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  ## Firefox, MySQL
-  - BROWSER=firefox DB=mysql TARGET_GROUP=front TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=firefox DB=mysql TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=firefox DB=mysql TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=firefox DB=mysql TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=firefox DB=mysql51 TARGET_GROUP=front TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=firefox DB=mysql51 TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=firefox DB=mysql51 TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=firefox DB=mysql51 TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  ## Use Plugins, Firefox, PostgreSQL
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=front TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  ## Use Plugins, Firefox, MySQL
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=front TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=front TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  ## Chrome, PostgreSQL
-  - BROWSER=chrome DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=chrome DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=chrome DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=chrome DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=chrome,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  ## Chrome, MySQL
-  - BROWSER=chrome DB=mysql TARGET_GROUP=front TARGET_ENV=chrome,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=chrome DB=mysql TARGET_GROUP=admin01 TARGET_ENV=chrome,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=chrome DB=mysql TARGET_GROUP=admin02 TARGET_ENV=chrome,mysql DOCKER_COMPOSE_VERSION=1.8.0
-  - BROWSER=chrome DB=mysql TARGET_GROUP=admin03 TARGET_ENV=chrome,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=firefox DB=pgsql84 TARGET_GROUP=front TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # ## Firefox, MySQL
+  # - BROWSER=firefox DB=mysql TARGET_GROUP=front TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=firefox DB=mysql TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=firefox DB=mysql TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=firefox DB=mysql TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=firefox DB=mysql51 TARGET_GROUP=front TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=firefox DB=mysql51 TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=firefox DB=mysql51 TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=firefox DB=mysql51 TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # ## Use Plugins, Firefox, PostgreSQL
+  # - USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=front TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # ## Use Plugins, Firefox, MySQL
+  # - USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=front TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=front TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # ## Chrome, PostgreSQL
+  # - BROWSER=chrome DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=chrome DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=chrome DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=chrome DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=chrome,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  # ## Chrome, MySQL
+  # - BROWSER=chrome DB=mysql TARGET_GROUP=front TARGET_ENV=chrome,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=chrome DB=mysql TARGET_GROUP=admin01 TARGET_ENV=chrome,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=chrome DB=mysql TARGET_GROUP=admin02 TARGET_ENV=chrome,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  # - BROWSER=chrome DB=mysql TARGET_GROUP=admin03 TARGET_ENV=chrome,mysql DOCKER_COMPOSE_VERSION=1.8.0
+  ## Sub Direcotry, Use Plugins, Firefox, PostgreSQL
+  - DIRTYPE=subdir USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  - DIRTYPE=subdir USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  - DIRTYPE=subdir USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  - DIRTYPE=subdir USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  ## Without html directory, Use Plugins, Firefox, PostgreSQL
+  - DIRTYPE=withouthtml USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  - DIRTYPE=withouthtml USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  - DIRTYPE=withouthtml USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  - DIRTYPE=withouthtml USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
 
 matrix:
   fast_finish: true
@@ -88,8 +98,7 @@ before_install:
     - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
     - chmod +x docker-compose
     - sudo mv docker-compose /usr/local/bin
-    - docker-compose -f docker-compose.yml -f docker-compose.${BROWSER}.yml -f docker-compose.${DB}.yml --project-name ${BROWSER}_${DB}_${TARGET_GROUP} build --no-cache
+    - docker-compose -f docker-compose.yml ${DIRTYPE:+-f docker-compose.${DIRTYPE}.yml} -f docker-compose.${BROWSER}.yml -f docker-compose.${DB}.yml --project-name ${BROWSER}_${DB}_${TARGET_GROUP} build --no-cache
 script:
-    - if [[ $USE_PLUGIN != '1' ]]; then docker-compose  -f docker-compose.yml -f docker-compose.${BROWSER}.yml -f docker-compose.${DB}.yml --project-name ${BROWSER}_${DB}_${TARGET_GROUP} run --rm codecept run -d -g ${TARGET_GROUP} --env ${TARGET_ENV} ; fi
-    - if [[ $USE_PLUGIN = '1' ]]; then docker-compose  -f docker-compose.yml -f docker-compose.${BROWSER}.yml -f docker-compose.${DB}.yml --project-name ${BROWSER}_${DB}_${TARGET_GROUP} run --rm codecept run -d -g plugin_installer -g plugin_uninstaller -g ${TARGET_GROUP} --env ${TARGET_ENV} ; fi
+    - docker-compose  -f docker-compose.yml ${DIRTYPE:+-f docker-compose.${DIRTYPE}.yml} -f docker-compose.${BROWSER}.yml -f docker-compose.${DB}.yml --project-name ${BROWSER}_${DB}_${TARGET_GROUP} run --rm codecept run -d ${USE_PLUGIN:+-g plugin_installer -g plugin_uninstaller} -g ${TARGET_GROUP} --env ${TARGET_ENV}
 
