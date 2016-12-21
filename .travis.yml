@@ -7,7 +7,7 @@ services:
 
 env:
   ## Firefox, PostgreSQL
-  # - BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
+  - BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
   # - BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
   # - BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
   # - BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0

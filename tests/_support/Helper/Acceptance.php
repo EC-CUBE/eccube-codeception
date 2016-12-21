@@ -23,4 +23,9 @@ class Acceptance extends \Codeception\Module
             }
         }
     }
+
+    public function getBaseUrl()
+    {
+        return $this->getModule('WebDriver')->_getUrl();
+    }
 }
