@@ -26,14 +26,14 @@ return [
     4 => [
         'name' => 'Maker',
         'code' => 'Maker',
-        'file' => 'Maker_v0.0.2.tar.gz',
-        'url' => 'https://github.com/EC-CUBE/maker-plugin/releases/download/0.0.2/Maker_v0.0.2.tar.gz'
+        'file' => 'Maker-1.0.0.tar.gz',
+        'url' => 'https://github.com/EC-CUBE/maker-plugin/releases/download/1.0.0/Maker-1.0.0.tar.gz'
     ],
     5 => [
         'name' => 'OrderPdf',
         'code' => 'OrderPdf',
-        'file' => 'OrderPdf_v0.0.2.tar.gz',
-        'url' => 'https://github.com/EC-CUBE/order-pdf-plugin/releases/download/0.0.2/OrderPdf_v0.0.2.tar.gz'
+        'file' => 'OrderPdf-1.0.0.tar.gz',
+        'url' => 'https://github.com/EC-CUBE/order-pdf-plugin/releases/download/1.0.0/OrderPdf-1.0.0.tar.gz'
     ],
     6 => [
         'name' => 'Pointプラグイン',
@@ -44,8 +44,8 @@ return [
     7 => [
         'name' => 'おすすめ商品管理プラグイン',
         'code' => 'Recommend',
-        'file' => 'Recommend_v1.0.3.tar.gz',
-        'url' => 'https://github.com/EC-CUBE/Recommend-plugin/releases/download/1.0.3/Recommend_v1.0.3.tar.gz'
+        'file' => 'Recommend-2.0.0.tar.gz',
+        'url' => 'https://github.com/EC-CUBE/Recommend-plugin/releases/download/2.0.0/Recommend-2.0.0.tar.gz'
     ],
     8 => [
         'name' => 'リスティング広告入稿用CSV作成プラグイン',
@@ -56,8 +56,8 @@ return [
     9 => [
         'name' => '関連商品プラグイン',
         'code' => 'RelatedProduct',
-        'file' => 'RelatedProduct_v0.0.2.tar.gz',
-        'url' => 'https://github.com/EC-CUBE/related-product-plugin/releases/download/0.0.2/RelatedProduct_v0.0.2.tar.gz'
+        'file' => 'RelatedProduct-1.0.0.tar.gz',
+        'url' => 'https://github.com/EC-CUBE/related-product-plugin/releases/download/1.0.0/RelatedProduct-1.0.0.tar.gz'
     ],
     // FIXME PostgreSQL と MySQL でソート順に差異が発生するため, 以下が修正されるまでは除外
     // https://github.com/EC-CUBE/ec-cube/issues/1933
@@ -68,3 +68,4 @@ return [
     //     'url' => 'https://github.com/EC-CUBE/sales-report-plugin/releases/download/0.0.2/SalesReport_v0.0.2.tar.gz'
     // ],
 ];
+
