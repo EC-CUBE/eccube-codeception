@@ -277,22 +277,22 @@ class EA08SysteminfoCest
     {
         $I->wantTo('EA0804-UC01-T04 セキュリティ管理 - SSL強制');
 
-        $testConfig = Fixtures::get('test_config');
-
-        $I->amOnUrl('http://'.$testConfig['hostname'].'/');
+        $httpBaseUrl = $I->getBaseUrl();
+        $I->amOnUrl($httpBaseUrl);
         $I->assertRegExp('/^http:\/\//', $I->executeJS('return location.href'), 'httpsにリダイレクトされない');
 
         $config = Fixtures::get('config');
-        $I->amOnUrl('https://'.$testConfig['hostname'].'/'.$config['admin_route'].'/setting/system/security');
+        $httpsBaseUrl = str_replace('http://', 'https://', $httpBaseUrl);
+        $I->amOnUrl($httpsBaseUrl.$config['admin_route'].'/setting/system/security');
         $I->checkOption(['id' => 'admin_security_force_ssl']);
         $I->click('#aside_column div div div div div button');
 
         // httpでアクセスしたらhttpsにリダイレクトされる
-        $I->amOnUrl('http://'.$testConfig['hostname'].'/');
+        $I->amOnUrl($httpBaseUrl);
         $I->assertRegExp('/^https:\/\//', $I->executeJS('return location.href'), 'httpsにリダイレクトされる');
 
         // 後続テストのために戻しておく
-        $I->amOnUrl('https://'.$testConfig['hostname'].'/'.$config['admin_route'].'/setting/system/security');
+        $I->amOnUrl($httpsBaseUrl.$config['admin_route'].'/setting/system/security');
         $I->uncheckOption(['id' => 'admin_security_force_ssl']);
         $I->click('#aside_column div div div div div button');
     }
