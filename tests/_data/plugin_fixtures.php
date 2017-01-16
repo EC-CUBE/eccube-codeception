@@ -8,20 +8,20 @@ return [
     1 => [
         'name' => 'Coupon',
         'code' => 'Coupon',
-        'file' => 'Coupon_v1.0.3.tar.gz',
-        'url' => 'https://github.com/EC-CUBE/coupon-plugin/releases/download/1.0.3/Coupon_v1.0.3.tar.gz'
+        'file' => 'Coupon-2.0.0.tar.gz',
+        'url' => 'https://github.com/EC-CUBE/coupon-plugin/releases/download/2.0.0/Coupon-2.0.0.tar.gz'
     ],
     2 => [
         'name' => 'EccubeApi',
         'code' => 'EccubeApi',
-        'file' => 'EccubeApi-1.0.2.tar.gz',
-        'url' => 'https://github.com/EC-CUBE/eccube-api/releases/download/v0-beta-1.0.2/EccubeApi-1.0.2.tar.gz'
+        'file' => 'EccubeApi-1.0.3.tar.gz',
+        'url' => 'https://github.com/EC-CUBE/eccube-api/releases/download/v0-beta-1.0.3/EccubeApi-1.0.3.tar.gz'
     ],
     3 => [
         'name' => 'MailMagazine',
         'code' => 'MailMagazine',
-        'file' => 'MailMaga_v0.0.3.tar.gz',
-        'url' => 'https://github.com/EC-CUBE/mail-magazine-plugin/releases/download/0.0.3/MailMaga_v0.0.3.tar.gz'
+        'file' => 'MailMaga-1.0.0.tar.gz',
+        'url' => 'https://github.com/EC-CUBE/mail-magazine-plugin/releases/download/1.0.0/MailMaga-1.0.0.tar.gz'
     ],
     4 => [
         'name' => 'Maker',
