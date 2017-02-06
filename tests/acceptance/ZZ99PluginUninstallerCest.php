@@ -31,20 +31,17 @@ class EA09PluginUninstallerCest
         $I->wantTo('プラグインアンインストール');
 
         foreach ($this->plugins as $num => $plugin) {
-            OwnersPluginPage::go($I);
 
             // プラグイン無効化
-            $I->click(['xpath' => '/html/body/div/div/div/div/div/div[2]/div[2]/div/div/table/tbody/tr['.$num.']/td[1]/a[1]']);
-            $I->see('プラグインを無効にしました。', '#main .container-fluid div:nth-child(1) .alert-success');
+            OwnersPluginPage::go($I)->無効にする($plugin['code']);
+            $I->see('プラグインを無効にしました。', OwnersPluginPage::$完了メッセージ);
         }
 
         foreach ($this->plugins as $num => $plugin) {
-            OwnersPluginPage::go($I);
 
             // プラグイン削除
-            $I->click(['xpath' => '/html/body/div/div/div/div/div/div[2]/div[2]/div/div/table/tbody/tr[1]/td[1]/a[2]']);
-            $I->acceptPopup();
-            $I->see(' プラグインを削除しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+            OwnersPluginPage::go($I)->削除($plugin['code']);
+            $I->see(' プラグインを削除しました。', OwnersPluginPage::$完了メッセージ);
         }
     }
 }

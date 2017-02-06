@@ -59,13 +59,11 @@ return [
         'file' => 'RelatedProduct-1.0.0.tar.gz',
         'url' => 'https://github.com/EC-CUBE/related-product-plugin/releases/download/1.0.0/RelatedProduct-1.0.0.tar.gz'
     ],
-    // FIXME PostgreSQL と MySQL でソート順に差異が発生するため, 以下が修正されるまでは除外
-    // https://github.com/EC-CUBE/ec-cube/issues/1933
-    // 10 => [
-    //     'name' => '売上集計プラグイン',
-    //     'code' => 'SalesReport',
-    //     'file' => 'SalesReport_v0.0.2.tar.gz',
-    //     'url' => 'https://github.com/EC-CUBE/sales-report-plugin/releases/download/0.0.2/SalesReport_v0.0.2.tar.gz'
-    // ],
+    10 => [
+        'name' => '売上集計プラグイン',
+        'code' => 'SalesReport',
+        'file' => 'SalesReport-1.0.0.tar.gz',
+        'url' => 'https://github.com/EC-CUBE/sales-report-plugin/releases/download/1.0.0/SalesReport-1.0.0.tar.gz'
+    ],
 ];
 
