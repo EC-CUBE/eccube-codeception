@@ -31,7 +31,7 @@ class AA00PluginInstallerCest
         $I->wantTo('プラグインインストール');
 
         foreach ($this->plugins as $num => $plugin) {
-            OwnersPluginPage::go($I)
+            $OwnersPluginPage = OwnersPluginPage::go($I)
                 ->goInstall($I);
             $datadir = __DIR__.'/../_data';
 
@@ -44,13 +44,12 @@ class AA00PluginInstallerCest
             file_put_contents($save_path, $archive);
             $I->amGoingTo($plugin['file'].' を '.$save_path.' に保存しました.');
 
-            $I->attachFile(['id' => 'plugin_local_install_plugin_archive'],  $plugin['file']);
-            $I->click('#aside_column button');
-            $I->see('プラグインをインストールしました。', '#main .container-fluid div:nth-child(1) .alert-success');
+            $OwnersPluginPage->インストール($plugin['file']);
+            $I->see('プラグインをインストールしました。', OwnersPluginPage::$完了メッセージ);
 
             // プラグイン有効化
-            $I->click(['xpath' => '/html/body/div/div/div/div/div/div[2]/div[2]/div/div/table/tbody/tr['.$num.']/td[1]/a[1]']);
-            $I->see('プラグインを有効にしました。', '#main .container-fluid div:nth-child(1) .alert-success');
+            $OwnersPluginPage->有効にする($plugin['code']);
+            $I->see('プラグインを有効にしました。', OwnersPluginPage::$完了メッセージ);
         }
     }
 }
