@@ -263,11 +263,11 @@ class EA08SysteminfoCest
         $I->amOnPage('/'.$config['admin_route'].'/setting/system/security');
         $I->see('システム設定セキュリティ管理', '#main .page-header');
 
-        $I->fillField(['id' => 'admin_security_admin_route_dir'], 'test');
+        $I->fillField(['id' => 'admin_security_admin_route_dir'], 'admin2');
         $I->click('#aside_column div div div div div button');
-        $I->loginAsAdmin('', '', 'test');
+        $I->loginAsAdmin('', '', 'admin2');
 
-        $I->amOnPage('/test/setting/system/security');
+        $I->amOnPage('/admin2/setting/system/security');
         $I->fillField(['id' => 'admin_security_admin_route_dir'], $config['admin_route']);
         $I->click('#aside_column div div div div div button');
         $I->loginAsAdmin();
