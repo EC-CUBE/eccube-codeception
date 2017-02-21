@@ -38,8 +38,8 @@ class EF01TopCest
         $minus1 = $today->sub(new DateInterval('P1D'));
         $minus2 = $today->sub(new DateInterval('P2D'));
 
-        $I->haveInDatabase('dtb_news', array('news_id' => rand(999, 9999), 'news_date' => $minus1->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル1', 'news_comment' => 'コメント1', 'creator_id' => 1, 'rank' => 2, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00')));
-        $I->haveInDatabase('dtb_news', array('news_id' => rand(999, 9999), 'news_date' => $minus2->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル2', 'news_comment' => 'コメント2', 'creator_id' => 1, 'rank' => 3, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00')));
+        $I->haveInDatabase('dtb_news', array('news_id' => rand(999, 9999), 'news_date' => $minus1->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル1', 'news_comment' => 'コメント1', 'creator_id' => 1, 'rank' => 2, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00'), 'discriminator_type' => 'news'));
+        $I->haveInDatabase('dtb_news', array('news_id' => rand(999, 9999), 'news_date' => $minus2->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル2', 'news_comment' => 'コメント2', 'creator_id' => 1, 'rank' => 3, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00'), 'discriminator_type' => 'news'));
         $I->reloadPage();
         $news = Fixtures::get('news');
         $newsset = array();
@@ -77,7 +77,7 @@ class EF01TopCest
 
         // 「詳しくはこちら」リンクを押下する
         $today = new DateTime();
-        $I->haveInDatabase('dtb_news', array('news_id' => rand(999, 9999), 'news_date' => $today->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル1', 'news_comment' => 'コメント1', 'creator_id' => 1, 'news_url' => 'http://www.ec-cube.net', 'rank' => 2, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00')));
+        $I->haveInDatabase('dtb_news', array('news_id' => rand(999, 9999), 'news_date' => $today->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル1', 'news_comment' => 'コメント1', 'creator_id' => 1, 'news_url' => 'http://www.ec-cube.net', 'rank' => 2, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00'), 'discriminator_type' => 'news'));
         $I->reloadPage();
         $I->click('#news_area .newslist dt');
         $I->see('詳しくはこちら', '#news_area .newslist dd');
