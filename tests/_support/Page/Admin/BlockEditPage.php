@@ -20,7 +20,7 @@ class BlockEditPage extends AbstractAdminPage
     {
         $page = new self($I);
         $page->atPage('コンテンツ管理ブロック管理');
-        $page->tester->see('ブロック編集', '#aside_wrap > div.col-md-9 > div.box.form-horizontal > div.box-header > h3');
+        $page->tester->see('ブロック編集', '#aside_wrap > form > div.col-md-9 > div.box.form-horizontal > div.box-header > h3');
         return $page;
     }
 

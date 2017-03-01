@@ -47,7 +47,7 @@ class FileManagePage extends AbstractAdminPage
 
     public function ファイル名($rowNum)
     {
-        return "#aside_wrap > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(1)";
+        return "#aside_wrap > form > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(1)";
     }
 
     public function 一覧_ダウンロード($rowNum)
