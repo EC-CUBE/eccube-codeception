@@ -21,7 +21,7 @@ class PageEditPage extends AbstractAdminPage
     {
         $page = new self($I);
         $page->atPage('コンテンツ管理ページ管理');
-        $page->tester->see('ページ詳細編集', '#aside_wrap > div.col-md-9 > div:nth-child(1) > div.box-header > h3');
+        $page->tester->see('ページ詳細編集', '#aside_wrap > form > div.col-md-9 > div:nth-child(1) > div.box-header > h3');
         return $page;
     }
 
