@@ -51,6 +51,6 @@ class PageEditPage extends AbstractAdminPage
 
     public function 登録()
     {
-        $this->tester->click('#aside_column > div > div > div > div > button');
+        $this->tester->click('#aside_column > div > div > div > div > div > button');
     }
 }

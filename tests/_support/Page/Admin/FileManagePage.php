@@ -52,19 +52,19 @@ class FileManagePage extends AbstractAdminPage
 
     public function 一覧_ダウンロード($rowNum)
     {
-        $this->tester->click("#aside_wrap > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(5) > a");
+        $this->tester->click("#aside_wrap > form > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(5) > a");
         return $this;
     }
 
     public function 一覧_表示($rowNum)
     {
-        $this->tester->click("#aside_wrap > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(4) > a");
+        $this->tester->click("#aside_wrap > form > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(4) > a");
         return $this;
     }
 
     public function 一覧_削除($rowNum)
     {
-        $this->tester->click("#aside_wrap > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(6) > a");
+        $this->tester->click("#aside_wrap > form > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(6) > a");
         return $this;
     }
 
