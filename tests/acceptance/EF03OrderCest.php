@@ -302,7 +302,7 @@ class EF03OrderCest
             // TODO 注文した商品の内容もチェックしたい
             $I->seeInLastEmailSubjectTo($email, 'ご注文ありがとうございます');
             $I->seeInLastEmailTo($email, '姓0301 名03 様');
-            $I->seeInLastEmailTo($email, 'お名前　：姓0302名03　様', '変更後のお届け先');
+            $I->seeInLastEmailTo($email, 'お名前　：姓0302 名03 様', '変更後のお届け先');
             $I->seeInLastEmailTo($email, '郵便番号：〒530-0001');
             $I->seeInLastEmailTo($email, '住所　　：大阪府大阪市北区梅田2-4-9 ブリーゼタワー13F');
             $I->seeInLastEmailTo($email, '電話番号：111-111-111');

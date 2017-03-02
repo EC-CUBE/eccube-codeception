@@ -41,7 +41,7 @@ class FileManagePage extends AbstractAdminPage
 
     public function フォルダ作成()
     {
-        $this->tester->click('#aside_wrap > div.col-md-9 > div > div.box-header.form-horizontal > div.form-group.form-inline > div > a');
+        $this->tester->click('#aside_wrap > form > div.col-md-9 > div > div.box-header.form-horizontal > div.form-group.form-inline > div > a');
         return $this;
     }
 
