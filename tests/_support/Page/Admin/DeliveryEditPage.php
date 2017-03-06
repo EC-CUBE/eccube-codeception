@@ -43,7 +43,7 @@ class DeliveryEditPage extends AbstractAdminPage
 
     public function 登録()
     {
-        $this->tester->click('#form1 #aside_wrap div:nth-child(2) button');
+        $this->tester->click(['xpath' => '//form[@id="form1"]//button[text()="登録"]']);
         return $this;
     }
 

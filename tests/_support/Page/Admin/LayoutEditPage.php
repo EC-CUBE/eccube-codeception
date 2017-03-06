@@ -25,7 +25,7 @@ class LayoutEditPage extends AbstractAdminPage
 
     public function 登録()
     {
-        $this->tester->click('#aside_wrap > div.col-md-3 > div > div.box.no-header > div > div > div > button');
+        $this->tester->click('#aside_wrap > form > div.col-md-3 > div > div.box.no-header > div > div > div > button');
         return $this;
     }
 
