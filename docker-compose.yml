@@ -3,6 +3,7 @@ services:
   db:
     image: eccube/postgres
     environment:
+      - TZ=Asia/Tokyo
       - POSTGRES_USER=cube3_dev_user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=cube3_dev
@@ -14,6 +15,7 @@ services:
         - ECCUBE_REPOS=${ECCUBE_REPOS}
         - DBTYPE=pgsql
     environment:
+      - TZ=Asia/Tokyo
       - PGPASSWORD=password
       - POSTGRES_ENV_POSTGRES_PASSWORD=password
     ports:
@@ -38,6 +40,8 @@ services:
     depends_on:
       - browser
       - eccube3
+    environment:
+      - TZ=Asia/Tokyo
     volumes:
       - ./tests:/project/tests
       - ./codeception.yml:/project/codeception.yml
@@ -49,6 +53,7 @@ services:
       - 5900
     dns: 8.8.4.4
     environment:
+      - TZ=Asia/Tokyo
       - no_proxy=localhost
     volumes:
       - ./tests/_support/_downloads:/home/seluser/Downloads
@@ -57,3 +62,5 @@ services:
     ports:
       - 1080
       - 1025
+    environment:
+      - TZ=Asia/Tokyo
