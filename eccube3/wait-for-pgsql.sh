@@ -18,5 +18,5 @@ done
 >&2 echo "Postgres is up - executing command"
 ${ECCUBE_PATH}/exec_env.sh
 php ${ECCUBE_PATH}/eccube_install.php pgsql none --skip-createdb --verbose
-chown -R www-data:www-data ${ECCUBE_PATH}
+chown -R www-data:www-data ${ECCUBE_PATH}/app
 apache2-foreground
