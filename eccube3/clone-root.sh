@@ -1,5 +1,7 @@
 #!/bin/bash
 
-cd /var
-rm -r /var/www
-git clone --depth=50 -b ${ECCUBE_BRANCH} ${ECCUBE_REPOS} ${ECCUBE_PATH}
+cd ${ECCUBE_PATH}
+git init
+git remote add origin ${ECCUBE_REPOS}
+git fetch --depth=50 origin
+git checkout origin/${ECCUBE_BRANCH}

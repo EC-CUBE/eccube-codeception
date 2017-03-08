@@ -19,6 +19,8 @@ RUN chmod +x /wait-for-db.sh
 
 ENTRYPOINT /wait-for-db.sh
 
+USER www-data
+
 ## Clone EC-CUBE3
 ADD clone-${DIRTYPE}.sh /clone.sh
 RUN /clone.sh
@@ -26,6 +28,9 @@ RUN (cd ${ECCUBE_PATH} && echo "Current revision: $(git log -n 1 --format=%H) ($
 
 WORKDIR ${ECCUBE_PATH}
 RUN composer install
+
+USER root
+
 COPY config/exec_env.sh ${ECCUBE_PATH}/exec_env.sh
 RUN chmod +x ${ECCUBE_PATH}/exec_env.sh
 RUN ls -lt ${ECCUBE_PATH}/
