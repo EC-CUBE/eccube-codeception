@@ -86,19 +86,17 @@ class EF06OtherCest
         ]);
         $I->see('パスワード発行メールの送信 完了', '#main .page-heading');
 
-        $I->seeEmailCount(2);
-        foreach (array($customer->getEmail(), $BaseInfo->getEmail01()) as $email) {
-            $I->seeInLastEmailSubjectTo($email, 'パスワード変更のご確認');
-        }
+        $I->seeEmailCount(1);
+        $I->seeInLastEmailSubjectTo($customer->getEmail(), 'パスワード変更のご確認');
+
         $url = $I->grabFromLastEmailTo($customer->getEmail(), '@/forgot/reset/(.*)@');
 
         $I->resetEmails();
         $I->amOnPage($url);
         $I->see('パスワード変更(完了ページ)', '#contents #main h1');
-        $I->seeEmailCount(2);
-        foreach (array($customer->getEmail(), $BaseInfo->getEmail01()) as $email) {
-            $I->seeInLastEmailSubjectTo($email, 'パスワード変更のお知らせ');
-        }
+        $I->seeEmailCount(1);
+        $I->seeInLastEmailSubjectTo($customer->getEmail(), 'パスワード変更のお知らせ');
+
         $new_password = $I->grabFromLastEmailTo($customer->getEmail(), '@新しいパスワード：(.*)@');
         $I->loginAsMember($customer->getEmail(), trim(str_replace('新しいパスワード：', '', $new_password)));
     }
