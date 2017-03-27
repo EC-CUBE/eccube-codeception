@@ -18,7 +18,7 @@ done
 
 
 >&2 echo "MySQL Ready"
-/var/www/exec_env.sh
-php /var/www/eccube_install.php mysql none --skip-createdb --verbose
+${ECCUBE_PATH}/exec_env.sh
+php ${ECCUBE_PATH}/eccube_install.php mysql none --skip-createdb --verbose
 chown -R www-data:www-data ${ECCUBE_PATH}/app
 apache2-foreground
