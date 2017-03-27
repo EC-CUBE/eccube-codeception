@@ -57,11 +57,6 @@ env:
   - DIRTYPE=subdir BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
   - DIRTYPE=subdir BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
   - DIRTYPE=subdir BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  ## Without html directory, Firefox, PostgreSQL
-  - DIRTYPE=withouthtml BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - DIRTYPE=withouthtml BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - DIRTYPE=withouthtml BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-  - DIRTYPE=withouthtml BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
 
 matrix:
   fast_finish: true
@@ -94,10 +89,6 @@ matrix:
     - env: DIRTYPE=subdir BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
     - env: DIRTYPE=subdir BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
     - env: DIRTYPE=subdir BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-    - env: DIRTYPE=withouthtml BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-    - env: DIRTYPE=withouthtml BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-    - env: DIRTYPE=withouthtml BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
-    - env: DIRTYPE=withouthtml BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql DOCKER_COMPOSE_VERSION=1.8.0
 
 before_install:
     - sudo apt-get update
