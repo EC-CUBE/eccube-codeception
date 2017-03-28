@@ -31,9 +31,14 @@ class EF03OrderMultiShippingCest
         $shopPage->changeMultiShipping('有効');
         $shopPage->登録();
 
-        $productEditPage = \Page\Admin\ProductEditPage::go($I, 2);
-        $productEditPage->changeProductType(2);
-        $productEditPage->登録();
+        $app = Fixtures::get('app');
+
+        $pc = $app['orm.em']->getRepository('Eccube\Entity\ProductClass')->findOneBy(array('Product' => 2));
+        $type = $app['eccube.repository.master.product_type']->find(2);
+        $pc->setProductType($type);
+
+        $app['orm.em']->persist($pc);
+        $app['orm.em']->flush($pc);
     }
 
     public function _after(\AcceptanceTester $I)
