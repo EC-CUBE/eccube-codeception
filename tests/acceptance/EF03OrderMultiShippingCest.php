@@ -287,8 +287,8 @@ class EF03OrderMultiShippingCest
         $i->see('お届け先(2)', '#shipping_confirm_box--1 h3');
 
         // select delivery method
-        $option = $i->grabTextFrom('#main_middle #confirm_main #shopping_confirm_box__shipping_delivery--0 select#shopping_shippings_0_delivery option:nth-child(2)');
-        $i->selectOption('form select[id=shopping_shippings_0_delivery]', $option);
+//        $option = $i->grabTextFrom('#main_middle #confirm_main #shopping_confirm_box__shipping_delivery--0 select#shopping_shippings_0_delivery option:nth-child(2)');
+        $i->selectOption('form select[id=shopping_shippings_0_delivery]', $deliveryName);
         $i->wait(1);
         // check delivery method
         $i->seeOptionIsSelected('form select[id=shopping_shippings_0_delivery]', $deliveryName);
