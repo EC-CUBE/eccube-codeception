@@ -15,6 +15,7 @@ class ProductEditPage extends AbstractAdminPage
     public static $商品コード = ['id' => 'admin_product_class_code'];
     public static $販売制限数 = ['id' => 'admin_product_class_sale_limit'];
     public static $お届可能日 = ['id' => 'admin_product_class_delivery_date'];
+    public static $productType = ['id' => 'admin_product_class_product_type'];
 
     /**
      * ProductRegisterPage constructor.
@@ -24,9 +25,13 @@ class ProductEditPage extends AbstractAdminPage
         parent::__construct($I);
     }
 
-    public static function go($I)
+    public static function go($I, $id = null)
     {
         $page = new ProductEditPage($I);
+        if (is_numeric($id)) {
+            return $page->goPage("/product/product/{$id}/edit", '商品管理商品登録');
+        }
+
         return $page->goPage('/product/product/new', '商品管理商品登録');
     }
 
@@ -58,6 +63,21 @@ class ProductEditPage extends AbstractAdminPage
     public function 登録()
     {
         $this->tester->click('#form1 #aside_column button:nth-child(1)');
+        return $this;
+    }
+
+    /**
+     * Change product type
+     * type = text/value
+     *
+     * @param string $value
+     * @param string $type
+     * @return $this
+     */
+    public function changeProductType($value, $type = 'value')
+    {
+        $this->tester->selectOption(self::$productType, array($type => $value));
+
         return $this;
     }
 }
