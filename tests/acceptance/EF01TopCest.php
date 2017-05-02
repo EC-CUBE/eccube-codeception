@@ -1,6 +1,7 @@
 <?php
 
 use Codeception\Util\Fixtures;
+use Page\Front\TopPage;
 
 /**
  * @group front
@@ -20,17 +21,16 @@ class EF01TopCest
     public function topページ_初期表示(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC01-T01 TOPページ 初期表示');
-        $I->amOnPage('/');
+        TopPage::go($I);
 
         // カテゴリ選択ボックス（キーワード検索用）、キーワード検索入力欄、虫眼鏡ボタンが表示されている
-        $I->see('全ての商品', '#search #category_id');
-        $I->see('', '#search #name');
-        $I->see('', '#search .bt_search');
+        $I->see('全ての商品', TopPage::$検索_カテゴリ選択);
+        $I->see('', TopPage::$検索_カテゴリ選択);
 
         // カテゴリ名（カテゴリ検索用）が表示されている
         $categories = Fixtures::get('categories');
         foreach ($categories as $category) {
-            $I->see($category->getName(), '#search #category_id option');
+            $I->see($category->getName(), '#searchform #category_id option');
         }
 
         //管理側のコンテンツ管理（新着情報管理）に設定されている情報が、順位順に表示されている
@@ -59,101 +59,94 @@ class EF01TopCest
             'comment' => 'コメント2',
         );
         foreach ($newsset as $key => $news) {
-            $I->see($news['title'], '#news_area .newslist dl:nth-child('.(count($newsset) - $key).') .news_title');
+            $I->see($news['title'], 'div.ec-news .ec-news__item:nth-child('.(count($newsset) - $key).') .ec-newsline__comment');
         }
     }
 
     public function topページ_新着情報(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC01-T02 TOPページ 新着情報');
-        $I->amOnPage('/');
+        $topPage = TopPage::go($I);
 
         // 各新着情報の箇所を押下する
         // Knowhow: javascriptでclick eventハンドリングしている場合はclick('表示文字列')では探せない
-        $I->click('#news_area .newslist dt');
+        $topPage->新着情報選択(1);
 
         // 押下された新着情報のセクションが広がり、詳細情報、リンクが表示される
-        $I->see('一人暮らしからオフィスなどさまざまなシーンで あなたの生活をサポートするグッズをご家庭へお届けします！', '#news_area .newslist dd');
+        $I->assertContains('一人暮らしからオフィスなどさまざまなシーンで あなたの生活をサポートするグッズをご家庭へお届けします！', $topPage->新着情報詳細(1));
 
         // 「詳しくはこちら」リンクを押下する
         $today = new DateTime();
         $I->haveInDatabase('dtb_news', array('news_id' => rand(999, 9999), 'news_date' => $today->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル1', 'news_comment' => 'コメント1', 'creator_id' => 1, 'news_url' => 'http://www.ec-cube.net', 'rank' => 2, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00'), 'discriminator_type' => 'news'));
         $I->reloadPage();
-        $I->click('#news_area .newslist dt');
-        $I->see('詳しくはこちら', '#news_area .newslist dd');
-        $I->click('#news_area .newslist dd a');
+        $topPage->新着情報選択(1);
+        $I->assertContains('詳しくはこちら', $topPage->新着情報詳細(1));
+        $topPage->新着情報リンククリック(1);
         $I->seeInTitle('ECサイト構築・リニューアルは「ECオープンプラットフォームEC-CUBE」');
     }
 
     public function topページ_カテゴリ検索(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC02-T01 TOPページ カテゴリ検索');
-        $I->amOnPage('/');
+        $topPage = TopPage::go($I);
 
         // カテゴリを選択、そのまま続けて子カテゴリを選択する
-        $I->moveMouseOver(['css' => '#category .category-nav li:nth-child(2)']);
-        $I->wait(3);
-        $I->click('#header #category ul li:nth-child(2) ul li:nth-child(1) a');
+        $topPage->カテゴリ選択(['キッチンツール', '調理器具']);
 
         // 商品一覧の上部に、選択されたカテゴリとその親カテゴリのリンクが表示される
-        $I->see('調理器具', '#topicpath ol');
-        $I->see('パーコレーター', '#item_list');
+        $I->see('調理器具', '.ec-topicpath');
+        $I->see('パーコレーター', '.ec-shelfGrid');
     }
 
     public function topページ_全件検索(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC03-T01 TOPページ 全件検索');
-        $I->amOnPage('/');
-
-        // カテゴリを選択する
-        $I->click('#searchform #category_id');
-
-        // 虫眼鏡ボタンを押下する
-        $I->click('#searchform .bt_search');
+        $topPage = TopPage::go($I);
+        $topPage->検索();
 
         // 商品一覧の上部に、選択されたカテゴリとその親カテゴリのリンクが表示される
-        $I->see('全商品', '#topicpath ol');
+        $I->see('全商品', '.ec-topicpath');
 
         // カテゴリに分類されている商品のみ表示される
-        $products = $I->grabMultiple('#item_list .product_item');
+        $products = $I->grabMultiple('ul.ec-shelfGrid li.ec-shelfGrid__item');
         $I->assertTrue((count($products) >= 2));
     }
 
     public function topページ_カテゴリ絞込検索(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC03-T02 TOPページ カテゴリ絞込検索');
-        $I->amOnPage('/');
+        $topPage = TopPage::go($I);
 
         // カテゴリを選択する
         $I->selectOption(['id' => 'category_id'], '調理器具');
 
         // 虫眼鏡ボタンを押下する
-        $I->click('#searchform .bt_search');
+        $topPage->検索();
 
         // 商品一覧の上部に、選択されたカテゴリとその親カテゴリのリンクが表示される
-        $I->see('調理器具', '#topicpath ol');
+        $I->see('調理器具', '.ec-topicpath');
 
         // カテゴリに分類されている商品のみ表示される
-        $I->see('パーコレーター', '#item_list');
-        $I->dontSee('ディナーフォーク', '#item_list');
+        $I->see('パーコレーター', '.ec-shelfGrid');
+        $I->dontSee('ディナーフォーク', '.ec-shelfGrid');
     }
 
     public function topページ_キーワード絞込検索(\AcceptanceTester $I)
     {
         $I->wantTo('EF0101-UC03-T02 TOPページ キーワード絞込検索');
-        $I->amOnPage('/');
+        $topPage = TopPage::go($I);
 
         // キーワードを入力する
         $I->fillField(['id' => 'name'], 'フォーク');
 
         // 虫眼鏡ボタンを押下する
-        $I->click('#searchform .bt_search');
+        $topPage->検索();
 
         // 商品一覧の上部に、選択されたカテゴリとその親カテゴリのリンクが表示される
-        $I->see('フォーク', '#topicpath ol');
+        $I->see('フォーク', '.ec-topicpath');
 
         // カテゴリに分類されている商品のみ表示される
-        $I->dontSee('パーコレーター', '#item_list');
-        $I->see('ディナーフォーク', '#item_list');
+        $I->dontSee('パーコレーター', '.ec-topicpath');
+        $I->see('ディナーフォーク', '.ec-shelfGrid');
     }
 }

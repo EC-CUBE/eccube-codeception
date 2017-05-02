@@ -167,7 +167,7 @@ class EF05MypageCest
         $I->click('#main_middle #deliveradd_input .btn_group p a');
 
         // TOPページヘ遷移する
-        $I->see('新着情報', '#contents_bottom #news_area h2');
+        $I->see('新着情報', '.ec-news__title');
     }
 
     public function mypage_お届け先編集表示(\AcceptanceTester $I)
@@ -340,6 +340,6 @@ class EF05MypageCest
         $I->click('#main_middle .unsubscribe_box .btn_group p a');
 
         // TOPページヘ遷移する
-        $I->see('新着情報', '#contents_bottom #news_area h2');
+        $I->see('新着情報', '.ec-news__title');
     }
 }

@@ -139,19 +139,19 @@ class EA06ContentsManagementCest
 
         $I->amOnPage('/user_data/page1');
         $config = Fixtures::get('config');
-        $I->see($config['shop_name'], '#header > div > div.header_logo_area > h1 > a');
+        $I->seeElement('#main');
 
         /* レイアウト編集 */
         PageManagePage::go($I)->レイアウト編集('page1');
-        $I->dragAndDrop('#position_0 > div:nth-child(1)', '#position_5');
+        $I->dragAndDrop('#position_0 > div:nth-child(4) label', '#position_5');
         LayoutEditPage::at($I)->登録();
 
         $I->see('登録が完了しました。', LayoutEditPage::$登録完了メッセージ);
         $I->amOnPage('/user_data/page1');
-        $I->see($config['shop_name'], '#header > div > div.header_logo_area > h1 > a');
+        $I->see('新着情報', '.ec-news');
 
         PageManagePage::go($I)->レイアウト編集('page1');
-        $I->dragAndDrop('#detail_box__layout_item--7', '#position_0');
+        $I->dragAndDrop('#detail_box__layout_item--4 label', '#position_0');
         LayoutEditPage::at($I)->プレビュー();
 
         $I->switchToNewWindow();
