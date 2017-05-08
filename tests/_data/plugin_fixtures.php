@@ -65,5 +65,11 @@ return [
         'file' => 'SalesReport-1.0.0.tar.gz',
         'url' => 'https://github.com/EC-CUBE/sales-report-plugin/releases/download/1.0.0/SalesReport-1.0.0.tar.gz'
     ],
+    11 => [
+        'name' => 'カスタムCSV出力プラグイン',
+        'code' => 'CustomCsvExport',
+        'file' => 'custom-csv-export-plugin-1.0.0.tar.gz',
+        'url' => 'https://github.com/EC-CUBE/custom-csv-export-plugin/releases/download/1.0.0/custom-csv-export-plugin-1.0.0.tar.gz'
+    ],
 ];
 
