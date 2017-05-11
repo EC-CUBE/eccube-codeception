@@ -164,7 +164,7 @@ class EF06OtherCest
             'contact[kana][kana02]' => 'メイ',
             'contact[zip][zip01]' => '530',
             'contact[zip][zip02]' => '0001',
-            'contact[address][pref]' => 27,
+            'contact[address][pref]' => ['value' => '27'],
             'contact[address][addr01]' => '大阪市北区',
             'contact[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
             'contact[tel][tel01]' => '111',
