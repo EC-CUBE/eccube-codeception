@@ -120,7 +120,7 @@ class EF06OtherCest
         $I->wantTo('EF0604-UC01-T01 当サイトについて');
         $I->amOnPage('/');
 
-        $I->click('#footer ul li:nth-child(1) a');
+        $I->click('.ec-footerNavi .ec-footerNavi__link:nth-child(1) a');
         $I->see('当サイトについて', '#main h1');
         $baseinfo = Fixtures::get('baseinfo');
         $I->see($baseinfo->getShopName(), '#main .dl_table dl:nth-child(1) dd');
@@ -131,7 +131,7 @@ class EF06OtherCest
         $I->wantTo('EF0605-UC01-T01 プライバシーポリシー');
         $I->amOnPage('/');
 
-        $I->click('#footer ul li:nth-child(2) a');
+        $I->click('.ec-footerNavi .ec-footerNavi__link:nth-child(2) a');
         $I->see('プライバシーポリシー', '#main h1');
         $I->see('個人情報保護の重要性に鑑み、「個人情報の保護に関する法律」及び本プライバシーポリシーを遵守し、お客さまのプライバシー保護に努めます。', '#main p');
     }
@@ -141,7 +141,7 @@ class EF06OtherCest
         $I->wantTo('EF0606-UC01-T01 特定商取引法に基づく表記');
         $I->amOnPage('/');
 
-        $I->click('#footer ul li:nth-child(3) a');
+        $I->click('.ec-footerNavi .ec-footerNavi__link:nth-child(3) a');
         $I->see('特定商取引法に基づく表記', '#main h1');
     }
 
@@ -154,7 +154,7 @@ class EF06OtherCest
         $new_email = microtime(true).'.'.$faker->safeEmail;
         $BaseInfo = Fixtures::get('baseinfo');
 
-        $I->click('#footer ul li:nth-child(4) a');
+        $I->click('.ec-footerNavi .ec-footerNavi__link:nth-child(4) a');
         $I->see('お問い合わせ', '#main h1');
 
         $I->submitForm("#form1",[

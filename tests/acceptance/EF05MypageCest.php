@@ -137,7 +137,7 @@ class EF05MypageCest
             'entry[kana][kana02]' => 'メイ',
             'entry[zip][zip01]' => '530',
             'entry[zip][zip02]' => '0001',
-            'entry[address][pref]' => 27,
+            'entry[address][pref]' => ['value' => '27'],
             'entry[address][addr01]' => '大阪市北区',
             'entry[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
             'entry[tel][tel01]' => '111',
@@ -167,7 +167,7 @@ class EF05MypageCest
         $I->click('#main_middle #deliveradd_input .btn_group p a');
 
         // TOPページヘ遷移する
-        $I->see('新着情報', '#contents_bottom #news_area h2');
+        $I->see('新着情報', '.ec-news__title');
     }
 
     public function mypage_お届け先編集表示(\AcceptanceTester $I)
@@ -206,7 +206,7 @@ class EF05MypageCest
             'customer_address[kana][kana02]' => 'メイ',
             'customer_address[zip][zip01]' => '530',
             'customer_address[zip][zip02]' => '0001',
-            'customer_address[address][pref]' => 27,
+            'customer_address[address][pref]' => ['value' => '27'],
             'customer_address[address][addr01]' => '大阪市北区',
             'customer_address[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
             'customer_address[tel][tel01]' => '111',
@@ -243,7 +243,7 @@ class EF05MypageCest
             'customer_address[kana][kana02]' => 'メイ',
             'customer_address[zip][zip01]' => '530',
             'customer_address[zip][zip02]' => '0001',
-            'customer_address[address][pref]' => 27,
+            'customer_address[address][pref]' => ['value' => '27'],
             'customer_address[address][addr01]' => '大阪市南区',
             'customer_address[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
             'customer_address[tel][tel01]' => '111',
@@ -280,7 +280,7 @@ class EF05MypageCest
             'customer_address[kana][kana02]' => 'メイ',
             'customer_address[zip][zip01]' => '530',
             'customer_address[zip][zip02]' => '0001',
-            'customer_address[address][pref]' => 27,
+            'customer_address[address][pref]' => ['value' => '27'],
             'customer_address[address][addr01]' => '大阪市西区',
             'customer_address[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
             'customer_address[tel][tel01]' => '111',
@@ -340,6 +340,6 @@ class EF05MypageCest
         $I->click('#main_middle .unsubscribe_box .btn_group p a');
 
         // TOPページヘ遷移する
-        $I->see('新着情報', '#contents_bottom #news_area h2');
+        $I->see('新着情報', '.ec-news__title');
     }
 }

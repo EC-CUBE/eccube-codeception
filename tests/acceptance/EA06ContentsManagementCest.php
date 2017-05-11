@@ -5,6 +5,7 @@ use Page\Admin\BlockEditPage;
 use Page\Admin\BlockManagePage;
 use Page\Admin\FileManagePage;
 use Page\Admin\LayoutEditPage;
+use Page\Admin\LayoutManagePage;
 use Page\Admin\NewsManagePage;
 use Page\Admin\NewsEditPage;
 use Page\Admin\PageManagePage;
@@ -124,6 +125,7 @@ class EA06ContentsManagementCest
             ->入力_ファイル名('page1')
             ->入力_URL('page1')
             ->入力_内容('page1')
+            ->入力_PC用レイアウト('トップページ用レイアウト')
             ->登録();
         $I->see('登録が完了しました。', PageEditPage::$登録完了メッセージ);
 
@@ -139,19 +141,19 @@ class EA06ContentsManagementCest
 
         $I->amOnPage('/user_data/page1');
         $config = Fixtures::get('config');
-        $I->see($config['shop_name'], '#header > div > div.header_logo_area > h1 > a');
+        $I->seeElement('#main');
 
         /* レイアウト編集 */
-        PageManagePage::go($I)->レイアウト編集('page1');
-        $I->dragAndDrop('#position_0 > div:nth-child(1)', '#position_5');
+        LayoutManagePage::go($I)->レイアウト編集('下層ページ用レイアウト(旧)');
+        $I->dragAndDrop('#position_0 > div:nth-child(4)', '#position_5');
         LayoutEditPage::at($I)->登録();
 
         $I->see('登録が完了しました。', LayoutEditPage::$登録完了メッセージ);
         $I->amOnPage('/user_data/page1');
-        $I->see($config['shop_name'], '#header > div > div.header_logo_area > h1 > a');
+        $I->see('新着情報', '.ec-news');
 
-        PageManagePage::go($I)->レイアウト編集('page1');
-        $I->dragAndDrop('#detail_box__layout_item--7', '#position_0');
+        LayoutManagePage::go($I)->レイアウト編集('下層ページ用レイアウト(旧)');
+        $I->dragAndDrop('#detail_box__layout_item--4', '#position_0');
         LayoutEditPage::at($I)->プレビュー();
 
         $I->switchToNewWindow();
@@ -175,8 +177,8 @@ class EA06ContentsManagementCest
         $I->see('登録が完了しました。', BlockEditPage::$登録完了メッセージ);
 
         // TOPページにブロックを配置
-        PageManagePage::go($I)->レイアウト編集('TOPページ');
-        $I->dragAndDrop('#position_0 > div:nth-child(1) > label', '#position_1');
+        LayoutManagePage::go($I)->レイアウト編集('トップページ用レイアウト');
+        $I->dragAndDrop('#position_0 > div:nth-child(1)', '#position_1');
         LayoutEditPage::at($I)->登録();
 
         $I->amOnPage('/');

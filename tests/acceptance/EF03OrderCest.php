@@ -1,6 +1,7 @@
 <?php
 
 use Codeception\Util\Fixtures;
+use Page\Front\ProductDetailPage;
 
 /**
  * @group front
@@ -25,14 +26,12 @@ class EF03OrderCest
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // 商品詳細パーコレータ カートへ
-        $I->amOnPage('products/detail/2');
-        $I->buyThis(1);
-
-        // 買い物を続ける
-        $I->click('#main_middle #form_cart .total_box .btn_group p:nth-child(2) a');
+        ProductDetailPage::go($I, 2)
+            ->カートに入れる(1)
+            ->お買い物を続ける();
 
         // トップページ
-        $I->see('新着情報', '#contents_bottom #news_area h2');
+        $I->see('新着情報', '.ec-news__title');
     }
 
     public function order_カート削除(\AcceptanceTester $I)
@@ -42,12 +41,9 @@ class EF03OrderCest
         $customer = $createCustomer();
         $I->loginAsMember($customer->getEmail(), 'password');
 
-        // 商品詳細パーコレータ カートへ
-        $I->amOnPage('products/detail/2');
-        $I->buyThis(1);
-
-        // 削除
-        $I->makeEmptyCart();
+        ProductDetailPage::go($I, 2)
+            ->カートに入れる(1)
+            ->商品削除(1);
     }
 
     public function order_カート数量増やす(\AcceptanceTester $I)
@@ -59,14 +55,12 @@ class EF03OrderCest
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // 商品詳細パーコレータ カートへ
-        $I->amOnPage('products/detail/2');
-        $I->buyThis(1);
-
-        // 増加
-        $I->click('#main_middle .cart_item .item_box:nth-child(1) .item_quantity ul li:nth-child(2) a');
+        $cartPage = ProductDetailPage::go($I, 2)
+            ->カートに入れる(1)
+            ->商品数量増やす(1);
 
         // 確認
-        $I->see('2', '#main_middle .cart_item .item_box:nth-child(1) .item_quantity');
+        $I->assertEquals('2', $cartPage->商品数量(1));
 
     }
 
@@ -78,14 +72,12 @@ class EF03OrderCest
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // 商品詳細パーコレータ カートへ
-        $I->amOnPage('products/detail/2');
-        $I->buyThis(2);
-
-        // 減らす
-        $I->click('#main_middle .cart_item .item_box:nth-child(1) .item_quantity ul li:nth-child(1) a');
+        $cartPage = ProductDetailPage::go($I, 2)
+            ->カートに入れる(2)
+            ->商品数量減らす(1);
 
         // 確認
-        $I->see('1', '#main_middle .cart_item .item_box:nth-child(1) .item_quantity');
+        $I->assertEquals('1', $cartPage->商品数量(1));
     }
 
     public function order_ログインユーザ購入(\AcceptanceTester $I)
@@ -97,14 +89,12 @@ class EF03OrderCest
         $BaseInfo = Fixtures::get('baseinfo');
 
         // 商品詳細パーコレータ カートへ
-        $I->amOnPage('products/detail/2');
-        $I->buyThis(1);
-
-        // レジへ
-        $I->click('#main_middle .total_box .btn_group p a');
-        $I->see('ログイン', '#main_middle .page-heading');
+        ProductDetailPage::go($I, 2)
+            ->カートに入れる(1)
+            ->レジに進む();
 
         // ログイン
+        $I->see('ログイン', '#main_middle .page-heading');
         $I->submitForm('#main_middle form', [
             'login_email' => $customer->getEmail(),
             'login_pass' => 'password'
@@ -147,7 +137,7 @@ class EF03OrderCest
 
         // topへ
         $I->click('#main_middle #deliveradd_input .btn_group p a');
-        $I->see('新着情報', '#contents_bottom #news_area h2');
+        $I->see('新着情報', '.ec-news__title');
     }
 
     public function order_ゲスト購入(\AcceptanceTester $I)
@@ -159,12 +149,10 @@ class EF03OrderCest
         $new_email = microtime(true).'.'.$faker->safeEmail;
         $BaseInfo = Fixtures::get('baseinfo');
 
-        // 商品詳細パーコレータ カートへ
-        $I->amOnPage('products/detail/2');
-        $I->buyThis(1);
+        ProductDetailPage::go($I, 2)
+            ->カートに入れる(1)
+            ->レジに進む();
 
-        // レジへ
-        $I->click('#main_middle .total_box .btn_group p a');
         $I->see('ログイン', '#main_middle .page-heading');
 
         // ゲスト購入
@@ -178,7 +166,7 @@ class EF03OrderCest
             'nonmember[kana][kana02]' => 'メイ',
             'nonmember[zip][zip01]' => '530',
             'nonmember[zip][zip02]' => '0001',
-            'nonmember[address][pref]' => 27,
+            'nonmember[address][pref]' => ['value' => '27'],
             'nonmember[address][addr01]' => '大阪市北区',
             'nonmember[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
             'nonmember[tel][tel01]' => '111',
@@ -221,7 +209,7 @@ class EF03OrderCest
         }
         // topへ
         $I->click('#main_middle #deliveradd_input .btn_group p a');
-        $I->see('新着情報', '#contents_bottom #news_area h2');
+        $I->see('新着情報', '.ec-news__title');
     }
 
     public function order_ゲスト購入情報変更(\AcceptanceTester $I)
@@ -234,25 +222,24 @@ class EF03OrderCest
         $BaseInfo = Fixtures::get('baseinfo');
 
         // 商品詳細パーコレータ カートへ
-        $I->amOnPage('products/detail/2');
-        $I->buyThis(1);
+        ProductDetailPage::go($I, 2)
+            ->カートに入れる(1)
+            ->レジに進む();
 
-        // レジへ
-        $I->click('#main_middle .total_box .btn_group p a');
         $I->see('ログイン', '#main_middle .page-heading');
 
         // ゲスト購入
         $I->click('#main_middle #login_box div:nth-child(2) .btn_area a');
         $I->see('お客様情報の入力', '#main_middle .page-heading');
 
-        $I->submitForm("#main_middle form",[
+        $I->submitForm(['css' => '#main_middle form'],[
             'nonmember[name][name01]' => '姓03',
             'nonmember[name][name02]' => '名03',
             'nonmember[kana][kana01]' => 'セイ',
             'nonmember[kana][kana02]' => 'メイ',
             'nonmember[zip][zip01]' => '530',
             'nonmember[zip][zip02]' => '0001',
-            'nonmember[address][pref]' => 27,
+            'nonmember[address][pref]' => ['value' => '27'],
             'nonmember[address][addr01]' => '大阪市北区',
             'nonmember[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
             'nonmember[tel][tel01]' => '111',
@@ -276,10 +263,10 @@ class EF03OrderCest
 
         // お客様情報変更
         $I->click('#main_middle #shopping-form #confirm_main #customer');
-        $I->wait(10);
+        $I->waitForElementVisible(['id' => 'edit0']);
         $I->fillField(['id' => 'edit0'], '姓0301');
         $I->click('#main_middle #shopping-form #confirm_main #customer-ok button');
-        $I->wait(10);
+        $I->wait(5);
         $I->see('姓0301', '#main_middle #shopping-form #confirm_main .address');
 
         // 配送情報
@@ -311,6 +298,6 @@ class EF03OrderCest
 
         // topへ
         $I->click('#main_middle #deliveradd_input .btn_group p a');
-        $I->see('新着情報', '#contents_bottom #news_area h2');
+        $I->see('新着情報', '.ec-news__title');
     }
 }

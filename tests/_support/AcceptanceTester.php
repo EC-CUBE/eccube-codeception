@@ -77,19 +77,19 @@ class AcceptanceTester extends \Codeception\Actor
             'login_email' => $email,
             'login_pass' => $password
         ]);
-        $I->see('新着情報', '#contents_bottom #news_area h2');
-        $I->see('ログアウト', '#header #member .member_link li:nth-child(3) a');
+        $I->see('新着情報', '.ec-news__title');
+        $I->see('ログアウト', ['xpath' => "//*[@class='ec-headerRole']//*[@class='ec-headerNav__item']//span[contains(text(), 'ログアウト')]"]);
     }
 
     public function logoutAsMember()
     {
         $I = $this;
         $I->amOnPage('/');
-        $isLogin = $I->grabTextFrom('#header #member .member_link li:nth-child(2) a');
+        $isLogin = $I->grabTextFrom('.ec-headerRole .ec-headerNav .ec-headerNav__item:nth-child(3) a');
         if ($isLogin == 'ログアウト') {
-            $I->click('#header #member .member_link li:nth-child(2) a');
-            $I->see('新着情報', '#contents_bottom #news_area h2');
-            $I->see('ログイン', '#header #member .member_link li:nth-child(2) a');
+            $I->wait(1);
+            $I->click('.ec-headerRole .ec-headerNav .ec-headerNav__item:nth-child(3) a');
+            $I->see('ログイン', '.ec-headerRole .ec-headerNav .ec-headerNav__item:nth-child(3) a');
         }
     }
 

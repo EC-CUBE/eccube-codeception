@@ -9,15 +9,7 @@ use Codeception\Util\Fixtures;
  */
 class EF04CustomerCest
 {
-    public function _before(\AcceptanceTester $I)
-    {
-    }
-
-    public function _after(\AcceptanceTester $I)
-    {
-    }
-
-    public function customer_会員登録正常(\AcceptanceTester $I, \Codeception\Scenario $scenario)
+    public function customer_会員登録正常(\AcceptanceTester $I)
     {
         $I->wantTo('EF0401-UC01-T01 会員登録 正常パターン');
         $I->amOnPage('/entry');
@@ -33,7 +25,7 @@ class EF04CustomerCest
             'entry[kana][kana02]' => 'メイ',
             'entry[zip][zip01]' => '530',
             'entry[zip][zip02]' => '0001',
-            'entry[address][pref]' => 27,
+            'entry[address][pref]' => ['value' => '27'],
             'entry[address][addr01]' => '大阪市北区',
             'entry[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
             'entry[tel][tel01]' => '111',
@@ -70,7 +62,7 @@ class EF04CustomerCest
 
         // 「トップページへ」ボタンを押下する
         $I->click('#main_middle .btn_group p a');
-        $I->see('新着情報', '#contents_bottom #news_area h2');
+        $I->see('新着情報', '.ec-news__title');
 
 
         // アクティベートURL取得
@@ -89,7 +81,7 @@ class EF04CustomerCest
         }
 
         $I->click('#main_middle .btn_group p a');
-        $I->see('新着情報', '#contents_bottom #news_area h2');
+        $I->see('新着情報', '.ec-news__title');
     }
 
     public function customer_会員登録異常1(\AcceptanceTester $I)
@@ -109,7 +101,7 @@ class EF04CustomerCest
             'entry[kana][kana02]' => 'メイ',
             'entry[zip][zip01]' => '530',
             'entry[zip][zip02]' => '0001',
-            'entry[address][pref]' => 27,
+            'entry[address][pref]' => ['value' => '27'],
             'entry[address][addr01]' => '大阪市北区',
             'entry[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
             'entry[tel][tel01]' => '111',
@@ -142,7 +134,7 @@ class EF04CustomerCest
             'entry[kana][kana02]' => 'メイ',
             'entry[zip][zip01]' => '530',
             'entry[zip][zip02]' => '0001',
-            'entry[address][pref]' => 27,
+            'entry[address][pref]' => ['value' => '27'],
             'entry[address][addr01]' => '大阪市北区',
             'entry[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
             'entry[tel][tel01]' => '111',
@@ -166,7 +158,7 @@ class EF04CustomerCest
         $I->amOnPage('/entry');
 
         $I->click('#main_middle form .no-padding .btn_group p:nth-child(2) a');
-        $I->see('新着情報', '#contents_bottom #news_area h2');
+        $I->see('新着情報', '.ec-news__title');
     }
 
     public function customer_会員登録戻る(\AcceptanceTester $I)
@@ -186,7 +178,7 @@ class EF04CustomerCest
             'entry[kana][kana02]' => 'メイ',
             'entry[zip][zip01]' => '530',
             'entry[zip][zip02]' => '0001',
-            'entry[address][pref]' => 27,
+            'entry[address][pref]' => ['value' => '27'],
             'entry[address][addr01]' => '大阪市北区',
             'entry[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
             'entry[tel][tel01]' => '111',

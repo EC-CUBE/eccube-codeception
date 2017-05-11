@@ -49,6 +49,12 @@ class PageEditPage extends AbstractAdminPage
         return $this;
     }
 
+    public function 入力_PC用レイアウト($layoutName)
+    {
+        $this->tester->selectOption(['id' => 'main_edit_PcLayout'], $layoutName);
+        return $this;
+    }
+
     public function 登録()
     {
         $this->tester->click('#aside_column > div > div > div > div > div > button');
