@@ -56,10 +56,10 @@ class TopPage extends AbstractFrontPage
     public function カテゴリ選択($categories)
     {
         $xpath = "//*[@class='ec-layoutRole__header']/";
-        foreach ($categories as $category) {
-            $xpath = $xpath . "/ul/li/a[contains(text(), '$category')]/parent::node()";
+        foreach ($categories as $i=>$category) {
+            $xpath .= "/ul/li/a[contains(text(), '$category')]/parent::node()";
+            $this->tester->waitForElement(['xpath' => $xpath]);
             $this->tester->moveMouseOver(['xpath' => $xpath]);
-            $this->tester->wait(3);
         }
         $this->tester->click(['xpath' => $xpath]);
         return $this;

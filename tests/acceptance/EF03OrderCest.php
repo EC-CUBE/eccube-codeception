@@ -166,7 +166,7 @@ class EF03OrderCest
             'nonmember[kana][kana02]' => 'メイ',
             'nonmember[zip][zip01]' => '530',
             'nonmember[zip][zip02]' => '0001',
-            'nonmember[address][pref]' => 27,
+            'nonmember[address][pref]' => ['value' => '27'],
             'nonmember[address][addr01]' => '大阪市北区',
             'nonmember[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
             'nonmember[tel][tel01]' => '111',
@@ -232,14 +232,14 @@ class EF03OrderCest
         $I->click('#main_middle #login_box div:nth-child(2) .btn_area a');
         $I->see('お客様情報の入力', '#main_middle .page-heading');
 
-        $I->submitForm("#main_middle form",[
+        $I->submitForm(['css' => '#main_middle form'],[
             'nonmember[name][name01]' => '姓03',
             'nonmember[name][name02]' => '名03',
             'nonmember[kana][kana01]' => 'セイ',
             'nonmember[kana][kana02]' => 'メイ',
             'nonmember[zip][zip01]' => '530',
             'nonmember[zip][zip02]' => '0001',
-            'nonmember[address][pref]' => 27,
+            'nonmember[address][pref]' => ['value' => '27'],
             'nonmember[address][addr01]' => '大阪市北区',
             'nonmember[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
             'nonmember[tel][tel01]' => '111',
@@ -263,10 +263,10 @@ class EF03OrderCest
 
         // お客様情報変更
         $I->click('#main_middle #shopping-form #confirm_main #customer');
-        $I->wait(10);
+        $I->waitForElementVisible(['id' => 'edit0']);
         $I->fillField(['id' => 'edit0'], '姓0301');
         $I->click('#main_middle #shopping-form #confirm_main #customer-ok button');
-        $I->wait(10);
+        $I->wait(5);
         $I->see('姓0301', '#main_middle #shopping-form #confirm_main .address');
 
         // 配送情報
