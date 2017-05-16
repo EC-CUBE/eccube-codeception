@@ -145,16 +145,18 @@ class EA06ContentsManagementCest
 
         /* レイアウト編集 */
         LayoutManagePage::go($I)->レイアウト編集('下層ページ用レイアウト(旧)');
-        $I->dragAndDrop('#position_0 > div:nth-child(4)', '#position_5');
-        LayoutEditPage::at($I)->登録();
+        LayoutEditPage::at($I)
+            ->ブロックを移動('新着情報', '#position_5')
+            ->登録();
 
         $I->see('登録が完了しました。', LayoutEditPage::$登録完了メッセージ);
         $I->amOnPage('/user_data/page1');
         $I->see('新着情報', '.ec-news');
 
         LayoutManagePage::go($I)->レイアウト編集('下層ページ用レイアウト(旧)');
-        $I->dragAndDrop('#detail_box__layout_item--4', '#position_0');
-        LayoutEditPage::at($I)->プレビュー();
+        LayoutEditPage::at($I)
+            ->ブロックを移動('新着情報', '#position_0')
+            ->プレビュー();
 
         $I->switchToNewWindow();
 
@@ -178,8 +180,9 @@ class EA06ContentsManagementCest
 
         // TOPページにブロックを配置
         LayoutManagePage::go($I)->レイアウト編集('トップページ用レイアウト');
-        $I->dragAndDrop('#position_0 > div:nth-child(1)', '#position_1');
-        LayoutEditPage::at($I)->登録();
+        LayoutEditPage::at($I)
+            ->ブロックを移動('block1', '#position_1')
+            ->登録();
 
         $I->amOnPage('/');
         $I->see('block1', ['id' => 'block1']);

@@ -33,7 +33,13 @@ class ProductListPage extends AbstractFrontPage
 
     public function 表示件数設定($num)
     {
-        $this->tester->selectOption(['css' => "#page_navi_top select[name = 'disp_number']"], "${num}件");
+        $this->tester->selectOption(['css' => "select[name = 'disp_number']"], "${num}件");
+        return $this;
+    }
+
+    public function 表示順設定($sort)
+    {
+        $this->tester->selectOption(['css' => "select[name = 'orderby']"], $sort);
         return $this;
     }
 

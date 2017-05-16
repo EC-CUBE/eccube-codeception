@@ -51,13 +51,13 @@ class ProductDetailPage extends AbstractFrontPage
 
     public function サムネイル切替($num)
     {
-        $this->tester->click("ul.slick-dots li:nth-child(${num}) button.thumbnail");
+        $this->tester->click("div.item_nav div.slick-list div.slick-track div.slideThumb:nth-child(${num})");
         return $this;
     }
 
     public function サムネイル画像URL()
     {
-        return $this->tester->grabAttributeFrom('div.slick-track img.slick-active', 'src');
+        return $this->tester->grabAttributeFrom('div.item.slick-slide.slick-current.slick-active img', 'src');
     }
 
     public function 規格選択($array)

@@ -78,18 +78,18 @@ class AcceptanceTester extends \Codeception\Actor
             'login_pass' => $password
         ]);
         $I->see('新着情報', '.ec-news__title');
-        $I->see('ログアウト', ['xpath' => "//*[@class='ec-headerRole']//*[@class='ec-headerNav__item']//span[contains(text(), 'ログアウト')]"]);
+        $I->see('ログアウト', ['xpath' => "//*[@class='ec-headerNaviRole']//*[@class='ec-headerNav__item']//span[contains(text(), 'ログアウト')]"]);
     }
 
     public function logoutAsMember()
     {
         $I = $this;
         $I->amOnPage('/');
-        $isLogin = $I->grabTextFrom('.ec-headerRole .ec-headerNav .ec-headerNav__item:nth-child(3) a');
+        $isLogin = $I->grabTextFrom('.ec-headerNaviRole .ec-headerNav .ec-headerNav__item:nth-child(3) a');
         if ($isLogin == 'ログアウト') {
             $I->wait(1);
-            $I->click('.ec-headerRole .ec-headerNav .ec-headerNav__item:nth-child(3) a');
-            $I->see('ログイン', '.ec-headerRole .ec-headerNav .ec-headerNav__item:nth-child(3) a');
+            $I->click('.ec-headerNaviRole .ec-headerNav .ec-headerNav__item:nth-child(3) a');
+            $I->see('ログイン', '.ec-headerNaviRole .ec-headerNav .ec-headerNav__item:nth-child(3) a');
         }
     }
 

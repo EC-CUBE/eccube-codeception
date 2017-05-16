@@ -29,6 +29,12 @@ class LayoutEditPage extends AbstractAdminPage
         return $this;
     }
 
+    public function ブロックを移動($blockName, $dest)
+    {
+        $this->tester->dragAndDrop(['xpath' => "//div[contains(@id, 'detail_box__layout_item')]/a[text()='${blockName}']"], $dest);
+        return $this;
+    }
+
     public function プレビュー()
     {
         $this->tester->click("#preview_box__preview_button > button");
