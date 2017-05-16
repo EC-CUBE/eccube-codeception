@@ -58,12 +58,14 @@ class EF02ProductCest
         }
         $I->assertTrue(($pPos < $fPos));
 
+        $listPage = new ProductListPage($I);
         // ソート条件の選択リストを変更する 価格順->新着順
-        $I->selectOption(['css' => "#page_navi_top select[name = 'disp_number']"], '30件');
-        $I->selectOption(['css' => "#page_navi_top select[name = 'orderby']"], '新着順');
+        $listPage
+            ->表示件数設定(30)
+            ->表示順設定('新着順');
 
         // 変更されたソート条件に従い、商品がソートされる
-        $products = $I->grabMultiple('#item_list .col-sm-3 .product_item a dl dt');
+        $products = $I->grabMultiple(['xpath' => "//*[@class='ec-shelfGrid__item']/a/p[1]"]);
         $pPos = 0;
         $fPos = 0;
         foreach ($products as $key => $product) {
@@ -112,17 +114,23 @@ class EF02ProductCest
         $topPage->カテゴリ選択(['キッチンツール']);
 
         // 絞込検索条件では、検索数が多い場合、「次へ」「前へ」「ページ番号」が表示される
-        $I->see('1', 'li.pagenation__item.active');
-        $I->see('2', 'li.pagenation__item');
-        $I->see('次へ', 'li.pagenation__item-next');
+        $I->see('1', ['css' => 'li.ec-pager__item--active']);
+        $I->see('2', ['xpath' => "//li[@class='ec-pager__item'][position()=1]"]);
+        $I->see('次へ', ['xpath' => "//li[@class='ec-pager__item'][position()=2]"]);
 
         // 選択されたリンクに応じてページングされる
-        $I->click('li.pagenation__item:nth-child(2) a'); // '2'をクリック
-        $I->see('2', 'li.pagenation__item.active');
-        $I->click('li.pagenation__item-previous a'); // '前へ'をクリック
-        $I->see('1', 'li.pagenation__item.active');
-        $I->click('li.pagenation__item-next a'); // '次へ'をクリック
-        $I->see('2', 'li.pagenation__item.active');
+
+        // '2'をクリック
+        $I->click(['xpath' => "//li[@class='ec-pager__item'][position()=1]/a"]);
+        $I->see('2', ['css' => 'li.ec-pager__item--active']);
+
+        // '前へ'をクリック
+        $I->click(['xpath' => "//li[@class='ec-pager__item'][position()=1]/a"]);
+        $I->see('1', ['css' => 'li.ec-pager__item--active']);
+
+        // '次へ'をクリック
+        $I->click(['xpath' => "//li[@class='ec-pager__item'][position()=2]/a"]);
+        $I->see('2', ['css' => 'li.ec-pager__item--active']);
     }
 
     public function product_商品詳細初期表示(\AcceptanceTester $I)

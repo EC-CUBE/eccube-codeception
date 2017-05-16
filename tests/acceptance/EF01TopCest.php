@@ -105,7 +105,7 @@ class EF01TopCest
         $topPage->検索();
 
         // 商品一覧の上部に、選択されたカテゴリとその親カテゴリのリンクが表示される
-        $I->see('全商品', '.ec-topicpath');
+        $I->see('全て', '.ec-topicpath');
 
         // カテゴリに分類されている商品のみ表示される
         $products = $I->grabMultiple('ul.ec-shelfGrid li.ec-shelfGrid__item');

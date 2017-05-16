@@ -7,6 +7,9 @@ services:
   browser:
     ports:
       - "5900:5900"
+    environment:
+      - SCREEN_WIDTH=1680
+      - SCREEN_HEIGHT=1050
   mailcatcher:
     ports:
       - "1080:1080"
