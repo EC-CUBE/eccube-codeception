@@ -124,6 +124,8 @@ class EA04OrderCest
 
     public function order_受注編集(\AcceptanceTester $I)
     {
+        $I->getScenario()->skip('新出荷管理が実装されるまでスキップ');
+
         $I->wantTo('EA0401-UC05-T01(& UC05-T02/UC06-T01) 受注編集');
 
         $config = Fixtures::get('config');
@@ -173,6 +175,8 @@ class EA04OrderCest
 
     public function order_受注削除(\AcceptanceTester $I)
     {
+        $I->getScenario()->skip('新出荷管理が実装されるまでスキップ');
+
         $I->wantTo('EA0401-UC08-T01(& UC08-T02) 受注削除');
 
         $config = Fixtures::get('config');
@@ -252,6 +256,9 @@ class EA04OrderCest
 
     public function order_受注登録(\AcceptanceTester $I)
     {
+
+        $I->getScenario()->skip('新出荷管理が実装されるまでスキップ');
+
         $I->wantTo('EA0405-UC01-T01(& UC01-T02) 受注登録');
 
         $OrderRegisterPage = OrderEditPage::go($I)
