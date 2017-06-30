@@ -73,7 +73,7 @@ class EA01TopCest
         $I->switchToIFrame("information");
         $I->click(['css' => '.news_area .link_list .tableish a:nth-child(3)']);
         $I->switchToNewWindow();
-        $I->seeInTitle("全商品 | ECサイト構築・リニューアルは「ECオープンプラットフォームEC-CUBE」");
+        $I->assertRegExp('/^https?:\/\/www.ec-cube.net\/.*$/', $I->executeJS('return location.href'), '公式サイトが開く');
         $I->switchToWindow();
 
         // ショップ情報の在庫切れ商品をクリックすると商品管理ページに遷移することを確認

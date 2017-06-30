@@ -1,10 +1,12 @@
 version: "2"
 services:
   browser:
-    image: selenium/standalone-chrome-debug:2.53.1
+    image: selenium/standalone-chrome-debug:latest
     shm_size: 1g
     ports:
       - 5900
     dns: 8.8.4.4
     environment:
       - no_proxy=localhost
+    volumes:
+      - ./tests/_support/_downloads:/root/Downloads
