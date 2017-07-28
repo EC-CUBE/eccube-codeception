@@ -35,6 +35,7 @@ class EF04CustomerCest
             'entry[email][second]' => $new_email,
             'entry[password][first]' => 'password',
             'entry[password][second]' => 'password',
+            'entry[job]' => ['value' => '1'],
         ];
         $findPluginByCode = Fixtures::get('findPluginByCode');
         $Plugin = $findPluginByCode('MailMagazine');
@@ -188,6 +189,7 @@ class EF04CustomerCest
             'entry[email][second]' => $new_email,
             'entry[password][first]' => 'password',
             'entry[password][second]' => 'password',
+            'entry[job]' => ['value' => '1'],
         ];
 
         $findPluginByCode = Fixtures::get('findPluginByCode');
