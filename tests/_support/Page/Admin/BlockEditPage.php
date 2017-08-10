@@ -38,7 +38,7 @@ class BlockEditPage extends AbstractAdminPage
 
     public function 入力_データ($value)
     {
-        $this->tester->fillField(['id' => 'block_block_html'], $value);
+        $this->tester->fillField(['xpath' => '//input[@id="block_block_html"]/parent::node()//textarea[@class="ace_text-input"]'], $value);
         return $this;
     }
 
