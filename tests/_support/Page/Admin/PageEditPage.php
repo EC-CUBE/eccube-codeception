@@ -45,7 +45,8 @@ class PageEditPage extends AbstractAdminPage
 
     public function 入力_内容($value)
     {
-        $this->tester->fillField(['xpath' => '//input[@id="main_edit_tpl_data"]/parent::node()//textarea[@class="ace_text-input"]'], $value);
+        $value = preg_replace("/([^\\\])'/", "$1\\'", $value);
+        $this->tester->executeJS("ace.edit('editor').setValue('$value')");
         return $this;
     }
 
