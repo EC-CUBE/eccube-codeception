@@ -2,6 +2,10 @@
 
 use Codeception\Util\Fixtures;
 use Page\Front\ProductDetailPage;
+use Page\Front\ShippingEditPage;
+use Page\Front\ShoppingCompletePage;
+use Page\Front\ShoppingLoginPage;
+use Page\Front\ShoppingPage;
 
 /**
  * @group front
@@ -94,32 +98,14 @@ class EF03OrderCest
             ->レジに進む();
 
         // ログイン
-        $I->see('ログイン', '#main_middle .page-heading');
-        $I->submitForm('#main_middle form', [
-            'login_email' => $customer->getEmail(),
-            'login_pass' => 'password'
-        ]);
-
-        // 確認
-        $I->see('ご注文内容のご確認', '#main_middle .page-heading');
-        $I->see('お客様情報', '#main_middle #shopping-form #confirm_main');
-        $I->see('配送情報', '#main_middle #shopping-form #confirm_main');
-        $I->see('お届け先', '#main_middle #shopping-form #confirm_main');
-        $I->see('お支払方法', '#main_middle #shopping-form #confirm_main');
-        $I->see('お問い合わせ欄', '#main_middle #shopping-form #confirm_main');
-        $I->see('小計', '#main_middle #shopping-form #confirm_side');
-        $I->see('手数料', '#main_middle #shopping-form #confirm_side');
-        $I->see('送料', '#main_middle #shopping-form #confirm_side');
-        $I->see('合計', '#main_middle #shopping-form #confirm_side');
+        ShoppingLoginPage::at($I)->ログイン($customer->getEmail());
 
         $I->resetEmails();
 
-        // 注文
-        $I->click('#main_middle #shopping-form #order-button');
+        ShoppingPage::at($I)->注文する();
+
         $I->wait(1);
 
-        // 確認
-        $I->see('ご注文完了', '#main_middle .page-heading');
 
         // メール確認
         $I->seeEmailCount(2);
@@ -135,8 +121,8 @@ class EF03OrderCest
             $I->seeInLastEmailTo($email, 'メールアドレス：'.$customer->getEmail());
         }
 
-        // topへ
-        $I->click('#main_middle #deliveradd_input .btn_group p a');
+        // 完了画面 -> topへ
+        ShoppingCompletePage::at($I)->TOPへ();
         $I->see('新着情報', '.ec-news__title');
     }
 
@@ -153,48 +139,30 @@ class EF03OrderCest
             ->カートに入れる(1)
             ->レジに進む();
 
-        $I->see('ログイン', '#main_middle .page-heading');
-
-        // ゲスト購入
-        $I->click('#main_middle #login_box div:nth-child(2) .btn_area a');
-        $I->see('お客様情報の入力', '#main_middle .page-heading');
-
-        $I->submitForm("#main_middle form",[
-            'nonmember[name][name01]' => '姓03',
-            'nonmember[name][name02]' => '名03',
-            'nonmember[kana][kana01]' => 'セイ',
-            'nonmember[kana][kana02]' => 'メイ',
-            'nonmember[zip][zip01]' => '530',
-            'nonmember[zip][zip02]' => '0001',
-            'nonmember[address][pref]' => ['value' => '27'],
-            'nonmember[address][addr01]' => '大阪市北区',
-            'nonmember[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
-            'nonmember[tel][tel01]' => '111',
-            'nonmember[tel][tel02]' => '111',
-            'nonmember[tel][tel03]' => '111',
-            'nonmember[email][first]' => $new_email,
-            'nonmember[email][second]' => $new_email,
-        ]);
-
-        // 確認
-        $I->see('ご注文内容のご確認', '#main_middle .page-heading');
-        $I->see('お客様情報', '#main_middle #shopping-form #confirm_main');
-        $I->see('配送情報', '#main_middle #shopping-form #confirm_main');
-        $I->see('お届け先', '#main_middle #shopping-form #confirm_main');
-        $I->see('お支払方法', '#main_middle #shopping-form #confirm_main');
-        $I->see('お問い合わせ欄', '#main_middle #shopping-form #confirm_main');
-        $I->see('小計', '#main_middle #shopping-form #confirm_side');
-        $I->see('手数料', '#main_middle #shopping-form #confirm_side');
-        $I->see('送料', '#main_middle #shopping-form #confirm_side');
-        $I->see('合計', '#main_middle #shopping-form #confirm_side');
+        ShoppingLoginPage::at($I)->ゲスト購入()
+            ->入力_姓('姓03')
+            ->入力_名('名03')
+            ->入力_セイ('セイ')
+            ->入力_メイ('メイ')
+            ->入力_郵便番号1('530')
+            ->入力_郵便番号2('0001')
+            ->入力_都道府県(['value' => '27'])
+            ->入力_市区町村名('大阪市北区')
+            ->入力_番地_ビル名('梅田2-4-9 ブリーゼタワー13F')
+            ->入力_電話番号1('111')
+            ->入力_電話番号2('111')
+            ->入力_電話番号3('111')
+            ->入力_Eメール($new_email)
+            ->入力_Eメール確認($new_email)
+            ->次へ();
 
         $I->resetEmails();
-        // 注文
-        $I->click('#main_middle #shopping-form #confirm_side .total_amount p:nth-child(2) button');
+
+        ShoppingPage::at($I)->注文する();
+
         $I->wait(1);
 
         // 確認
-        $I->see('ご注文完了', '#main_middle .page-heading');
         $I->seeEmailCount(2);
         foreach (array($new_email, $BaseInfo->getEmail01()) as $email) {
             // TODO 注文した商品の内容もチェックしたい
@@ -207,8 +175,9 @@ class EF03OrderCest
             $I->seeInLastEmailTo($email, '電話番号：111-111-111');
             $I->seeInLastEmailTo($email, 'メールアドレス：'.$new_email);
         }
-        // topへ
-        $I->click('#main_middle #deliveradd_input .btn_group p a');
+
+        // 完了画面 -> topへ
+        ShoppingCompletePage::at($I)->TOPへ();
         $I->see('新着情報', '.ec-news__title');
     }
 
@@ -226,63 +195,44 @@ class EF03OrderCest
             ->カートに入れる(1)
             ->レジに進む();
 
-        $I->see('ログイン', '#main_middle .page-heading');
-
-        // ゲスト購入
-        $I->click('#main_middle #login_box div:nth-child(2) .btn_area a');
-        $I->see('お客様情報の入力', '#main_middle .page-heading');
-
-        $I->submitForm(['css' => '#main_middle form'],[
-            'nonmember[name][name01]' => '姓03',
-            'nonmember[name][name02]' => '名03',
-            'nonmember[kana][kana01]' => 'セイ',
-            'nonmember[kana][kana02]' => 'メイ',
-            'nonmember[zip][zip01]' => '530',
-            'nonmember[zip][zip02]' => '0001',
-            'nonmember[address][pref]' => ['value' => '27'],
-            'nonmember[address][addr01]' => '大阪市北区',
-            'nonmember[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
-            'nonmember[tel][tel01]' => '111',
-            'nonmember[tel][tel02]' => '111',
-            'nonmember[tel][tel03]' => '111',
-            'nonmember[email][first]' => $new_email,
-            'nonmember[email][second]' => $new_email,
-        ]);
+        ShoppingLoginPage::at($I)->ゲスト購入()
+            ->入力_姓('姓03')
+            ->入力_名('名03')
+            ->入力_セイ('セイ')
+            ->入力_メイ('メイ')
+            ->入力_郵便番号1('530')
+            ->入力_郵便番号2('0001')
+            ->入力_都道府県(['value' => '27'])
+            ->入力_市区町村名('大阪市北区')
+            ->入力_番地_ビル名('梅田2-4-9 ブリーゼタワー13F')
+            ->入力_電話番号1('111')
+            ->入力_電話番号2('111')
+            ->入力_電話番号3('111')
+            ->入力_Eメール($new_email)
+            ->入力_Eメール確認($new_email)
+            ->次へ();
 
         // 確認
-        $I->see('ご注文内容のご確認', '#main_middle .page-heading');
-        $I->see('お客様情報', '#main_middle #shopping-form #confirm_main');
-        $I->see('配送情報', '#main_middle #shopping-form #confirm_main');
-        $I->see('お届け先', '#main_middle #shopping-form #confirm_main');
-        $I->see('お支払方法', '#main_middle #shopping-form #confirm_main');
-        $I->see('お問い合わせ欄', '#main_middle #shopping-form #confirm_main');
-        $I->see('小計', '#main_middle #shopping-form #confirm_side');
-        $I->see('手数料', '#main_middle #shopping-form #confirm_side');
-        $I->see('送料', '#main_middle #shopping-form #confirm_side');
-        $I->see('合計', '#main_middle #shopping-form #confirm_side');
+        $ShoppingPage = ShoppingPage::at($I)
+            ->お客様情報変更()
+            ->入力_姓('姓0301')
+            ->お客様情報変更OK();
 
-        // お客様情報変更
-        $I->click('#main_middle #shopping-form #confirm_main #customer');
-        $I->waitForElementVisible(['id' => 'edit0']);
-        $I->fillField(['id' => 'edit0'], '姓0301');
-        $I->click('#main_middle #shopping-form #confirm_main #customer-ok button');
-        $I->wait(5);
-        $I->see('姓0301', '#main_middle #shopping-form #confirm_main .address');
+        // 確認
+        $I->see('姓0301', '#shopping-form .customer-name01');
 
         // 配送情報
-        $I->click('#main_middle #shopping-form #confirm_main .btn-shipping-edit');
-        $I->see('お届け先の変更', '#main_middle .page-heading');
-        $I->fillField(['id' => 'shopping_shipping_name_name01'], '姓0302');
-        $I->click('#main_middle form .btn_group p:nth-child(1) button');
-        $I->see('姓0302', '#main_middle #shopping-form #confirm_main .address');
+        $ShoppingPage->お届け先変更();
+
+        ShippingEditPage::at($I)
+            ->入力_姓('姓0302')
+            ->登録する();
+
+        $I->see('姓0302', 'div.ec-orderRole div.ec-orderDelivery__address');
 
         $I->resetEmails();
-        // 注文
-        $I->click('#main_middle #shopping-form #confirm_side .total_amount p:nth-child(2) button');
-        $I->wait(1);
 
-        // 確認
-        $I->see('ご注文完了', '#main_middle .page-heading');
+        ShoppingPage::at($I)->注文する();
 
         $I->seeEmailCount(2);
         foreach (array($new_email, $BaseInfo->getEmail01()) as $email) {
@@ -297,7 +247,7 @@ class EF03OrderCest
         }
 
         // topへ
-        $I->click('#main_middle #deliveradd_input .btn_group p a');
+        ShoppingCompletePage::at($I)->TOPへ();
         $I->see('新着情報', '.ec-news__title');
     }
 }
