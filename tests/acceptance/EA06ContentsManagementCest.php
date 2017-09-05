@@ -141,10 +141,10 @@ class EA06ContentsManagementCest
 
         $I->amOnPage('/user_data/page1');
         $config = Fixtures::get('config');
-        $I->seeElement('#main');
+        $I->seeElement('div.ec-layoutRole__main');
 
         /* レイアウト編集 */
-        LayoutManagePage::go($I)->レイアウト編集('下層ページ用レイアウト(旧)');
+        LayoutManagePage::go($I)->レイアウト編集('下層ページ用レイアウト');
         LayoutEditPage::at($I)
             ->ブロックを移動('新着情報', '#position_5')
             ->登録();
@@ -153,7 +153,7 @@ class EA06ContentsManagementCest
         $I->amOnPage('/user_data/page1');
         $I->see('新着情報', '.ec-news');
 
-        LayoutManagePage::go($I)->レイアウト編集('下層ページ用レイアウト(旧)');
+        LayoutManagePage::go($I)->レイアウト編集('下層ページ用レイアウト');
         LayoutEditPage::at($I)
             ->ブロックを移動('新着情報', '#position_0')
             ->プレビュー();
