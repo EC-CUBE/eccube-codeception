@@ -62,7 +62,7 @@ class EF05MypageCest
 
         $I->loginAsMember($customer->getEmail(), 'password');
 
-        MyPage::go($I)->注文履歴()->注文履歴詳細(1);
+        MyPage::go($I)->注文履歴詳細(1);
 
         HistoryPage::at($I);
 
@@ -75,8 +75,8 @@ class EF05MypageCest
         $I->see('メール配信履歴一覧', 'div.ec-orderRole div.ec-orderMails div.ec-rectHeading h2');
         $I->see('小計', 'div.ec-orderRole__summary div.ec-totalBox dl:nth-child(1)');
         $I->see('手数料', 'div.ec-orderRole__summary div.ec-totalBox dl:nth-child(2)');
-        $I->see('送料合計', 'div.ec-orderRole__summary div.ec-totalBox dl:nth-child(3)');
-        $I->see('合計', 'div.ec-orderRole__summary div.ec-totalBox dl.ec-totalBox__total');
+        $I->see('送料', 'div.ec-orderRole__summary div.ec-totalBox dl:nth-child(3)');
+        $I->see('合計', 'div.ec-orderRole__summary div.ec-totalBox .ec-totalBox__total');
     }
 
     public function mypage_お気に入り一覧(\AcceptanceTester $I)
@@ -147,7 +147,6 @@ class EF05MypageCest
         }
         // 会員情報フォームに会員情報を入力する
         $I->submitForm("div.ec-editRole form", $form);
-
 
         // 会員情報編集（完了）画面が表示される
         $I->see('会員情報編集(完了)', 'div.ec-pageHeader h1');
