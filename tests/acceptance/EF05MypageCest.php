@@ -1,7 +1,11 @@
 <?php
 
 use Codeception\Util\Fixtures;
-use Faker\Factory as Faker;
+use Page\Front\CustomerAddressEditPage;
+use Page\Front\CustomerAddressListPage;
+use Page\Front\HistoryPage;
+use Page\Front\MyPage;
+use Page\Front\ProductDetailPage;
 
 /**
  * @group front
@@ -25,18 +29,11 @@ class EF05MypageCest
         $customer = $createCustomer();
         $I->loginAsMember($customer->getEmail(), 'password');
 
-        // TOPページ>マイページ
-        $I->amOnPage('/mypage');
-
-        // マイページのヘッダーとして、ご注文履歴/会員情報編集/お届け先編集/退会手続きが表示される
-        $I->see('ご注文履歴', '#main_middle .local_nav ul li:nth-child(1) a');
-        $I->see('お気に入り一覧', '#main_middle .local_nav ul li:nth-child(2) a');
-        $I->see('会員情報編集', '#main_middle .local_nav ul li:nth-child(3) a');
-        $I->see('お届け先編集', '#main_middle .local_nav ul li:nth-child(4) a');
-        $I->see('退会手続き', '#main_middle .local_nav ul li:nth-child(5) a');
+        MyPage::go($I);
+        MyPage::at($I);
     }
 
-    public function mypage_ご注文履歴(\AcceptanceTester $I)
+    public function mypage_ご注文履歴_(\AcceptanceTester $I)
     {
         $I->wantTo('EF0502-UC01-T01 Mypage ご注文履歴');
         $createCustomer = Fixtures::get('createCustomer');
@@ -47,13 +44,12 @@ class EF05MypageCest
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // TOPページ>マイページ>ご注文履歴
-        $I->amOnPage('/mypage');
-        $I->click('#main_middle .local_nav ul li:nth-child(1) a');
+        MyPage::go($I)->注文履歴();
 
         // 注文内容の状況/簡易情報が表示される、各注文履歴に「詳細を見る」ボタンが表示される
-        $I->see('ご注文履歴', '#main_middle .page-heading');
-        $I->see('ご注文番号', '#main_middle .historylist_column');
-        $I->see('詳細を見る', '#main_middle .historylist_column p a');
+        $I->see('ご注文履歴', 'div.ec-pageHeader h1');
+        $I->see('ご注文番号', 'div.ec-historyRole dl.ec-definitions');
+        $I->see('詳細を見る', 'div.ec-historyRole p.ec-historyListHeader__action a');
     }
 
     public function mypage_ご注文履歴詳細(\AcceptanceTester $I)
@@ -62,28 +58,25 @@ class EF05MypageCest
         $createCustomer = Fixtures::get('createCustomer');
         $customer = $createCustomer();
         $createOrders = Fixtures::get('createOrders');
-        $Orders = $createOrders($customer);
+        $createOrders($customer);
 
         $I->loginAsMember($customer->getEmail(), 'password');
 
-        // TOPページ>マイページ>ご注文履歴>ご注文履歴詳細
-        $I->amOnPage('/mypage');
-        $I->click('#main_middle .local_nav ul li:nth-child(1) a');
-        $I->click('#main_middle .historylist_column p a');
+        MyPage::go($I)->注文履歴詳細(1);
 
-        // 注文内容の状況/詳細情報/お客様情報/お支払い方法/メール配信履歴一覧/小計・手数料・送料合計・合計金額が表示されている
-        $I->see('ご注文履歴詳細', '#main_middle .page-heading');
-        $I->see('ご注文状況', '#main_middle .order_detail');
+        HistoryPage::at($I);
+
+        $I->see('ご注文状況', 'div.ec-orderOrder div.ec-definitions:nth-child(3) dt');
         // $I->see('注文受付', '#main_middle .order_detail'); TODO 受注ステータスが可変するためテストが通らない場合がある
-        $I->see('配送情報', '#main_middle #shopping_confirm #confirm_main');
-        $I->see('お届け先', '#main_middle #shopping_confirm #confirm_main');
-        $I->see('お支払方法', '#main_middle #shopping_confirm #confirm_main');
-        $I->see('お問い合わせ', '#main_middle #shopping_confirm #confirm_main');
-        $I->see('メール配信履歴一覧', '#main_middle #shopping_confirm #confirm_main');
-        $I->see('小計', '#main_middle #shopping_confirm #confirm_side dl:nth-child(1)');
-        $I->see('手数料', '#main_middle #shopping_confirm #confirm_side dl:nth-child(2)');
-        $I->see('送料合計', '#main_middle #shopping_confirm #confirm_side dl:nth-child(3)');
-        $I->see('合計', '#main_middle #shopping_confirm #confirm_side .total_amount .total_price');
+        $I->see('配送情報', 'div.ec-orderRole div.ec-orderDelivery div.ec-rectHeading h2');
+        $I->see('お届け先', 'div.ec-orderRole div.ec-orderDelivery div.ec-orderDelivery__title');
+        $I->see('お支払方法', 'div.ec-orderRole div.ec-orderPayment div.ec-rectHeading h2');
+        $I->see('お問い合わせ', 'div.ec-orderRole div.ec-orderConfirm div.ec-rectHeading h2');
+        $I->see('メール配信履歴一覧', 'div.ec-orderRole div.ec-orderMails div.ec-rectHeading h2');
+        $I->see('小計', 'div.ec-orderRole__summary div.ec-totalBox dl:nth-child(1)');
+        $I->see('手数料', 'div.ec-orderRole__summary div.ec-totalBox dl:nth-child(2)');
+        $I->see('送料', 'div.ec-orderRole__summary div.ec-totalBox dl:nth-child(3)');
+        $I->see('合計', 'div.ec-orderRole__summary div.ec-totalBox .ec-totalBox__total');
     }
 
     public function mypage_お気に入り一覧(\AcceptanceTester $I)
@@ -94,23 +87,20 @@ class EF05MypageCest
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // TOPページ>マイページ>ご注文履歴
-        $I->amOnPage('/mypage');
-        $I->click('#main_middle .local_nav ul li:nth-child(2) a');
+        MyPage::go($I)->お気に入り一覧();
 
         // 最初はなにも登録されていない
-        $I->see('お気に入り一覧', '#main_middle .page-heading');
-        $I->see('お気に入りが登録されていません。', '#main_middle .container-fluid .intro');
+        $I->see('お気に入り一覧', 'div.ec-pageHeader h1');
+        $I->see('お気に入りが登録されていません。', 'div.ec-favoriteRole div.ec-welcomeMsg');
 
         // お気に入り登録
-        $I->amOnPage('/products/detail/2');
-        $I->click('#favorite');
+        ProductDetailPage::go($I, 2)->お気に入りに追加();
 
-        $I->amOnPage('/mypage');
-        $I->click('#main_middle .local_nav ul li:nth-child(2) a');
-        $I->see('パーコレーター', '#main_middle .container-fluid #item_list');
+        MyPage::go($I)->お気に入り一覧();
+        $I->see('パーコレーター', 'ul.ec-favoriteRole__itemList li:nth-child(1) p.ec-favoriteRole__itemTitle');
 
         // お気に入りを削除
-        $I->click('#main_middle .container-fluid #item_list .btn_circle');
+        $I->click('ul.ec-favoriteRole__itemList li:nth-child(1) a.ec-closeBtn--circle');
         $I->acceptPopup();
     }
 
@@ -124,8 +114,7 @@ class EF05MypageCest
         $new_email = microtime(true).'.'.$faker->safeEmail;
 
         // TOPページ>マイページ>会員情報編集
-        $I->amOnPage('/mypage');
-        $I->click('#main_middle .local_nav ul li:nth-child(3) a');
+        MyPage::go($I)->会員情報編集();
 
         // 会員情報フォームに既存の登録情報が表示される
         $I->seeInField(['id' => 'entry_name_name01'], $customer->getName01());
@@ -157,14 +146,13 @@ class EF05MypageCest
             $form['entry[mailmaga_flg]'] = '1';
         }
         // 会員情報フォームに会員情報を入力する
-        $I->submitForm("#main_middle form", $form);
-
+        $I->submitForm("div.ec-editRole form", $form);
 
         // 会員情報編集（完了）画面が表示される
-        $I->see('会員情報編集(完了)', '#main_middle .page-heading');
+        $I->see('会員情報編集(完了)', 'div.ec-pageHeader h1');
 
         // 「トップページへ」ボタンを押下する
-        $I->click('#main_middle #deliveradd_input .btn_group p a');
+        $I->click('div.ec-registerCompleteRole a.ec-blockBtn--cancel');
 
         // TOPページヘ遷移する
         $I->see('新着情報', '.ec-news__title');
@@ -178,10 +166,9 @@ class EF05MypageCest
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // TOPページ>マイページ>お届け先編集
-        $I->amOnPage('/mypage');
-        $I->click('#main_middle .local_nav ul li:nth-child(4) a');
+        MyPage::go($I)->お届け先編集();
 
-        $I->see('お届け先編集', '#main_middle .page-heading');
+        $I->see('お届け先編集', 'div.ec-pageHeader h1');
     }
 
     public function mypage_お届け先編集作成(\AcceptanceTester $I)
@@ -192,33 +179,31 @@ class EF05MypageCest
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // TOPページ>マイページ>お届け先編集
-        $I->amOnPage('/mypage');
-        $I->click('#main_middle .local_nav ul li:nth-child(4) a');
-
-        // 追加フォーム
-        $I->click('#main_middle #deliveradd_select div p a');
+        MyPage::go($I)
+            ->お届け先編集()
+            ->追加();
 
         // 入力 & submit
-        $I->submitForm("#main_middle form",[
-            'customer_address[name][name01]' => '姓05',
-            'customer_address[name][name02]' => '名05',
-            'customer_address[kana][kana01]' => 'セイ',
-            'customer_address[kana][kana02]' => 'メイ',
-            'customer_address[zip][zip01]' => '530',
-            'customer_address[zip][zip02]' => '0001',
-            'customer_address[address][pref]' => ['value' => '27'],
-            'customer_address[address][addr01]' => '大阪市北区',
-            'customer_address[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
-            'customer_address[tel][tel01]' => '111',
-            'customer_address[tel][tel02]' => '111',
-            'customer_address[tel][tel03]' => '111',
-        ]);
+        CustomerAddressEditPage::at($I)
+            ->入力_姓('姓05')
+            ->入力_名('名05')
+            ->入力_セイ('セイ')
+            ->入力_メイ('メイ')
+            ->入力_郵便番号1('530')
+            ->入力_郵便番号2('0001')
+            ->入力_都道府県(['value' => '27'])
+            ->入力_市区町村名('大阪市北区')
+            ->入力_番地_ビル名('梅田2-4-9 ブリーゼタワー13F')
+            ->入力_電話番号1('111')
+            ->入力_電話番号2('111')
+            ->入力_電話番号3('111')
+            ->登録する();
 
         // お届け先編集ページ
-        $I->see('お届け先編集', '#main_middle .page-heading');
+        CustomerAddressListPage::at($I);
 
         // 一覧に追加されている
-        $I->see('大阪市北区', '#main_middle #deliveradd_select .address_table .addr_box');
+        $I->see('大阪市北区', 'div.ec-addressList div:nth-child(2) div.ec-addressList__address');
     }
 
     public function mypage_お届け先編集変更(\AcceptanceTester $I)
@@ -229,33 +214,30 @@ class EF05MypageCest
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // TOPページ>マイページ>お届け先編集
-        $I->amOnPage('/mypage');
-        $I->click('#main_middle .local_nav ul li:nth-child(4) a');
+        MyPage::go($I)
+            ->お届け先編集()
+            ->変更(1);
 
-        // 変更フォーム
-        $I->click('#main_middle #deliveradd_select .address_table .addr_box .btn_edit a');
-
-        // 入力 & submit
-        $I->submitForm("#main_middle form",[
-            'customer_address[name][name01]' => '姓05',
-            'customer_address[name][name02]' => '名05',
-            'customer_address[kana][kana01]' => 'セイ',
-            'customer_address[kana][kana02]' => 'メイ',
-            'customer_address[zip][zip01]' => '530',
-            'customer_address[zip][zip02]' => '0001',
-            'customer_address[address][pref]' => ['value' => '27'],
-            'customer_address[address][addr01]' => '大阪市南区',
-            'customer_address[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
-            'customer_address[tel][tel01]' => '111',
-            'customer_address[tel][tel02]' => '111',
-            'customer_address[tel][tel03]' => '111',
-        ]);
+        CustomerAddressEditPage::at($I)
+            ->入力_姓('姓05')
+            ->入力_名('名05')
+            ->入力_セイ('セイ')
+            ->入力_メイ('メイ')
+            ->入力_郵便番号1('530')
+            ->入力_郵便番号2('0001')
+            ->入力_都道府県(['value' => '27'])
+            ->入力_市区町村名('大阪市南区')
+            ->入力_番地_ビル名('梅田2-4-9 ブリーゼタワー13F')
+            ->入力_電話番号1('111')
+            ->入力_電話番号2('111')
+            ->入力_電話番号3('111')
+            ->登録する();
 
         // お届け先編集ページ
-        $I->see('お届け先編集', '#main_middle .page-heading');
+        CustomerAddressListPage::at($I);
 
-        // 一覧に追加されている
-        $I->see('大阪市南区', '#main_middle #deliveradd_select .address_table .addr_box');
+        // 一覧に反映されている
+        $I->see('大阪市南区', 'div.ec-addressList div:nth-child(1) div.ec-addressList__address');
     }
 
     public function mypage_お届け先編集削除(\AcceptanceTester $I)
@@ -266,36 +248,31 @@ class EF05MypageCest
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // TOPページ>マイページ>お届け先編集
-        $I->amOnPage('/mypage');
-        $I->click('#main_middle .local_nav ul li:nth-child(4) a');
+        MyPage::go($I)->お届け先編集()->追加();
 
-        // 追加フォーム お届け先１つの登録だと削除できないので2個目を追加
-        $I->click('#main_middle #deliveradd_select div p a');
+        CustomerAddressEditPage::at($I)
+            ->入力_姓('姓0501')
+            ->入力_名('名0501')
+            ->入力_セイ('セイ')
+            ->入力_メイ('メイ')
+            ->入力_郵便番号1('530')
+            ->入力_郵便番号2('0001')
+            ->入力_都道府県(['value' => '27'])
+            ->入力_市区町村名('大阪市西区')
+            ->入力_番地_ビル名('梅田2-4-9 ブリーゼタワー13F')
+            ->入力_電話番号1('111')
+            ->入力_電話番号2('111')
+            ->入力_電話番号3('111')
+            ->登録する();
 
-        // 入力 & submit
-        $I->submitForm("#main_middle form",[
-            'customer_address[name][name01]' => '姓0501',
-            'customer_address[name][name02]' => '名0501',
-            'customer_address[kana][kana01]' => 'セイ',
-            'customer_address[kana][kana02]' => 'メイ',
-            'customer_address[zip][zip01]' => '530',
-            'customer_address[zip][zip02]' => '0001',
-            'customer_address[address][pref]' => ['value' => '27'],
-            'customer_address[address][addr01]' => '大阪市西区',
-            'customer_address[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
-            'customer_address[tel][tel01]' => '111',
-            'customer_address[tel][tel02]' => '111',
-            'customer_address[tel][tel03]' => '111',
-        ]);
-        $I->see('大阪市西区', '#main_middle #deliveradd_select .address_table .addr_box');
+        $I->see('大阪市西区', 'div.ec-addressList div:nth-child(2) div.ec-addressList__address');
 
-        // ×マークをクリック
-        $I->click('#main_middle #deliveradd_select .address_table:nth-child(2) .addr_box .icon_edit a');
-        $I->acceptPopup();
+        CustomerAddressListPage::at($I)
+            ->削除(1);
 
         // 確認
-        $I->see('大阪市西区', '#main_middle #deliveradd_select .address_table .addr_box');
-        $I->dontSee($customer->getAddr01(), '#main_middle #deliveradd_select .address_table .addr_box');
+        $I->see('大阪市西区', 'div.ec-addressList div:nth-child(1) div.ec-addressList__address');
+        $I->dontSee($customer->getAddr01(), 'div.ec-addressList div:nth-child(1) div.ec-addressList__address');
     }
 
     public function mypage_退会手続き未実施(\AcceptanceTester $I)
@@ -306,16 +283,16 @@ class EF05MypageCest
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // TOPページ>マイページ>退会手続き
-        $I->amOnPage('/mypage');
-        $I->click('#main_middle .local_nav ul li:nth-child(5) a');
-        $I->see('退会手続き', '#main_middle .page-heading');
+        MyPage::go($I)
+            ->退会手続き();
 
         // 会員退会手続きへ
-        $I->click('#main_middle .unsubscribe_box form .btn_group p button');
+        $I->click('div.ec-withdrawRole form button');
 
         // 未実施
-        $I->click('#main_middle .unsubscribe_box form .btn_group p:nth-child(1) a');
-        $I->see('ご注文履歴', '#main_middle .page-heading');
+        $I->click('div.ec-withdrawConfirmRole form a.ec-withdrawConfirmRole__cancel');
+
+        MyPage::at($I);
     }
 
     public function mypage_退会手続き(\AcceptanceTester $I)
@@ -326,18 +303,17 @@ class EF05MypageCest
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // TOPページ>マイページ>お届け先編集
-        $I->amOnPage('/mypage');
-        $I->click('#main_middle .local_nav ul li:nth-child(5) a');
-        $I->see('退会手続き', '#main_middle .page-heading');
+        MyPage::go($I)
+            ->退会手続き();
 
         // 会員退会手続きへ
-        $I->click('#main_middle .unsubscribe_box form .btn_group p button');
+        $I->click('div.ec-withdrawRole form button');
 
-        // 未実施
-        $I->click('#main_middle .unsubscribe_box form .btn_group p:nth-child(2) button');
-        $I->see('退会手続き', '#main_middle .page-heading');
-        $I->see('退会が完了いたしました', '#main_middle .unsubscribe_box');
-        $I->click('#main_middle .unsubscribe_box .btn_group p a');
+        // 実施
+        $I->click('div.ec-withdrawConfirmRole form button');
+        $I->see('退会手続き', 'div.ec-pageHeader h1');
+        $I->see('退会が完了いたしました', 'div.ec-withdrawCompleteRole div.ec-reportHeading');
+        $I->click('div.ec-withdrawCompleteRole a.ec-blockBtn--cancel');
 
         // TOPページヘ遷移する
         $I->see('新着情報', '.ec-news__title');

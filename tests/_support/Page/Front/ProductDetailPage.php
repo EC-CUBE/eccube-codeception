@@ -78,4 +78,10 @@ class ProductDetailPage extends AbstractFrontPage
         $this->tester->click(['id' => 'add-cart']);
         return new CartPage($this->tester);
     }
+
+    public function お気に入りに追加()
+    {
+        $this->tester->click('#favorite');
+        return $this;
+    }
 }

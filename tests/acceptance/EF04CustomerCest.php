@@ -72,7 +72,7 @@ class EF04CustomerCest
 
         // アクティベートURLからトップページへ
         $I->amOnPage($activateUrl);
-        $I->see('新規会員登録（完了）', '#contents #main #main_middle h1');
+        $I->see('新規会員登録（完了）', 'div.ec-pageHeader h1');
 
         $I->seeEmailCount(2);
         foreach (array($new_email, $BaseInfo->getEmail01()) as $email) {
@@ -81,7 +81,7 @@ class EF04CustomerCest
             $I->seeInLastEmailTo($email, '本会員登録が完了いたしました。');
         }
 
-        $I->click('#main_middle .btn_group p a');
+        $I->click('div.ec-registerCompleteRole a.ec-blockBtn--cancel');
         $I->see('新着情報', '.ec-news__title');
     }
 

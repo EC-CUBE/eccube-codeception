@@ -42,7 +42,7 @@ class EF06OtherCest
             'login_pass' => 'password'
         ]);
 
-        $I->see('ログインできませんでした。', '#login_mypage .text-danger');
+        $I->see('ログインできませんでした。', 'div.ec-login p.ec-errorMessage');
     }
 
     public function other_ログイン異常2(\AcceptanceTester $I)
@@ -59,7 +59,7 @@ class EF06OtherCest
             'login_pass' => 'password'
         ]);
 
-        $I->see('ログインできませんでした。', '#login_mypage .text-danger');
+        $I->see('ログインできませんでした。', 'div.ec-login p.ec-errorMessage');
     }
 
     public function other_パスワード再発行(\AcceptanceTester $I)
@@ -74,7 +74,7 @@ class EF06OtherCest
         $I->amOnPage('/forgot');
 
         // TOPページ>ログイン>パスワード再発行
-        $I->see('パスワードの再発行', '#main .page-heading');
+        $I->see('パスワードの再発行', 'div.ec-pageHeader h1');
 
         // メールアドレスを入力する
         // 「次のページへ」ボタンを押下する
@@ -84,7 +84,7 @@ class EF06OtherCest
         $I->submitForm('#form1',[
             'login_email' => $customer->getEmail()
         ]);
-        $I->see('パスワード発行メールの送信 完了', '#main .page-heading');
+        $I->see('パスワード発行メールの送信 完了', 'div.ec-pageHeader h1');
 
         $I->seeEmailCount(2);
         foreach (array($customer->getEmail(), $BaseInfo->getEmail01()) as $email) {
@@ -94,7 +94,7 @@ class EF06OtherCest
 
         $I->resetEmails();
         $I->amOnPage($url);
-        $I->see('パスワード変更(完了ページ)', '#contents #main h1');
+        $I->see('パスワード変更(完了ページ)', 'div.ec-pageHeader h1');
         $I->seeEmailCount(2);
         foreach (array($customer->getEmail(), $BaseInfo->getEmail01()) as $email) {
             $I->seeInLastEmailSubjectTo($email, 'パスワード変更のお知らせ');
@@ -121,9 +121,9 @@ class EF06OtherCest
         $I->amOnPage('/');
 
         $I->click('.ec-footerNavi .ec-footerNavi__link:nth-child(1) a');
-        $I->see('当サイトについて', '#main h1');
+        $I->see('当サイトについて', 'div.ec-pageHeader h1');
         $baseinfo = Fixtures::get('baseinfo');
-        $I->see($baseinfo->getShopName(), '#main .dl_table dl:nth-child(1) dd');
+        $I->see($baseinfo->getShopName(), '#help_about_box__shop_name');
     }
 
     public function other_プライバシーポリシー(\AcceptanceTester $I)
@@ -132,8 +132,8 @@ class EF06OtherCest
         $I->amOnPage('/');
 
         $I->click('.ec-footerNavi .ec-footerNavi__link:nth-child(2) a');
-        $I->see('プライバシーポリシー', '#main h1');
-        $I->see('個人情報保護の重要性に鑑み、「個人情報の保護に関する法律」及び本プライバシーポリシーを遵守し、お客さまのプライバシー保護に努めます。', '#main p');
+        $I->see('プライバシーポリシー', 'div.ec-pageHeader h1');
+        $I->see('個人情報保護の重要性に鑑み、「個人情報の保護に関する法律」及び本プライバシーポリシーを遵守し、お客さまのプライバシー保護に努めます。', 'div.ec-layoutRole__main p:nth-child(1)');
     }
 
     public function other_特定商取引法に基づく表記(\AcceptanceTester $I)
@@ -142,7 +142,7 @@ class EF06OtherCest
         $I->amOnPage('/');
 
         $I->click('.ec-footerNavi .ec-footerNavi__link:nth-child(3) a');
-        $I->see('特定商取引法に基づく表記', '#main h1');
+        $I->see('特定商取引法に基づく表記', 'div.ec-pageHeader h1');
     }
 
     public function other_お問い合わせ1(\AcceptanceTester $I)
@@ -155,30 +155,29 @@ class EF06OtherCest
         $BaseInfo = Fixtures::get('baseinfo');
 
         $I->click('.ec-footerNavi .ec-footerNavi__link:nth-child(4) a');
-        $I->see('お問い合わせ', '#main h1');
+        $I->see('お問い合わせ', 'div.ec-pageHeader h1');
 
-        $I->submitForm("#form1",[
-            'contact[name][name01]' => '姓',
-            'contact[name][name02]' => '名',
-            'contact[kana][kana01]' => 'セイ',
-            'contact[kana][kana02]' => 'メイ',
-            'contact[zip][zip01]' => '530',
-            'contact[zip][zip02]' => '0001',
-            'contact[address][pref]' => ['value' => '27'],
-            'contact[address][addr01]' => '大阪市北区',
-            'contact[address][addr02]' => '梅田2-4-9 ブリーゼタワー13F',
-            'contact[tel][tel01]' => '111',
-            'contact[tel][tel02]' => '111',
-            'contact[tel][tel03]' => '111',
-            'contact[email]' => $new_email,
-            'contact[contents]' => 'お問い合わせ内容の送信'
-        ]);
+        $I->fillField(['id' => 'contact_name_name01'], '姓');
+        $I->fillField(['id' => 'contact_name_name02'], '名');
+        $I->fillField(['id' => 'contact_kana_kana01'], 'セイ');
+        $I->fillField(['id' => 'contact_kana_kana02'], 'メイ');
+        $I->fillField(['id' => 'contact_zip_zip01'], '530');
+        $I->fillField(['id' => 'contact_zip_zip02'], '0001');
+        $I->selectOption(['id' => 'contact_address_pref'], ['value' => '27']);
+        $I->fillField(['id' => 'contact_address_addr01'], '大阪市北区');
+        $I->fillField(['id' => 'contact_address_addr02'], '梅田2-4-9 ブリーゼタワー13F');
+        $I->fillField(['id' => 'contact_tel_tel01'], '111');
+        $I->fillField(['id' => 'contact_tel_tel02'], '111');
+        $I->fillField(['id' => 'contact_tel_tel03'], '111');
+        $I->fillField(['id' => 'contact_email'], $new_email);
+        $I->fillField(['id' => 'contact_contents'], 'お問い合わせ内容の送信');
+        $I->click('div.ec-RegisterRole__actions button.ec-blockBtn--action');
 
-        $I->see('お問い合わせ', '#main h1');
-        $I->click('#confirm_box__confirm_button > button');
+        $I->see('お問い合わせ', 'div.ec-pageHeader h1');
+        $I->click('div.ec-contactConfirmRole div.ec-RegisterRole__actions button.ec-blockBtn--action');
 
         // 完了ページ
-        $I->see('お問い合わせ完了', '#main h1');
+        $I->see('お問い合わせ完了', 'div.ec-pageHeader h1');
 
         // メールチェック
         $I->seeEmailCount(2);

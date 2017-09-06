@@ -70,7 +70,7 @@ class CartPage extends AbstractFrontPage
      */
     public function レジに進む()
     {
-        $this->tester->click(['id' => 'total_box__next_button']);
+        $this->tester->click(['css' => '#total_box__next_button a']);
         return new ShoppingPage($this->tester);
     }
 
@@ -79,7 +79,7 @@ class CartPage extends AbstractFrontPage
      */
     public function お買い物を続ける()
     {
-        $this->tester->click(['id' => 'total_box__top_button']);
+        $this->tester->click(['css' => '#total_box__top_button a']);
         return new TopPage($this->tester);
     }
 }
