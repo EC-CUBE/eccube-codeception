@@ -31,7 +31,6 @@ Fixtures::add('faker', $faker);
 $num = $app['orm.em']->getRepository('Eccube\Entity\Customer')
     ->createQueryBuilder('o')
     ->select('count(o.id)')
-    ->where('o.del_flg = 0')
     ->getQuery()
     ->getSingleScalarResult();
 if ($num < $config['fixture_customer_num']) {
@@ -46,7 +45,6 @@ if ($num < $config['fixture_customer_num']) {
 $num = $app['orm.em']->getRepository('Eccube\Entity\Product')
     ->createQueryBuilder('o')
     ->select('count(o.id)')
-    ->where('o.del_flg = 0')
     ->getQuery()
     ->getSingleScalarResult();
 // 受注生成件数 + 初期データの商品が生成されているはず
@@ -126,7 +124,6 @@ Fixtures::add('baseinfo', $baseinfo);
 
 $categories = $app['orm.em']->getRepository('Eccube\Entity\Category')
     ->createQueryBuilder('o')
-    ->where('o.del_flg = 0')
     ->getQuery()
     ->getResult();
 /** カテゴリ一覧の配列. */
@@ -134,7 +131,6 @@ Fixtures::add('categories', $categories);
 
 $news = $app['orm.em']->getRepository('Eccube\Entity\News')
     ->createQueryBuilder('o')
-    ->where('o.del_flg = 0')
     ->orderBy('o.date', 'DESC')
     ->getQuery()
     ->getResult();
@@ -144,7 +140,6 @@ Fixtures::add('news', $news);
 $findOrders = function () use ($app) {
     return $app['orm.em']->getRepository('Eccube\Entity\Order')
     ->createQueryBuilder('o')
-    ->where('o.del_flg = 0')
     ->getQuery()
     ->getResult();
 };
@@ -154,7 +149,6 @@ Fixtures::add('findOrders', $findOrders);
 $findProducts = function () use ($app) {
     return $app['orm.em']->getRepository('Eccube\Entity\Product')
         ->createQueryBuilder('p')
-        ->where('p.del_flg = 0')
         ->getQuery()
         ->getResult();
 };
@@ -201,7 +195,6 @@ Fixtures::add('findPluginByCode', $findPluginByCode);
 $findCustomers = function () use ($app) {
     return $app['orm.em']->getRepository('Eccube\Entity\Customer')
         ->createQueryBuilder('c')
-        ->where('c.del_flg = 0')
         ->getQuery()
         ->getResult();
 };
