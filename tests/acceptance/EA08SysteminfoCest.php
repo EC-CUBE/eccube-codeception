@@ -393,7 +393,7 @@ class EA08SysteminfoCest
 
         $test_config = Fixtures::get('test_config');
         $eccube = $test_config['eccube_path'];
-        $configfile = $eccube."/app/config/eccube/config.yml";
+        $configfile = $eccube."/app/config/eccube/config.php";
         $lines = file($configfile);
         $fh = fopen($configfile, 'w');
         foreach ($lines as $line) {
