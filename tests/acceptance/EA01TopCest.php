@@ -84,7 +84,5 @@ class EA01TopCest
         // ショップ情報の会員数をクリックすると会員管理に遷移することを確認
         $I->click(TopPage::$ショップ状況_会員数);
         $I->see('会員マスター', self::ページタイトル);
-        $I->dontSeeCheckboxIsChecked(CustomerManagePage::$検索条件_仮会員);
-        $I->seeCheckboxIsChecked(CustomerManagePage::$検索条件_本会員);
     }
 }
