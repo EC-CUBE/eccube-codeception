@@ -36,7 +36,7 @@ class PaymentManagePage extends AbstractAdminPage
     {
         $rowNum = $rowNum + 1;
         $this->tester->click("#main .container-fluid .table_list table tbody tr:nth-child(${rowNum}) td:nth-child(4) a");
-        $this->tester->click("#main .container-fluid .table_list table tbody tr:nth-child(${rowNum}) td:nth-child(4) ul li:nth-child(4) a");
+        $this->tester->click("#main .container-fluid .table_list table tbody tr:nth-child(${rowNum}) td:nth-child(4) ul li:nth-child(5) a");
         return $this;
     }
 
@@ -51,7 +51,7 @@ class PaymentManagePage extends AbstractAdminPage
     {
         $rowNum = $rowNum + 1;
         $this->tester->click("#main .container-fluid .table_list table tbody tr:nth-child(${rowNum}) td:nth-child(4) a");
-        $this->tester->click("#main .container-fluid .table_list table tbody tr:nth-child(${rowNum}) .icon_edit ul li:nth-child(2) a");
+        $this->tester->click("#main .container-fluid .table_list table tbody tr:nth-child(${rowNum}) .icon_edit ul li:nth-child(3) a");
     }
 
     public function 新規入力()
