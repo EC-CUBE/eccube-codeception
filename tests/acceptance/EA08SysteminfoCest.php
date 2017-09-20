@@ -237,9 +237,9 @@ class EA08SysteminfoCest
         $I->amOnPage('/'.$config['admin_route'].'/setting/system/member');
         $I->see('システム設定メンバー管理', '#main .page-header');
 
-        $I->click('#main #member_list__menu_box--2 a');
-        $I->see('削除', '#main #member_list__menu--2 li:nth-child(2) a');
-        $href = $I->grabAttributeFrom('#main #member_list__menu--2 li:nth-child(2) a', 'href');
+        $I->click('#main #member_list__menu_box--1 a');
+        $I->see('削除', '#main #member_list__menu--1 li:nth-child(2) a');
+        $href = $I->grabAttributeFrom('#main #member_list__menu--1 li:nth-child(2) a', 'href');
         $I->assertEquals('', $href, $href.' が一致しません');
     }
 
