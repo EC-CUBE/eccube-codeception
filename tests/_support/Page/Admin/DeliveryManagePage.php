@@ -40,7 +40,7 @@ class DeliveryManagePage extends AbstractAdminPage
     public function 一覧_削除($rowNum)
     {
         $this->tester->click("#main .container-fluid .sortable_list .tableish .item_box:nth-child(${rowNum}) .icon_edit .dropdown a");
-        $this->tester->click("#main .container-fluid .sortable_list .tableish .item_box:nth-child(${rowNum}) .icon_edit .dropdown ul li:nth-child(2) a");
+        $this->tester->click("#main .container-fluid .sortable_list .tableish .item_box:nth-child(${rowNum}) .icon_edit .dropdown ul li:nth-child(3) a");
         return $this;
     }
 
