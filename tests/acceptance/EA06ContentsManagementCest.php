@@ -29,6 +29,9 @@ class EA06ContentsManagementCest
     {
     }
 
+    /**
+     * @group vaddy
+     */
     public function contentsmanagement_新着情報管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0601-UC01-T01(& UC02-T01/UC02-T02/UC03-T01) 新着情報管理（作成・編集・削除）');
@@ -69,6 +72,7 @@ class EA06ContentsManagementCest
     /**
      * @env firefox
      * @env chrome
+     * @group vaddy
      */
     public function contentsmanagement_ファイル管理(\AcceptanceTester $I)
     {
@@ -112,6 +116,9 @@ class EA06ContentsManagementCest
         $I->acceptPopup();
     }
 
+    /**
+     * @group vaddy
+     */
     public function contentsmanagement_ページ管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0603-UC01-T01(& UC01-T02/UC01-T03/UC01-T04/UC01-T05) ページ管理');
@@ -161,6 +168,9 @@ class EA06ContentsManagementCest
         $I->acceptPopup();
     }
 
+    /**
+     * @group vaddy
+     */
     public function contentsmanagement_ブロック管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0603-UC01-T01(& UC01-T02/UC01-T03) ブロック管理');

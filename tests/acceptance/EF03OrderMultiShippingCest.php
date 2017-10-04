@@ -124,6 +124,7 @@ class EF03OrderMultiShippingCest
      * Test two different types of products in an order with multiple shipping.
      *
      * @param AcceptanceTester $i
+     * @group vaddy
      */
     public function order_MultiShipping_TwoType_TwoAddress(\AcceptanceTester $i)
     {

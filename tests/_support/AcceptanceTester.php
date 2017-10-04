@@ -63,7 +63,7 @@ class AcceptanceTester extends \Codeception\Actor
         $I = $this;
         if ($dir == '') {
             $config = Fixtures::get('config');
-            $I->amOnPage('/'.$config['admin_route']);
+            $I->amOnPage('/'.$config['admin_route'].'/');
         } else {
             $I->amOnPage('/'.$dir);
         }
