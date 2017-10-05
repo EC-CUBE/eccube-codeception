@@ -24,11 +24,6 @@ RUN cd /var && \
 
 WORKDIR ${ECCUBE_PATH}
 RUN composer install
-ENV DBSERVER db
-ENV DBPASS password
-ENV AUTH_MAGIC XjosAXOzO1B3mE0egwQA
-ENV MAIL_HOST mailcatcher
-ENV MAIL_PORT 1025
 
 ## create config yaml files
 RUN php /var/www/eccube_install.php ${DBTYPE} none --skip-createdb --skip-initdb --verbose
