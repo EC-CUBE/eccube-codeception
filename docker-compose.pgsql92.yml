@@ -3,13 +3,16 @@ services:
   db:
     image: eccube/postgres:9.2
     environment:
-      - POSTGRES_USER=cube3_dev_user
+      - POSTGRES_USER=eccube_user
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=cube3_dev
+      - POSTGRES_DB=eccube_db
   eccube3:
     build:
       args:
         - DBTYPE=pgsql
+    environment:
+      - PGPASSWORD=password
+      - POSTGRES_ENV_POSTGRES_PASSWORD=password
   codecept:
     build:
       args:

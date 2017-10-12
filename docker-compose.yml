@@ -4,20 +4,27 @@ services:
     image: eccube/postgres
     environment:
       - TZ=Asia/Tokyo
-      - POSTGRES_USER=cube3_dev_user
+      - POSTGRES_USER=eccube_user
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=cube3_dev
+      - POSTGRES_DB=eccube_db
   eccube3:
     build:
       context: eccube3
       args:
+        - ECCUBE_PATH=/var/www/html
         - ECCUBE_BRANCH=${ECCUBE_BRANCH}
         - ECCUBE_REPOS=${ECCUBE_REPOS}
         - DBTYPE=pgsql
     environment:
       - TZ=Asia/Tokyo
-      - PGPASSWORD=password
-      - POSTGRES_ENV_POSTGRES_PASSWORD=password
+      - ECCUBE_DB_HOST=db
+      - ECCUBE_DB_USERNAME=eccube_user
+      - ECCUBE_DB_PASSWORD=password
+      - ECCUBE_AUTH_MAGIC=XjosAXOzO1B3mE0egwQA
+      - ECCUBE_MAIL_HOST=mailcatcher
+      - ECCUBE_MAIL_PORT=1025
+      - ECCUBE_ADMIN_USER=admin
+      - ECCUBE_ADMIN_PASS=password
     ports:
       - 80
       - 443
@@ -42,6 +49,13 @@ services:
       - eccube3
     environment:
       - TZ=Asia/Tokyo
+      - ECCUBE_DB_HOST=db
+      - ECCUBE_DB_USERNAME=eccube_user
+      - ECCUBE_DB_PASSWORD=password
+      - ECCUBE_DB_DATABASE=eccube_db
+      - ECCUBE_AUTH_MAGIC=XjosAXOzO1B3mE0egwQA
+      - ECCUBE_MAIL_HOST=mailcatcher
+      - ECCUBE_MAIL_PORT=1025
     volumes:
       - ./tests:/project/tests
       - ./codeception.yml:/project/codeception.yml

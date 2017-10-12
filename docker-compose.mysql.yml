@@ -4,8 +4,8 @@ services:
     image: mysql:latest
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=cube3_dev
-      - MYSQL_USER=cube3_dev_user
+      - MYSQL_DATABASE=eccube_db
+      - MYSQL_USER=eccube_user
       - MYSQL_PASSWORD=password
   eccube3:
     build:

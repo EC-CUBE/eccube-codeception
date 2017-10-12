@@ -33,36 +33,36 @@ class CartPage extends AbstractFrontPage
 
     public function 商品名($index)
     {
-        return $this->tester->grabTextFrom(".item_box:nth-child(${index}) .item_name a");
+        return $this->tester->grabTextFrom(["xpath" => "//div[@class='ec-cartRole']//ul[@class='ec-cartRow'][position()=${index}]//div[@class='ec-cartRow__name']"]);
     }
 
     public function 商品数量($index)
     {
-        return $this->tester->grabTextFrom(".item_box:nth-child(${index}) .item_quantity");
+        return $this->tester->grabTextFrom(["xpath" => "//div[@class='ec-cartRole']//ul[@class='ec-cartRow'][position()=${index}]//div[@class='ec-cartRow__amount']"]);
     }
 
     public function 商品数量増やす($index)
     {
-        $this->tester->click(".item_box:nth-child(${index}) .item_quantity a#cart_item_list__up");
+        $this->tester->click(["xpath" => "//div[@class='ec-cartRole']//ul[@class='ec-cartRow'][position()=${index}]//div[@class='ec-cartRow__amountUpDown']/a[@class='ec-cartRow__amountUpButton']"]);
         return $this;
     }
 
     public function 商品数量減らす($index)
     {
-        $this->tester->click(".item_box:nth-child(${index}) .item_quantity a#cart_item_list__down");
+        $this->tester->click(["xpath" => "//div[@class='ec-cartRole']//ul[@class='ec-cartRow'][position()=${index}]//div[@class='ec-cartRow__amountUpDown']/a[@class='ec-cartRow__amountDownButton']"]);
         return $this;
     }
 
     public function 商品削除($index)
     {
-        $this->tester->click(".item_box:nth-child(${index}) .icon_edit a");
+        $this->tester->click(["xpath" => "//div[@class='ec-cartRole']//ul[@class='ec-cartRow'][position()=${index}]//li[@class='ec-cartRow__delColumn']/a"]);
         $this->tester->acceptPopup();
         return $this;
     }
 
     public function エラーメッセージ()
     {
-        return $this->tester->grabTextFrom('#cart_box .errormsg.bg-danger');
+        return $this->tester->grabTextFrom(["css" => 'div.ec-cartRole__error div.ec-alert-warning__text']);
     }
 
     /**
@@ -70,7 +70,7 @@ class CartPage extends AbstractFrontPage
      */
     public function レジに進む()
     {
-        $this->tester->click(['css' => '#total_box__next_button a']);
+        $this->tester->click(['css' => 'div.ec-cartRole__actions a.ec-blockBtn--action']);
         return new ShoppingPage($this->tester);
     }
 
@@ -79,7 +79,7 @@ class CartPage extends AbstractFrontPage
      */
     public function お買い物を続ける()
     {
-        $this->tester->click(['css' => '#total_box__top_button a']);
+        $this->tester->click(['css' => 'div.ec-cartRole__actions a.ec-blockBtn--cancel']);
         return new TopPage($this->tester);
     }
 }

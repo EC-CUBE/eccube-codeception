@@ -10,9 +10,9 @@ $config = parse_ini_file('tests/acceptance/config.ini',true);
  * よってCodeceptionの設定によってコントロールされず、テスト後もデータベース内にこのデータは残る
  * データの件数によって、作成するかどうか判定される
  */
-require_once $config['eccube_path'].'autoload.php';
+$loader = require_once $config['eccube_path'].'autoload.php';
 
-$app = Eccube\Application::getInstance();
+$app = Eccube\Application::getInstance(['eccube.autoloader' => $loader]);
 // Disable to TransactionListener.
 $app->setTestMode(true);
 $app->initialize();

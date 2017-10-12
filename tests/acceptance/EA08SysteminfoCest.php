@@ -370,14 +370,14 @@ class EA08SysteminfoCest
     /**
      * ATTENTION 後続のテストが失敗するため、最後に実行する必要がある
      */
-    public function systeminfo_セキュリティ管理IP制限(\AcceptanceTester $I, \Codeception\Scenario $scenario)
+    public function systeminfo_セキュリティ管理IP制限(\AcceptanceTester $I)
     {
         $I->wantTo('EA0804-UC01-T03 セキュリティ管理 - IP制限');
 
         $findPlugins = Fixtures::get('findPlugins');
         $Plugins = $findPlugins();
         if (is_array($Plugins) && count($Plugins) > 0 ) {
-            $scenario->skip('プラグインのアンインストールが必要なため、テストをスキップします');
+            $I->getScenario()->skip('プラグインのアンインストールが必要なため、テストをスキップします');
         }
 
         // 表示
@@ -385,7 +385,7 @@ class EA08SysteminfoCest
         $I->amOnPage('/'.$config['admin_route'].'/setting/system/security');
         $I->see('システム設定セキュリティ管理', '#main .page-header');
 
-        $I->fillField(['id' => 'admin_security_admin_allow_host'], '1.1.1.1');
+        $I->fillField(['id' => 'admin_security_admin_allow_hosts'], '1.1.1.1');
         $I->click('#aside_column div div div div div button');
 
         $I->amOnPage('/'.$config['admin_route']);

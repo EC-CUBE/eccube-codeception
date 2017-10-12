@@ -91,7 +91,7 @@ class EF05MypageCest
 
         // 最初はなにも登録されていない
         $I->see('お気に入り一覧', 'div.ec-pageHeader h1');
-        $I->see('お気に入りが登録されていません。', 'div.ec-favoriteRole div.ec-welcomeMsg');
+        $I->see('お気に入りが登録されていません。', 'div.ec-favoriteRole');
 
         // お気に入り登録
         ProductDetailPage::go($I, 2)->お気に入りに追加();

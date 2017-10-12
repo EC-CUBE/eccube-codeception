@@ -3,7 +3,7 @@ FROM eccube/php-ext-apache
 MAINTAINER Kentaro Ohkouchi <nanasess@fsm.ne.jp>
 
 ENV PGUSER cube3_dev_user
-ARG ECCUBE_PATH=/var/www/html
+ARG ECCUBE_PATH
 ARG DBTYPE
 ARG ECCUBE_REPOS
 ARG ECCUBE_BRANCH

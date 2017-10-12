@@ -14,8 +14,8 @@ modules:
         - MailCatcher
     config:
         Db:
-            user: 'cube3_dev_user'
-            password: 'password'
+            user: '%ECCUBE_DB_USERNAME%'
+            password: '%ECCUBE_DB_PASSWORD%'
             populate: true
             cleanup: false
             reconnect: true
@@ -40,7 +40,7 @@ env:
                 WebDriver:
                     browser: firefox
                 Db:
-                    dsn: 'pgsql:host=db;dbname=cube3_dev'
+                    dsn: 'pgsql:host=%ECCUBE_DB_HOST%;dbname=%ECCUBE_DB_DATABASE%'
 
     front: # Backward compatibility
         modules:
@@ -48,14 +48,14 @@ env:
                 WebDriver:
                     browser: firefox
                 Db:
-                    dsn: 'pgsql:host=db;dbname=cube3_dev'
+                    dsn: 'pgsql:host=%ECCUBE_DB_HOST%;dbname=%ECCUBE_DB_DATABASE%'
     admin: # Backward compatibility
         modules:
             config:
                 WebDriver:
                     browser: firefox
                 Db:
-                    dsn: 'pgsql:host=db;dbname=cube3_dev'
+                    dsn: 'pgsql:host=%ECCUBE_DB_HOST%;dbname=%ECCUBE_DB_DATABASE%'
     firefox:
         modules:
             config:
@@ -76,9 +76,9 @@ env:
         modules:
             config:
                 Db:
-                    dsn: 'mysql:host=db;dbname=cube3_dev;charset=utf8'
+                    dsn: 'mysql:host=%ECCUBE_DB_HOST%;dbname=%ECCUBE_DB_DATABASE%;charset=utf8'
     pgsql:
         modules:
             config:
                 Db:
-                    dsn: 'pgsql:host=db;dbname=cube3_dev'
+                    dsn: 'pgsql:host=%ECCUBE_DB_HOST%;dbname=%ECCUBE_DB_DATABASE%'
