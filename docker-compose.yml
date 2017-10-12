@@ -11,19 +11,20 @@ services:
     build:
       context: eccube3
       args:
+        - ECCUBE_PATH=/var/www/html
         - ECCUBE_BRANCH=${ECCUBE_BRANCH}
         - ECCUBE_REPOS=${ECCUBE_REPOS}
         - DBTYPE=pgsql
     environment:
       - TZ=Asia/Tokyo
-      - DB_HOST=db
-      - DB_USERNAME=eccube_user
-      - DB_PASSWORD=password
-      - AUTH_MAGIC=XjosAXOzO1B3mE0egwQA
-      - MAIL_HOST=mailcatcher
-      - MAIL_PORT=1025
-      - ADMIN_USER=admin
-      - ADMIN_PASS=password
+      - ECCUBE_DB_HOST=db
+      - ECCUBE_DB_USERNAME=eccube_user
+      - ECCUBE_DB_PASSWORD=password
+      - ECCUBE_AUTH_MAGIC=XjosAXOzO1B3mE0egwQA
+      - ECCUBE_MAIL_HOST=mailcatcher
+      - ECCUBE_MAIL_PORT=1025
+      - ECCUBE_ADMIN_USER=admin
+      - ECCUBE_ADMIN_PASS=password
     ports:
       - 80
       - 443
@@ -48,13 +49,13 @@ services:
       - eccube3
     environment:
       - TZ=Asia/Tokyo
-      - DB_HOST=db
-      - DB_USERNAME=eccube_user
-      - DB_PASSWORD=password
-      - DB_DATABASE=eccube_db
-      - AUTH_MAGIC=XjosAXOzO1B3mE0egwQA
-      - MAIL_HOST=mailcatcher
-      - MAIL_PORT=1025
+      - ECCUBE_DB_HOST=db
+      - ECCUBE_DB_USERNAME=eccube_user
+      - ECCUBE_DB_PASSWORD=password
+      - ECCUBE_DB_DATABASE=eccube_db
+      - ECCUBE_AUTH_MAGIC=XjosAXOzO1B3mE0egwQA
+      - ECCUBE_MAIL_HOST=mailcatcher
+      - ECCUBE_MAIL_PORT=1025
     volumes:
       - ./tests:/project/tests
       - ./codeception.yml:/project/codeception.yml

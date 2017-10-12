@@ -4,7 +4,7 @@ set -e
 
 cmd="$@"
 
-until psql -h db -U "${DB_USERNAME}" -d "template1" -c '\l'; do
+until psql -h db -U "${ECCUBE_DB_USERNAME}" -d "template1" -c '\l'; do
   >&2 echo "Postgres is unavailable - sleeping"
   sleep 1
 done
