@@ -2,6 +2,7 @@
 !/tests/_data/plugin_fixtures.php
 /tests/_output/*
 /tests/_support/_downloads/*
+/tests/_support/_generated/*
 composer.phar
 /vendor
 */vendor/
