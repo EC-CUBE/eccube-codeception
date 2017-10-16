@@ -3,7 +3,7 @@
 <?php
 
 /*
- * Original https://github.com/Codeception/Codeception/blob/2.2/codecept
+ * Original https://github.com/Codeception/Codeception/blob/2.3/codecept
  *
  * Docker を使用して codecept run を実行した場合, テスト対象の EC-CUBE が
  * 起動していないとエラーとなってしまう.
@@ -30,12 +30,12 @@ use Codeception\Application;
 $app = new Application('Codeception', Codeception\Codecept::VERSION);
 $app->add(new Codeception\Command\Build('build'));
 $app->add(new Codeception\Command\Run('run'));
+$app->add(new Codeception\Command\Init('init'));
 $app->add(new Codeception\Command\Console('console'));
 $app->add(new Codeception\Command\Bootstrap('bootstrap'));
 $app->add(new Codeception\Command\GenerateCept('generate:cept'));
 $app->add(new Codeception\Command\GenerateCest('generate:cest'));
 $app->add(new Codeception\Command\GenerateTest('generate:test'));
-$app->add(new Codeception\Command\GeneratePhpUnit('generate:phpunit'));
 $app->add(new Codeception\Command\GenerateSuite('generate:suite'));
 $app->add(new Codeception\Command\GenerateHelper('generate:helper'));
 $app->add(new Codeception\Command\GenerateScenarios('generate:scenarios'));
@@ -48,6 +48,8 @@ $app->add(new Codeception\Command\GenerateFeature('generate:feature'));
 $app->add(new Codeception\Command\GherkinSnippets('gherkin:snippets'));
 $app->add(new Codeception\Command\GherkinSteps('gherkin:steps'));
 $app->add(new Codeception\Command\DryRun('dry-run'));
+$app->add(new Codeception\Command\ConfigValidate('config:validate'));
+$app->add(new Codeception\Command\Completion());
 $app->registerCustomCommands();
 $app->run();
 
