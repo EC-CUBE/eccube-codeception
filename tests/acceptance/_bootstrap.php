@@ -14,7 +14,7 @@ $loader = require_once $config['eccube_path'].'autoload.php';
 
 $app = Eccube\Application::getInstance(['eccube.autoloader' => $loader]);
 // Disable to TransactionListener.
-$app->setTestMode(true);
+$app['eccube.listener.transaction.enabled'] = false;
 $app->initialize();
 $app->initializePlugin();
 $app->register(new \Eccube\Tests\ServiceProvider\FixtureServiceProvider());
