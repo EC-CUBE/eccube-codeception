@@ -216,7 +216,7 @@ class EA04OrderCest
 
         $OrderListPage->一覧_メール通知(1);
 
-        $I->selectOption(['id' => 'template-change'], ['1' => 'ご注文ありがとうございます']);
+        $I->selectOption(['id' => 'template-change'], ['1' => '注文受付メール']);
         $I->click(['css' => '#button_box__button_menu > button']);
         $I->click(['css' => '#confirm_box__button_menu > p:nth-child(2) > button']);
 
@@ -243,7 +243,7 @@ class EA04OrderCest
             ->一覧_全選択()
             ->メール一括通知();
 
-        $I->selectOption(['id' => 'template-change'], ['1' => 'ご注文ありがとうございます']);
+        $I->selectOption(['id' => 'template-change'], ['1' => '注文受付メール']);
         $I->click(['css' => '#top_box__button_menu > button']);
         $I->click(['css' => '#confirm_box__button_menu > p:nth-child(2) > button']);
 
