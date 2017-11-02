@@ -138,16 +138,17 @@ class OrderEditPage extends AbstractAdminPage
     public function 商品検索($value = '')
     {
         $this->tester->click('#aside_wrap > form > div > div:nth-child(3) > div.box-body.accpanel > div > div.btn_area > ul > li:nth-child(1) > a');
-        $this->tester->waitForElement(['id' => 'search_product_modal_box']);
+        $this->tester->waitForElement(['id' => 'admin_search_product_id']);
+        $this->tester->wait(1);
         $this->tester->fillField(['id' => 'admin_search_product_id'], $value);
-        $this->tester->click('#searchProductModalButton');
+        $this->tester->click(['id' => 'searchProductModalButton']);
         return $this;
     }
 
     public function 商品検索結果_選択($rowNum)
     {
         $rowNum = $rowNum * 2;
-        $this->tester->click("#searchProductModalList > div > table > tbody > tr:nth-child(${rowNum}) > td.text-right > button");
+        $this->tester->click(['css' => "#searchProductModalList > div > table > tbody > tr:nth-child(${rowNum}) > td.text-right > button"]);
         return $this;
     }
 
