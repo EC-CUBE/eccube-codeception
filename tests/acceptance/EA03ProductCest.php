@@ -293,6 +293,7 @@ class EA03ProductCest
 
         $ProductClassPage = ProductClassPage::go($I)->一覧_編集(1);
 
+        $I->waitForElement(ProductClassPage::$規格名);
         $value = $I->grabValueFrom(ProductClassPage::$規格名);
         $I->assertEquals('test class1', $value);
 
@@ -380,6 +381,7 @@ class EA03ProductCest
         $I->see('分類を保存しました。', ProductClassCategoryPage::$登録完了メッセージ);
 
         $ProductClassCategoryPage->一覧_編集(1);
+        $I->waitForElement(ProductClassCategoryPage::$分類名);
         $value = $I->grabValueFrom(ProductClassCategoryPage::$分類名);
         $I->assertEquals('test class2 category1', $value);
 
