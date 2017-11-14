@@ -20,6 +20,9 @@ class EA08SysteminfoCest
     {
     }
 
+    /**
+     * @group vaddy
+     */
     public function systeminfo_システム情報(\AcceptanceTester $I)
     {
         $I->wantTo('EA0801-UC01-T01 システム情報');
@@ -46,6 +49,9 @@ class EA08SysteminfoCest
         $I->see('新規登録', '#main .container-fluid .btn_area a');
     }
 
+    /**
+     * @group vaddy
+     */
     public function systeminfo_メンバー管理登録実施(\AcceptanceTester $I)
     {
         $I->wantTo('EA0803-UC01-T01 メンバー管理 - 登録 - 登録実施');
@@ -113,6 +119,9 @@ class EA08SysteminfoCest
         $I->see('入力されていません。', '#form1 div:nth-child(1) div');
     }
 
+    /**
+     * @group vaddy
+     */
     public function systeminfo_メンバー管理編集実施(\AcceptanceTester $I)
     {
         $I->wantTo('EA0803-UC02-T01 メンバー管理 - 編集 - 編集実施');
@@ -181,6 +190,9 @@ class EA08SysteminfoCest
         $I->see('入力されていません。', '#form1 div:nth-child(1) div');
     }
 
+    /**
+     * @group vaddy
+     */
     public function systeminfo_メンバー管理登録下へ(\AcceptanceTester $I)
     {
         $I->wantTo('EA0802-UC01-T02 メンバー管理 - 下へ');
@@ -211,6 +223,9 @@ class EA08SysteminfoCest
         $I->see('管理者', '#main .container-fluid .table_list .table tbody tr:nth-child(2) td:nth-child(1)');
     }
 
+    /**
+     * @group vaddy
+     */
     public function systeminfo_メンバー管理削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0802-UC01-T06 メンバー管理 - 削除');
@@ -254,6 +269,9 @@ class EA08SysteminfoCest
         $I->see('セキュリティ機能設定', '#main .container-fluid div:nth-child(1) .box-header .box-title');
     }
 
+    /**
+     * @group vaddy
+     */
     public function systeminfo_セキュリティ管理ディレクトリ名(\AcceptanceTester $I)
     {
         $I->wantTo('EA0804-UC01-T02 セキュリティ管理 - ディレクトリ名変更');
@@ -297,6 +315,9 @@ class EA08SysteminfoCest
         $I->click('#aside_column div div div div div button');
     }
 
+    /**
+     * @group vaddy
+     */
     public function systeminfo_権限管理追加(\AcceptanceTester $I)
     {
         $I->wantTo('EA0805-UC01-T01 権限管理 - 追加');
@@ -312,6 +333,9 @@ class EA08SysteminfoCest
         $I->dontSee('オーナーズストア', '#side ul');
     }
 
+    /**
+     * @group vaddy
+     */
     public function systeminfo_権限管理削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0805-UC02-T01 権限管理 - 削除');
@@ -326,6 +350,9 @@ class EA08SysteminfoCest
         $I->see('オーナーズストア', '#side ul');
     }
 
+    /**
+     * @group vaddy
+     */
     public function systeminfo_ログ表示(\AcceptanceTester $I)
     {
         $I->wantTo('EA0806-UC01-T01 ログ表示');
@@ -345,6 +372,9 @@ class EA08SysteminfoCest
         $I->dontSeeElement(['css' => '#main .container-fluid .box table tbody tr:nth-child(2)']);
     }
 
+    /**
+     * @group vaddy
+     */
     public function systeminfo_マスターデータ管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0807-UC01-T01 マスターデータ管理');
@@ -388,7 +418,7 @@ class EA08SysteminfoCest
         $I->fillField(['id' => 'admin_security_admin_allow_host'], '1.1.1.1');
         $I->click('#aside_column div div div div div button');
 
-        $I->amOnPage('/'.$config['admin_route']);
+        $I->amOnPage('/'.$config['admin_route'].'/');
         $I->see('アクセスできません。', '#main .container-fluid h1');
 
         $test_config = Fixtures::get('test_config');

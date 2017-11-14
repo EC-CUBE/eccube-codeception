@@ -1,0 +1,16 @@
+version: "2"
+
+services:
+
+  eccube3:
+    ports:
+      - "8080:80"
+      - "8443:443"
+    environment:
+      - VADDY_CODE=${VADDY_CODE}
+
+  codecept:
+    environment:
+      - VADDY_CODE=${VADDY_CODE}
+      - VADDY_PROXY=${VADDY_PROXY}
+      - VADDY_PROXY_PORT=${VADDY_PROXY_PORT}

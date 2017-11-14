@@ -17,6 +17,9 @@ class EF04CustomerCest
     {
     }
 
+    /**
+     * @group vaddy
+     */
     public function customer_会員登録正常(\AcceptanceTester $I, \Codeception\Scenario $scenario)
     {
         $I->wantTo('EF0401-UC01-T01 会員登録 正常パターン');
@@ -210,6 +213,9 @@ class EF04CustomerCest
         $I->see('新規会員登録', '#main_middle h1');
     }
 
+    /**
+     * @group vaddy
+     */
     public function customer_会員登録利用規約(\AcceptanceTester $I)
     {
         $I->wantTo('EF0404-UC01-T01 会員登録 利用規約');

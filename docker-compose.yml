@@ -42,6 +42,7 @@ services:
       - eccube3
     environment:
       - TZ=Asia/Tokyo
+      - BASE_URL=${ECCUBE_BASE_URL}
     volumes:
       - ./tests:/project/tests
       - ./codeception.yml:/project/codeception.yml

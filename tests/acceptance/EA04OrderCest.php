@@ -43,6 +43,7 @@ class EA04OrderCest
     /**
      * @env firefox
      * @env chrome
+     * @group vaddy
      */
     public function order_受注CSVダウンロード(\AcceptanceTester $I)
     {
@@ -84,6 +85,7 @@ class EA04OrderCest
     /**
      * @env firefox
      * @env chrome
+     * @group vaddy
      */
     public function order_配送CSVダウンロード(\AcceptanceTester $I)
     {
@@ -122,6 +124,9 @@ class EA04OrderCest
         $I->assertEquals(4, $value);
     }
 
+    /**
+     * @group vaddy
+     */
     public function order_受注編集(\AcceptanceTester $I)
     {
         $I->wantTo('EA0401-UC05-T01(& UC05-T02/UC06-T01) 受注編集');
@@ -171,6 +176,9 @@ class EA04OrderCest
         $I->see('受注情報を保存しました。', OrderEditPage::$登録完了メッセージ);
     }
 
+    /**
+     * @group vaddy
+     */
     public function order_受注削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0401-UC08-T01(& UC08-T02) 受注削除');
@@ -200,6 +208,9 @@ class EA04OrderCest
         $I->assertEquals($OrderNumForDontDel, $OrderListPage->一覧_注文番号(1));
     }
 
+    /**
+     * @group vaddy
+     */
     public function order_受注メール通知(\AcceptanceTester $I)
     {
         $I->wantTo('EA0402-UC01-T01 受注メール通知');
@@ -225,6 +236,9 @@ class EA04OrderCest
         $I->seeInLastEmailSubjectTo('admin@example.com', 'ご注文ありがとうございます');
     }
 
+    /**
+     * @group vaddy
+     */
     public function order_一括メール通知(\AcceptanceTester $I)
     {
         $I->wantTo('EA0402-UC02-T01(& UC02-T02) 一括メール通知');
@@ -250,6 +264,9 @@ class EA04OrderCest
         $I->seeEmailCount(20);
     }
 
+    /**
+     * @group vaddy
+     */
     public function order_受注登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0405-UC01-T01(& UC01-T02) 受注登録');

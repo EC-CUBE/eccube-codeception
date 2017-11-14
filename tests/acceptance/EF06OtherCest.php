@@ -62,6 +62,9 @@ class EF06OtherCest
         $I->see('ログインできませんでした。', '#login_mypage .text-danger');
     }
 
+    /**
+     * @group vaddy
+     */
     public function other_パスワード再発行(\AcceptanceTester $I)
     {
         $I->wantTo('EF0602-UC01-T01 パスワード再発行');
@@ -101,6 +104,9 @@ class EF06OtherCest
         $I->loginAsMember($customer->getEmail(), trim(str_replace('新しいパスワード：', '', $new_password)));
     }
 
+    /**
+     * @group vaddy
+     */
     public function other_ログアウト(\AcceptanceTester $I)
     {
         $I->wantTo('EF0603-UC01-T01 ログアウト');
@@ -143,6 +149,9 @@ class EF06OtherCest
         $I->see('特定商取引法に基づく表記', '#main h1');
     }
 
+    /**
+     * @group vaddy
+     */
     public function other_お問い合わせ1(\AcceptanceTester $I)
     {
         $I->wantTo('EF0607-UC01-T01 お問い合わせ');

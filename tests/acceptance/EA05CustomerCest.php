@@ -49,6 +49,9 @@ class EA05CustomerCest
         $I->see('検索条件に該当するデータがありませんでした。', CustomerManagePage::$検索結果メッセージ);
     }
 
+    /**
+     * @group vaddy
+     */
     public function customer_会員登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0502-UC01-T02(& UC01-T02) 会員登録');
@@ -93,6 +96,9 @@ class EA05CustomerCest
         $I->dontSeeElement(CustomerEditPage::$登録完了メッセージ);
     }
 
+    /**
+     * @group vaddy
+     */
     public function customer_会員編集(\AcceptanceTester $I)
     {
         $I->wantTo('EA0502-UC02-T01 会員編集');
@@ -147,6 +153,9 @@ class EA05CustomerCest
         $I->dontSeeElement(CustomerEditPage::$登録完了メッセージ);
     }
 
+    /**
+     * @group vaddy
+     */
     public function customer_会員削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0501-UC03-T01 会員削除');
@@ -183,6 +192,7 @@ class EA05CustomerCest
     /**
      * @env firefox
      * @env chrome
+     * @group vaddy
      */
     public function customer_CSV出力(\AcceptanceTester $I)
     {
@@ -211,6 +221,9 @@ class EA05CustomerCest
         $I->assertEquals('2', $value);
     }
 
+    /**
+     * @group vaddy
+     */
     public function customer_仮会員メール再送(\AcceptanceTester $I)
     {
         $I->wantTo('EA0501-UC06-T01(& UC06-T02) 仮会員メール再送');

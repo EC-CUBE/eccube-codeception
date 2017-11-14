@@ -35,6 +35,9 @@ class EF03OrderCest
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
 
+    /**
+     * @group vaddy
+     */
     public function order_カート削除(\AcceptanceTester $I)
     {
         $I->wantTo('EF0301-UC01-T02 カート 削除');
@@ -50,6 +53,9 @@ class EF03OrderCest
         $I->makeEmptyCart();
     }
 
+    /**
+     * @group vaddy
+     */
     public function order_カート数量増やす(\AcceptanceTester $I)
     {
         $I->wantTo('EF0301-UC01-T03 カート 数量増やす');
@@ -88,6 +94,9 @@ class EF03OrderCest
         $I->see('1', '#main_middle .cart_item .item_box:nth-child(1) .item_quantity');
     }
 
+    /**
+     * @group vaddy
+     */
     public function order_ログインユーザ購入(\AcceptanceTester $I)
     {
         $I->wantTo('EF0302-UC01-T01 ログインユーザ購入');
@@ -150,6 +159,9 @@ class EF03OrderCest
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
 
+    /**
+     * @group vaddy
+     */
     public function order_ゲスト購入(\AcceptanceTester $I)
     {
         $I->wantTo('EF0302-UC02-T01 ゲスト購入');
@@ -224,6 +236,9 @@ class EF03OrderCest
         $I->see('新着情報', '#contents_bottom #news_area h2');
     }
 
+    /**
+     * @group vaddy
+     */
     public function order_ゲスト購入情報変更(\AcceptanceTester $I)
     {
         $I->wantTo('EF0305-UC02-T01 ゲスト購入 情報変更'); // EF0305-UC04-T01も一緒にテスト
