@@ -137,35 +137,35 @@ class EA06ContentsManagementCest
         $I->amOnPage('/user_data/page1');
         $I->see('page1', 'body');
 
+        /* 削除 */
+        PageManagePage::go($I)->削除('page1');
+        $I->acceptPopup();
+
         /* 編集 */
-        PageManagePage::go($I)->ページ編集('page1');
+        PageManagePage::go($I)->ページ編集('ご利用ガイド');
         PageEditPage::at($I)
             ->入力_内容("{% extends 'default_frame.twig' %}")
             ->登録();
         $I->see('登録が完了しました。', PageEditPage::$登録完了メッセージ);
 
-        $I->amOnPage('/user_data/page1');
+        $I->amOnPage('/help/guide');
         $config = Fixtures::get('config');
         $I->see($config['shop_name'], '#header > div > div.header_logo_area > h1 > a');
 
         /* レイアウト編集 */
-        PageManagePage::go($I)->レイアウト編集('page1');
+        PageManagePage::go($I)->レイアウト編集('ご利用ガイド');
         $I->dragAndDrop('#position_0 > div:nth-child(1)', '#position_5');
         LayoutEditPage::at($I)->登録();
 
         $I->see('登録が完了しました。', LayoutEditPage::$登録完了メッセージ);
-        $I->amOnPage('/user_data/page1');
+        $I->amOnPage('/help/guide');
         $I->see($config['shop_name'], '#header > div > div.header_logo_area > h1 > a');
 
-        PageManagePage::go($I)->レイアウト編集('page1');
+        PageManagePage::go($I)->レイアウト編集('ご利用ガイド');
         $I->dragAndDrop('#detail_box__layout_item--7', '#position_0');
         LayoutEditPage::at($I)->プレビュー();
 
         $I->switchToNewWindow();
-
-        /* 削除 */
-        PageManagePage::go($I)->削除('page1');
-        $I->acceptPopup();
     }
 
     /**

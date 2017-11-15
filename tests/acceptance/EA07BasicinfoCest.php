@@ -145,6 +145,20 @@ class EA07BasicinfoCest
     /**
      * @group vaddy
      */
+    public function basicinfo_支払方法削除(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0704-UC03-T01 支払方法 削除');
+
+        // 表示
+        // 削除
+        PaymentManagePage::go($I)
+            ->一覧_削除(1);
+        $I->acceptPopup();
+    }
+
+    /**
+     * @group vaddy
+     */
     public function basicinfo_支払方法編集(\AcceptanceTester $I)
     {
         $I->wantTo('EA0705-UC02-T01 支払方法 編集');
@@ -162,20 +176,6 @@ class EA07BasicinfoCest
         $PaymentManagePage = PaymentManagePage::at($I);
         $I->see('登録が完了しました。', PaymentManagePage::$登録完了メッセージ);
         $I->see('payment method2', $PaymentManagePage->一覧_支払方法(1));
-    }
-
-    /**
-     * @group vaddy
-     */
-    public function basicinfo_支払方法削除(\AcceptanceTester $I)
-    {
-        $I->wantTo('EA0704-UC03-T01 支払方法 削除');
-
-        // 表示
-        // 削除
-        PaymentManagePage::go($I)
-            ->一覧_削除(1);
-        $I->acceptPopup();
     }
 
     public function basicinfo_配送方法一覧(\AcceptanceTester $I)
@@ -215,6 +215,19 @@ class EA07BasicinfoCest
     /**
      * @group vaddy
      */
+    public function basicinfo_配送方法削除(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0706-UC03-T01 配送方法 削除');
+
+        DeliveryManagePage::go($I)
+            ->一覧_削除(1);
+
+        $I->acceptPopup();
+    }
+
+    /**
+     * @group vaddy
+     */
     public function basicinfo_配送方法編集(\AcceptanceTester $I)
     {
         $I->wantTo('EA0707-UC02-T01 配送方法 編集');
@@ -231,19 +244,6 @@ class EA07BasicinfoCest
         $DeliveryManagePage = DeliveryManagePage::at($I);
         $I->see('登録が完了しました。', DeliveryManagePage::$登録完了メッセージ);
         $I->see('配送業者名1', $DeliveryManagePage->一覧_名称(1));
-    }
-
-    /**
-     * @group vaddy
-     */
-    public function basicinfo_配送方法削除(\AcceptanceTester $I)
-    {
-        $I->wantTo('EA0706-UC03-T01 配送方法 削除');
-
-        DeliveryManagePage::go($I)
-            ->一覧_削除(1);
-
-        $I->acceptPopup();
     }
 
     /**
