@@ -231,7 +231,7 @@ class EA03ProductCest
 
         $I->click(['css' => '#detail_box__price01 > a']);
         $I->click(['css' => '#sub_detail_box__toggle > h3']);
-        $I->seeElement(ProductEditPage::$商品種別);
+        $I->seeElement(ProductEditPage::$販売種別);
         $I->seeElement(ProductEditPage::$販売価格);
         $I->waitForElement(ProductEditPage::$通常価格);
         $I->seeElement(ProductEditPage::$在庫数);
@@ -246,7 +246,7 @@ class EA03ProductCest
         $ProductEditPage = ProductEditPage::at($I);
 
         $I->dontSeeElements([
-            ProductEditPage::$商品種別,
+            ProductEditPage::$販売種別,
             ProductEditPage::$販売価格,
             ProductEditPage::$通常価格,
             ProductEditPage::$在庫数,
