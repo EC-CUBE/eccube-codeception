@@ -4,6 +4,7 @@ use Codeception\Util\Fixtures;
 use Page\Front\ProductDetailPage;
 use Page\Front\ShippingEditPage;
 use Page\Front\ShoppingCompletePage;
+use Page\Front\ShoppingConfirmPage;
 use Page\Front\ShoppingLoginPage;
 use Page\Front\ShoppingPage;
 
@@ -102,10 +103,10 @@ class EF03OrderCest
 
         $I->resetEmails();
 
-        ShoppingPage::at($I)->注文する();
+        ShoppingPage::at($I)->確認する();
+        ShoppingConfirmPage::at($I)->注文する();
 
         $I->wait(1);
-
 
         // メール確認
         $I->seeEmailCount(2);
@@ -158,7 +159,8 @@ class EF03OrderCest
 
         $I->resetEmails();
 
-        ShoppingPage::at($I)->注文する();
+        ShoppingPage::at($I)->確認する();
+        ShoppingConfirmPage::at($I)->注文する();
 
         $I->wait(1);
 
@@ -232,7 +234,8 @@ class EF03OrderCest
 
         $I->resetEmails();
 
-        ShoppingPage::at($I)->注文する();
+        ShoppingPage::at($I)->確認する();
+        ShoppingConfirmPage::at($I)->注文する();
 
         $I->seeEmailCount(2);
         foreach (array($new_email, $BaseInfo->getEmail01()) as $email) {
