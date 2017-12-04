@@ -25,7 +25,7 @@ class MailSettingsPage extends AbstractAdminPage
     }
 
     public function 入力_件名($value) {
-        $this->tester->fillField(['id' => 'mail_subject'], $value);
+        $this->tester->fillField(['id' => 'mail_mail_subject'], $value);
         return $this;
     }
 

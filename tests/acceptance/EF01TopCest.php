@@ -38,15 +38,15 @@ class EF01TopCest
         $minus1 = $today->sub(new DateInterval('P1D'));
         $minus2 = $today->sub(new DateInterval('P2D'));
 
-        $I->haveInDatabase('dtb_news', array('id' => rand(999, 9999), 'news_date' => $minus1->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル1', 'news_comment' => 'コメント1', 'creator_id' => 1, 'rank' => 2, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00'), 'discriminator_type' => 'news'));
-        $I->haveInDatabase('dtb_news', array('id' => rand(999, 9999), 'news_date' => $minus2->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル2', 'news_comment' => 'コメント2', 'creator_id' => 1, 'rank' => 3, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00'), 'discriminator_type' => 'news'));
+        $I->haveInDatabase('dtb_news', array('id' => rand(999, 9999), 'publish_date' => $minus1->format('Y-m-d 00:00:00'), 'title' => 'タイトル1', 'description' => 'コメント1', 'creator_id' => 1, 'sort_no' => 2, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00'), 'discriminator_type' => 'news'));
+        $I->haveInDatabase('dtb_news', array('id' => rand(999, 9999), 'publish_date' => $minus2->format('Y-m-d 00:00:00'), 'title' => 'タイトル2', 'description' => 'コメント2', 'creator_id' => 1, 'sort_no' => 3, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00'), 'discriminator_type' => 'news'));
         $I->reloadPage();
         $news = Fixtures::get('news');
         $newsset = array();
         $newsset[] = array (
-            'date' => $news[0]->getDate(),
+            'date' => $news[0]->getPublishDate(),
             'title' => $news[0]->getTitle(),
-            'comment' => $news[0]->getComment(),
+            'comment' => $news[0]->getDescription(),
         );
         $newsset[] = array (
             'date' => $minus1->format('Y-m-d 00:00:00'),
@@ -59,7 +59,7 @@ class EF01TopCest
             'comment' => 'コメント2',
         );
         foreach ($newsset as $key => $news) {
-            $I->see($news['title'], 'div.ec-news .ec-news__item:nth-child('.(count($newsset) - $key).') .ec-newsline__comment');
+            $I->see($news['title'], 'div.ec-news .ec-news__item:nth-child('.(count($newsset) - $key).') .ec-newsline__title');
         }
     }
 
@@ -77,7 +77,7 @@ class EF01TopCest
 
         // 「詳しくはこちら」リンクを押下する
         $today = new DateTime();
-        $I->haveInDatabase('dtb_news', array('id' => rand(999, 9999), 'news_date' => $today->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル1', 'news_comment' => 'コメント1', 'creator_id' => 1, 'news_url' => 'http://www.ec-cube.net', 'rank' => 2, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00'), 'discriminator_type' => 'news'));
+        $I->haveInDatabase('dtb_news', array('id' => rand(999, 9999), 'publish_date' => $today->format('Y-m-d 00:00:00'), 'title' => 'タイトル1', 'description' => 'コメント1', 'creator_id' => 1, 'url' => 'http://www.ec-cube.net', 'sort_no' => 2, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00'), 'discriminator_type' => 'news'));
         $I->reloadPage();
         $topPage->新着情報選択(1);
         $I->assertContains('詳しくはこちら', $topPage->新着情報詳細(1));

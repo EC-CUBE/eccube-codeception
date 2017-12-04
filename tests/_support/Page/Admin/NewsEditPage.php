@@ -25,7 +25,7 @@ class NewsEditPage extends AbstractAdminPage
 
     public function 入力_日付($value)
     {
-        $this->tester->executeJS("$('#admin_news_date').val('".$value."').change();");
+        $this->tester->executeJS("$('#admin_news_publish_date').val('".$value."').change();");
         return $this;
     }
 
@@ -37,7 +37,7 @@ class NewsEditPage extends AbstractAdminPage
 
     public function 入力_本文($value)
     {
-        $this->tester->fillField(['id' => 'admin_news_comment'], $value);
+        $this->tester->fillField(['id' => 'admin_news_description'], $value);
         return $this;
     }
 

@@ -10,6 +10,9 @@ services:
     environment:
       - SCREEN_WIDTH=1680
       - SCREEN_HEIGHT=1050
+  db:
+    ports:
+      - "5432:5432"
   mailcatcher:
     ports:
       - "1080:1080"
