@@ -31,6 +31,12 @@ class CartPage extends AbstractFrontPage
         parent::__construct($I);
     }
 
+    public static function go($I) {
+        $page = new self($I);
+        $page->goPage('/cart');
+        return $page;
+    }
+
     public function 商品名($index)
     {
         return $this->tester->grabTextFrom(["xpath" => "//div[@class='ec-cartRole']//ul[@class='ec-cartRow'][position()=${index}]//div[@class='ec-cartRow__name']"]);

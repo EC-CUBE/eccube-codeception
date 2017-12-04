@@ -1,6 +1,7 @@
 <?php
 
 use Codeception\Util\Fixtures;
+use Page\Front\CartPage;
 use Page\Front\ProductDetailPage;
 use Page\Front\ShippingEditPage;
 use Page\Front\ShoppingCompletePage;
@@ -32,7 +33,11 @@ class EF03OrderCest
 
         // 商品詳細パーコレータ カートへ
         ProductDetailPage::go($I, 2)
-            ->カートに入れる(1)
+            ->カートに入れる(1);
+
+        $I->acceptPopup();
+
+        CartPage::go($I)
             ->お買い物を続ける();
 
         // トップページ
@@ -47,7 +52,11 @@ class EF03OrderCest
         $I->loginAsMember($customer->getEmail(), 'password');
 
         ProductDetailPage::go($I, 2)
-            ->カートに入れる(1)
+            ->カートに入れる(1);
+
+        $I->acceptPopup();
+
+        CartPage::go($I)
             ->商品削除(1);
     }
 
@@ -60,8 +69,12 @@ class EF03OrderCest
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // 商品詳細パーコレータ カートへ
-        $cartPage = ProductDetailPage::go($I, 2)
-            ->カートに入れる(1)
+        ProductDetailPage::go($I, 2)
+            ->カートに入れる(1);
+
+        $I->acceptPopup();
+
+        $cartPage = CartPage::go($I)
             ->商品数量増やす(1);
 
         // 確認
@@ -77,8 +90,12 @@ class EF03OrderCest
         $I->loginAsMember($customer->getEmail(), 'password');
 
         // 商品詳細パーコレータ カートへ
-        $cartPage = ProductDetailPage::go($I, 2)
-            ->カートに入れる(2)
+        ProductDetailPage::go($I, 2)
+            ->カートに入れる(2);
+
+        $I->acceptPopup();
+
+        $cartPage = CartPage::go($I)
             ->商品数量減らす(1);
 
         // 確認
@@ -95,7 +112,11 @@ class EF03OrderCest
 
         // 商品詳細パーコレータ カートへ
         ProductDetailPage::go($I, 2)
-            ->カートに入れる(1)
+            ->カートに入れる(1);
+
+        $I->acceptPopup();
+
+        CartPage::go($I)
             ->レジに進む();
 
         // ログイン
@@ -137,7 +158,11 @@ class EF03OrderCest
         $BaseInfo = Fixtures::get('baseinfo');
 
         ProductDetailPage::go($I, 2)
-            ->カートに入れる(1)
+            ->カートに入れる(1);
+
+        $I->acceptPopup();
+
+        CartPage::go($I)
             ->レジに進む();
 
         ShoppingLoginPage::at($I)->ゲスト購入()
@@ -194,7 +219,11 @@ class EF03OrderCest
 
         // 商品詳細パーコレータ カートへ
         ProductDetailPage::go($I, 2)
-            ->カートに入れる(1)
+            ->カートに入れる(1);
+
+        $I->acceptPopup();
+
+        CartPage::go($I)
             ->レジに進む();
 
         ShoppingLoginPage::at($I)->ゲスト購入()
