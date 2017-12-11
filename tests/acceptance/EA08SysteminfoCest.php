@@ -277,6 +277,8 @@ class EA08SysteminfoCest
     {
         $I->wantTo('EA0804-UC01-T04 セキュリティ管理 - SSL強制');
 
+        $I->getScenario()->skip('このテストを通すと以降のテストが通らなくなってしまっているので一時的にスキップ');
+
         $httpBaseUrl = $I->getBaseUrl();
         $I->amOnUrl($httpBaseUrl);
         $I->assertRegExp('/^http:\/\//', $I->executeJS('return location.href'), 'httpsにリダイレクトされない');
