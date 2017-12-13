@@ -14,7 +14,7 @@ class ProductEditPage extends AbstractAdminPage
     public static $在庫数 = ['id' => 'admin_product_class_stock'];
     public static $商品コード = ['id' => 'admin_product_class_code'];
     public static $販売制限数 = ['id' => 'admin_product_class_sale_limit'];
-    public static $お届可能日 = ['id' => 'admin_product_class_delivery_date'];
+    public static $お届可能日 = ['id' => 'admin_product_class_delivery_duration'];
 
     /**
      * ProductRegisterPage constructor.

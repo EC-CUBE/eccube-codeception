@@ -179,8 +179,14 @@ class EF02ProductCest
         $I->setStock(2, 10);
         $productPage = ProductDetailPage::go($I, 2);
 
+        $I->wait(3);
         // 「カートに入れる」ボタンを押下する
-        $cartPage = $productPage->カートに入れる(4);
+        $productPage->カートに入れる(4);
+
+        $I->seeInPopup('カートに追加しました。');
+        $I->acceptPopup();
+
+        $cartPage = CartPage::go($I);
 
         // 入力された個数分が、カート画面の対象商品に追加されている。
         $I->assertContains('パーコレーター', $cartPage->商品名(1));
@@ -198,13 +204,17 @@ class EF02ProductCest
         $productPage = ProductDetailPage::go($I, 2);
 
         // 「カートに入れる」ボタンを押下する
-        $cartPage = $productPage->カートに入れる(6);
+        $productPage->カートに入れる(6);
+
+        $I->seeInPopup('選択された商品(パーコレーター)は販売制限しております。');
+        $I->acceptPopup();
+
+        $cartPage = CartPage::go($I);
 
         // 入力された個数分が、カート画面の対象商品に追加されている。
         $I->assertContains('パーコレーター', $cartPage->商品名(1));
         $I->assertContains('5', $cartPage->商品数量(1));
 
-        $I->assertContains('選択された商品(パーコレーター)は販売制限しております。', $cartPage->エラーメッセージ());
         // カートを空に
         $cartPage->商品削除(1);
     }
@@ -217,13 +227,17 @@ class EF02ProductCest
         $productPage = ProductDetailPage::go($I, 2);
 
         // 「カートに入れる」ボタンを押下する
-        $cartPage = $productPage->カートに入れる(12);
+        $productPage->カートに入れる(12);
+
+        $I->seeInPopup('選択された商品(パーコレーター)は販売制限しております。');
+        $I->acceptPopup();
+
+        $cartPage = CartPage::go($I);
 
         // 入力された個数分が、カート画面の対象商品に追加されている。
         $I->assertContains('パーコレーター', $cartPage->商品名(1));
         $I->assertContains('5', $cartPage->商品数量(1));
 
-        $I->assertContains('選択された商品(パーコレーター)は販売制限しております。', $cartPage->エラーメッセージ());
         // カートを空に
         $cartPage->商品削除(1);
     }
@@ -233,9 +247,14 @@ class EF02ProductCest
         $I->wantTo('EF0202-UC02-T04 商品詳細(規格あり) カート 注文数＜販売制限数＜在庫数の注文');
         $I->setStock(1, array(10, 10, 10, 10, 10, 10, 10, 10, 10));
 
-        $cartPage = ProductDetailPage::go($I, 1)
+        ProductDetailPage::go($I, 1)
             ->規格選択(['プラチナ', '150cm'])
             ->カートに入れる(1);
+
+        $I->seeInPopup('カートに追加しました。');
+        $I->acceptPopup();
+
+        $cartPage = CartPage::go($I);
 
         // 入力された個数分が、カート画面の対象商品に追加されている。
         $I->assertContains('ディナーフォーク', $cartPage->商品名(1));
@@ -250,14 +269,18 @@ class EF02ProductCest
         $I->wantTo('EF0202-UC02-T05 商品詳細(規格あり) カート 販売制限数＜注文数＜在庫数の注文');
         $I->setStock(1, array(10, 10, 10, 10, 10, 10, 10, 10, 10));
 
-        $cartPage = ProductDetailPage::go($I, 1)
+        ProductDetailPage::go($I, 1)
             ->規格選択(['プラチナ', '150cm'])
             ->カートに入れる(3);
+
+        $I->seeInPopup('選択された商品(ディナーフォーク - プラチナ - 150cm)は販売制限しております。');
+        $I->acceptPopup();
+
+        $cartPage = CartPage::go($I);
 
         // 入力された個数分が、カート画面の対象商品に追加されている。
         $I->assertContains('ディナーフォーク', $cartPage->商品名(1));
         $I->assertContains('2', $cartPage->商品数量(1));
-        $I->assertContains('選択された商品(ディナーフォーク - プラチナ - 150cm)は販売制限しております。', $cartPage->エラーメッセージ());
 
         // カートを空に
         $cartPage->商品削除(1);
@@ -268,14 +291,18 @@ class EF02ProductCest
         $I->wantTo('EF0202-UC02-T06 商品詳細(規格あり) カート 販売制限数＜在庫数＜注文数の注文');
         $I->setStock(1, array(10, 10, 10, 10, 10, 10, 10, 10, 10));
 
-        $cartPage = ProductDetailPage::go($I, 1)
+        ProductDetailPage::go($I, 1)
             ->規格選択(['プラチナ', '150cm'])
             ->カートに入れる(12);
+
+        $I->seeInPopup('選択された商品(ディナーフォーク - プラチナ - 150cm)は販売制限しております。');
+        $I->acceptPopup();
+
+        $cartPage = CartPage::go($I);
 
         // 入力された個数分が、カート画面の対象商品に追加されている。
         $I->assertContains('ディナーフォーク', $cartPage->商品名(1));
         $I->assertContains('2', $cartPage->商品数量(1));
-        $I->assertContains('選択された商品(ディナーフォーク - プラチナ - 150cm)は販売制限しております。', $cartPage->エラーメッセージ());
 
         // カートを空に
         $cartPage->商品削除(1);

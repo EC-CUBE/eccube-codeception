@@ -131,7 +131,7 @@ Fixtures::add('categories', $categories);
 
 $news = $app['orm.em']->getRepository('Eccube\Entity\News')
     ->createQueryBuilder('o')
-    ->orderBy('o.date', 'DESC')
+    ->orderBy('o.publish_date', 'DESC')
     ->getQuery()
     ->getResult();
 /** 新着情報一覧. */

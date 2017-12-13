@@ -70,13 +70,14 @@ class ProductDetailPage extends AbstractFrontPage
 
     /**
      * @param $num|int
-     * @return CartPage
+     * @return ProductDetailPage
      */
     public function カートに入れる($num)
     {
         $this->tester->fillField(['id' => 'quantity'], $num);
         $this->tester->click(['id' => 'add-cart']);
-        return new CartPage($this->tester);
+        $this->tester->wait(1);
+        return $this;
     }
 
     public function お気に入りに追加()

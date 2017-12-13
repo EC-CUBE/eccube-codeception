@@ -24,7 +24,7 @@
 namespace Page\Front;
 
 
-class ShoppingPage extends AbstractFrontPage
+class ShoppingConfirmPage extends AbstractFrontPage
 {
     public function __construct(\AcceptanceTester $I)
     {
@@ -34,10 +34,9 @@ class ShoppingPage extends AbstractFrontPage
     public static function at($I)
     {
         $page = new self($I);
-        $page->tester->see('ご注文手続き', 'div.ec-pageHeader h1');
+        $page->tester->see('ご注文内容のご確認', 'div.ec-pageHeader h1');
         $page->tester->see('お客様情報', '#shopping-form div.ec-orderAccount div.ec-rectHeading h2');
         $page->tester->see('配送情報', '#shopping-form div.ec-orderDelivery div.ec-rectHeading h2');
-        $page->tester->see('お届け先', '#shopping-form div.ec-orderDelivery div.ec-orderDelivery__title');
         $page->tester->see('お支払方法', '#shopping-form div.ec-orderPayment div.ec-rectHeading h2');
         $page->tester->see('お問い合わせ', '#shopping-form div.ec-orderConfirm div.ec-rectHeading h2');
         $page->tester->see('小計', '#shopping-form div.ec-orderRole__summary div.ec-totalBox');
@@ -47,35 +46,9 @@ class ShoppingPage extends AbstractFrontPage
         return $page;
     }
 
-    public function 確認する()
+    public function 注文する()
     {
         $this->tester->click('#shopping-form div.ec-orderRole__summary div.ec-totalBox button');
-        return $this;
-    }
-
-    public function お客様情報変更()
-    {
-        $this->tester->click('#shopping-form #customer');
-        $this->tester->waitForElementVisible(['id' => 'edit0']);
-        return $this;
-    }
-
-    public function 入力_姓($value)
-    {
-        $this->tester->fillField(['id' => 'edit0'], $value);
-        return $this;
-    }
-
-    public function お客様情報変更OK()
-    {
-        $this->tester->click('div.ec-orderAccount #customer-ok button');
-        $this->tester->wait(5);
-        return $this;
-    }
-
-    public function お届け先変更()
-    {
-        $this->tester->click('div.ec-orderRole div.ec-orderDelivery__change a');
         return $this;
     }
 }
