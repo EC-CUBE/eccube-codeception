@@ -40,48 +40,6 @@ class EA07BasicinfoCest
         $I->see('基本情報を保存しました。', ShopSettingPage::$登録完了メッセージ);
     }
 
-    public function basicinfo_特定商取引法(\AcceptanceTester $I)
-    {
-        $I->wantTo('EA0702-UC01-T01 特定商取引法');
-
-        $faker = Fixtures::get('faker');
-        $email = microtime(true).'.'.$faker->safeEmail;
-
-        TradelawSettingPage::go($I)
-            ->入力_販売業者('販売業者')
-            ->入力_運営責任者('運営責任者')
-            ->入力_郵便番号1('530')
-            ->入力_郵便番号2('0001')
-            ->入力_都道府県('大阪府')
-            ->入力_市区町村名('大阪市北区')
-            ->入力_番地_ビル名('梅田2-4-9 ブリーゼタワー13F')
-            ->入力_電話番号1('111')
-            ->入力_電話番号2('111')
-            ->入力_電話番号3('111')
-            ->入力_Eメール($email)
-            ->入力_URL('http://www.ec-cube.net')
-            ->入力_商品代金以外の必要料金('term01')
-            ->入力_注文方法('term02')
-            ->入力_支払方法('term03')
-            ->入力_支払期限('term04')
-            ->入力_引き渡し時期('term05')
-            ->入力_返品交換について('term06')
-            ->登録();
-
-        $I->see('登録が完了しました。', TradelawSettingPage::$登録完了メッセージ);
-    }
-
-    public function basicinfo_利用規約(\AcceptanceTester $I)
-    {
-        $I->wantTo('EA0703-UC01-T01 利用規約');
-
-        CustomerAgreementSettingPage::go($I)
-            ->入力_会員規約('会員規約')
-            ->登録();
-
-        $I->see('登録が完了しました。', CustomerAgreementSettingPage::$登録完了メッセージ);
-    }
-
     public function basicinfo_支払方法一覧(\AcceptanceTester $I)
     {
         $I->wantTo('EA0704-UC01-T01 支払方法 一覧');
