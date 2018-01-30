@@ -7,6 +7,8 @@ services:
       - MYSQL_DATABASE=eccube_db
       - MYSQL_USER=eccube_user
       - MYSQL_PASSWORD=password
+      - DATABASE_URL=mysql://eccube_user:password@db:3306/eccube_db
+      - DATABASE_SERVER_VERSION=8
   eccube3:
     build:
       args:
@@ -15,3 +17,6 @@ services:
     build:
       args:
         - DBTYPE=mysql
+    environment:
+      - DATABASE_URL=mysql://eccube_user:password@db:3306/eccube_db
+      - DATABASE_SERVER_VERSION=8

@@ -17,3 +17,10 @@ services:
     ports:
       - "1080:1080"
       - "1025:1025"
+
+  codecept:
+    volumes:
+      - codecept_eccube_var:/var/www/var
+
+volumes:
+  codecept_eccube_var:
