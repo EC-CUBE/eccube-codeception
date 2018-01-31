@@ -26,6 +26,7 @@ services:
       - ECCUBE_MAIL_PORT=1025
       - ECCUBE_ADMIN_USER=admin
       - ECCUBE_ADMIN_PASS=password
+      - ECCUBE_ADMIN_ROUTE=admin
     ports:
       - 80
       - 443
@@ -57,6 +58,9 @@ services:
       - ECCUBE_AUTH_MAGIC=XjosAXOzO1B3mE0egwQA
       - ECCUBE_MAIL_HOST=mailcatcher
       - ECCUBE_MAIL_PORT=1025
+      - ECCUBE_COOKIE_NAME=eccube
+      - ECCUBE_COOKIE_LIFETIME=0
+      - ECCUBE_ADMIN_ROUTE=admin
     volumes:
       - ./tests:/project/tests
       - ./codeception.yml:/project/codeception.yml

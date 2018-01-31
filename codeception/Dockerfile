@@ -26,7 +26,6 @@ WORKDIR ${ECCUBE_PATH}
 RUN composer install
 
 ## create config yaml files
-RUN php /var/www/eccube_install.php ${DBTYPE} none --skip-createdb --skip-initdb --verbose
 WORKDIR /project
 
 ## create dummy directories
