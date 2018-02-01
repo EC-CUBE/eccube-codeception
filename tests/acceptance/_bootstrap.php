@@ -24,6 +24,7 @@ $entityManager = $container->get('doctrine')->getManager();
 
 use Eccube\Common\Constant;
 use Eccube\Entity\Customer;
+use Eccube\Common\EccubeConfig;
 use Eccube\Entity\Master\CustomerStatus;
 
 $faker = Faker::create('ja_JP');
@@ -130,7 +131,7 @@ Fixtures::add('admin_account',array(
     'password' => $config['admin_password'],
 ));
 /** $app['config'] 情報. */
-Fixtures::add('config', $container->getParameter('eccube.constants'));
+Fixtures::add('config', $container->get(EccubeConfig::class));
 
 /** config.ini 情報. */
 Fixtures::add('test_config', $config);
