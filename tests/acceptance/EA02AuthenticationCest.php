@@ -32,7 +32,7 @@ class EA02AuthenticationCest
             'password' => "invalidpassword"
         ]);
 
-        $I->see('ログインできませんでした。', '.login-box #form1 .text-danger');
+        $I->see('資格が無効です。', '.login-box #form1 .text-danger');
     }
 
     public function authentication_最終ログイン日時確認(\AcceptanceTester $I)
