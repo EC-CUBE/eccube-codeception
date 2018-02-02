@@ -28,7 +28,7 @@ class CsvSettingsPage extends AbstractAdminPage
     public static function at($I)
     {
         $page = new CsvSettingsPage($I);
-        $page->tester->see('システム設定CSV出力項目設定', '#main .page-header');
+        $page->tester->see('基本情報設定CSV出力項目設定', '#main .page-header');
         return $page;
     }
 
