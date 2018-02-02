@@ -14,7 +14,7 @@ class DeliveryEditPage extends AbstractAdminPage
     public static function at($I)
     {
         $page = new self($I);
-        return $page->atPage('ショップ設定配送先管理');
+        return $page->atPage('基本情報設定配送方法設定');
     }
 
     public function 入力_配送業者名($value) {

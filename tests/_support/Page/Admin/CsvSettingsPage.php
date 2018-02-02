@@ -22,7 +22,7 @@ class CsvSettingsPage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new CsvSettingsPage($I);
-        return $page->goPage('/setting/shop/csv', 'システム設定CSV出力項目設定');
+        return $page->goPage('/setting/shop/csv', '基本情報設定CSV出力項目設定');
     }
 
     public static function at($I)

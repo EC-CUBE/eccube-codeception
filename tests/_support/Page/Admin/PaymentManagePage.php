@@ -18,13 +18,13 @@ class PaymentManagePage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new self($I);
-        return $page->goPage('/setting/shop/payment', 'ショップ設定支払方法管理');
+        return $page->goPage('/setting/shop/payment', '基本情報設定支払方法設定');
     }
 
     public static function at($I)
     {
         $page = new self($I);
-        return $page->atPage('ショップ設定支払方法管理');
+        return $page->atPage('基本情報設定支払方法設定');
     }
 
     public function 一覧_支払方法($rowNum)

@@ -211,15 +211,15 @@ class EA07BasicinfoCest
 
         // 編集
         $TaxManagePage
-            ->一覧_編集(2)
+            ->一覧_編集(1)
             ->入力_消費税率(12)
             ->共通税率設定_登録();
 
         $I->see('税率設定情報を保存しました。', TaxManagePage::$登録完了メッセージ);
-        $I->see('12%', $TaxManagePage->一覧_税率(2));
+        $I->see('12%', $TaxManagePage->一覧_税率(1));
 
         // 削除
-        $TaxManagePage->一覧_削除(2);
+        $TaxManagePage->一覧_削除(1);
 
         // 個別税率設定
         $TaxManagePage

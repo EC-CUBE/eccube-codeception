@@ -30,7 +30,7 @@ class TaxManagePage extends AbstractAdminPage
     }
 
     public function 入力_個別税率設定($value) {
-        $this->tester->selectOption(['id' => 'tax_rule_option_product_tax_rule_0'], $value);
+        $this->tester->checkOption('#tax_rule_option_product_tax_rule_0');
         return $this;
     }
 
@@ -51,6 +51,7 @@ class TaxManagePage extends AbstractAdminPage
     {
         $this->tester->click("#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(${rowNum}) .icon_edit .dropdown a");
         $this->tester->click("#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(${rowNum}) .icon_edit .dropdown ul li:nth-child(2) a");
+        $this->tester->acceptPopup();
         return $this;
     }
 

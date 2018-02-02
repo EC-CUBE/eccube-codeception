@@ -17,7 +17,7 @@ class DeliveryManagePage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new self($I);
-        $page->goPage('/setting/shop/delivery', 'ショップ設定配送方法管理');
+        $page->goPage('/setting/shop/delivery', '基本情報設定配送方法設定');
         $page->tester->see('配送方法一覧', '#main .container-fluid .box-title');
         return $page;
     }
@@ -25,7 +25,7 @@ class DeliveryManagePage extends AbstractAdminPage
     public static function at($I)
     {
         $page = new self($I);
-        $page->atPage('ショップ設定配送方法管理');
+        $page->atPage('基本情報設定配送方法設定');
         $page->tester->see('配送方法一覧', '#main .container-fluid .box-title');
         return $page;
     }
