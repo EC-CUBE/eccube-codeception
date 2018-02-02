@@ -17,15 +17,20 @@ services:
         - DBTYPE=pgsql
     environment:
       - TZ=Asia/Tokyo
-      - ECCUBE_DB_HOST=db
-      - ECCUBE_DB_USERNAME=eccube_user
-      - ECCUBE_DB_PASSWORD=password
-      - ECCUBE_DB_DATABASE=eccube_db
-      - ECCUBE_AUTH_MAGIC=XjosAXOzO1B3mE0egwQA
-      - ECCUBE_MAIL_HOST=mailcatcher
-      - ECCUBE_MAIL_PORT=1025
-      - ECCUBE_ADMIN_USER=admin
-      - ECCUBE_ADMIN_PASS=password
+      - APP_ENV=dev
+      - APP_DEBUG=1
+      - APP_SECRET=s$cretf0rt3st
+      - DATABASE_URL=sqlite:///%kernel.project_dir%/app/config/eccube/eccube.db
+      - DATABASE_SERVER_VERSION=3
+      - MAILER_URL=smtp://mailcatcher:1025
+      - ECCUBE_AUTH_MAGIC=secret
+      - ECCUBE_FORCE_SSL=false
+      - ECCUBE_ADMIN_ALLOW_HOSTS='["127.0.0.1"]'
+      - ECCUBE_COOKIE_LIFETIME=0
+      - ECCUBE_COOKIE_NAME=eccube
+      - ECCUBE_LOCALE=ja
+      - ECCUBE_TIMEZONE=Asia/Tokyo
+      - ECCUBE_CURRENCY=JPY
       - ECCUBE_ADMIN_ROUTE=admin
     ports:
       - 80
