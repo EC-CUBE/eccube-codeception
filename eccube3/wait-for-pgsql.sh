@@ -12,11 +12,10 @@ done
 >&2 echo "Postgres is up - executing command"
 ${ECCUBE_PATH}/exec_env.sh
 
-bin/console cache:clear --no-warmup
-bin/console cache:warmup
-
 bin/console doctrine:schema:create
 bin/console eccube:fixtures:load
+
+bin/console cache:warmup --env=prod
 
 chown -R www-data:www-data ${ECCUBE_PATH}/app
 apache2-foreground
