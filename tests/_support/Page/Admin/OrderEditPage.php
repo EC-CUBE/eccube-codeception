@@ -123,18 +123,6 @@ class OrderEditPage extends AbstractAdminPage
         return $this;
     }
 
-    public function 注文者情報をコピー()
-    {
-        $this->tester->click('#main #detail_wrap a.copyCustomerToShippingButton');
-        return $this;
-    }
-
-    public function 入力_配送業者($value)
-    {
-        $this->tester->selectOption(['id' => 'order_Shippings_0_Delivery'], $value);
-        return $this;
-    }
-
     public function 商品検索($value = '')
     {
         $this->tester->click('#aside_wrap > form > div > div:nth-child(3) > div.box-body.accpanel > div > div.btn_area > ul > li:nth-child(1) > a');
@@ -153,6 +141,7 @@ class OrderEditPage extends AbstractAdminPage
 
     public function 受注情報登録()
     {
+        $this->tester->scrollTo('#aside_wrap > form > div > div.row.btn_area > p > button');
         $this->tester->click('#aside_wrap > form > div > div.row.btn_area > p > button');
         return $this;
     }
