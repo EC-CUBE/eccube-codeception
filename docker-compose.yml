@@ -58,7 +58,7 @@ services:
       - ECCUBE_DB_USERNAME=eccube_user
       - ECCUBE_DB_PASSWORD=password
       - ECCUBE_DB_DATABASE=eccube_db
-      - ECCUBE_AUTH_MAGIC=XjosAXOzO1B3mE0egwQA
+      - ECCUBE_AUTH_MAGIC=secret
       - ECCUBE_MAIL_HOST=mailcatcher
       - ECCUBE_MAIL_PORT=1025
       - ECCUBE_COOKIE_NAME=eccube
