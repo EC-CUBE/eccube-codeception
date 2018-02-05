@@ -20,8 +20,6 @@ services:
       - APP_ENV=dev
       - APP_DEBUG=1
       - APP_SECRET=s$cretf0rt3st
-      - DATABASE_URL=sqlite:///%kernel.project_dir%/app/config/eccube/eccube.db
-      - DATABASE_SERVER_VERSION=3
       - MAILER_URL=smtp://mailcatcher:1025
       - ECCUBE_AUTH_MAGIC=secret
       - ECCUBE_FORCE_SSL=false
