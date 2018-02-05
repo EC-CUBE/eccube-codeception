@@ -44,7 +44,7 @@ class EA04OrderCest
      * @env firefox
      * @env chrome
      */
-    public function order_受注CSVダウンロード(\AcceptanceTester $I)
+    public function order_downloadCsv(\AcceptanceTester $I)
     {
         $I->wantTo('EA0401-UC02-T01 受注CSVダウンロード');
 
@@ -60,7 +60,7 @@ class EA04OrderCest
         $I->assertGreaterOrEquals(count($TargetOrders), count(file($OrderCSV)), '検索結果以上の行数があるはず');
     }
 
-    public function order_受注情報のCSV出力項目変更設定(\AcceptanceTester $I)
+    public function order_downloadWithChangeSetting(\AcceptanceTester $I)
     {
         $I->wantTo('EA0401-UC02-T02 受注情報のCSV出力項目変更設定');
 
