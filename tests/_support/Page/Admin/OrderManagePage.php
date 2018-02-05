@@ -35,13 +35,6 @@ class OrderManagePage extends AbstractAdminPage
         return $this;
     }
 
-    public function csv()
-    {
-        $this->CSVダウンロードメニュー();
-        $this->tester->click('#main > div > div.row > div > div > div.box-body > div > div > ul > li.dropdown.open > ul > li:nth-child(0) > a');
-        return $this->CSVダウンロードメニュー(); // プルダウンを戻しておく
-    }
-
     public function 受注CSVダウンロード実行()
     {
         $this->CSVダウンロードメニュー();
