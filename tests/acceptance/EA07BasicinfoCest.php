@@ -220,6 +220,7 @@ class EA07BasicinfoCest
 
         // 削除
         $TaxManagePage->一覧_削除(1);
+        $I->see('税率設定情報を削除しました。', TaxManagePage::$登録完了メッセージ);
 
         // 個別税率設定
         $TaxManagePage
