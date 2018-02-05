@@ -125,7 +125,7 @@ class EA06ContentsManagementCest
             ->入力_ファイル名('page1')
             ->入力_URL('page1')
             ->入力_内容('page1')
-            ->入力_PC用レイアウト('トップページ用レイアウト')
+            ->入力_PC用レイアウト('下層ページ用レイアウト')
             ->登録();
         $I->see('登録が完了しました。', PageEditPage::$登録完了メッセージ);
 
