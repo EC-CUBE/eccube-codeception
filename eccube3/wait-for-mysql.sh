@@ -15,6 +15,9 @@ done
 >&2 echo "MySQL Ready"
 ${ECCUBE_PATH}/exec_env.sh
 
+bin/console cache:clear --no-warmup
+bin/console cache:warmup
+
 bin/console doctrine:schema:create
 bin/console eccube:fixtures:load
 
