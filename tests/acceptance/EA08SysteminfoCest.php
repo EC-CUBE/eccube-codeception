@@ -110,7 +110,7 @@ class EA08SysteminfoCest
         $I->see('メンバー登録・編集', '#main .container-fluid div:nth-child(1) .box-header .box-title');
 
         $I->click('#aside_column button');
-        $I->see('入力されていません。', '#form1 div:nth-child(1) div');
+        $I->see('空であってはなりません。', '#form1 div:nth-child(1) div');
     }
 
     public function systeminfo_メンバー管理編集実施(\AcceptanceTester $I)
@@ -178,7 +178,7 @@ class EA08SysteminfoCest
         $I->fillField(['id' => 'admin_member_name'], '');
         $I->click('#aside_column button');
 
-        $I->see('入力されていません。', '#form1 div:nth-child(1) div');
+        $I->see('空であってはなりません。', '#form1 div:nth-child(1) div');
     }
 
     public function systeminfo_メンバー管理登録下へ(\AcceptanceTester $I)
