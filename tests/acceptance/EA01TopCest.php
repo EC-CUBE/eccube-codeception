@@ -45,7 +45,7 @@ class EA01TopCest
         $config = Fixtures::get('config');
         $findOrders = Fixtures::get('findOrders');
         $NewOrders = array_filter($findOrders(), function ($Order) use ($config) {
-            return $Order->getOrderStatus()->getId() == $config['order_new'];
+            return $Order->getOrderStatus()->getId() == \Eccube\Entity\Master\OrderStatus::NEW;
         });
         $I->see(count($NewOrders), TopPage::$受付状況_新規受付数);
 
