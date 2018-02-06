@@ -29,8 +29,8 @@ class TaxManagePage extends AbstractAdminPage
         return $this;
     }
 
-    public function 入力_個別税率設定() {
-        $this->tester->checkOption('#tax_rule_option_product_tax_rule_0');
+    public function 入力_個別税率設定($value) {
+        $this->tester->selectOption(['id' => 'tax_rule_option_product_tax_rule_0'], $value);
         return $this;
     }
 
