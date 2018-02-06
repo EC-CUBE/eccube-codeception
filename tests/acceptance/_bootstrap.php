@@ -183,7 +183,8 @@ $createCustomer = function ($email = null, $active = true) use ($container, $fak
 /** 会員を生成するクロージャ. */
 Fixtures::add('createCustomer', $createCustomer);
 
-$createOrders = function ($Customer, $numberOfOrders = 5) use ($container, $entityManager, $generator, $faker) {
+$createOrders = function ($Customer, $numberOfOrders = 5) use ($container, $entityManager, $faker) {
+    $generator = $container->get('Eccube\Tests\Fixture\Generator');
     $Orders = array();
     for ($i = 0; $i < $numberOfOrders; $i++) {
         $Order = $generator->createOrder($Customer);
