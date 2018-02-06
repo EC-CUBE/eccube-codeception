@@ -11,6 +11,7 @@ services:
       args:
         - DBTYPE=pgsql
     environment:
+      - PGUSER=eccube_user
       - PGPASSWORD=password
       - POSTGRES_ENV_POSTGRES_PASSWORD=password
       - DATABASE_URL=pgsql://eccube_user:password@db:5432/eccube_db
