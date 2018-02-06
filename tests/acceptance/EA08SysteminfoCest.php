@@ -337,9 +337,8 @@ class EA08SysteminfoCest
         $I->amOnPage('/'.$config['admin_route'].'/setting/system/log');
         $I->see('システム設定EC-CUBE ログ表示', '#main .page-header');
 
-        $log = $I->grabValueFrom(['id' => 'admin_system_log_files']);
-        $expect = "site_".date('Y-m-d').".log";
-        $I->assertEquals($expect, $log);
+        $option = $I->grabTextFrom('#admin_system_log_files option:nth-child(1)');
+        $I->selectOption("#admin_system_log_files", $option);
 
         $I->fillField(['id' => 'line-max'], '1');
         $I->click(['css' => '#form1 button']);
