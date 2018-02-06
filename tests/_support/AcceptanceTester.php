@@ -2,6 +2,7 @@
 use Codeception\Util\Fixtures;
 use Eccube\Common\Constant;
 use Interactions\DragAndDropBy;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 /**
  * Inherited Methods
