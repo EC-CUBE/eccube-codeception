@@ -78,7 +78,7 @@ class EA03ProductCest
             ->検索()
             ->CSV出力項目設定();
 
-        $I->see('システム設定CSV出力項目設定', self::ページタイトル);
+        $I->see('基本情報設定CSV出力項目設定', self::ページタイトル);
         $value = $I->grabValueFrom(CsvSettingsPage::$CSVタイプ);
         $I->assertEquals('1', $value);
     }
