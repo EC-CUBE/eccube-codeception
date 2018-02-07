@@ -2,6 +2,7 @@
 use Codeception\Util\Fixtures;
 use Eccube\Common\Constant;
 use Interactions\DragAndDropBy;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 /**
  * Inherited Methods
@@ -53,7 +54,7 @@ class AcceptanceTester extends \Codeception\Actor
         if ($isLogin == '管理者 様') {
             $I->click('#header .navbar-menu .dropdown .dropdown-toggle');
             $config = Fixtures::get('config');
-            $I->amOnPage('/'.$config['admin_route'].'/logout');
+            $I->amOnPage('/'.$config['eccube_admin_route'].'/logout');
             $I->see('ログイン', '.login-box #form1 .btn_area button');
         }
     }
@@ -63,7 +64,7 @@ class AcceptanceTester extends \Codeception\Actor
         $I = $this;
         if ($dir == '') {
             $config = Fixtures::get('config');
-            $I->amOnPage('/'.$config['admin_route']);
+            $I->amOnPage('/'.$config['eccube_admin_route']);
         } else {
             $I->amOnPage('/'.$dir);
         }

@@ -50,7 +50,7 @@ $num = $entityManager->getRepository('Eccube\Entity\Product')
     ->getQuery()
     ->getSingleScalarResult();
 // 受注生成件数 + 初期データの商品が生成されているはず
-if ($num < ($config['fixture_customer_num']+2)) {
+if ($num < ($config['fixture_product_num']+2)) {
     // 規格なしも含め $config['fixture_product_num'] の分だけ生成する
     for ($i = 0; $i < $config['fixture_product_num'] - 1; $i++) {
         createProduct($container);
@@ -183,7 +183,8 @@ $createCustomer = function ($email = null, $active = true) use ($container, $fak
 /** 会員を生成するクロージャ. */
 Fixtures::add('createCustomer', $createCustomer);
 
-$createOrders = function ($Customer, $numberOfOrders = 5) use ($container, $entityManager, $generator, $faker) {
+$createOrders = function ($Customer, $numberOfOrders = 5) use ($container, $entityManager, $faker) {
+    $generator = $container->get('Eccube\Tests\Fixture\Generator');
     $Orders = array();
     for ($i = 0; $i < $numberOfOrders; $i++) {
         $Order = $generator->createOrder($Customer);
