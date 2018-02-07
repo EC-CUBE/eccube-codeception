@@ -51,6 +51,7 @@ class TaxManagePage extends AbstractAdminPage
     {
         $this->tester->click("#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(${rowNum}) .icon_edit .dropdown a");
         $this->tester->click("#form1 div div div:nth-child(5) .box-body div table tbody tr:nth-child(${rowNum}) .icon_edit .dropdown ul li:nth-child(2) a");
+        $this->tester->acceptPopup();
         return $this;
     }
 

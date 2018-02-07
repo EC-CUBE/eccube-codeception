@@ -14,7 +14,7 @@ class PaymentEditPage extends AbstractAdminPage
     public static function at($I)
     {
         $page = new self($I);
-        return $page->atPage('ショップ設定支払方法管理');
+        return $page->atPage('基本情報設定支払方法設定');
     }
 
     public function 入力_支払方法($value) {
