@@ -105,7 +105,7 @@ class EA06ContentsManagementCest
         $I->see('folder1', $FileManagePage->パンくず(1));
 
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/content/file_manager');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/content/file_manager');
         $I->see('コンテンツ管理ファイル管理', '#main .page-header');
 
         FileManagePage::go($I)
