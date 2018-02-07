@@ -27,7 +27,7 @@ abstract class AbstractAdminPage
     protected function goPage($url, $pageTitle)
     {
         $config = Fixtures::get('config');
-        $this->tester->amOnPage('/'.$config['admin_route'].$url);
+        $this->tester->amOnPage('/'.$config['eccube_admin_route'].$url);
         return $this->atPage($pageTitle);
     }
 
