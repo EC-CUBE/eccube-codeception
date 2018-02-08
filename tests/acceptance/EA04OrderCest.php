@@ -44,7 +44,7 @@ class EA04OrderCest
      * @env firefox
      * @env chrome
      */
-    public function order_downloadCsv(\AcceptanceTester $I)
+    public function order_受注CSVダウンロード(\AcceptanceTester $I)
     {
         $I->wantTo('EA0401-UC02-T01 受注CSVダウンロード');
 
@@ -60,7 +60,7 @@ class EA04OrderCest
         $I->assertGreaterOrEquals(count($TargetOrders), count(file($OrderCSV)), '検索結果以上の行数があるはず');
     }
 
-    public function order_downloadWithChangeSetting(\AcceptanceTester $I)
+    public function order_受注情報のCSV出力項目変更設定(\AcceptanceTester $I)
     {
         $I->wantTo('EA0401-UC02-T02 受注情報のCSV出力項目変更設定');
 
@@ -118,7 +118,7 @@ class EA04OrderCest
         $I->assertEquals(4, $value);
     }
 
-    public function order_editOrder(\AcceptanceTester $I)
+    public function order_受注編集(\AcceptanceTester $I)
     {
         $I->wantTo('EA0401-UC05-T01(& UC05-T02/UC06-T01) 受注編集');
 
@@ -165,7 +165,7 @@ class EA04OrderCest
         $I->see('受注情報を保存しました。', OrderEditPage::$登録完了メッセージ);
     }
 
-    public function order_deleteOrder(\AcceptanceTester $I)
+    public function order_受注削除(\AcceptanceTester $I)
     {
         $I->getScenario()->skip('Order depend on shipping => skip it');
 
@@ -195,7 +195,7 @@ class EA04OrderCest
         $I->assertEquals($OrderNumForDontDel, $OrderListPage->一覧_注文番号(1));
     }
 
-    public function order_checkSendMail(\AcceptanceTester $I)
+    public function order_受注メール通知(\AcceptanceTester $I)
     {
         $I->wantTo('EA0402-UC01-T01 受注メール通知');
 
@@ -206,7 +206,7 @@ class EA04OrderCest
         });
         $Order = array_pop($NewOrders);
         $OrderListPage = OrderManagePage::go($I)->検索($Order->getId());
-        $I->see('検索結果 1 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
+        $I->see('1', OrderManagePage::$検索結果_メッセージ);
 
         $OrderListPage->一覧_メール通知(1);
 
@@ -220,7 +220,7 @@ class EA04OrderCest
         $I->seeInLastEmailSubjectTo('admin@example.com', 'ご注文ありがとうございます');
     }
 
-    public function order_checkSendMailAll(\AcceptanceTester $I)
+    public function order_一括メール通知(\AcceptanceTester $I)
     {
         $I->wantTo('EA0402-UC02-T01(& UC02-T02) 一括メール通知');
 
@@ -246,7 +246,7 @@ class EA04OrderCest
         $I->seeEmailCount(20);
     }
 
-    public function order_createOrder(\AcceptanceTester $I)
+    public function order_受注登録(\AcceptanceTester $I)
     {
         $I->getScenario()->skip('Function incomplete');
 
