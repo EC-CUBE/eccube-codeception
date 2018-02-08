@@ -23,7 +23,6 @@ services:
       - MAILER_URL=smtp://mailcatcher:1025
       - ECCUBE_AUTH_MAGIC=secret
       - ECCUBE_FORCE_SSL=false
-      - ECCUBE_ADMIN_ALLOW_HOSTS='["127.0.0.1"]'
       - ECCUBE_COOKIE_LIFETIME=0
       - ECCUBE_COOKIE_NAME=eccube
       - ECCUBE_LOCALE=ja
