@@ -137,7 +137,7 @@ class EA04OrderCest
             ->受注情報登録();
 
         /* 異常系 */
-        $I->see('空であってはなりません。', OrderEditPage::$姓_エラーメッセージ);
+        $I->see('入力されていません。', OrderEditPage::$姓_エラーメッセージ);
 
         /* 正常系 */
         $OrderRegisterPage
@@ -177,7 +177,7 @@ class EA04OrderCest
         });
 
         $OrderListPage = OrderManagePage::go($I)->検索();
-        $I->see(''.count($TargetOrders).'', OrderManagePage::$検索結果_メッセージ);
+        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
         // 削除
         $OrderNumForDel = $OrderListPage->一覧_注文番号(1);
@@ -206,7 +206,7 @@ class EA04OrderCest
         });
         $Order = array_pop($NewOrders);
         $OrderListPage = OrderManagePage::go($I)->検索($Order->getId());
-        $I->see('1', OrderManagePage::$検索結果_メッセージ);
+        $I->see('検索結果 1 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
 
         $OrderListPage->一覧_メール通知(1);
 
