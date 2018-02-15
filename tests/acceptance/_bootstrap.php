@@ -76,7 +76,7 @@ foreach ($Customers as $Customer) {
         ->getSingleScalarResult();
     if ($num < $config['fixture_order_num']) {
         for ($i = 0; $i < $config['fixture_order_num'] - $num; $i++) {
-            $Status = $container->get('Eccube\Repository\Master\OrderStatusRepository')->find($faker->numberBetween(1, 8));
+            $Status = $entityManager->getRepository('Eccube\Entity\Master\OrderStatus')->find($faker->numberBetween(1, 8));
             $OrderDate = $faker->dateTimeThisYear();
             createOrder($container, $Customer, $Product->getProductClasses()->toArray(), $Delivery, $charge, $discount, $Status, $OrderDate);
         }
@@ -188,7 +188,7 @@ $createOrders = function ($Customer, $numberOfOrders = 5) use ($container, $enti
     $Orders = array();
     for ($i = 0; $i < $numberOfOrders; $i++) {
         $Order = $generator->createOrder($Customer);
-        $Status = $container->get('Eccube\Repository\Master\OrderStatusRepository')->find($faker->numberBetween(1, 7));
+        $Status = $entityManager->getRepository('Eccube\Entity\Master\OrderStatus')->find($faker->numberBetween(1, 7));
         $OrderDate = $faker->dateTimeThisYear();
         $Order->setOrderStatus($Status);
         $Order->setOrderDate($OrderDate);
