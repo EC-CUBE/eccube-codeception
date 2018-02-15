@@ -26,7 +26,7 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/system');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/system');
         $I->see('システム設定システム情報', '#main .page-header');
 
         $I->see('システム情報', '#main .container-fluid div:nth-child(1) .box-header .box-title');
@@ -39,7 +39,7 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/member');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/member');
         $I->see('システム設定メンバー管理', '#main .page-header');
 
         $I->see('メンバー管理', '#main .container-fluid div:nth-child(1) .box-header .box-title');
@@ -52,7 +52,7 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/member');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/member');
         $I->see('システム設定メンバー管理', '#main .page-header');
 
         $I->click('#main .container-fluid .btn_area a');
@@ -78,7 +78,7 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/member');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/member');
         $I->see('システム設定メンバー管理', '#main .page-header');
 
         $I->click('#main .container-fluid .btn_area a');
@@ -103,7 +103,7 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/member');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/member');
         $I->see('システム設定メンバー管理', '#main .page-header');
 
         $I->click('#main .container-fluid .btn_area a');
@@ -119,7 +119,7 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/member');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/member');
         $I->see('システム設定メンバー管理', '#main .page-header');
 
         $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(5) .dropdown a');
@@ -148,7 +148,7 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/member');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/member');
         $I->see('システム設定メンバー管理', '#main .page-header');
 
         $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(5) .dropdown a');
@@ -168,7 +168,7 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/member');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/member');
         $I->see('システム設定メンバー管理', '#main .page-header');
 
         $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(5) .dropdown a');
@@ -187,7 +187,7 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/member');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/member');
         $I->see('システム設定メンバー管理', '#main .page-header');
 
         $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(5) .dropdown a');
@@ -202,7 +202,7 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/member');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/member');
         $I->see('システム設定メンバー管理', '#main .page-header');
 
         $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(2) td:nth-child(5) .dropdown a');
@@ -217,7 +217,7 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/member');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/member');
         $I->see('システム設定メンバー管理', '#main .page-header');
 
         $I->click('#main .container-fluid .table_list .table tbody tr:nth-child(1) td:nth-child(5) .dropdown a');
@@ -234,7 +234,7 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/member');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/member');
         $I->see('システム設定メンバー管理', '#main .page-header');
 
         $I->click('#main #member_list__menu_box--1 a');
@@ -249,7 +249,7 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/security');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/security');
         $I->see('システム設定セキュリティ管理', '#main .page-header');
         $I->see('セキュリティ機能設定', '#main .container-fluid div:nth-child(1) .box-header .box-title');
     }
@@ -260,7 +260,7 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/security');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/security');
         $I->see('システム設定セキュリティ管理', '#main .page-header');
 
         $I->fillField(['id' => 'admin_security_admin_route_dir'], 'admin2');
@@ -268,7 +268,7 @@ class EA08SysteminfoCest
         $I->loginAsAdmin('', '', 'admin2');
 
         $I->amOnPage('/admin2/setting/system/security');
-        $I->fillField(['id' => 'admin_security_admin_route_dir'], $config['admin_route']);
+        $I->fillField(['id' => 'admin_security_admin_route_dir'], $config['eccube_admin_route']);
         $I->click('#aside_column div div div div div button');
         $I->loginAsAdmin();
     }
@@ -285,7 +285,7 @@ class EA08SysteminfoCest
 
         $config = Fixtures::get('config');
         $httpsBaseUrl = str_replace('http://', 'https://', $httpBaseUrl);
-        $I->amOnUrl($httpsBaseUrl.$config['admin_route'].'/setting/system/security');
+        $I->amOnUrl($httpsBaseUrl.$config['eccube_admin_route'].'/setting/system/security');
         $I->checkOption(['id' => 'admin_security_force_ssl']);
         $I->click('#aside_column div div div div div button');
 
@@ -294,7 +294,7 @@ class EA08SysteminfoCest
         $I->assertRegExp('/^https:\/\//', $I->executeJS('return location.href'), 'httpsにリダイレクトされる');
 
         // 後続テストのために戻しておく
-        $I->amOnUrl($httpsBaseUrl.$config['admin_route'].'/setting/system/security');
+        $I->amOnUrl($httpsBaseUrl.$config['eccube_admin_route'].'/setting/system/security');
         $I->uncheckOption(['id' => 'admin_security_force_ssl']);
         $I->click('#aside_column div div div div div button');
     }
@@ -334,12 +334,11 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/log');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/log');
         $I->see('システム設定EC-CUBE ログ表示', '#main .page-header');
 
-        $log = $I->grabValueFrom(['id' => 'admin_system_log_files']);
-        $expect = "site_".date('Y-m-d').".log";
-        $I->assertEquals($expect, $log);
+        $option = $I->grabTextFrom('#admin_system_log_files option:nth-child(1)');
+        $I->selectOption("#admin_system_log_files", $option);
 
         $I->fillField(['id' => 'line-max'], '1');
         $I->click(['css' => '#form1 button']);
@@ -353,7 +352,7 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/masterdata');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/masterdata');
         $I->see('システム設定マスターデータ管理', '#main .page-header');
 
         $I->selectOption(['id' => 'admin_system_masterdata_masterdata'], ['Eccube-Entity-Master-Sex' => 'mtb_sex']);
@@ -365,7 +364,7 @@ class EA08SysteminfoCest
         $I->click(['css' => '#form2 #aside_column button']);
 
         $I->see('登録が完了しました。', '#main .container-fluid div:nth-child(1) .alert-success');
-        $I->amOnPage('/'.$config['admin_route'].'/customer/new');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/customer/new');
         $I->see('無回答', '#customer_form #admin_customer_sex');
     }
 
@@ -384,13 +383,13 @@ class EA08SysteminfoCest
 
         // 表示
         $config = Fixtures::get('config');
-        $I->amOnPage('/'.$config['admin_route'].'/setting/system/security');
+        $I->amOnPage('/'.$config['eccube_admin_route'].'/setting/system/security');
         $I->see('システム設定セキュリティ管理', '#main .page-header');
 
         $I->fillField(['id' => 'admin_security_admin_allow_hosts'], '1.1.1.1');
         $I->click('#aside_column div div div div div button');
 
-        $I->amOnPage('/'.$config['admin_route']);
+        $I->amOnPage('/'.$config['eccube_admin_route']);
         $I->see('アクセスできません。', '#main .container-fluid h1');
 
         $test_config = Fixtures::get('test_config');
