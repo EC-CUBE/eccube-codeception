@@ -8,7 +8,10 @@ ARG DBTYPE
 ARG ECCUBE_REPOS
 ARG ECCUBE_BRANCH
 ARG DIRTYPE="root"
+
 ENV ECCUBE_PATH=${ECCUBE_PATH}
+ENV DATABASE_URL=${DATABASE_URL}
+ENV DATABASE_SERVER_VERSION=${DATABASE_SERVER_VERSION}
 
 RUN useradd -ms /bin/bash ${PGUSER}
 
@@ -25,6 +28,10 @@ USER www-data
 ADD clone-${DIRTYPE}.sh /clone.sh
 RUN /clone.sh
 RUN (cd ${ECCUBE_PATH} && echo "Current revision: $(git log -n 1 --format=%H) ($(git rev-parse --abbrev-ref HEAD))")
+RUN { \
+    echo "APP_ENV=prod"; \
+    echo "APP_DEBUG=0"; \
+} > ${ECCUBE_PATH}/.env
 
 WORKDIR ${ECCUBE_PATH}
 RUN composer install

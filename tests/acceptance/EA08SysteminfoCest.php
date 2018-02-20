@@ -390,19 +390,6 @@ class EA08SysteminfoCest
         $I->click('#aside_column div div div div div button');
 
         $I->amOnPage('/'.$config['eccube_admin_route']);
-        $I->see('アクセスできません。', '#main .container-fluid h1');
-
-        $test_config = Fixtures::get('test_config');
-        $eccube = $test_config['eccube_path'];
-        $configfile = $eccube."/app/config/eccube/config.php";
-        $lines = file($configfile);
-        $fh = fopen($configfile, 'w');
-        foreach ($lines as $line) {
-            if(preg_match('/1\.1\.1\.1/', $line)) {
-                continue;
-            }
-            fwrite($fh, $line);
-        }
-        fclose($fh);
+        $I->see('アクセスできません。', '.ec-layoutRole .ec-reportHeading');
     }
 }

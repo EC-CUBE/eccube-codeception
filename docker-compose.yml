@@ -17,8 +17,6 @@ services:
         - DBTYPE=pgsql
     environment:
       - TZ=Asia/Tokyo
-      - APP_ENV=prod
-      - APP_DEBUG=1
       - APP_SECRET=s$cretf0rt3st
       - MAILER_URL=smtp://mailcatcher:1025
       - ECCUBE_AUTH_MAGIC=secret
