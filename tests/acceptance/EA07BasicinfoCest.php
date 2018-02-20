@@ -37,7 +37,7 @@ class EA07BasicinfoCest
             ->入力_会社名('会社名')
             ->登録();
 
-        $I->see('基本情報を保存しました。', ShopSettingPage::$登録完了メッセージ);
+        $I->see('登録が完了しました。', ShopSettingPage::$登録完了メッセージ);
     }
 
     public function basicinfo_支払方法一覧(\AcceptanceTester $I)
