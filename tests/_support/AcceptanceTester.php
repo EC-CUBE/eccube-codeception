@@ -51,7 +51,7 @@ class AcceptanceTester extends \Codeception\Actor
     {
         $I = $this;
         $isLogin = $I->grabTextFrom('#header .navbar-menu .dropdown .dropdown-toggle');
-        if ($isLogin == '管理者 様') {
+        if ($isLogin == '管理者') {
             $I->click('#header .navbar-menu .dropdown .dropdown-toggle');
             $config = Fixtures::get('config');
             $I->amOnPage('/'.$config['eccube_admin_route'].'/logout');
