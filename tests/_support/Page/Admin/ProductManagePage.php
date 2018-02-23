@@ -6,15 +6,16 @@ namespace Page\Admin;
  * 商品管理/商品マスター
  * @package Page\Admin
  */
-class ProductManagePage extends AbstractAdminPage
+class ProductManagePage extends AbstractAdminPageStyleGuide
 {
     public static $URL = '/product';
 
     public static $検索条件_プロダクト = ['id' => 'admin_search_product_id'];
-    public static $検索ボタン = '#search_form button';
+    public static $検索ボタン = '#search_form .c-outsideBlock__contents button';
 
-    public static $検索結果_メッセージ = '#main .container-fluid .box .box-title';
-    public static $検索結果_一覧 = "#main .container-fluid .box-body .item_list";
+    public static $検索結果_メッセージ = '#search_form > div.c-outsideBlock__contents.mb-5 > span';
+    public static $検索結果_結果なしメッセージ = '.c-contentsArea .c-contentsArea__cols div.text-center.h5';
+    public static $検索結果_一覧 = "#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody";
 
     protected $tester;
 
@@ -41,7 +42,7 @@ class ProductManagePage extends AbstractAdminPage
     {
         $this->tester->fillField(self::$検索条件_プロダクト, $product);
         $this->tester->click(self::$検索ボタン);
-        $this->tester->see('商品管理商品マスター', '#main .page-header');
+        $this->tester->see('商品管理商品マスター', '.c-pageTitle h2.c-pageTitle__title');
         return $this;
     }
 
@@ -52,7 +53,8 @@ class ProductManagePage extends AbstractAdminPage
      */
     public function 検索結果_規格設定($rowNum)
     {
-        $this->検索結果_オプション($rowNum);
+        $this->tester->getScenario()->incomplete('未実装：商品マスター画面での規格一覧の閲覧は未実装');
+
         $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(1) > a");
     }
 
@@ -63,8 +65,7 @@ class ProductManagePage extends AbstractAdminPage
      */
     public function 検索結果_複製($rowNum)
     {
-        $this->検索結果_オプション($rowNum);
-        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(3) > a");
+        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(2) > a");
         return $this;
     }
 
@@ -75,8 +76,7 @@ class ProductManagePage extends AbstractAdminPage
      */
     public function 検索結果_確認($rowNum)
     {
-        $this->検索結果_オプション($rowNum);
-        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(2) > a");
+        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(1) > a");
         return $this;
     }
 
@@ -87,8 +87,7 @@ class ProductManagePage extends AbstractAdminPage
      */
     public function 検索結果_選択($rowNum)
     {
-        $this->検索結果_オプション($rowNum);
-        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(3) > a");
+        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(4) > a");
         return $this;
     }
 
@@ -99,34 +98,21 @@ class ProductManagePage extends AbstractAdminPage
      */
     public function 検索結果_削除($rowNum)
     {
-        $this->検索結果_オプション($rowNum);
+        $this->tester->getScenario()->incomplete('未実装：商品マスター画面での削除は未実装');
+
         $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(4) > a");
-        return $this;
-    }
-
-    /**
-     * 検索結果の指定した行の「...」をクリックする。
-     * @param int $rowNum 検索結果の行番号(1から始まる)
-     * @return $this
-     */
-    private function 検索結果_オプション($rowNum)
-    {
-
-        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > a");
         return $this;
     }
 
     public function CSVダウンロード()
     {
-        $this->tester->click('#main #result_list__csv_menu > a');
-        $this->tester->click('#main #result_list__csv_menu > ul > li:nth-child(1) > a');
+        $this->tester->click('.c-contentsArea__cols .row div:nth-child(2) div:nth-child(2) button:nth-child(1)');
         return $this;
     }
 
     public function CSV出力項目設定()
     {
-        $this->tester->click('#main #result_list__csv_menu > a');
-        $this->tester->click('#main #result_list__csv_menu > ul > li:nth-child(2) > a');
+        $this->tester->click('.c-contentsArea__cols .row div:nth-child(2) div:nth-child(2) button:nth-child(2)');
         return $this;
     }
 }

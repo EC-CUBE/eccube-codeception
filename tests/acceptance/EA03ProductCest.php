@@ -37,7 +37,7 @@ class EA03ProductCest
 
         ProductManagePage::go($I)->検索('フォーク');
 
-        $I->see("検索結果 1 件 が該当しました", ProductManagePage::$検索結果_メッセージ);
+        $I->see("検索結果：1件が該当しました", ProductManagePage::$検索結果_メッセージ);
         $I->see("ディナーフォーク", ProductManagePage::$検索結果_一覧);
     }
 
@@ -47,7 +47,7 @@ class EA03ProductCest
 
         ProductManagePage::go($I)->検索('お箸');
 
-        $I->see("検索条件に該当するデータがありませんでした。", ProductManagePage::$検索結果_メッセージ);
+        $I->see("検索条件に合致するデータが見つかりませんでした", ProductManagePage::$検索結果_結果なしメッセージ);
     }
 
     /**
@@ -64,7 +64,7 @@ class EA03ProductCest
             ->検索()
             ->CSVダウンロード();
 
-        $I->see("検索結果 ".count($Products)." 件 が該当しました", ProductManagePage::$検索結果_メッセージ);
+        $I->see("検索結果：".count($Products)."件が該当しました", ProductManagePage::$検索結果_メッセージ);
 
         $ProductCSV = $I->getLastDownloadFile('/^product_\d{14}\.csv$/');
         $I->assertGreaterOrEquals(count($Products), count(file($ProductCSV)), '検索結果以上の行数があるはず');
@@ -474,7 +474,7 @@ class EA03ProductCest
         $I->wantTo('EA0306-UC01-T01 商品CSV登録');
 
         ProductManagePage::go($I)->検索('アップロード商品');
-        $I->see('検索条件に該当するデータがありませんでした。', ProductManagePage::$検索結果_メッセージ);
+        $I->see('検索条件に合致するデータが見つかりませんでした', ProductManagePage::$検索結果_結果なしメッセージ);
 
         ProductCsvUploadPage::go($I)
             ->入力_CSVファイル('product.csv')
@@ -482,7 +482,7 @@ class EA03ProductCest
         $I->see('商品登録CSVファイルをアップロードしました', CategoryCsvUploadPage::$完了メッセージ);
 
         ProductManagePage::go($I)->検索('アップロード商品');
-        $I->see('検索結果 3 件 が該当しました', ProductManagePage::$検索結果_メッセージ);
+        $I->see("検索結果：3件が該当しました", ProductManagePage::$検索結果_メッセージ);
     }
 
     /**
