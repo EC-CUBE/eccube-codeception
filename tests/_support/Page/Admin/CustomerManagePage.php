@@ -33,8 +33,7 @@ class CustomerManagePage extends AbstractAdminPage
 
     public function 一覧_編集($rowNum)
     {
-        $this->一覧_メニュー($rowNum);
-        $this->tester->click("#search_form > div.row > div > div > div.box-body > div.table_list > div > table > tbody > tr:nth-child(${rowNum}) > td.icon_edit > div > ul > li:nth-child(1) > a");
+        $this->tester->click("#result_list_main__list tbody tr:nth-child(${rowNum}) td:nth-child(2) a");
         return $this;
     }
 
