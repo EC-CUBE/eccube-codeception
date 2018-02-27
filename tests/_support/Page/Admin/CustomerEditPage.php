@@ -4,10 +4,10 @@
 namespace Page\Admin;
 
 
-class CustomerEditPage extends AbstractAdminPage
+class CustomerEditPage extends AbstractAdminPageStyleGuide
 {
 
-    public static $登録完了メッセージ = '#main .container-fluid div:nth-child(1) .alert-success';
+    public static $登録完了メッセージ = '#page_admin_customer_edit > div > div.c-contentsArea > div.alert.alert-success.alert-dismissible.fade.show.m-3 > span';
 
     /**
      * CustomerRegisterPage constructor.
@@ -121,7 +121,7 @@ class CustomerEditPage extends AbstractAdminPage
 
     public function 登録()
     {
-        $this->tester->click('#button_box__insert_button > div > button');
+        $this->tester->click('#customer_form > div.c-conversionArea > div > div > div:nth-child(2) > div > div:nth-child(2) > button');
         return $this;
     }
 
