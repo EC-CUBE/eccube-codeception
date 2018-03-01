@@ -14,7 +14,7 @@ use Page\Admin\TopPage;
 class EA01TopCest
 {
     const ページタイトル = '#main .page-header';
-    const ページタイトルStyleGuide = '.c-pageTitle h2.c-pageTitle__title';
+    const ページタイトルStyleGuide = '.c-pageTitle';
 
     public function _before(\AcceptanceTester $I)
     {
