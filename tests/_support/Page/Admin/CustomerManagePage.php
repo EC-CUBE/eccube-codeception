@@ -3,9 +3,13 @@
 namespace Page\Admin;
 
 
-class CustomerManagePage extends AbstractAdminPage
+class CustomerManagePage extends AbstractAdminPageStyleGuide
 {
-    public static $検索結果メッセージ = '#search_form > div.row > div > div > div.box-header.with-arrow > h3';
+    public static $URL = '/customer';
+
+    public static $検索ボタン = '#search_form .c-outsideBlock__contents button';
+    public static $検索結果メッセージ = '#search_form > div.c-outsideBlock__contents.mb-5 > span';
+    public static $検索結果_結果なしメッセージ = '.c-contentsArea .c-contentsArea__cols div.text-center.h5';
     public static $検索条件_仮会員 = ['id' => 'admin_search_customer_customer_status_0'];
     public static $検索条件_本会員 = ['id' => 'admin_search_customer_customer_status_1'];
 
@@ -21,19 +25,20 @@ class CustomerManagePage extends AbstractAdminPage
     public static function go(\AcceptanceTester $I)
     {
         $page = new self($I);
-        return $page->goPage('/customer', '会員管理会員マスター');
+        return $page->goPage(self::$URL, '会員管理会員マスター');
     }
 
     public function 検索($value = '')
     {
         $this->tester->fillField(['id' => 'admin_search_customer_multi'], $value);
-        $this->tester->click('#search_form > div.search-box > div.row.btn_area > div > button');
+        $this->tester->click(self::$検索ボタン);
+        $this->tester->see('会員管理会員マスター', '.c-pageTitle h2.c-pageTitle__title');
         return $this;
     }
 
     public function 一覧_編集($rowNum)
     {
-        $this->tester->click("#result_list_main__list tbody tr:nth-child(${rowNum}) td:nth-child(2) a");
+        $this->tester->click("#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(2) > a");
         return $this;
     }
 
@@ -59,20 +64,13 @@ class CustomerManagePage extends AbstractAdminPage
 
     public function CSVダウンロード()
     {
-        $this->CSVダウンロードメニュー();
-        $this->tester->click('#search_form > div.row > div > div > div.box-body > div.row > div > ul > li.dropdown.open > ul > li:nth-child(1) > a');
+        $this->tester->click('#search_form > div.c-contentsArea__cols > div > div > div.row.justify-content-between.mb-2 > div.col-5.text-right > div:nth-child(2) > div > button:nth-child(1)');
         return $this;
     }
 
     public function CSV出力項目設定()
     {
-        $this->CSVダウンロードメニュー();
-        $this->tester->click('#search_form > div.row > div > div > div.box-body > div.row > div > ul > li.dropdown.open > ul > li:nth-child(2) > a');
-    }
-
-    private function CSVダウンロードメニュー()
-    {
-        $this->tester->click('#search_form > div.row > div > div > div.box-body > div.row > div > ul > li:nth-child(2) > a');
+        $this->tester->click('#search_form > div.c-contentsArea__cols > div > div > div.row.justify-content-between.mb-2 > div.col-5.text-right > div:nth-child(2) > div > button:nth-child(2)');
     }
 
     public function 一覧_会員ID($rowNum)
