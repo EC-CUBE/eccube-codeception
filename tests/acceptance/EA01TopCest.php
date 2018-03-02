@@ -14,7 +14,7 @@ use Page\Admin\TopPage;
 class EA01TopCest
 {
     const ページタイトル = '#main .page-header';
-    const ページタイトルStyleGuide = '.c-pageTitle';
+    const ページタイトルStyleGuide = '.c-pageTitle h2.c-pageTitle__title';
 
     public function _before(\AcceptanceTester $I)
     {
@@ -84,6 +84,6 @@ class EA01TopCest
 
         // ショップ情報の会員数をクリックすると会員管理に遷移することを確認
         $I->click(TopPage::$ショップ状況_会員数);
-        $I->see('会員マスター', self::ページタイトル);
+        $I->see('会員マスター', self::ページタイトルStyleGuide);
     }
 }

@@ -35,7 +35,7 @@ class EA05CustomerCest
         $customer = $createCustomer();
 
         $CustomerListPage->検索($customer->getEmail());
-        $I->see('検索結果 1 件 が該当しました', CustomerManagePage::$検索結果メッセージ);
+        $I->see('検索結果：1件が該当しました', CustomerManagePage::$検索結果メッセージ);
     }
 
     public function customer_検索結果なし(\AcceptanceTester $I)
@@ -46,7 +46,8 @@ class EA05CustomerCest
 
         CustomerManagePage::go($I)
             ->検索($email);
-        $I->see('検索条件に該当するデータがありませんでした。', CustomerManagePage::$検索結果メッセージ);
+
+        $I->see('検索条件に合致するデータが見つかりませんでした', CustomerManagePage::$検索結果_結果なしメッセージ);
     }
 
     public function customer_会員登録(\AcceptanceTester $I)
@@ -103,7 +104,7 @@ class EA05CustomerCest
         $CustomerListPage = CustomerManagePage::go($I)
             ->検索($customer->getEmail());
 
-        $I->see('検索結果 1 件 が該当しました',CustomerManagePage::$検索結果メッセージ);
+        $I->see('検索結果：1件が該当しました', CustomerManagePage::$検索結果メッセージ);
 
         $CustomerListPage->一覧_編集(1);
 
@@ -135,7 +136,7 @@ class EA05CustomerCest
         $CustomerListPage = CustomerManagePage::go($I)
             ->検索($customer->getEmail());
 
-        $I->see('検索結果 1 件 が該当しました',CustomerManagePage::$検索結果メッセージ);
+        $I->see('検索結果：1件が該当しました' ,CustomerManagePage::$検索結果メッセージ);
 
         $CustomerListPage->一覧_編集(1);
 
@@ -149,6 +150,7 @@ class EA05CustomerCest
 
     public function customer_会員削除(\AcceptanceTester $I)
     {
+        $I->getScenario()->incomplete('未実装：会員削除は未実装');
         $I->wantTo('EA0501-UC03-T01 会員削除');
 
         $createCustomer = Fixtures::get('createCustomer');
@@ -160,11 +162,12 @@ class EA05CustomerCest
         $CustomerManagePage->一覧_削除(1);
         $I->acceptPopup();
 
-        $I->see('検索条件に該当するデータがありませんでした', CustomerManagePage::$検索結果メッセージ);
+        $I->see('検索条件に合致するデータが見つかりませんでした', CustomerManagePage::$検索結果_結果なしメッセージ);
     }
 
     public function customer_会員削除キャンセル(\AcceptanceTester $I)
     {
+        $I->getScenario()->incomplete('未実装：会員削除は未実装');
         $I->wantTo('EA0501-UC03-T02 会員削除キャンセル');
 
         $createCustomer = Fixtures::get('createCustomer');
@@ -213,6 +216,7 @@ class EA05CustomerCest
 
     public function customer_仮会員メール再送(\AcceptanceTester $I)
     {
+        $I->getScenario()->incomplete('未実装：仮会員メール再送は未実装');
         $I->wantTo('EA0501-UC06-T01(& UC06-T02) 仮会員メール再送');
 
         $I->resetEmails();
