@@ -32,7 +32,7 @@ class CustomerManagePage extends AbstractAdminPageStyleGuide
     {
         $this->tester->fillField(['id' => 'admin_search_customer_multi'], $value);
         $this->tester->click(self::$検索ボタン);
-        $this->tester->see('会員マスター会員管理', '.c-pageTitle h2.c-pageTitle__title');
+        $this->tester->see('会員マスター会員管理', '.c-pageTitle');
         return $this;
     }
 
