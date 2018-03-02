@@ -20,13 +20,13 @@ class CustomerEditPage extends AbstractAdminPageStyleGuide
     public static function go($I)
     {
         $page = new self($I);
-        return $page->goPage('/customer/new', '会員管理会員登録・編集');
+        return $page->goPage('/customer/new', '会員登録・編集会員管理');
     }
 
     public static function at($I)
     {
         $page = new self($I);
-        return $page->atPage('会員管理会員登録・編集');
+        return $page->atPage('会員登録・編集会員管理');
     }
 
     public function 入力_姓($value)
