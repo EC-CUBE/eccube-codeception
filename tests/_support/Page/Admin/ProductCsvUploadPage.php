@@ -4,7 +4,7 @@ namespace Page\Admin;
 
 class ProductCsvUploadPage extends AbstractAdminPage
 {
-    public static $完了メッセージ = '#main > div > div:nth-child(1) > div.alert-success';
+    public static $完了メッセージ = 'div.c-container > div.c-contentsArea > div.alert-success';
 
     /**
      * ProductCsvUploadPage constructor.
