@@ -4,12 +4,12 @@
 namespace Page\Admin;
 
 
-class OrderEditPage extends AbstractAdminPage
+class OrderEditPage extends AbstractAdminPageStyleGuide
 {
 
-    public static $姓_エラーメッセージ = '#aside_wrap > form > div > div:nth-child(2) > div.box-body.accpanel > div > div:nth-child(2) > div > span > ul > p';
+    public static $姓_エラーメッセージ = '#ordererInfo > div > div:nth-child(2) > div.col > span > ul > p';
 
-    public static $登録完了メッセージ = '#main .container-fluid div:nth-child(1) .alert-success';
+    public static $登録完了メッセージ = '#page_admin_order_edit > div > div.c-contentsArea > div.alert.alert-success.alert-dismissible.fade.show.m-3 > span';
 
     /**
      * OrderRegisterPage constructor.
@@ -22,14 +22,14 @@ class OrderEditPage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new self($I);
-        $page->goPage('/order/new', '受注管理受注登録・編集');
+        $page->goPage('/order/new', '受注登録受注管理');
         return $page;
     }
 
     public static function at($I)
     {
         $page = new self($I);
-        $page->atPage('受注管理受注登録・編集');
+        $page->atPage('受注登録受注管理');
         return $page;
     }
 
@@ -141,8 +141,7 @@ class OrderEditPage extends AbstractAdminPage
 
     public function 受注情報登録()
     {
-        $this->tester->scrollTo('#aside_wrap > form > div > div.row.btn_area > p > button');
-        $this->tester->click('#aside_wrap > form > div > div.row.btn_area > p > button');
+        $this->tester->click('#form1 > div.c-conversionArea > div > div > div:nth-child(2) > div > div > button');
         return $this;
     }
 }
