@@ -4,10 +4,10 @@
 namespace Page\Admin;
 
 
-class LayoutEditPage extends AbstractAdminPage
+class LayoutEditPage extends AbstractAdminPageStyleGuide
 {
 
-    public static $登録完了メッセージ = '#main .container-fluid div:nth-child(1) .alert-success';
+    public static $登録完了メッセージ = '#page_admin_content_layout_edit > div.c-container > div.c-contentsArea > div.alert.alert-success.alert-dismissible.fade.show.m-3 > span';
 
     /**
      * LayoutEditPage constructor.
@@ -20,7 +20,7 @@ class LayoutEditPage extends AbstractAdminPage
     public static function at($I)
     {
         $page = new self($I);
-        return $page->atPage('コンテンツ管理レイアウト管理');
+        return $page->atPage('レイアウト管理コンテンツ管理');
     }
 
     public function 登録()
