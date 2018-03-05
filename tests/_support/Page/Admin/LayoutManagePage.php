@@ -24,7 +24,7 @@
 namespace Page\Admin;
 
 
-class LayoutManagePage extends AbstractAdminPage
+class LayoutManagePage extends AbstractAdminPageStyleGuide
 {
     public function __construct(\AcceptanceTester $I)
     {
@@ -34,17 +34,18 @@ class LayoutManagePage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new self($I);
-        return $page->goPage('/content/layout', 'コンテンツ管理レイアウト管理');
+        return $page->goPage('/content/layout', 'レイアウト管理コンテンツ管理');
     }
 
     public function レイアウト編集($layoutName)
     {
-        $this->tester->click(['xpath' => "//div[@id='sortable_list_box__list']//div[@class='item_pattern td'][translate(text(), ' \r\n', '')='${layoutName}']/parent::node()/div[@class='icon_edit td']/div/a"]);
-        $this->tester->click(['xpath' => "//div[@id='sortable_list_box__list']//div[@class='item_pattern td'][translate(text(), ' \r\n', '')='${layoutName}']/parent::node()/div[@class='icon_edit td']/div/ul/li[1]/a"]);
+        $this->tester->click(['xpath' => "//*[@id='pills-pc']//div[a]/a[translate(text(), ' \r\n', '')='${layoutName}']"]);
     }
 
     public function 削除($layoutName)
     {
+        $this->tester->getScenario()->incomplete('未実装：レイアウトの削除は未実装');
+
         $this->tester->click(['xpath' => "//div[@id='sortable_list_box__list']//div[@class='item_pattern td'][translate(text(), ' \r\n', '')='${layoutName}']/parent::node()/div[@class='icon_edit td']/div/a"]);
         $this->tester->click(['xpath' => "//div[@id='sortable_list_box__list']//div[@class='item_pattern td'][translate(text(), ' \r\n', '')='${layoutName}']/parent::node()/div[@class='icon_edit td']/div/ul/li[2]/a"]);
     }
