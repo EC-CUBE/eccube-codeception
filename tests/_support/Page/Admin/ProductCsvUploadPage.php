@@ -2,7 +2,7 @@
 
 namespace Page\Admin;
 
-class ProductCsvUploadPage extends AbstractAdminPage
+class ProductCsvUploadPage extends AbstractAdminPageStyleGuide
 {
     public static $完了メッセージ = 'div.c-container > div.c-contentsArea > div.alert-success';
 
