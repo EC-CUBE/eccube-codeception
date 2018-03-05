@@ -17,7 +17,7 @@ class ProductCsvUploadPage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new ProductCsvUploadPage($I);
-        return $page->goPage('/product/product_csv_upload', '商品管理商品登録CSVアップロード');
+        return $page->goPage('/product/product_csv_upload', '商品CSV登録商品管理');
     }
 
     public function 入力_CSVファイル($fileName)
