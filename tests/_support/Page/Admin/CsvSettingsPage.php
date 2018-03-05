@@ -3,11 +3,11 @@
 namespace Page\Admin;
 
 
-class CsvSettingsPage extends AbstractAdminPage
+class CsvSettingsPage extends AbstractAdminPageStyleGuide
 {
     public static $CSVタイプ = ['id' => 'csv-type'];
 
-    public static $登録完了メッセージ = '#main .container-fluid .alert-success';
+    public static $登録完了メッセージ = '.c-container .container-fluid .alert-success';
 
     protected $tester;
 
@@ -22,13 +22,13 @@ class CsvSettingsPage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new CsvSettingsPage($I);
-        return $page->goPage('/setting/shop/csv', '基本情報設定CSV出力項目設定');
+        return $page->goPage('/setting/shop/csv', 'CSV出力項目設定  基本情報設定');
     }
 
     public static function at($I)
     {
         $page = new CsvSettingsPage($I);
-        $page->tester->see('基本情報設定CSV出力項目設定', '#main .page-header');
+        $page->tester->see('CSV出力項目設定  基本情報設定', '.c-container .c-pageTitle__titles');
         return $page;
     }
 
