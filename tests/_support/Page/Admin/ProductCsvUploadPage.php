@@ -2,9 +2,9 @@
 
 namespace Page\Admin;
 
-class ProductCsvUploadPage extends AbstractAdminPage
+class ProductCsvUploadPage extends AbstractAdminPageStyleGuide
 {
-    public static $完了メッセージ = '#main > div > div:nth-child(1) > div.alert-success';
+    public static $完了メッセージ = 'div.c-container > div.c-contentsArea > div.alert-success';
 
     /**
      * ProductCsvUploadPage constructor.
@@ -17,7 +17,7 @@ class ProductCsvUploadPage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new ProductCsvUploadPage($I);
-        return $page->goPage('/product/product_csv_upload', '商品管理商品登録CSVアップロード');
+        return $page->goPage('/product/product_csv_upload', '商品CSV登録商品管理');
     }
 
     public function 入力_CSVファイル($fileName)
