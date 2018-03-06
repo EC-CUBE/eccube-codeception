@@ -19,6 +19,7 @@ use Page\Admin\ProductEditPage;
 class EA03ProductCest
 {
     const ページタイトル = '#main .page-header';
+    const ページタイトルStyleGuide = '.c-pageTitle';
 
     public function _before(\AcceptanceTester $I)
     {
@@ -78,7 +79,7 @@ class EA03ProductCest
             ->検索()
             ->CSV出力項目設定();
 
-        $I->see('基本情報設定CSV出力項目設定', self::ページタイトル);
+        $I->see('CSV出力項目設定基本情報設定', self::ページタイトルStyleGuide);
         $value = $I->grabValueFrom(CsvSettingsPage::$CSVタイプ);
         $I->assertEquals('1', $value);
     }
