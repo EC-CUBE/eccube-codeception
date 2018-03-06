@@ -479,7 +479,7 @@ class EA03ProductCest
         ProductCsvUploadPage::go($I)
             ->入力_CSVファイル('product.csv')
             ->CSVアップロード();
-        $I->see('商品登録CSVファイルをアップロードしました', CategoryCsvUploadPage::$完了メッセージ);
+        $I->see('商品登録CSVファイルをアップロードしました', ProductCsvUploadPage::$完了メッセージ);
 
         ProductManagePage::go($I)->検索('アップロード商品');
         $I->see("検索結果：3件が該当しました", ProductManagePage::$検索結果_メッセージ);
