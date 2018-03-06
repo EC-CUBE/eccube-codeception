@@ -87,5 +87,5 @@ env:
         modules:
             config:
                 WebDriver:
-                    http_proxy: %VADDY_PROXY%
-                    http_proxy_port: %VADDY_PROXY_PORT%
+                    http_proxy: '%VADDY_PROXY%'
+                    http_proxy_port: '%VADDY_PROXY_PORT%'
