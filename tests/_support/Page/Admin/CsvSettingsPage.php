@@ -48,7 +48,7 @@ class CsvSettingsPage extends AbstractAdminPageStyleGuide
     }
 
     public function 設定() {
-        $this->tester->click('#common_button_box__confirm_button button');
+        $this->tester->click('#csv-form > div.c-conversionArea > div > div > div:nth-child(2) > div > div > button');
         return $this;
     }
 
