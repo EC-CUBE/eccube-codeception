@@ -3,11 +3,11 @@
 namespace Page\Admin;
 
 
-class CsvSettingsPage extends AbstractAdminPage
+class CsvSettingsPage extends AbstractAdminPageStyleGuide
 {
     public static $CSVタイプ = ['id' => 'csv-type'];
 
-    public static $登録完了メッセージ = '#main .container-fluid .alert-success';
+    public static $登録完了メッセージ = '#page_admin_setting_shop_csv > div.c-container > div.c-contentsArea > div.alert.alert-success.alert-dismissible.fade.show.m-3 > span';
 
     protected $tester;
 
@@ -22,13 +22,13 @@ class CsvSettingsPage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new CsvSettingsPage($I);
-        return $page->goPage('/setting/shop/csv', '基本情報設定CSV出力項目設定');
+        return $page->goPage('/setting/shop/csv', 'CSV出力項目設定基本情報設定');
     }
 
     public static function at($I)
     {
         $page = new CsvSettingsPage($I);
-        $page->tester->see('基本情報設定CSV出力項目設定', '#main .page-header');
+        $page->tester->see('CSV出力項目設定基本情報設定', '.c-pageTitle');
         return $page;
     }
 
@@ -48,7 +48,7 @@ class CsvSettingsPage extends AbstractAdminPage
     }
 
     public function 設定() {
-        $this->tester->click('#common_button_box__confirm_button button');
+        $this->tester->click('#csv-form > div.c-conversionArea > div > div > div:nth-child(2) > div > div > button');
         return $this;
     }
 
