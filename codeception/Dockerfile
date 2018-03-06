@@ -29,7 +29,7 @@ RUN { \
     echo "APP_ENV=test"; \
     echo "APP_DEBUG=0"; \
 } > ${ECCUBE_PATH}/.env
-RUN composer install
+RUN composer install && rm -rf ${ECCUBE_PATH}/var/cache
 
 ## create config yaml files
 WORKDIR /project
