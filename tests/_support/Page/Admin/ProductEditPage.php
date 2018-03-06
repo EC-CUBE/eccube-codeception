@@ -5,9 +5,9 @@
  */
 namespace Page\Admin;
 
-class ProductEditPage extends AbstractAdminPage
+class ProductEditPage extends AbstractAdminPageStyleGuide
 {
-    public static $登録結果メッセージ = '#main .container-fluid div:nth-child(1) .alert-success';
+    public static $登録結果メッセージ = '#page_admin_product_product_edit > div.c-container > div.c-contentsArea > div.alert.alert-success.alert-dismissible.fade.show.m-3';
     public static $販売種別 = ['id' => 'admin_product_class_sale_type'];
     public static $通常価格 = ['id' => 'admin_product_class_price01'];
     public static $販売価格 = ['id' => 'admin_product_class_price02'];
@@ -33,7 +33,7 @@ class ProductEditPage extends AbstractAdminPage
     public static function at($I)
     {
         $page = new ProductEditPage($I);
-        $page->tester->see('商品管理商品登録', '#main .page-header');
+        $page->tester->see('商品管理商品登録', '#page_admin_product_product_edit > div.c-container > div.c-contentsArea > div > div');
         return $page;
     }
 
@@ -51,13 +51,13 @@ class ProductEditPage extends AbstractAdminPage
 
     public function 入力_公開()
     {
-        $this->tester->selectOption(['id' => 'admin_product_Status_1'], '公開');
+        $this->tester->selectOption('#admin_product_Status', '公開');
         return $this;
     }
 
     public function 登録()
     {
-        $this->tester->click('#form1 #aside_column button:nth-child(1)');
+        $this->tester->click('#form1 > div.c-conversionArea > div > div > div:nth-child(2) > div > div:nth-child(2) > button');
         return $this;
     }
 }
