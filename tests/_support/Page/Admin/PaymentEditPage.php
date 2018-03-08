@@ -4,7 +4,7 @@
 namespace Page\Admin;
 
 
-class PaymentEditPage extends AbstractAdminPage
+class PaymentEditPage extends AbstractAdminPageStyleGuide
 {
     public function __construct(\AcceptanceTester $I)
     {
@@ -14,7 +14,7 @@ class PaymentEditPage extends AbstractAdminPage
     public static function at($I)
     {
         $page = new self($I);
-        return $page->atPage('基本情報設定支払方法管理');
+        return $page->atPage('支払方法登録・編集基本情報設定');
     }
 
     public function 入力_支払方法($value) {
@@ -34,7 +34,7 @@ class PaymentEditPage extends AbstractAdminPage
 
     public function 登録()
     {
-        $this->tester->click('#form1 #aside_column button');
+        $this->tester->click('#form1 .c-conversionArea__container .c-conversionArea button');
     }
 
 }
