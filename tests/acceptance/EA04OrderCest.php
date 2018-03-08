@@ -212,10 +212,12 @@ class EA04OrderCest
         $OrderListPage->一覧_メール通知(1);
 
         $I->selectOption(['id' => 'template-change'], ['1' => '注文受付メール']);
-        $I->click(['css' => '#button_box__button_menu > button']);
-        $I->scrollTo(['css' => '#confirm_box__button_menu > p:nth-child(2) > button']);
-        $I->click(['css' => '#confirm_box__button_menu > p:nth-child(2) > button']);
+        $I->click(['id' => 'mailConfirm']);
+        $I->scrollTo(['id' => 'sendMail'], 0, 100);
+        $I->wait(1);
+        $I->click(['id' => 'sendMail']);
 
+        $I->wait(3);
         $I->seeEmailCount(2);
 
         $I->seeInLastEmailSubjectTo('admin@example.com', 'ご注文ありがとうございます');
@@ -240,10 +242,12 @@ class EA04OrderCest
             ->メール一括通知();
 
         $I->selectOption(['id' => 'template-change'], ['1' => '注文受付メール']);
-        $I->click(['css' => '#top_box__button_menu > button']);
-        $I->scrollTo(['css' => '#confirm_box__button_menu > p:nth-child(2) > button']);
-        $I->click(['css' => '#confirm_box__button_menu > p:nth-child(2) > button']);
+        $I->click(['id' => 'mailConfirm']);
+        $I->scrollTo(['id' => 'sendMail'], 0, 100);
+        $I->wait(1);
+        $I->click(['id' => 'sendMail']);
 
+        $I->wait(5);
         $I->seeEmailCount(20);
     }
 
