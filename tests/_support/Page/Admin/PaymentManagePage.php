@@ -7,8 +7,8 @@ namespace Page\Admin;
 class PaymentManagePage extends AbstractAdminPage
 {
 
-    public static $一覧_タイトル = '.c-contentsArea__cols > .c-contentsArea__primaryCol .c-primaryCol .card-header';
-    public static $登録完了メッセージ = '.c-container .c-contentsArea div.alert-success';
+    public static $一覧_タイトル = '#main .container-fluid .box-title';
+    public static $登録完了メッセージ = '#main .container-fluid div:nth-child(1) .alert-success';
 
     public function __construct(\AcceptanceTester $I)
     {
