@@ -34,7 +34,7 @@ class PaymentEditPage extends AbstractAdminPageStyleGuide
 
     public function 登録()
     {
-        $this->tester->click('#form1 .c-conversionArea__container .c-conversionArea button');
+        $this->tester->click('#form1 > .c-conversionArea > .c-conversionArea__container button.btn-ec-conversion');
     }
 
 }
