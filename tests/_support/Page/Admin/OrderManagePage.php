@@ -19,7 +19,7 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
     public static function go(\AcceptanceTester $I)
     {
         $page = new self($I);
-        return $page->goPage('/order', '受注管理受注マスター');
+        return $page->goPage('/order', '受注マスター受注管理');
     }
 
     public static function at(\AcceptanceTester $I)
