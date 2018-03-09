@@ -4,10 +4,10 @@
 namespace Page\Admin;
 
 
-class PageEditPage extends AbstractAdminPage
+class PageEditPage extends AbstractAdminPageStyleGuide
 {
 
-    public static $登録完了メッセージ = '#main .container-fluid div:nth-child(1) .alert-success';
+    public static $登録完了メッセージ = ['xpath' => "//div[@class='alert alert-success alert-dismissible fade show m-3']"];
 
     /**
      * PageNewPage constructor.
@@ -20,8 +20,8 @@ class PageEditPage extends AbstractAdminPage
     public static function at($I)
     {
         $page = new self($I);
-        $page->atPage('コンテンツ管理ページ管理');
-        $page->tester->see('ページ詳細編集', '#aside_wrap > form > div.col-md-9 > div:nth-child(1) > div.box-header > h3');
+        $page->atPage('ページ管理コンテンツ管理');
+        $page->tester->see('ページ詳細編集', '#content_page_form > div.c-contentsArea__cols > div > div > div:nth-child(1) > div.card-header > div > div.col-8 > span');
         return $page;
     }
 
@@ -58,6 +58,6 @@ class PageEditPage extends AbstractAdminPage
 
     public function 登録()
     {
-        $this->tester->click('#aside_column > div > div > div > div > div > button');
+        $this->tester->click(['xpath' => '//button[text()="登録"]']);
     }
 }
