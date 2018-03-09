@@ -199,37 +199,28 @@ class EA07BasicinfoCest
         $TaxManagePage = TaxManagePage::go($I);
 
         // 一覧
-        $I->see('税率一覧', '#form1 div div div:nth-child(5) .box-header h3');
-        $I->see('8%', '#tax_rule_list__tax_rate--1');
+        $I->see('共通税率設定', 'div.c-container div.c-contentsArea div.c-contentsArea__cols div.c-contentsArea__primaryCol div.c-primaryCol .card-header');
+        $I->see('8%', '#tax_rule_list__item--1 td:nth-child(2)');
 
         // 登録
         $TaxManagePage
-            ->入力_消費税率('10')
-            ->入力_適用日時(date('Y-m-d').' 00:00:00')
+            ->入力_消費税率(1, '10')
+            ->入力_適用日時(1, date('Y-m-d'))
             ->共通税率設定_登録();
-        $I->see('10%', $TaxManagePage->一覧_税率(1));
+        $I->see('10%', $TaxManagePage->一覧_税率(2));
 
-        // 編集
+        // edit
         $TaxManagePage
-            ->一覧_編集(1)
-            ->入力_消費税率(12)
-            ->共通税率設定_登録();
+            ->一覧_編集(2)
+            ->入力_消費税率(2, 12)
+            ->決定(2);
 
         $I->see('税率設定情報を保存しました。', TaxManagePage::$登録完了メッセージ);
-        $I->see('12%', $TaxManagePage->一覧_税率(1));
+        $I->see('12%', $TaxManagePage->一覧_税率(2));
 
         // 削除
-        $TaxManagePage->一覧_削除(1);
-        $I->see('税率設定情報を削除しました。', TaxManagePage::$登録完了メッセージ);
-
-        // 個別税率設定
-        $TaxManagePage
-            ->入力_個別税率設定('1')
-            ->個別税率設定_登録();
-
+        $TaxManagePage->一覧_削除(2);
         $I->see('税率設定情報を保存しました。', TaxManagePage::$登録完了メッセージ);
-        $value = $I->grabValueFrom(['css' => '#tax_rule_option_product_tax_rule input[type=radio]:checked']);
-        $I->assertTrue(($value == 1));
     }
 
     public function basicinfo_メール設定(\AcceptanceTester $I)
