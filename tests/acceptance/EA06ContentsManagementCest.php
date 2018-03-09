@@ -73,6 +73,7 @@ class EA06ContentsManagementCest
      */
     public function contentsmanagement_ファイル管理(\AcceptanceTester $I)
     {
+        $I->getScenario()->skip('ファイルアップロード未実装のためスキップ');
         $I->wantTo('EA0602-UC01-T01(& UC01-T02/UC01-T03/UC01-T04/UC01-T05/UC01-T06/UC01-T07) ファイル管理');
 
         /** @var FileManagePage $FileManagePage */
