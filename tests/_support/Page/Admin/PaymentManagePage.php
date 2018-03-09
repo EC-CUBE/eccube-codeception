@@ -4,11 +4,10 @@
 namespace Page\Admin;
 
 
-class PaymentManagePage extends AbstractAdminPage
+class PaymentManagePage extends AbstractAdminPageStyleGuide
 {
 
-    public static $一覧_タイトル = '#main .container-fluid .box-title';
-    public static $登録完了メッセージ = '#main .container-fluid div:nth-child(1) .alert-success';
+    public static $登録完了メッセージ = '.c-container .c-contentsArea div.alert-success';
 
     public function __construct(\AcceptanceTester $I)
     {
@@ -18,44 +17,43 @@ class PaymentManagePage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new self($I);
-        return $page->goPage('/setting/shop/payment', '基本情報設定支払方法管理');
+        return $page->goPage('/setting/shop/payment', '支払方法設定基本情報設定');
     }
 
     public static function at($I)
     {
         $page = new self($I);
-        return $page->atPage('基本情報設定支払方法管理');
+        return $page->atPage('支払方法設定基本情報設定');
     }
 
     public function 一覧_支払方法($rowNum)
     {
-        return "#main .container-fluid .table_list table tbody tr td:nth-child(${rowNum})";
+        $rowNum = $rowNum + 1;
+        return ".c-contentsArea__primaryCol .c-primaryCol .card-body ul li:nth-child(${rowNum})";
     }
 
     public function 一覧_下に($rowNum)
     {
         $rowNum = $rowNum + 1;
-        $this->tester->click("#main .container-fluid .table_list table tbody tr:nth-child(${rowNum}) td:nth-child(4) a");
-        $this->tester->click("#main .container-fluid .table_list table tbody tr:nth-child(${rowNum}) td:nth-child(4) ul li:nth-child(5) a");
+        $this->tester->click(".c-contentsArea__primaryCol .list-group-flush .list-group-item:nth-child(${rowNum}) .justify-content-around a:nth-child(2) ");
         return $this;
     }
 
     public function 一覧_編集($rowNum)
     {
         $rowNum = $rowNum + 1;
-        $this->tester->click("#main .container-fluid .table_list table tbody tr:nth-child(${rowNum}) td:nth-child(4) a");
-        $this->tester->click("#main .container-fluid .table_list table tbody tr:nth-child(${rowNum}) .icon_edit ul li:nth-child(1) a");
+        $this->tester->click(".c-contentsArea__primaryCol .list-group-flush .list-group-item:nth-child(${rowNum})> div > div:nth-child(2) a ");
+
     }
 
     public function 一覧_削除($rowNum)
     {
         $rowNum = $rowNum + 1;
-        $this->tester->click("#main .container-fluid .table_list table tbody tr:nth-child(${rowNum}) td:nth-child(4) a");
-        $this->tester->click("#main .container-fluid .table_list table tbody tr:nth-child(${rowNum}) .icon_edit ul li:nth-child(3) a");
+        $this->tester->click(".c-contentsArea__primaryCol .list-group-flush .list-group-item:nth-child(${rowNum}) .justify-content-around a:nth-child(3) ");
     }
 
     public function 新規入力()
     {
-        $this->tester->click('#main .container-fluid div:nth-child(2) .btn_area a');
+        $this->tester->click('.c-contentsArea__primaryCol  button.btn-ec-regular');
     }
 }
