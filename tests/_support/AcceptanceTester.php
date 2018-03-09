@@ -44,7 +44,7 @@ class AcceptanceTester extends \Codeception\Actor
             'password' => $password
         ]);
 
-        $I->see('ホーム', '#main .page-header');
+        $I->see('ホーム', '.c-contentsArea .c-pageTitle > .c-pageTitle__titles');
     }
 
     public function logoutAsAdmin()
