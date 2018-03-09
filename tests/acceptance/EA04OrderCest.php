@@ -57,7 +57,7 @@ class EA04OrderCest
 
         $OrderListPage->受注CSVダウンロード実行();
         // make sure wait to download file completely
-        sleep(10);
+        $I->wait(10);
         $OrderCSV = $I->getLastDownloadFile('/^order_\d{14}\.csv$/');
         $I->assertGreaterOrEquals(count($TargetOrders), count(file($OrderCSV)), '検索結果以上の行数があるはず');
     }
