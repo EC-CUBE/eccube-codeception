@@ -199,8 +199,8 @@ class EA07BasicinfoCest
         $TaxManagePage = TaxManagePage::go($I);
 
         // 一覧
-        $I->see('共通税率設定', 'div.c-container div.c-contentsArea div.c-contentsArea__cols div.c-contentsArea__primaryCol div.c-primaryCol .card-header');
-        $I->see('8%', '#tax_rule_list__item--1 td:nth-child(2)');
+        $I->see('共通税率設定', '#page_admin_setting_shop_tax > div.c-container > div.c-contentsArea > div.c-contentsArea__cols > div > div > div > div.card-header');
+        $I->see('8%', '#tax_rule_list__item--1 > td.align-middle.text-right');
 
         // 登録
         $TaxManagePage
@@ -220,7 +220,7 @@ class EA07BasicinfoCest
 
         // 削除
         $TaxManagePage->一覧_削除(2);
-        $I->see('税率設定情報を保存しました。', TaxManagePage::$登録完了メッセージ);
+        $I->see('税率設定情報を削除しました。', TaxManagePage::$登録完了メッセージ);
     }
 
     public function basicinfo_メール設定(\AcceptanceTester $I)

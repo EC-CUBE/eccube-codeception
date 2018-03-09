@@ -25,7 +25,8 @@ class TaxManagePage extends AbstractAdminPageStyleGuide
     }
 
     public function 入力_適用日時($row, $value) {
-        $this->tester->fillField(['css' => 'table tbody tr:nth-child('.$row.') input[type=date]'], $value);
+//        $this->tester->fillField(['css' => 'table tbody tr:nth-child('.$row.') input[type=date]'], $value);
+        $this->tester->executeJS("document.getElementById('tax_rule_apply_date').value = '{$value}'");
         return $this;
     }
 
@@ -48,14 +49,14 @@ class TaxManagePage extends AbstractAdminPageStyleGuide
 
     public function 一覧_削除($rowNum)
     {
-        $this->tester->click("table tbody tr:nth-child(${rowNum}) .btn-ec-actionIcon:nth-child(2)");
+        $this->tester->click("table tbody tr:nth-child(${rowNum}) > td.align-middle.action > div > div:nth-child(2) > a");
         $this->tester->acceptPopup();
         return $this;
     }
 
     public function 一覧_税率($rowNum)
     {
-        return "table tbody tr:nth-child(${rowNum}) td:nth-child(2)";
+        return "table > tbody > tr:nth-child(${rowNum}) > td.align-middle.text-right";
     }
 
     public function 共通税率設定_登録()
@@ -66,7 +67,8 @@ class TaxManagePage extends AbstractAdminPageStyleGuide
 
     public function 決定($row)
     {
-        $this->tester->click('table tbody tr:nth-child('.$row.') td:nth-child(5) button:nth-child(1)');
+        // td 5th + from + 3 input hidden tag = 9
+        $this->tester->click('table tbody tr:nth-child('.$row.') td:nth-child(9) button.btn.btn-ec-conversion');
         return;
     }
 }
