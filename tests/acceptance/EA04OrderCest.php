@@ -146,6 +146,7 @@ class EA04OrderCest
             ->入力_メイ('アアア')
             ->入力_郵便番号1('060')
             ->入力_郵便番号2('0000')
+            ->入力_都道府県(['1' => '北海道'])
             ->入力_市区町村名('bbb')
             ->入力_番地_ビル名('bbb')
             ->入力_電話番号1('111')
@@ -167,8 +168,6 @@ class EA04OrderCest
 
     public function order_受注削除(\AcceptanceTester $I)
     {
-        $I->getScenario()->skip('Order depend on shipping => skip it');
-
         $I->wantTo('EA0401-UC08-T01(& UC08-T02) 受注削除');
 
         $findOrders = Fixtures::get('findOrders'); // Closure
@@ -183,6 +182,8 @@ class EA04OrderCest
         $OrderNumForDel = $OrderListPage->一覧_注文番号(1);
         $OrderListPage->一覧_削除(1);
         $I->acceptPopup();
+
+        $I->getScenario()->incomplete('未実装：受注マスターでの受注削除が未実装');
 
         $I->see('受注情報を削除しました', ['css' => '#main > div > div:nth-child(1) > div']);
         $I->assertNotEquals($OrderNumForDel, $OrderListPage->一覧_注文番号(1));
@@ -211,10 +212,12 @@ class EA04OrderCest
         $OrderListPage->一覧_メール通知(1);
 
         $I->selectOption(['id' => 'template-change'], ['1' => '注文受付メール']);
-        $I->click(['css' => '#button_box__button_menu > button']);
-        $I->scrollTo(['css' => '#confirm_box__button_menu > p:nth-child(2) > button']);
-        $I->click(['css' => '#confirm_box__button_menu > p:nth-child(2) > button']);
+        $I->click(['id' => 'mailConfirm']);
+        $I->scrollTo(['id' => 'sendMail'], 0, 100);
+        $I->wait(1);
+        $I->click(['id' => 'sendMail']);
 
+        $I->wait(3);
         $I->seeEmailCount(2);
 
         $I->seeInLastEmailSubjectTo('admin@example.com', 'ご注文ありがとうございます');
@@ -239,23 +242,25 @@ class EA04OrderCest
             ->メール一括通知();
 
         $I->selectOption(['id' => 'template-change'], ['1' => '注文受付メール']);
-        $I->click(['css' => '#top_box__button_menu > button']);
-        $I->scrollTo(['css' => '#confirm_box__button_menu > p:nth-child(2) > button']);
-        $I->click(['css' => '#confirm_box__button_menu > p:nth-child(2) > button']);
+        $I->click(['id' => 'mailConfirm']);
+        $I->scrollTo(['id' => 'sendMail'], 0, 100);
+        $I->wait(1);
+        $I->click(['id' => 'sendMail']);
 
+        $I->wait(5);
         $I->seeEmailCount(20);
     }
 
     public function order_受注登録(\AcceptanceTester $I)
     {
-        $I->getScenario()->skip('Function incomplete');
-
         $I->wantTo('EA0405-UC01-T01(& UC01-T02) 受注登録');
 
         $OrderRegisterPage = OrderEditPage::go($I)->受注情報登録();
 
         /* 異常系 */
         $I->dontSee('受注情報を保存しました。', OrderEditPage::$登録完了メッセージ);
+
+        $I->getScenario()->incomplete('未実装：受注への商品の追加が未実装');
 
         /* 正常系 */
         $OrderRegisterPage

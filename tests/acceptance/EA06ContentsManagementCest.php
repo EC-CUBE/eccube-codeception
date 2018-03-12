@@ -144,6 +144,8 @@ class EA06ContentsManagementCest
         $config = Fixtures::get('config');
         $I->seeElement('div.ec-layoutRole__main');
 
+        $I->getScenario()->incomplete('未実装：レイアウトの更新は未実装');
+
         /* レイアウト編集 */
         LayoutManagePage::go($I)->レイアウト編集('下層ページ用レイアウト');
         LayoutEditPage::at($I)
@@ -178,6 +180,8 @@ class EA06ContentsManagementCest
             ->入力_データ("<div id='block1'>block1</div>")
             ->登録();
         $I->see('登録が完了しました。', BlockEditPage::$登録完了メッセージ);
+
+        $I->getScenario()->incomplete('未実装：レイアウトの更新は未実装');
 
         // TOPページにブロックを配置
         LayoutManagePage::go($I)->レイアウト編集('トップページ用レイアウト');

@@ -19,6 +19,7 @@ use Page\Admin\ProductEditPage;
 class EA03ProductCest
 {
     const ページタイトル = '#main .page-header';
+    const ページタイトルStyleGuide = '.c-pageTitle';
 
     public function _before(\AcceptanceTester $I)
     {
@@ -78,7 +79,7 @@ class EA03ProductCest
             ->検索()
             ->CSV出力項目設定();
 
-        $I->see('基本情報設定CSV出力項目設定', self::ページタイトル);
+        $I->see('CSV出力項目設定基本情報設定', self::ページタイトルStyleGuide);
         $value = $I->grabValueFrom(CsvSettingsPage::$CSVタイプ);
         $I->assertEquals('1', $value);
     }
@@ -229,8 +230,7 @@ class EA03ProductCest
             ->検索結果_選択(1);
         ProductEditPage::at($I);
 
-        $I->click(['css' => '#detail_box__price01 > a']);
-        $I->click(['css' => '#sub_detail_box__toggle > h3']);
+        $I->click(['css' => '#basicConfig > div > div:nth-child(7) > div.col > div.d-inline-block.mb-2 > a']);
         $I->seeElement(ProductEditPage::$販売種別);
         $I->seeElement(ProductEditPage::$販売価格);
         $I->waitForElement(ProductEditPage::$通常価格);
@@ -479,7 +479,7 @@ class EA03ProductCest
         ProductCsvUploadPage::go($I)
             ->入力_CSVファイル('product.csv')
             ->CSVアップロード();
-        $I->see('商品登録CSVファイルをアップロードしました', CategoryCsvUploadPage::$完了メッセージ);
+        $I->see('商品登録CSVファイルをアップロードしました', ProductCsvUploadPage::$完了メッセージ);
 
         ProductManagePage::go($I)->検索('アップロード商品');
         $I->see("検索結果：3件が該当しました", ProductManagePage::$検索結果_メッセージ);

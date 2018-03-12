@@ -3,10 +3,10 @@
 
 namespace Page\Admin;
 
-class CategoryCsvUploadPage extends AbstractAdminPage
+class CategoryCsvUploadPage extends AbstractAdminPageStyleGuide
 {
 
-    public static $完了メッセージ = '#main > div > div:nth-child(1) > div.alert-success';
+    public static $完了メッセージ = '.c-container div.c-contentsArea > div.alert-success';
 
     /**
      * CategoryCsvUploadPage constructor.
@@ -19,7 +19,7 @@ class CategoryCsvUploadPage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new self($I);
-        return $page->goPage('/product/category_csv_upload', 'カテゴリ登録CSVアップロード');
+        return $page->goPage('/product/category_csv_upload', 'カテゴリCSV登録商品管理');
     }
 
     public function 入力_CSVファイル($fileName)

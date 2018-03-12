@@ -39,10 +39,13 @@ class EA02AuthenticationCest
     {
         $I->wantTo('EA0201-UC01-T01 最終ログイン日時確認');
 
-        $I->click(['css' => '.navbar-menu .dropdown-toggle']);
-        $loginText = $I->grabTextFrom(['css' => '.navbar-menu .dropdown-menu']);
+        $I->click('header.c-headerBar div.c-headerBar__container a.c-headerBar__userMenu');
+        $loginText = $I->grabTextFrom(['css' => '#page_admin_homepage div.popover .popover-body > p']);
+
+        // Format Y/m/d only
         $lastLogin = preg_replace('/.*(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}).*/s', '$1', $loginText);
         // 表示されるログイン日時では秒数がわからないため、タイミングによっては1分ちょっと変わる
-        $I->assertTrue((strtotime('now') - strtotime($lastLogin)) < 70, '最終ログイン日時が正しい');
+        $now = new DateTime();
+        $I->assertTrue((strtotime($now->format('Y/m/d')) - strtotime($lastLogin)) < 70, '最終ログイン日時が正しい');
     }
 }

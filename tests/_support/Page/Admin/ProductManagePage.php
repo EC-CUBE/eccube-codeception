@@ -30,7 +30,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
     public static function go(\AcceptanceTester $I)
     {
         $page = new ProductManagePage($I);
-        return $page->goPage(self::$URL, '商品管理商品マスター');
+        return $page->goPage(self::$URL, '商品マスター商品管理');
     }
 
     /**
@@ -42,7 +42,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
     {
         $this->tester->fillField(self::$検索条件_プロダクト, $product);
         $this->tester->click(self::$検索ボタン);
-        $this->tester->see('商品管理商品マスター', '.c-pageTitle h2.c-pageTitle__title');
+        $this->tester->see('商品マスター商品管理', '.c-pageTitle');
         return $this;
     }
 
