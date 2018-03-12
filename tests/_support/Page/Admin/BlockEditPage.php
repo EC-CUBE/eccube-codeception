@@ -4,9 +4,9 @@
 namespace Page\Admin;
 
 
-class BlockEditPage extends AbstractAdminPage
+class BlockEditPage extends AbstractAdminPageStyleGuide
 {
-    public static $登録完了メッセージ = '#main .container-fluid div:nth-child(1) .alert-success';
+    public static $登録完了メッセージ = 'body > div.c-container > div.c-contentsArea > div.alert.alert-success.alert-dismissible.fade.show.m-3 > span';
 
     /**
      * BlockEditPage constructor.
@@ -19,7 +19,7 @@ class BlockEditPage extends AbstractAdminPage
     public static function at($I)
     {
         $page = new self($I);
-        $page->atPage('コンテンツ管理ブロック管理');
+        $page->atPage('ブロック管理コンテンツ管理');
         $page->tester->see('ブロック編集', '#content_block_form > div.c-contentsArea__cols > div > div > div > div.card-header > div > div.col-8 > span');
         return $page;
     }
