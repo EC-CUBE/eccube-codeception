@@ -27,19 +27,19 @@ class EA01TopCest
     {
     }
 
-    public function topページ_初期表示(\AcceptanceTester $I)
+    public function top_001(\AcceptanceTester $I)
     {
         $I->wantTo('EA0101-UC01-T01 TOPページ 初期表示');
 
         // TOP画面に現在の受注状況、お知らせ、売り上げ状況、ショップ状況が表示されている
-        $I->see('受注状況', TopPage::$受付状況);
+        $I->see('新規受付', TopPage::$受付状況_新規受付);
         $I->see('お知らせ', TopPage::$お知らせ);
-        $I->see('売り上げ状況', TopPage::$売上状況);
+        $I->see('売上状況', TopPage::$売上状況);
         $I->see('ショップ状況', TopPage::$ショップ状況);
 
         // 新規受付をクリックすると受注管理画面に遷移することを確認
         $I->click(TopPage::$受付状況_新規受付);
-        $I->see('受注マスター', self::ページタイトル);
+        $I->see('受注管理受注マスター', self::ページタイトル);
         $I->goToAdminPage();
 
         // 購入された商品が受注管理画面のページにて反映されていることを確認
