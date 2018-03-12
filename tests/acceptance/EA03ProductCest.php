@@ -412,8 +412,7 @@ class EA03ProductCest
 
         // csv EA0305-UC04-T01
         $CategoryPage
-            ->CSVダウンロード実行()
-            ->CSVダウンロードメニュー(); // 元に戻す
+            ->CSVダウンロード実行();
         /* csvがダウンロードされたかは確認不可 */
 
         // csv EA0305-UC04-T02
@@ -512,9 +511,9 @@ class EA03ProductCest
         $I->see('カテゴリ登録CSVファイルをアップロードしました', CategoryCsvUploadPage::$完了メッセージ);
 
         CategoryManagePage::go($I);
-        $I->seeElement(['xpath' => '//div[@id="sortable_list_box"]//a[contains(text(), "アップロードカテゴリ1")]']);
-        $I->seeElement(['xpath' => '//div[@id="sortable_list_box"]//a[contains(text(), "アップロードカテゴリ2")]']);
-        $I->seeElement(['xpath' => '//div[@id="sortable_list_box"]//a[contains(text(), "アップロードカテゴリ3")]']);
+        $I->seeElement(['xpath' => '//div[@class="item_box"]//a[contains(text(), "アップロードカテゴリ1")]']);
+        $I->seeElement(['xpath' => '//div[@class="item_box"]//a[contains(text(), "アップロードカテゴリ2")]']);
+        $I->seeElement(['xpath' => '//div[@class="item_box"]//a[contains(text(), "アップロードカテゴリ3")]']);
     }
 
     /**
