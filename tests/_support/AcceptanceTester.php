@@ -50,9 +50,10 @@ class AcceptanceTester extends \Codeception\Actor
     public function logoutAsAdmin()
     {
         $I = $this;
-        $isLogin = $I->grabTextFrom('#header .navbar-menu .dropdown .dropdown-toggle');
-        if ($isLogin == '管理者') {
-            $I->click('#header .navbar-menu .dropdown .dropdown-toggle');
+        $isLogin = $I->grabTextFrom('header.c-headerBar div.c-headerBar__container a.c-headerBar__userMenu span');
+        if ($isLogin == '管理者 様') {
+            $I->click('header.c-headerBar div.c-headerBar__container a.c-headerBar__userMenu');
+            $I->click('#page_admin_homepage div.popover .popover-body a:last-child');
             $config = Fixtures::get('config');
             $I->amOnPage('/'.$config['eccube_admin_route'].'/logout');
             $I->see('ログイン', '.login-box #form1 .btn_area button');
