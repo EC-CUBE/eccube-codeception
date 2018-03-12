@@ -511,9 +511,9 @@ class EA03ProductCest
         $I->see('カテゴリ登録CSVファイルをアップロードしました', CategoryCsvUploadPage::$完了メッセージ);
 
         CategoryManagePage::go($I);
-        $I->seeElement(['xpath' => '//div[@class="item_box"]//a[contains(text(), "アップロードカテゴリ1")]']);
-        $I->seeElement(['xpath' => '//div[@class="item_box"]//a[contains(text(), "アップロードカテゴリ2")]']);
-        $I->seeElement(['xpath' => '//div[@class="item_box"]//a[contains(text(), "アップロードカテゴリ3")]']);
+        $I->seeElement(['xpath' => '//li[@class="list-group-item"]//a[contains(text(), "アップロードカテゴリ1")]']);
+        $I->seeElement(['xpath' => '//li[@class="list-group-item"]//a[contains(text(), "アップロードカテゴリ2")]']);
+        $I->seeElement(['xpath' => '//li[@class="list-group-item"]//a[contains(text(), "アップロードカテゴリ3")]']);
     }
 
     /**

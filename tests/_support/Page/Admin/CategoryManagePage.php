@@ -42,19 +42,19 @@ class CategoryManagePage extends AbstractAdminPageStyleGuide
 
     public function 一覧_選択($rowNum)
     {
-        $this->tester->click("body > div.c-container > div.c-contentsArea > div.c-contentsArea__cols > div.c-contentsArea__primaryCol > div > div > div > div > ul > div > div:nth-child(${rowNum}) > li > div > div.col.d-flex.align-items-center > a");
+        $this->tester->click("body > div.c-container > div.c-contentsArea > div.c-contentsArea__cols > div.c-contentsArea__primaryCol > div > div > div > div > ul > li:nth-child(${rowNum}) > div > div.col.d-flex.align-items-center > a");
         return $this;
     }
 
     public function 一覧_編集($rowNum)
     {
-        $this->tester->click("body > div > div.c-contentsArea > div.c-contentsArea__cols > div.c-contentsArea__primaryCol > div > div > div > div > ul > div > div:nth-child(${rowNum}) > li > div > div.col-auto.text-right > a:nth-child(3)");
+        $this->tester->click("body > div > div.c-contentsArea > div.c-contentsArea__cols > div.c-contentsArea__primaryCol > div > div > div > div > ul > li:nth-child(${rowNum}) > div > div.col-auto.text-right > a:nth-child(3)");
         return $this;
     }
 
     public function 一覧_削除($rowNum)
     {
-        $this->tester->click("body > div > div.c-contentsArea > div.c-contentsArea__cols > div.c-contentsArea__primaryCol > div > div > div > div > ul > div > div:nth-child(${rowNum}) > li > div > div.col-auto.text-right > a:nth-child(4)");
+        $this->tester->click("body > div > div.c-contentsArea > div.c-contentsArea__cols > div.c-contentsArea__primaryCol > div > div > div > div > ul > li:nth-child(${rowNum}) > div > div.col-auto.text-right > a:nth-child(4)");
         return $this;
     }
 
@@ -71,18 +71,18 @@ class CategoryManagePage extends AbstractAdminPageStyleGuide
 
     public function 一覧_上に($rowNum)
     {
-        $this->tester->dragAndDropBy("body > div > div.c-contentsArea > div.c-contentsArea__cols > div.c-contentsArea__primaryCol > div > div > div > div > ul > div > div:nth-child($rowNum)", 0, -75);
+        $this->tester->dragAndDropBy("body > div > div.c-contentsArea > div.c-contentsArea__cols > div.c-contentsArea__primaryCol > div > div > div > div > ul > li:nth-child($rowNum)", 0, -75);
         return $this;
     }
 
     public function 一覧_下に($rowNum)
     {
-        $this->tester->dragAndDropBy("body > div > div.c-contentsArea > div.c-contentsArea__cols > div.c-contentsArea__primaryCol > div > div > div > div > ul > div > div:nth-child($rowNum)", 0, 75);
+        $this->tester->dragAndDropBy("body > div > div.c-contentsArea > div.c-contentsArea__cols > div.c-contentsArea__primaryCol > div > div > div > div > ul > li:nth-child($rowNum)", 0, 75);
         return $this;
     }
 
     public function 一覧_名称($rowNum)
     {
-        return "body > div > div.c-contentsArea > div.c-contentsArea__cols > div.c-contentsArea__primaryCol > div > div > div > div > ul > div > div:nth-child($rowNum) > li > div > div.col.d-flex.align-items-center > a";
+        return "body > div > div.c-contentsArea > div.c-contentsArea__cols > div.c-contentsArea__primaryCol > div > div > div > div > ul > li:nth-child($rowNum) > div > div.col.d-flex.align-items-center > a";
     }
 }
