@@ -20,7 +20,7 @@ class BlockEditPage extends AbstractAdminPage
     {
         $page = new self($I);
         $page->atPage('コンテンツ管理ブロック管理');
-        $page->tester->see('ブロック編集', '#aside_wrap > form > div.col-md-9 > div.box.form-horizontal > div.box-header > h3');
+        $page->tester->see('ブロック編集', '#content_block_form > div.c-contentsArea__cols > div > div > div > div.card-header > div > div.col-8 > span');
         return $page;
     }
 
@@ -45,7 +45,7 @@ class BlockEditPage extends AbstractAdminPage
 
     public function 登録()
     {
-        $this->tester->click('#aside_column > div > div > div > div > div > button');
+        $this->tester->click('#content_block_form > div.c-conversionArea > div > div > div:nth-child(2) > div > div > button');
         return $this;
     }
 }

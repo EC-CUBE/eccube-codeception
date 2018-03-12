@@ -18,7 +18,7 @@ class BlockManagePage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new self($I);
-        return $page->goPage('/content/block', 'コンテンツ管理ブロック管理');
+        return $page->goPage('/content/block', 'ブロック管理コンテンツ管理');
     }
 
     public function 新規入力()
