@@ -47,7 +47,6 @@ class EA07BasicinfoCest
         // 表示
         $PaymentManagePage = PaymentManagePage::go($I);
 
-        $I->see('支払方法', PaymentManagePage::$一覧_タイトル);
         $I->see('郵便振替', $PaymentManagePage->一覧_支払方法(1));
     }
 
@@ -66,6 +65,7 @@ class EA07BasicinfoCest
 
     public function basicinfo_支払方法登録(\AcceptanceTester $I)
     {
+        $I->getScenario()->incomplete('EA0705-UC01-T01 支払方法 登録');
         $I->wantTo('EA0705-UC01-T01 支払方法 登録');
 
         // 表示
@@ -87,6 +87,7 @@ class EA07BasicinfoCest
 
     public function basicinfo_支払方法編集(\AcceptanceTester $I)
     {
+        $I->getScenario()->incomplete('EA0705-UC01-T01 支払方法 登録');
         $I->wantTo('EA0705-UC02-T01 支払方法 編集');
 
         // 表示

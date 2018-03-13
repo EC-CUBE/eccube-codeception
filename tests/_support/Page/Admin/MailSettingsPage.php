@@ -4,9 +4,9 @@
 namespace Page\Admin;
 
 
-class MailSettingsPage extends AbstractAdminPage
+class MailSettingsPage extends AbstractAdminPageStyleGuide
 {
-    public static $登録完了メッセージ = '#main .container-fluid .alert-success';
+    public static $登録完了メッセージ = '#page_admin_setting_shop_mail_edit > div.c-container > div.c-contentsArea > div.alert.alert-success.alert-dismissible.fade.show.m-3 > span';
 
     public function __construct(\AcceptanceTester $I)
     {
@@ -16,7 +16,7 @@ class MailSettingsPage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new self($I);
-        return $page->goPage('/setting/shop/mail', '基本情報設定メール設定');
+        return $page->goPage('/setting/shop/mail', 'メール設定基本情報設定');
     }
 
     public function 入力_テンプレート($value) {

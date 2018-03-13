@@ -4,7 +4,7 @@
 namespace Page\Admin;
 
 
-class BlockManagePage extends AbstractAdminPage
+class BlockManagePage extends AbstractAdminPageStyleGuide
 {
 
     /**
@@ -18,24 +18,22 @@ class BlockManagePage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new self($I);
-        return $page->goPage('/content/block', 'コンテンツ管理ブロック管理');
+        return $page->goPage('/content/block', 'ブロック管理コンテンツ管理');
     }
 
     public function 新規入力()
     {
-        $this->tester->click('#content_block_form > div > div > div.row.btn_area2 > div > a');
+        $this->tester->click('#page_admin_content_block > div > div.c-contentsArea > div.c-contentsArea__cols > div > div.card.rounded.border-0 > div > div > a');
     }
 
     public function 編集($rowNum)
     {
-        $this->tester->click("#content_block_form > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(${rowNum}) > div.icon_edit.td > div > a");
-        $this->tester->click("#content_block_form > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(${rowNum}) > div.icon_edit.td > div > ul > li:nth-child(1) > a");
+        $this->tester->click("#page_admin_content_block > div > div.c-contentsArea > div.c-contentsArea__cols > div > div.c-primaryCol > div > div > div > ul > li:nth-child(${rowNum}) > div > div.col-auto.text-right > a:nth-child(1)");
     }
 
     public function 削除($rowNum)
     {
-        $this->tester->click("#content_block_form > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(${rowNum}) > div.icon_edit.td > div > a");
-        $this->tester->click("#content_block_form > div > div > div.col-md-12 > div > div.box-body.no-padding.no-border > div > div > div:nth-child(${rowNum}) > div.icon_edit.td > div > ul > li:nth-child(2) > a");
+        $this->tester->click("#page_admin_content_block > div > div.c-contentsArea > div.c-contentsArea__cols > div > div.c-primaryCol > div > div > div > ul > li:nth-child(${rowNum}) > div > div.col-auto.text-right > a.btn.btn-ec-actionIcon.mr-3.disabled");
     }
 
 }
