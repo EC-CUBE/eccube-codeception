@@ -41,40 +41,9 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
         return $this;
     }
 
-    public function 配送CSVダウンロード実行()
-    {
-        $this->CSVダウンロードメニュー();
-        $this->tester->click('#main > div > div.row > div > div > div.box-body > div > div > ul > li.dropdown.open > ul > li:nth-child(2) > a');
-        return $this->CSVダウンロードメニュー(); // プルダウンを戻しておく
-    }
-
     public function 受注CSV出力項目設定()
     {
         $this->tester->click('#form_bulk #btn_csv_setting');
-        return $this;
-    }
-
-    public function 配送CSV出力項目設定()
-    {
-        $this->CSVダウンロードメニュー();
-        $this->tester->click('#main > div > div.row > div > div > div.box-body > div > div > ul > li.dropdown.open > ul > li:nth-child(4) > a');
-    }
-
-    /**
-     * // TODO: Should remove this function due to new design does not have csv dropdown menu
-     */
-    private function CSVダウンロードメニュー()
-    {
-        $this->tester->click('#main > div > div.row > div > div > div.box-body > div > div > ul > li:nth-child(2) > a');
-        return $this;
-    }
-
-    /**
-     * TODO: Should remove this function due to new design does not have csv dropdown menu
-     */
-    private function 一覧_メニュー($rowNum)
-    {
-        $this->tester->click("#dropdown-form > div > div > table > tbody > tr:nth-child(${rowNum}) > td.icon_edit > div > a");
         return $this;
     }
 
