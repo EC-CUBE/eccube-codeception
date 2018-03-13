@@ -9,11 +9,11 @@ use Interactions\DragAndDropBy;
  * 商品管理規格編集
  * @package Page\Admin
  */
-class ProductClassPage extends AbstractAdminPage
+class ProductClassPage extends AbstractAdminPageStyleGuide
 {
 
-    public static $登録完了メッセージ = '#main .container-fluid div:nth-child(1) .alert-success';
-    public static $規格名 = ['id' => 'admin_class_name_name'];
+    public static $登録完了メッセージ = ['css' => '#page_admin_product_class_name > div > div.c-contentsArea > div.alert'];
+    public static $管理名 = ['id' => 'admin_class_name_name'];
 
     /**
      * ProductClassPage constructor.
@@ -26,30 +26,31 @@ class ProductClassPage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new ProductClassPage($I);
-        return $page->goPage('/product/class_name', '商品管理規格編集');
+        return $page->goPage('/product/class_name', '規格管理商品管理');
     }
 
-    public function 入力_規格名($value)
+    public function 入力_管理名($value)
     {
-        $this->tester->fillField(self::$規格名, $value);
+        $this->tester->fillField(self::$管理名, $value);
         return $this;
     }
 
     public function 規格作成()
     {
-        $this->tester->click('#form1 > div > div > button');
+        $this->tester->click(['css' => '#form1 button']);
         return $this;
     }
 
     public function 一覧_名称($rowNum)
     {
-        return "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.item_pattern > a";
+        $rowNum += 1;
+        return "ul.tableish > li:nth-child(${rowNum}) > div > div:nth-child(2) a:nth-child(1)";
     }
 
     public function 一覧_分類登録($rowNum)
     {
-        $this->一覧_オプション($rowNum);
-        $this->tester->click("#main .container-fluid .box .box-body .item_box:nth-child(${rowNum}) .icon_edit .dropdown ul li:nth-child(1) a");
+        $rowNum += 1;
+        $this->tester->click("ul.tableish > li:nth-child(${rowNum}) > div > div:nth-child(2) a:nth-child(1)");
         return $this;
     }
 
@@ -62,8 +63,8 @@ class ProductClassPage extends AbstractAdminPage
 
     public function 一覧_削除($rowNum)
     {
-        $this->一覧_オプション($rowNum);
-        $this->tester->click("#main .container-fluid .box .box-body .item_box:nth-child(${rowNum}) .icon_edit .dropdown ul li:nth-child(3) a");
+        $rowNum += 1;
+        $this->tester->click("ul.list-group > li:nth-child(${rowNum}) a:nth-child(4)");
         return $this;
     }
 
@@ -74,13 +75,15 @@ class ProductClassPage extends AbstractAdminPage
 
     public function 一覧_上に($rowNum)
     {
-        $this->tester->dragAndDropBy("#main .container-fluid .box .box-body .item_box:nth-child($rowNum)", 0, -55);
+        $rowNum += 1;
+        $this->tester->dragAndDropBy("ul.tableish > li:nth-child(${rowNum})", 0, -60);
         return $this;
     }
 
     public function 一覧_下に($rowNum)
     {
-        $this->tester->dragAndDropBy("#main .container-fluid .box .box-body .item_box:nth-child($rowNum)", 0, 55);
+        $rowNum += 1;
+        $this->tester->dragAndDropBy("ul.tableish > li:nth-child(${rowNum})", 0, 60);
         return $this;
     }
 }

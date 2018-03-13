@@ -5,10 +5,10 @@ namespace Page\Admin;
 use Facebook\WebDriver\Interactions\WebDriverActions;
 use Facebook\WebDriver\WebDriverBy;
 
-class ProductClassCategoryPage extends AbstractAdminPage
+class ProductClassCategoryPage extends AbstractAdminPageStyleGuide
 {
 
-    public static $登録完了メッセージ = '#main .container-fluid div:nth-child(1) .alert-success';
+    public static $登録完了メッセージ = ['css' => '#page_admin_product_class_category > div > div.c-contentsArea > div.alert'];
 
     public static $分類名 = ['id' => 'admin_class_category_name'];
 
@@ -23,8 +23,7 @@ class ProductClassCategoryPage extends AbstractAdminPage
     public static function at($I)
     {
         $page = new ProductClassCategoryPage($I);
-        $page->tester->see('商品管理規格編集', '#main .page-header');
-        return $page;
+        return $page->atPage('規格管理商品管理');;
     }
 
     public function 入力_分類名($value)
@@ -35,7 +34,7 @@ class ProductClassCategoryPage extends AbstractAdminPage
 
     public function 分類作成()
     {
-        $this->tester->click('#form1 > div > div > button');
+        $this->tester->click('#form1 button');
         return $this;
     }
 
@@ -48,8 +47,8 @@ class ProductClassCategoryPage extends AbstractAdminPage
 
     public function 一覧_削除($rowNum)
     {
-        $this->一覧_オプション($rowNum);
-        $this->tester->click("#main .container-fluid .box .box-body .item_box:nth-child(${rowNum}) .icon_edit .dropdown ul li:nth-child(2) a");
+        $rowNum += 1;
+        $this->tester->click("ul.list-group > li:nth-child(${rowNum}) a:nth-child(4)");
         return $this;
     }
 
@@ -61,18 +60,22 @@ class ProductClassCategoryPage extends AbstractAdminPage
 
     public function 一覧_上に($rowNum)
     {
-        $this->tester->dragAndDropBy("#main .container-fluid .box .box-body .item_box:nth-child($rowNum)", 0, -55);
+
+        $rowNum += 1;
+        $this->tester->dragAndDropBy("ul.tableish > li:nth-child(${rowNum})", 0, -60);
         return $this;
     }
 
     public function 一覧_下に($rowNum)
     {
-        $this->tester->dragAndDropBy("#main .container-fluid .box .box-body .item_box:nth-child($rowNum)", 0, 55);
+        $rowNum += 1;
+        $this->tester->dragAndDropBy("ul.tableish > li:nth-child(${rowNum})", 0, 60);
         return $this;
     }
 
     public function 一覧_名称($rowNum)
     {
-        return "#main .container-fluid .box .box-body .item_box:nth-child($rowNum) div.item_pattern > a";
+        $rowNum += 1;
+        return "ul.tableish > li:nth-child(${rowNum}) > div > div.col.d-flex.align-items-center";
     }
 }
