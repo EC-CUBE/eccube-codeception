@@ -9,7 +9,7 @@ use Interactions\DragAndDropBy;
  * 商品管理規格編集
  * @package Page\Admin
  */
-class ProductClassPage extends AbstractAdminPageStyleGuide
+class ClassNameManagePage extends AbstractAdminPageStyleGuide
 {
 
     public static $登録完了メッセージ = ['css' => '#page_admin_product_class_name > div > div.c-contentsArea > div.alert'];
@@ -25,7 +25,7 @@ class ProductClassPage extends AbstractAdminPageStyleGuide
 
     public static function go($I)
     {
-        $page = new ProductClassPage($I);
+        $page = new ClassNameManagePage($I);
         return $page->goPage('/product/class_name', '規格管理商品管理');
     }
 

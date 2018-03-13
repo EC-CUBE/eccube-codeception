@@ -55,9 +55,19 @@ class ProductEditPage extends AbstractAdminPageStyleGuide
         return $this;
     }
 
+    public function 規格管理()
+    {
+        $this->tester->click(['css' => '#standardConfig > div > div.d-block.text-center.text-center > button']);
+        $this->tester->waitForElement(['css' => '#confirmModal > div > div > div.modal-footer > a']);
+        $this->tester->wait(1);
+        $this->tester->click(['css' => '#confirmModal > div > div > div.modal-footer > a']);
+        return $this;
+    }
+
     public function 登録()
     {
         $this->tester->click('#form1 > div.c-conversionArea > div > div > div:nth-child(2) > div > div:nth-child(2) > button');
         return $this;
     }
+
 }
