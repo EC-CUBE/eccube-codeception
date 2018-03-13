@@ -53,8 +53,6 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
      */
     public function 検索結果_規格設定($rowNum)
     {
-        $this->tester->getScenario()->incomplete('未実装：商品マスター画面での規格一覧の閲覧は未実装');
-
         $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(1) > a");
     }
 

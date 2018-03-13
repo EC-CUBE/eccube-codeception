@@ -4,8 +4,9 @@ use Codeception\Util\Fixtures;
 use Page\Admin\CategoryCsvUploadPage;
 use Page\Admin\CategoryManagePage;
 use Page\Admin\CsvSettingsPage;
-use Page\Admin\ProductClassCategoryPage;
-use Page\Admin\ProductClassPage;
+use Page\Admin\ClassCategoryManagePage;
+use Page\Admin\ClassNameManagePage;
+use Page\Admin\ProductClassEditPage;
 use Page\Admin\ProductCsvUploadPage;
 use Page\Admin\ProductManagePage;
 use Page\Admin\ProductEditPage;
@@ -90,37 +91,44 @@ class EA03ProductCest
 
         ProductManagePage::go($I)
             ->検索('規格なし商品')
-            ->検索結果_規格設定(1);
+            ->検索結果_選択(1);
 
-        $I->see('商品管理商品登録(商品規格)', self::ページタイトル);
+        ProductEditPage::at($I)
+            ->規格管理();
 
-        $I->click('#main > div > div > div > form > div > div.box-body > button');
+        ProductClassEditPage::at($I)
+            ->規格設定();
+
         $I->seeElement(['css' => '#form_class_name1:invalid']); //規格1がエラー
-        $I->dontSeeElement(['id' => 'result_box__list']);
+        $I->dontSeeElement(['css' => '#form > div.c-contentsArea__cols > div > div > div:nth-child(2)']); // 規格編集行が表示されていない
     }
 
-    public function product_一覧からの規格編集規格なし(\AcceptanceTester $I)
+    public function product_一覧からの規格編集規格なし_(\AcceptanceTester $I)
     {
         $I->wantTo('EA0310-UC01-T01 一覧からの規格編集 規格なし');
 
         ProductManagePage::go($I)
             ->検索('規格なし商品')
-            ->検索結果_規格設定(1);
+            ->検索結果_選択(1);
 
-        $I->see('商品管理商品登録(商品規格)', self::ページタイトル);
+        ProductEditPage::at($I)
+            ->規格管理();
 
-        $I->selectOption(['id' => 'form_class_name1'], '材質');
-        $I->click('#main > div > div > div > form > div > div.box-body > button');
+        $ProductClassEditPage = ProductClassEditPage::at($I)
+            ->入力_規格1('材質')
+            ->規格設定();
 
-        $I->see('検索結果 3 件 が該当しました', '#product-class-form > div:nth-child(2) > div > div > div.box-header > h3');
-        $I->checkOption(['id' => 'form_product_classes_0_add']);
-        $I->checkOption(['id' => 'form_product_classes_1_add']);
-        $I->checkOption(['id' => 'form_product_classes_2_add']);
+        $I->see('3 件の規格の組み合わせがあります', '#form > div.c-contentsArea__cols > div > div > div:nth-child(2) > div.card-header > div > div.col-6 > span');
 
-        $I->click("#product-class-form div:nth-child(3) .btn_area button");
-        $I->waitForElement(['css' => '#main .container-fluid div:nth-child(1) .alert-success']);
-        $I->see('商品規格を登録しました。', '#main .container-fluid div:nth-child(1) .alert-success');
-        $I->see('商品規格を初期化', '#delete');
+        $ProductClassEditPage
+            ->選択(1)
+            ->選択(2)
+            ->選択(3)
+            ->登録();
+
+        $I->waitForElement(ProductClassEditPage::$登録完了メッセージ);
+        $I->see('商品規格を登録しました。', ProductClassEditPage::$登録完了メッセージ);
+        $I->seeElement(ProductClassEditPage::$初期化ボタン);
     }
 
     public function product_一覧からの規格編集規格あり2(\AcceptanceTester $I)
@@ -134,12 +142,15 @@ class EA03ProductCest
         $Product = array_pop($Products);
         ProductManagePage::go($I)
             ->検索($Product->getName())
-            ->検索結果_規格設定(1);
+            ->検索結果_選択(1);
 
-        $I->see('商品管理商品登録(商品規格)', self::ページタイトル);
+        ProductEditPage::at($I)
+            ->規格管理();
 
-        $I->click("#product-class-form > div:nth-child(3) > div > button");
-        $I->see('商品規格を更新しました。', '#main .container-fluid div:nth-child(1) .alert-success');
+        ProductClassEditPage::at($I)
+            ->登録();
+
+        $I->see('商品規格を更新しました。', ProductClassEditPage::$登録完了メッセージ);
     }
 
     public function product_一覧からの商品複製(\AcceptanceTester $I)
@@ -172,12 +183,17 @@ class EA03ProductCest
         $Product = array_pop($Products);
         ProductManagePage::go($I)
             ->検索($Product->getName())
-            ->検索結果_規格設定(1);
+            ->検索結果_選択(1);
 
-        $I->see('商品管理商品登録(商品規格)', self::ページタイトル);
+        ProductEditPage::at($I)
+            ->規格管理();
 
-        $I->click('#delete');
-        $I->acceptPopup();
+        ProductClassEditPage::at($I)
+            ->規格初期化();
+
+        $I->see('商品規格を削除しました', ProductClassEditPage::$登録完了メッセージ);
+
+        // TODO 規格が初期化されているのを確認
     }
 
     public function product_商品登録非公開(\AcceptanceTester $I)
@@ -274,11 +290,11 @@ class EA03ProductCest
     {
         $I->wantTo('EA0303-UC01-T01 規格登録');
 
-        ProductClassPage::go($I)
+        ClassNameManagePage::go($I)
             ->入力_管理名('test class1')
             ->規格作成();
 
-        $I->see('規格を保存しました。', ProductClassPage::$登録完了メッセージ);
+        $I->see('規格を保存しました。', ClassNameManagePage::$登録完了メッセージ);
     }
 
     public function product_規格登録未登録時(\AcceptanceTester $I)
@@ -293,21 +309,21 @@ class EA03ProductCest
 
         $I->getScenario()->skip('編集機能を実装するまでスキップ');
 
-        $ProductClassPage = ProductClassPage::go($I)->一覧_編集(1);
+        $ProductClassPage = ClassNameManagePage::go($I)->一覧_編集(1);
 
-        $value = $I->grabValueFrom(ProductClassPage::$管理名);
+        $value = $I->grabValueFrom(ClassNameManagePage::$管理名);
         $I->assertEquals('test class1', $value);
 
         $ProductClassPage->規格作成();
 
-        $I->see('規格を保存しました。', ProductClassPage::$登録完了メッセージ);
+        $I->see('規格を保存しました。', ClassNameManagePage::$登録完了メッセージ);
     }
 
     public function product_規格削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0303-UC03-T01 規格削除');
 
-        ProductClassPage::go($I)->一覧_削除(1);
+        ClassNameManagePage::go($I)->一覧_削除(1);
 
         $I->acceptPopup();
     }
@@ -316,7 +332,7 @@ class EA03ProductCest
     {
         $I->wantTo('EA0308-UC01-T01 規格表示順の変更');
 
-        $ProductClassPage = ProductClassPage::go($I);
+        $ProductClassPage = ClassNameManagePage::go($I);
         $I->see("サイズ", $ProductClassPage->一覧_名称(1));
         $I->see("材質", $ProductClassPage->一覧_名称(2));
 
@@ -333,10 +349,10 @@ class EA03ProductCest
     {
         $I->wantTo('EA0311-UC01-T01 分類表示順の変更');
 
-        ProductClassPage::go($I)
+        ClassNameManagePage::go($I)
             ->一覧_分類登録(1);
 
-        $ProductClassCategoryPage = ProductClassCategoryPage::at($I);
+        $ProductClassCategoryPage = ClassCategoryManagePage::at($I);
         $I->see('150cm', $ProductClassCategoryPage->一覧_名称(1));
         $I->see('170mm', $ProductClassCategoryPage->一覧_名称(2));
         $I->see('120mm', $ProductClassCategoryPage->一覧_名称(3));
@@ -366,20 +382,20 @@ class EA03ProductCest
     {
         $I->wantTo('EA0304-UC01-T01(& UC01-T02/UC02-T01/UC03-T01) 分類登録/編集/削除');
 
-        $ProductClassPage = ProductClassPage::go($I)
+        $ProductClassPage = ClassNameManagePage::go($I)
             ->入力_管理名('test class2')
             ->規格作成();
 
-        $I->see('規格を保存しました。', ProductClassPage::$登録完了メッセージ);
+        $I->see('規格を保存しました。', ClassNameManagePage::$登録完了メッセージ);
 
         $ProductClassPage->一覧_分類登録(1);
         $I->see('規格名 test class2', 'div.card-header');
 
-        $ProductClassCategoryPage = ProductClassCategoryPage::at($I)
+        $ProductClassCategoryPage = ClassCategoryManagePage::at($I)
             ->入力_分類名('test class2 category1')
             ->分類作成();
 
-        $I->see('分類を保存しました。', ProductClassCategoryPage::$登録完了メッセージ);
+        $I->see('分類を保存しました。', ClassCategoryManagePage::$登録完了メッセージ);
 
         // TODO 編集機能を実装したらテスト
 //        $ProductClassCategoryPage->一覧_編集(1);

@@ -5,7 +5,7 @@ namespace Page\Admin;
 use Facebook\WebDriver\Interactions\WebDriverActions;
 use Facebook\WebDriver\WebDriverBy;
 
-class ProductClassCategoryPage extends AbstractAdminPageStyleGuide
+class ClassCategoryManagePage extends AbstractAdminPageStyleGuide
 {
 
     public static $登録完了メッセージ = ['css' => '#page_admin_product_class_category > div > div.c-contentsArea > div.alert'];
@@ -22,7 +22,7 @@ class ProductClassCategoryPage extends AbstractAdminPageStyleGuide
 
     public static function at($I)
     {
-        $page = new ProductClassCategoryPage($I);
+        $page = new ClassCategoryManagePage($I);
         return $page->atPage('規格管理商品管理');;
     }
 
