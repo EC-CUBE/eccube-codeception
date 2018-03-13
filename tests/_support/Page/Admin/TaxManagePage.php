@@ -67,8 +67,7 @@ class TaxManagePage extends AbstractAdminPageStyleGuide
 
     public function 決定($row)
     {
-        // td 5th + from + 3 input hidden tag = 9
-        $this->tester->click('table tbody tr:nth-child('.$row.') td:nth-child(9) button.btn.btn-ec-conversion');
+        $this->tester->click('table tbody tr:nth-child('.$row.') > td > div.edit > button.btn.btn-ec-conversion');
         return;
     }
 }
