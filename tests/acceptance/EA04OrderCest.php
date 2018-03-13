@@ -82,52 +82,6 @@ class EA04OrderCest
     }
 
     /**
-     * @env firefox
-     * @env chrome
-     *
-     * TODO: This test should move to shipping cest
-     * @skip
-     */
-    public function order_配送CSVダウンロード(\AcceptanceTester $I)
-    {
-        $I->wantTo('EA0401-UC03-T01 配送CSVダウンロード');
-
-        $findOrders = Fixtures::get('findOrders'); // Closure
-        $TargetOrders = array_filter($findOrders(), function ($Order) {
-            return $Order->getOrderStatus()->getId() != OrderStatus::PROCESSING;
-        });
-        $OrderListPage = OrderManagePage::go($I)->検索();
-        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
-
-        $OrderListPage->配送CSVダウンロード実行();
-        $ShippingCSV = $I->getLastDownloadFile('/^shipping_\d{14}\.csv$/');
-        $I->assertGreaterOrEquals(count($TargetOrders), count(file($ShippingCSV)), '検索結果以上の行数があるはず');
-    }
-
-    /**
-     *  TODO: This test should move to shipping cest
-     * @skip
-     */
-    public function order_配送情報のCSV出力項目変更設定(\AcceptanceTester $I)
-    {
-        $I->wantTo('EA0401-UC03-T02 配送情報のCSV出力項目変更設定');
-
-        $findOrders = Fixtures::get('findOrders'); // Closure
-        $TargetOrders = array_filter($findOrders(), function ($Order) {
-            return $Order->getOrderStatus()->getId() != OrderStatus::PROCESSING;
-        });
-        $OrderListPage = OrderManagePage::go($I)->検索();
-        $I->see('検索結果 '.count($TargetOrders).' 件 が該当しました', OrderManagePage::$検索結果_メッセージ);
-
-        /* 項目設定 */
-        $OrderListPage->配送CSV出力項目設定();
-
-        CsvSettingsPage::at($I);
-        $value = $I->grabValueFrom(CsvSettingsPage::$CSVタイプ);
-        $I->assertEquals(4, $value);
-    }
-
-    /**
      * TODO: will fix when apply style guide for admin order edit
      *
      * @skip
