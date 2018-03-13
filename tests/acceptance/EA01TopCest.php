@@ -13,8 +13,7 @@ use Page\Admin\TopPage;
  */
 class EA01TopCest
 {
-    const ページタイトル = '#main .page-header';
-    const ページタイトルStyleGuide = '.c-pageTitle h2.c-pageTitle__title';
+    const ページタイトル = '.c-pageTitle h2.c-pageTitle__title';
 
     public function _before(\AcceptanceTester $I)
     {
@@ -39,7 +38,7 @@ class EA01TopCest
 
         // 新規受付をクリックすると受注管理画面に遷移することを確認
         $I->click(TopPage::$受付状況_新規受付);
-        $I->see('受注管理受注マスター', self::ページタイトル);
+        $I->see('受注マスター', self::ページタイトル);
         $I->goToAdminPage();
 
         // 購入された商品が受注管理画面のページにて反映されていることを確認
@@ -79,11 +78,11 @@ class EA01TopCest
 
         // ショップ情報の在庫切れ商品をクリックすると商品管理ページに遷移することを確認
         $I->click(TopPage::$ショップ状況_在庫切れ商品);
-        $I->see('商品マスター', self::ページタイトルStyleGuide);
+        $I->see('商品マスター', self::ページタイトル);
         $I->goToAdminPage();
 
         // ショップ情報の会員数をクリックすると会員管理に遷移することを確認
         $I->click(TopPage::$ショップ状況_会員数);
-        $I->see('会員マスター', self::ページタイトルStyleGuide);
+        $I->see('会員マスター', self::ページタイトル);
     }
 }
