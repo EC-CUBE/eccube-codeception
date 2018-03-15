@@ -113,6 +113,7 @@ class EA07BasicinfoCest
         // 削除
         PaymentManagePage::go($I)
             ->一覧_削除(1);
+        $I->waitForElement('#delete_1', 2);
         $I->acceptPopup();
     }
 
