@@ -50,7 +50,7 @@ class EA07BasicinfoCest
         $I->see('郵便振替', $PaymentManagePage->一覧_支払方法(1));
     }
 
-    public function basicinfo_支払方法入れ替え(\AcceptanceTester $I)
+    public function basicinfo_1(\AcceptanceTester $I)
     {
         $I->wantTo('EA0704-UC02-T01 支払方法 入れ替え');
 
@@ -60,7 +60,14 @@ class EA07BasicinfoCest
         // 入れ替え
         $I->see('郵便振替', $PaymentManagePage->一覧_支払方法(1));
         $PaymentManagePage->一覧_下に(1);
-        $I->see('ランクの移動が完了しました。', PaymentManagePage::$登録完了メッセージ);
+
+        $PaymentManagePage = PaymentManagePage::go($I);
+        $I->see('郵便振替', $PaymentManagePage->一覧_支払方法(2));
+
+
+        $PaymentManagePage->一覧_上に(2);
+        $PaymentManagePage = PaymentManagePage::go($I);
+        $I->see('郵便振替', $PaymentManagePage->一覧_支払方法(1));
     }
 
     public function basicinfo_支払方法登録(\AcceptanceTester $I)
