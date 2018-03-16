@@ -113,7 +113,6 @@ class EA07BasicinfoCest
         // 削除
         PaymentManagePage::go($I)
             ->一覧_削除(1);
-        $I->waitForElement('#delete_1', 5);
     }
 
     public function basicinfo_配送方法一覧(\AcceptanceTester $I)
