@@ -50,7 +50,7 @@ class PaymentManagePage extends AbstractAdminPageStyleGuide
     {
         $rowNum = $rowNum + 1;
         $this->tester->click(".c-contentsArea__primaryCol .list-group-flush .list-group-item:nth-child(${rowNum}) > div > div.col-3.text-right > div > div:nth-child(3) > a");
-//        $this->tester->waitForElement('#delete_2', 5);
+        // accept modal
         $this->tester->click(".c-contentsArea__primaryCol .list-group-flush .list-group-item:nth-child(${rowNum}) > div > div.col-3.text-right > div > div:nth-child(3) > div > div > div > div.modal-footer > a:nth-child(2)");
     }
 
