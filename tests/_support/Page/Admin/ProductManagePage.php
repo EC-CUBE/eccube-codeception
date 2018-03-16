@@ -96,9 +96,19 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
      */
     public function 検索結果_削除($rowNum)
     {
-        $this->tester->getScenario()->incomplete('未実装：商品マスター画面での削除は未実装');
+      $this->tester->click("#page_admin_product > div.c-container > div.c-contentsArea > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(3) > a");
+      return $this;
+    }
 
-        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(4) > a");
+    public function Accept_削除($rowNum)
+    {
+        $this->tester->click("#page_admin_product > div.c-container > div.c-contentsArea > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(3) button.btn.btn-ec-delete");
+        return $this;
+    }
+
+    public function Cancel_削除($rowNum)
+    {
+        $this->tester->click("#page_admin_product > div.c-container > div.c-contentsArea > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(3) button.btn.btn-ec-sub");
         return $this;
     }
 
