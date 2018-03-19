@@ -50,7 +50,7 @@ class EA07BasicinfoCest
         $I->see('郵便振替', $PaymentManagePage->一覧_支払方法(1));
     }
 
-    public function basicinfo_1(\AcceptanceTester $I)
+    public function basicinfo_支払方法入れ替え(\AcceptanceTester $I)
     {
         $I->wantTo('EA0704-UC02-T01 支払方法 入れ替え');
 
