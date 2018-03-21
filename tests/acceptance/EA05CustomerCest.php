@@ -226,7 +226,9 @@ class EA05CustomerCest
 
         CustomerManagePage::go($I)
             ->検索($customer->getEmail())
-            ->一覧_仮会員メール再送(1)->一覧_仮会員メール再送_Accept(1);
+            ->一覧_仮会員メール再送(1)
+            ->wait()
+            ->一覧_仮会員メール再送_Accept(1);
         $I->wait(10);
 
         $I->seeEmailCount(2);

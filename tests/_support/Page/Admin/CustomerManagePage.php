@@ -28,6 +28,12 @@ class CustomerManagePage extends AbstractAdminPageStyleGuide
         return $page->goPage(self::$URL, '会員マスター会員管理');
     }
 
+    public function wait($second = 3)
+    {
+        $this->tester->wait($second);
+        return $this;
+    }
+
     public function 検索($value = '')
     {
         $this->tester->fillField(['id' => 'admin_search_customer_multi'], $value);
@@ -57,7 +63,7 @@ class CustomerManagePage extends AbstractAdminPageStyleGuide
 
     public function 一覧_仮会員メール再送_Accept($rowNum)
     {
-        $this->tester->click("#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div.col.text-center button.btn.btn-ec-delete");
+        $this->tester->click("#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div.col.text-center a.btn.btn-ec-delete");
         return $this;
     }
 
