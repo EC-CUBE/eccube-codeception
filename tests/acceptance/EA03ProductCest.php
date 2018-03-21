@@ -164,8 +164,9 @@ class EA03ProductCest
         $Product = array_pop($Products);
         ProductManagePage::go($I)
             ->検索($Product->getName())
-            ->検索結果_複製(1)->Accept_削除();
+            ->検索結果_複製(1);
 
+        $I->acceptPopup();
     }
 
     /**
@@ -280,8 +281,9 @@ class EA03ProductCest
 
         ProductManagePage::go($I)
             ->検索('')
-            ->検索結果_削除(1)->Accept_削除(1);
-
+            ->検索結果_削除(1)
+            ->wait()
+            ->Accept_削除(1);
     }
 
     public function product_規格登録_(\AcceptanceTester $I)
