@@ -280,10 +280,10 @@ class EA03ProductCest
         $I->wantTo('EA0310-UC05-T03 一覧からの商品削除');
 
         ProductManagePage::go($I)
-            ->検索('test product2')
-            ->検索結果_削除(1);
-
-        $I->acceptPopup();
+            ->検索('')
+            ->検索結果_削除(1)
+            ->wait()
+            ->Accept_削除(1);
     }
 
     public function product_規格登録_(\AcceptanceTester $I)
