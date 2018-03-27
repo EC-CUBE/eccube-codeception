@@ -15,7 +15,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
 
     public static $検索結果_メッセージ = '#search_form > div.c-outsideBlock__contents.mb-5 > span';
     public static $検索結果_結果なしメッセージ = '.c-contentsArea .c-contentsArea__cols div.text-center.h5';
-    public static $検索結果_一覧 = "#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody";
+    public static $検索結果_一覧 = "#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody";
 
     protected $tester;
 
@@ -31,6 +31,16 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
     {
         $page = new ProductManagePage($I);
         return $page->goPage(self::$URL, '商品マスター商品管理');
+    }
+
+    /**
+     * @param $second
+     * @return $this
+     */
+    public function wait($second = 3)
+    {
+        $this->tester->wait($second);
+        return $this;
     }
 
     /**
@@ -63,7 +73,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
      */
     public function 検索結果_複製($rowNum)
     {
-        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(2) > a");
+        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(2) > a");
         return $this;
     }
 
@@ -74,7 +84,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
      */
     public function 検索結果_確認($rowNum)
     {
-        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(1) > a");
+        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(1) > a");
         return $this;
     }
 
@@ -85,7 +95,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
      */
     public function 検索結果_選択($rowNum)
     {
-        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(4) > a");
+        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(4) > a");
         return $this;
     }
 
@@ -96,9 +106,19 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
      */
     public function 検索結果_削除($rowNum)
     {
-        $this->tester->getScenario()->incomplete('未実装：商品マスター画面での削除は未実装');
+      $this->tester->click("#page_admin_product > div.c-container > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(3) > a");
+      return $this;
+    }
 
-        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(4) > a");
+    public function Accept_削除($rowNum)
+    {
+        $this->tester->click("#page_admin_product > div.c-container > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(3) div.modal div.modal-footer a.btn-ec-delete");
+        return $this;
+    }
+
+    public function Cancel_削除($rowNum)
+    {
+        $this->tester->click("#page_admin_product > div.c-container > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(3) button.btn.btn-ec-sub");
         return $this;
     }
 

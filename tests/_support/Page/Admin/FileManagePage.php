@@ -4,7 +4,7 @@
 namespace Page\Admin;
 
 
-class FileManagePage extends AbstractAdminPage
+class FileManagePage extends AbstractAdminPageStyleGuide
 {
 
     /**
@@ -18,7 +18,7 @@ class FileManagePage extends AbstractAdminPage
     public static function go($I)
     {
         $page = new self($I);
-        return $page->goPage('/content/file_manager', 'コンテンツ管理ファイル管理');
+        return $page->goPage('/content/file_manager', 'ファイル管理コンテンツ管理');
     }
 
     public function 入力_ファイル($fileName)
@@ -29,7 +29,7 @@ class FileManagePage extends AbstractAdminPage
 
     public function アップロード()
     {
-        $this->tester->click(['xpath' => '//div[@id="upload_box__file"]//a']);
+        $this->tester->click('#upload_box__file a.action-upload');
         return $this;
     }
 
@@ -47,12 +47,12 @@ class FileManagePage extends AbstractAdminPage
 
     public function ファイル名($rowNum)
     {
-        return "#aside_wrap > form > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(1)";
+        return "#fileList table > tbody > tr:nth-child(${rowNum}) > td:nth-child(2)";
     }
 
     public function 一覧_ダウンロード($rowNum)
     {
-        $this->tester->click("#aside_wrap > form > div.col-md-9 > div > div.box-body > div > div > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(5) > a");
+        $this->tester->click("#fileList table > tbody > tr:nth-child(${rowNum}) > td:nth-child(5) a.action-download");
         return $this;
     }
 

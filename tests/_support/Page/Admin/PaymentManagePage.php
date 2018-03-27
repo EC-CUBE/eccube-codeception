@@ -49,7 +49,9 @@ class PaymentManagePage extends AbstractAdminPageStyleGuide
     public function 一覧_削除($rowNum)
     {
         $rowNum = $rowNum + 1;
-        $this->tester->click(".c-contentsArea__primaryCol .list-group-flush .list-group-item:nth-child(${rowNum}) .justify-content-around a:nth-child(3) ");
+        $this->tester->click(".c-contentsArea__primaryCol .list-group-flush .list-group-item:nth-child(${rowNum}) > div > div.col-3.text-right > div > div:nth-child(3) > a");
+        // accept modal
+        $this->tester->click(".c-contentsArea__primaryCol .list-group-flush .list-group-item:nth-child(${rowNum}) > div > div.col-3.text-right > div > div:nth-child(3) > div > div > div > div.modal-footer > a:nth-child(2)");
     }
 
     public function 新規入力()

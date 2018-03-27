@@ -73,7 +73,6 @@ class EA06ContentsManagementCest
      */
     public function contentsmanagement_ファイル管理(\AcceptanceTester $I)
     {
-        $I->getScenario()->skip('ファイルアップロード未実装のためスキップ');
         $I->wantTo('EA0602-UC01-T01(& UC01-T02/UC01-T03/UC01-T04/UC01-T05/UC01-T06/UC01-T07) ファイル管理');
 
         /** @var FileManagePage $FileManagePage */
@@ -82,6 +81,8 @@ class EA06ContentsManagementCest
             ->アップロード();
 
         $I->see('upload.txt', $FileManagePage->ファイル名(1));
+
+        $I->getScenario()->incomplete('Incompleted caused by not implement download yet');
 
         $FileManagePage->一覧_ダウンロード(1);
         $UploadedFile = $I->getLastDownloadFile('/^upload\.txt$/');
@@ -107,7 +108,7 @@ class EA06ContentsManagementCest
 
         $config = Fixtures::get('config');
         $I->amOnPage('/'.$config['eccube_admin_route'].'/content/file_manager');
-        $I->see('コンテンツ管理ファイル管理', '#main .page-header');
+        $I->see('ファイル管理コンテンツ管理', '.c-pageTitle');
 
         FileManagePage::go($I)
             ->一覧_削除(1);
