@@ -100,6 +100,35 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
     }
 
     /**
+     * Btn class product, list product search
+     * @return $this
+     */
+    public function clickBtnPopupClass()
+    {
+        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr > td:nth-child(7) > button.standardConfirm");
+        return $this;
+    }
+
+    /**
+     * Btn class product, list product search
+     * @return $this
+     */
+    public function popupClassCancel()
+    {
+        $this->tester->click("#page_admin_product div#product-classes .modal-footer button.btn-v-sub");
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function popupClassFollow()
+    {
+        $this->tester->click("#page_admin_product div#product-classes .modal-footer a.btn-ec-conversion");
+        return $this;
+    }
+
+    /**
      * 検索結果の指定した行を削除。
      * @param int $rowNum 検索結果の行番号(1から始まる)
      * @return $this
