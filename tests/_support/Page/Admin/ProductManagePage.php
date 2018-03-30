@@ -103,7 +103,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
      * Btn class product, list product search
      * @return $this
      */
-    public function clickBtnPopupClass()
+    public function 規格確認ボタンをクリック()
     {
         $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr > td:nth-child(7) > button.standardConfirm");
         return $this;
@@ -113,7 +113,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
      * Btn class product, list product search
      * @return $this
      */
-    public function popupClassCancel()
+    public function 規格確認をキャンセル()
     {
         $this->tester->click("#page_admin_product div#product-classes .modal-footer button.btn-v-sub");
         return $this;
@@ -122,7 +122,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
     /**
      * @return $this
      */
-    public function popupClassFollow()
+    public function 規格編集画面に遷移()
     {
         $this->tester->click("#page_admin_product div#product-classes .modal-footer a.btn-ec-conversion");
         return $this;
