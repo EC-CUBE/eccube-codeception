@@ -154,7 +154,7 @@ class OrderEditPage extends AbstractAdminPageStyleGuide
 
     public function getProductName($row)
     {
-        return $this->tester->grabTextFrom("#table-form-field > tbody > tr:nth-child({$row}) > td.align-middle.w-25.pl-3 > p");
+        return $this->tester->grabTextFrom("#table-form-field > tbody > tr:nth-child({$row}) > td.align-middle.w-25.pl-3");
     }
 
     public function removeProduct($row)
@@ -165,7 +165,7 @@ class OrderEditPage extends AbstractAdminPageStyleGuide
 
     public function acceptDeleteModal($row)
     {
-        $this->tester->click("#table-form-field > tbody > tr:nth-child({$row}) > td.align-middle.text-right.pr-3 div.modal div.modal-footer a.delete");
+        $this->tester->click("#table-form-field > tbody > tr:nth-child({$row}) > td.align-middle.text-right.pr-3 div.modal a.delete");
         return $this;
     }
 }
