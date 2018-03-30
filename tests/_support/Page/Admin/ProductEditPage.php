@@ -33,7 +33,7 @@ class ProductEditPage extends AbstractAdminPageStyleGuide
     public static function at($I)
     {
         $page = new ProductEditPage($I);
-        $page->tester->see('商品管理商品登録', '.c-pageTitle .c-pageTitle__titles');
+        $page->tester->see('商品管理商品登録', '#page_admin_product_product_edit > div.c-container > div.c-contentsArea > div > div');
         return $page;
     }
 
@@ -78,7 +78,7 @@ class ProductEditPage extends AbstractAdminPageStyleGuide
 
     public function 登録()
     {
-        $this->tester->click('#form1 > div.c-conversionArea button.btn-ec-conversion');
+        $this->tester->click('#form1 > div.c-conversionArea > div > div > div:nth-child(2) > div > div:nth-child(2) > button');
         return $this;
     }
 
