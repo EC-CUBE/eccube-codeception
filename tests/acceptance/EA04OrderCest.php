@@ -254,4 +254,24 @@ class EA04OrderCest
         $I->see('受注情報を保存しました。', OrderEditPage::$登録完了メッセージ);
     }
 
+    public function order_product_remove(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0405-UC01-T03 Order product remove');
+
+        $OrderRegisterPage = OrderEditPage::goEdit($I);
+
+        $productName = $OrderRegisterPage->getProductName(1);
+        // delete
+        $OrderRegisterPage->removeProduct(1)
+            ->acceptDeleteModal(1);
+        $I->wait(5);
+
+        // before submit
+        $I->dontSee($productName, "#table-form-field");
+
+        // after submit
+        $OrderRegisterPage->受注情報登録();
+        $I->dontSee($productName, "#table-form-field");
+    }
+
 }
