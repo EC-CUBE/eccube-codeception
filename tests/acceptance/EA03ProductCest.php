@@ -43,6 +43,32 @@ class EA03ProductCest
         $I->see("ディナーフォーク", ProductManagePage::$検索結果_一覧);
     }
 
+    public function product_class_popup_show(\AcceptanceTester $I)
+    {
+        $I->wantTo('SHOW POPUP PRODUCT CLASS');
+
+        ProductManagePage::go($I)
+            ->検索()
+            ->clickBtnPopupClass()
+            ->wait()
+            ->popupClassCancel();
+
+        $I->dontSeeElement(['css' => 'div.modal.show']);
+    }
+
+    public function product_class_popup_follow(\AcceptanceTester $I)
+    {
+        $I->wantTo('FOLLOW POPUP PRODUCT CLASS');
+
+        ProductManagePage::go($I)
+            ->検索()
+            ->clickBtnPopupClass()
+            ->wait()
+            ->popupClassFollow();
+
+        $I->see('商品登録（規格設定）商品管理', self::ページタイトルStyleGuide);
+    }
+
     public function product_商品検索結果無(\AcceptanceTester $I)
     {
         $I->wantTo('EA0301-UC01-T02 商品検索 検索結果なし');
@@ -101,32 +127,6 @@ class EA03ProductCest
 
         $I->seeElement(['css' => '#form_class_name1:invalid']); //規格1がエラー
         $I->dontSeeElement(['css' => '#form > div.c-contentsArea__cols > div > div > div:nth-child(2)']); // 規格編集行が表示されていない
-    }
-
-    public function product_class_popup_show(\AcceptanceTester $I)
-    {
-        $I->wantTo('SHOW POPUP PRODUCT CLASS');
-
-        ProductManagePage::go($I)
-            ->検索()
-            ->clickBtnPopupClass()
-            ->wait()
-            ->popupClassCancel();
-
-        $I->dontSeeElement(['css' => 'div.modal.show']);
-    }
-
-    public function product_class_popup_follow(\AcceptanceTester $I)
-    {
-        $I->wantTo('FOLLOW POPUP PRODUCT CLASS');
-
-        ProductManagePage::go($I)
-            ->検索()
-            ->clickBtnPopupClass()
-            ->wait()
-            ->popupClassFollow();
-
-        $I->see('商品登録（規格設定）商品管理', self::ページタイトルStyleGuide);
     }
 
     public function product_一覧からの規格編集規格なし_(\AcceptanceTester $I)
