@@ -33,7 +33,7 @@ class ProductEditPage extends AbstractAdminPageStyleGuide
     public static function at($I)
     {
         $page = new ProductEditPage($I);
-        $page->tester->see('商品管理商品登録', '#page_admin_product_product_edit > div.c-container > div.c-contentsArea > div > div');
+        $page->tester->see('商品管理商品登録', '.c-pageTitle .c-pageTitle__titles');
         return $page;
     }
 
@@ -55,6 +55,18 @@ class ProductEditPage extends AbstractAdminPageStyleGuide
         return $this;
     }
 
+    public function clickShownTags(){
+        $this->tester->click(['css' => 'div[href="#allTags"] > a']);
+        return $this;
+    }
+
+    public function clickSelectTags(){
+        $this->tester->click(['css' => '#allTags > div:nth-child(2) button']);
+        $this->tester->click(['css' => '#allTags > div:nth-child(3) button']);
+        $this->tester->click(['css' => '#allTags > div:nth-child(4) button']);
+        return $this;
+    }
+
     public function 規格管理()
     {
         $this->tester->click(['css' => '#standardConfig > div > div.d-block.text-center.text-center > button']);
@@ -66,7 +78,7 @@ class ProductEditPage extends AbstractAdminPageStyleGuide
 
     public function 登録()
     {
-        $this->tester->click('#form1 > div.c-conversionArea > div > div > div:nth-child(2) > div > div:nth-child(2) > button');
+        $this->tester->click('#form1 > div.c-conversionArea button.btn-ec-conversion');
         return $this;
     }
 

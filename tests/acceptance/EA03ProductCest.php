@@ -72,6 +72,22 @@ class EA03ProductCest
         $I->assertGreaterOrEquals(count($Products), count(file($ProductCSV)), '検索結果以上の行数があるはず');
     }
 
+    public function product_newProductTags(\AcceptanceTester $I){
+        $I->wantTo('ADD TAGS TO PRODUCT');
+
+        ProductEditPage::go($I)
+            ->入力_商品名("規格なし商品")
+            ->入力_販売価格(50000)
+            ->clickShownTags()
+            ->clickSelectTags()
+            ->登録();
+        $I->see('登録が完了しました。', 'div.c-container > div.c-contentsArea > div.alert');
+
+        $I->seeElement(['xpath' => '//*[@id="tag"]/div/div[1]/button']);
+        $I->seeElement(['xpath' => '//*[@id="tag"]/div/div[2]/button']);
+        $I->seeElement(['xpath' => '//*[@id="tag"]/div/div[3]/button']);
+    }
+
     public function product_CSV出力項目設定(\AcceptanceTester $I)
     {
         $I->wantTo('EA0301-UC02-T02 CSV出力項目設定');
