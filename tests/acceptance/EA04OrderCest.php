@@ -228,8 +228,6 @@ class EA04OrderCest
         /* 異常系 */
         $I->dontSee('受注情報を保存しました。', OrderEditPage::$登録完了メッセージ);
 
-        $I->getScenario()->incomplete('未実装：受注への商品の追加が未実装');
-
         /* 正常系 */
         $OrderRegisterPage
             ->入力_受注ステータス(['1' => '新規受付'])
