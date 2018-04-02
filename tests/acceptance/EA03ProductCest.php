@@ -203,6 +203,7 @@ class EA03ProductCest
         ProductEditPage::go($I)
             ->入力_商品名('test product1')
             ->入力_販売価格('1000')
+            ->入力_カテゴリ(1)
             ->登録();
 
         $I->see('登録が完了しました。', ProductEditPage::$登録結果メッセージ);
@@ -215,6 +216,7 @@ class EA03ProductCest
         ProductEditPage::go($I)
             ->入力_商品名('test product2')
             ->入力_販売価格('1000')
+            ->入力_カテゴリ(1)
             ->入力_公開()
             ->登録();
 
@@ -231,6 +233,8 @@ class EA03ProductCest
 
         ProductEditPage::at($I)
             ->入力_商品名('test product11')
+            ->入力_カテゴリ(1)
+            ->入力_カテゴリ(2)
             ->登録();
 
         $I->see('登録が完了しました。', ProductEditPage::$登録結果メッセージ);
