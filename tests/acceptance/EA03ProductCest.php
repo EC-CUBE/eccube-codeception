@@ -276,7 +276,7 @@ class EA03ProductCest
     }
 
     public function product_新製品はタグを持っています(\AcceptanceTester $I){ //
-        $I->wantTo('EA0302-UC01-T04-タグを商品に追加する');
+        $I->wantTo('EA0302-UC01-T05-タグを商品に追加する');
 
         ProductEditPage::go($I)
             ->入力_商品名("規格なし商品")
