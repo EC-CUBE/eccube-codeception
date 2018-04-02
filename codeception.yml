@@ -14,4 +14,3 @@ extensions:
         - Codeception\Extension\RunFailed
 params:
     - env
-    - ../var/www/html/eccube/sf/.env
