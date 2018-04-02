@@ -17,6 +17,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
     public static $検索結果_結果なしメッセージ = '.c-contentsArea .c-contentsArea__cols div.text-center.h5';
     public static $検索結果_一覧 = "#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody";
 
+    /** @var \AcceptanceTester $tester */
     protected $tester;
 
     /**
@@ -105,7 +106,8 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
      */
     public function 規格確認ボタンをクリック()
     {
-        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr > td:nth-child(7) > button.standardConfirm");
+        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr > td:nth-child(7) > button.page-link");
+        $this->tester->waitForElementVisible(['id' => 'productClassesModal']);
         return $this;
     }
 
@@ -115,7 +117,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
      */
     public function 規格確認をキャンセル()
     {
-        $this->tester->click("#page_admin_product div#product-classes .modal-footer button.btn-v-sub");
+        $this->tester->click("#page_admin_product div#productClassesModal .modal-footer button.btn-v-sub");
         return $this;
     }
 
@@ -124,7 +126,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
      */
     public function 規格編集画面に遷移()
     {
-        $this->tester->click("#page_admin_product div#product-classes .modal-footer a.btn-ec-conversion");
+        $this->tester->click("#page_admin_product div#productClassesModal .modal-footer a.btn-ec-conversion");
         return $this;
     }
 

@@ -50,7 +50,6 @@ class EA03ProductCest
         ProductManagePage::go($I)
             ->検索()
             ->規格確認ボタンをクリック()
-            ->wait()
             ->規格確認をキャンセル();
 
         $I->dontSeeElement(['css' => 'div.modal.show']);
@@ -63,7 +62,6 @@ class EA03ProductCest
         ProductManagePage::go($I)
             ->検索()
             ->規格確認ボタンをクリック()
-            ->wait()//待つ
             ->規格編集画面に遷移();
 
         $I->see('商品登録（規格設定）商品管理', self::ページタイトルStyleGuide);
