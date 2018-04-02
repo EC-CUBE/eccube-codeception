@@ -55,6 +55,12 @@ class ProductEditPage extends AbstractAdminPageStyleGuide
         return $this;
     }
 
+    public function 入力_カテゴリ($category_id)
+    {
+        $this->tester->checkOption(['id' => 'admin_product_category_'.$category_id]);
+        return $this;
+    }
+
     public function 規格管理()
     {
         $this->tester->click(['css' => '#standardConfig > div > div.d-block.text-center.text-center > button']);
