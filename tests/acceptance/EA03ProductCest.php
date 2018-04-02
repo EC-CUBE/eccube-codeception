@@ -52,24 +52,6 @@ class EA03ProductCest
         $I->see("検索条件に合致するデータが見つかりませんでした", ProductManagePage::$検索結果_結果なしメッセージ);
     }
 
-    public function product_001(\AcceptanceTester $I){ //新製品はタグを持っています
-        $I->wantTo('タグを商品に追加する'); // タグを商品に追加する
-
-        ProductEditPage::go($I)
-            ->入力_商品名("規格なし商品")
-            ->入力_販売価格(50000)
-            ->クリックして開くタグリスト() // クリックして開くタグリスト
-            ->クリックして選択タグ(2) // クリックして選択タグ
-            ->クリックして選択タグ(3) // クリックして選択タグ
-            ->クリックして選択タグ(4) // クリックして選択タグ
-            ->登録();
-        $I->see('登録が完了しました。', 'div.c-container > div.c-contentsArea > div.alert');
-
-        $I->seeElement(['xpath' => '//*[@id="tag"]/div/div[1]/button']);
-        $I->seeElement(['xpath' => '//*[@id="tag"]/div/div[2]/button']);
-        $I->seeElement(['xpath' => '//*[@id="tag"]/div/div[3]/button']);
-    }
-
     /**
      * @env firefox
      * @env chrome
@@ -291,6 +273,24 @@ class EA03ProductCest
 
         $ProductEditPage->登録();
         $I->see('登録が完了しました。', ProductEditPage::$登録結果メッセージ);
+    }
+
+    public function product_新製品はタグを持っています(\AcceptanceTester $I){ //
+        $I->wantTo('EA0302-UC01-T04-タグを商品に追加する');
+
+        ProductEditPage::go($I)
+            ->入力_商品名("規格なし商品")
+            ->入力_販売価格(50000)
+            ->クリックして開くタグリスト()
+            ->クリックして選択タグ(2)
+            ->クリックして選択タグ(3)
+            ->クリックして選択タグ(4)
+            ->登録();
+        $I->see('登録が完了しました。', 'div.c-container > div.c-contentsArea > div.alert');
+
+        $I->seeElement(['xpath' => '//*[@id="tag"]/div/div[1]/button']);
+        $I->seeElement(['xpath' => '//*[@id="tag"]/div/div[2]/button']);
+        $I->seeElement(['xpath' => '//*[@id="tag"]/div/div[3]/button']);
     }
 
     public function product_一覧からの商品削除(\AcceptanceTester $I)
