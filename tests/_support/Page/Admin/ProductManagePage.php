@@ -16,6 +16,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
     public static $検索結果_メッセージ = '#search_form > div.c-outsideBlock__contents.mb-5 > span';
     public static $検索結果_結果なしメッセージ = '.c-contentsArea .c-contentsArea__cols div.text-center.h5';
     public static $検索結果_一覧 = "#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody";
+    public static $一括削除エラー = ['id' => 'bulkErrors'];
 
     /** @var \AcceptanceTester $tester */
     protected $tester;
@@ -162,6 +163,27 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
     public function CSV出力項目設定()
     {
         $this->tester->click('.c-contentsArea__cols .row div:nth-child(2) div:nth-child(2) button:nth-child(2)');
+        return $this;
+    }
+
+    public function すべて選択()
+    {
+        $this->tester->checkOption(['id' => 'check_all']);
+        return $this;
+    }
+
+    public function 完全に削除()
+    {
+        $this->tester->click(['css' => '#form_bulk button.btn-ec-delete']);
+        $this->tester->waitForElementVisible(['id' => 'bulkDelete']);
+        $this->tester->click(['id' => 'bulkDelete']);
+        $this->tester->waitForElementVisible(['id' => 'bulkDeleteDone']);
+        return $this;
+    }
+
+    public function 一括削除完了()
+    {
+        $this->tester->click(['id' => 'bulkDeleteDone']);
         return $this;
     }
 }

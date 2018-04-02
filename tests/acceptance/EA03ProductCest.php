@@ -227,6 +227,7 @@ class EA03ProductCest
         ProductEditPage::go($I)
             ->入力_商品名('test product1')
             ->入力_販売価格('1000')
+            ->入力_カテゴリ(1)
             ->登録();
 
         $I->see('登録が完了しました。', ProductEditPage::$登録結果メッセージ);
@@ -239,6 +240,7 @@ class EA03ProductCest
         ProductEditPage::go($I)
             ->入力_商品名('test product2')
             ->入力_販売価格('1000')
+            ->入力_カテゴリ(1)
             ->入力_公開()
             ->登録();
 
@@ -255,6 +257,8 @@ class EA03ProductCest
 
         ProductEditPage::at($I)
             ->入力_商品名('test product11')
+            ->入力_カテゴリ(1)
+            ->入力_カテゴリ(2)
             ->登録();
 
         $I->see('登録が完了しました。', ProductEditPage::$登録結果メッセージ);
@@ -308,6 +312,70 @@ class EA03ProductCest
             ->検索結果_削除(1)
             ->wait()
             ->Accept_削除(1);
+    }
+
+    public function product_商品の一括削除_正常(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0302-UC05-T04 商品の一括削除(正常)');
+
+        $createProduct = Fixtures::get('createProduct');
+        foreach (range(1, 5) as $i) {
+            $createProduct("一括削除用_${i}");
+        }
+        $ProductManagePage = ProductManagePage::go($I)
+            ->検索('一括削除用')
+            ->すべて選択();
+
+        $I->see("検索結果：5件が該当しました", ProductManagePage::$検索結果_メッセージ);
+
+        $ProductManagePage
+            ->完全に削除()
+            ->一括削除完了();
+
+        $I->see("検索結果：0件が該当しました", ProductManagePage::$検索結果_メッセージ);
+    }
+
+
+
+    public function product_商品の一括削除_削除エラー(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0302-UC05-T04 商品の一括削除(正常)');
+
+        $createProduct = Fixtures::get('createProduct');
+        $createOrders = Fixtures::get('createOrders');
+
+        $timestamp = time();
+        // 受注に紐付いていない商品と紐付いている商品を作成
+        foreach (range(1, 5) as $i) {
+            $createProduct("一括削除用_${timestamp}_受注なし_${i}");
+        }
+        $Customer = (Fixtures::get('createCustomer'))();
+        foreach (range(1, 5) as $i) {
+            $Product = $createProduct("一括削除用_${timestamp}_受注あり_${i}");
+            $createOrders($Customer, 1, $Product->getProductClasses()->toArray());
+        }
+
+        $ProductManagePage = ProductManagePage::go($I)
+            ->検索("一括削除用_${timestamp}")
+            ->すべて選択();
+
+        $I->see("検索結果：10件が該当しました", ProductManagePage::$検索結果_メッセージ);
+        $I->see("一括削除用_${timestamp}_受注あり", ProductManagePage::$検索結果_一覧);
+        $I->see("一括削除用_${timestamp}_受注なし", ProductManagePage::$検索結果_一覧);
+
+        $ProductManagePage->完全に削除();
+
+        $I->see("一括削除用_${timestamp}_受注あり_1", ProductManagePage::$一括削除エラー);
+        $I->see("一括削除用_${timestamp}_受注あり_2", ProductManagePage::$一括削除エラー);
+        $I->see("一括削除用_${timestamp}_受注あり_3", ProductManagePage::$一括削除エラー);
+        $I->see("一括削除用_${timestamp}_受注あり_4", ProductManagePage::$一括削除エラー);
+        $I->see("一括削除用_${timestamp}_受注あり_5", ProductManagePage::$一括削除エラー);
+
+        $ProductManagePage->一括削除完了();
+
+        $I->see("検索結果：5件が該当しました", ProductManagePage::$検索結果_メッセージ);
+        $I->see("一括削除用_${timestamp}_受注あり", ProductManagePage::$検索結果_一覧);
+        $I->dontSee("一括削除用_${timestamp}_受注なし", ProductManagePage::$検索結果_一覧);
     }
 
     public function product_規格登録_(\AcceptanceTester $I)

@@ -202,6 +202,11 @@ $findProducts = function () use ($entityManager) {
 /** 商品を検索するクロージャ. */
 Fixtures::add('findProducts', $findProducts);
 
+$createProduct = function($product_name = null, $product_class_num = 3) use ($container) {
+    return createProduct($container, $product_name, $product_class_num);
+};
+Fixtures::add('createProduct', $createProduct);
+
 $createCustomer = function ($email = null, $active = true) use ($container, $faker) {
     if (is_null($email)) {
         $email = microtime(true).'.'.$faker->safeEmail;
@@ -211,11 +216,11 @@ $createCustomer = function ($email = null, $active = true) use ($container, $fak
 /** 会員を生成するクロージャ. */
 Fixtures::add('createCustomer', $createCustomer);
 
-$createOrders = function ($Customer, $numberOfOrders = 5) use ($container, $entityManager, $faker) {
+$createOrders = function ($Customer, $numberOfOrders = 5, $ProductClasses = array()) use ($container, $entityManager, $faker) {
     $generator = $container->get('Eccube\Tests\Fixture\Generator');
     $Orders = array();
     for ($i = 0; $i < $numberOfOrders; $i++) {
-        $Order = $generator->createOrder($Customer);
+        $Order = $generator->createOrder($Customer, $ProductClasses);
         $Status = $entityManager->getRepository('Eccube\Entity\Master\OrderStatus')->find($faker->numberBetween(1, 7));
         $OrderDate = $faker->dateTimeThisYear();
         $Order->setOrderStatus($Status);
