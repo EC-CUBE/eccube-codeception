@@ -275,7 +275,8 @@ class EA03ProductCest
         $I->see('登録が完了しました。', ProductEditPage::$登録結果メッセージ);
     }
 
-    public function product_新製品はタグを持っています(\AcceptanceTester $I){ //
+    public function product_新製品はタグを持っています(\AcceptanceTester $I)
+    {
         $I->wantTo('EA0302-UC01-T05-タグを商品に追加する');
 
         ProductEditPage::go($I)
