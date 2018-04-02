@@ -25,7 +25,7 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
     public static function at(\AcceptanceTester $I)
     {
         $page = new self($I);
-        return $page->atPage('受注管理受注マスター');
+        return $page->atPage('受注マスター受注管理');
     }
 
     public function 検索($value = '')
@@ -66,17 +66,10 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
 
     public function 一覧_全選択()
     {
-        $this->tester->checkOption(['id' => 'check-all']);
+        $this->tester->checkOption('#check-all');
         return $this;
     }
 
-    /**
-     * TODO: Should remove this function due to new design does not have other dropdown menu
-     */
-    private function その他メニュー()
-    {
-        $this->tester->click('#dropmenu > a');
-    }
 
     public function メール一括通知()
     {
@@ -86,5 +79,21 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
     public function 一覧_注文番号($rowNum)
     {
         return $this->tester->grabTextFrom("#search_result > tbody > tr:nth-child($rowNum) a.action-edit");
+    }
+
+    public function 受注ステータス検索($value = '')
+    {
+        $this->tester->checkOption(['id' => 'admin_search_order_multi_status_' . $value]);
+        $this->tester->click('#search_form #search_submit');
+        return $this;
+    }
+
+    public function 受注ステータス変更($option = [])
+    {
+        $this->tester->selectOption('#option_bulk_status', $option);
+        $this->tester->click('#form_bulk #btn_bulk_status');
+        $this->tester->waitForElementVisible('#confirmBulkModal', 5);
+        $this->tester->click('#confirmBulkModal button[data-action="yes"]');
+        return $this;
     }
 }

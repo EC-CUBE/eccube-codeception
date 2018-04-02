@@ -209,6 +209,9 @@ class EA04OrderCest
             ->一覧_全選択()
             ->メール一括通知();
 
+        $I->waitForElementVisible('#confirmBulkModal', 5);
+        $I->click('#confirmBulkModal button[data-action="yes"]');
+
         $I->selectOption(['id' => 'template-change'], ['1' => '注文受付メール']);
         $I->click(['id' => 'mailConfirm']);
         $I->scrollTo(['id' => 'sendMail'], 0, 100);
@@ -252,4 +255,31 @@ class EA04OrderCest
         $I->see('受注情報を保存しました。', OrderEditPage::$登録完了メッセージ);
     }
 
+    public function order_ー括受注のステータス変更(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0402-UC02-T02_ー括受注のステータス変更');
+
+        $findOrders = Fixtures::get('findOrders'); // Closure
+
+        $NewOrders = array_filter($findOrders(), function ($Order) {
+            return $Order->getOrderStatus()->getId() == OrderStatus::NEW;
+        });
+        OrderManagePage::go($I)->受注ステータス検索(OrderStatus::NEW);
+        $I->see('検索結果：'.count($NewOrders).'件が該当しました', OrderManagePage::$検索結果_メッセージ);
+
+        $DeliveredOrders = array_filter($findOrders(), function ($Order) {
+            return $Order->getOrderStatus()->getId() == OrderStatus::DELIVERED;
+        });
+        OrderManagePage::go($I)->受注ステータス検索(OrderStatus::DELIVERED);
+        $I->see('検索結果：'.count($DeliveredOrders).'件が該当しました', OrderManagePage::$検索結果_メッセージ);
+
+        OrderManagePage::go($I)->受注ステータス検索(OrderStatus::NEW)
+            ->一覧_全選択()
+            ->受注ステータス変更('発送済み');
+
+        $I->wait(10);
+
+        OrderManagePage::go($I)->受注ステータス検索(OrderStatus::DELIVERED);
+        $I->see('検索結果：'.(count($DeliveredOrders) + count($NewOrders)).'件が該当しました', OrderManagePage::$検索結果_メッセージ);
+    }
 }
