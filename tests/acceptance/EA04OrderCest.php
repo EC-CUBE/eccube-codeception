@@ -254,7 +254,7 @@ class EA04OrderCest
 
     public function order_ー括受注のステータス変更(\AcceptanceTester $I)
     {
-        $I->wantTo('EA0402-UC02-T02_ー括受注のステータス変更');
+        $I->wantTo('EA0405-UC06-T01_ー括受注のステータス変更');
 
         $findOrders = Fixtures::get('findOrders'); // Closure
 
@@ -273,8 +273,6 @@ class EA04OrderCest
         OrderManagePage::go($I)->受注ステータス検索(OrderStatus::NEW)
             ->一覧_全選択()
             ->受注ステータス変更('発送済み');
-
-        $I->wait(10);
 
         OrderManagePage::go($I)->受注ステータス検索(OrderStatus::DELIVERED);
         $I->see('検索結果：'.(count($DeliveredOrders) + count($NewOrders)).'件が該当しました', OrderManagePage::$検索結果_メッセージ);
