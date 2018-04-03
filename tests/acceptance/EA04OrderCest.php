@@ -252,4 +252,49 @@ class EA04OrderCest
         $I->see('受注情報を保存しました。', OrderEditPage::$登録完了メッセージ);
     }
 
+    public function order_ー括受注のステータス変更(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0405-UC06-T01_ー括受注のステータス変更');
+
+        // 新規受付ステータスをキャンセルに変更する
+        $entityManager = Fixtures::get('entityManager');
+        $findOrders = Fixtures::get('findOrders');
+        $NewOrders = array_filter($findOrders(), function ($Order) {
+            return $Order->getOrderStatus()->getId() == OrderStatus::NEW;
+        });
+        $CancelStatus = $entityManager->getRepository('Eccube\Entity\Master\OrderStatus')->find(OrderStatus::CANCEL);
+        foreach ($NewOrders as $newOrder) {
+            $newOrder->setOrderStatus($CancelStatus);
+        }
+        $entityManager->flush();
+
+        // 新規受付ステータスの受注を作る
+        $createCustomer = Fixtures::get('createCustomer');
+        $createOrders = Fixtures::get('createOrders');
+        $newOrders = $createOrders($createCustomer(), 2, array());
+        $Status = $entityManager->getRepository('Eccube\Entity\Master\OrderStatus')->find(OrderStatus::NEW);
+        foreach ($newOrders as $newOrder) {
+            $newOrder->setOrderStatus($Status);
+        }
+        $entityManager->flush();
+
+        $NewOrders = array_filter($findOrders(), function ($Order) {
+            return $Order->getOrderStatus()->getId() == OrderStatus::NEW;
+        });
+        OrderManagePage::go($I)->受注ステータス検索(OrderStatus::NEW);
+        $I->see('検索結果：'.count($NewOrders).'件が該当しました', OrderManagePage::$検索結果_メッセージ);
+
+        $DeliveredOrders = array_filter($findOrders(), function ($Order) {
+            return $Order->getOrderStatus()->getId() == OrderStatus::DELIVERED;
+        });
+        OrderManagePage::go($I)->受注ステータス検索(OrderStatus::DELIVERED);
+        $I->see('検索結果：'.count($DeliveredOrders).'件が該当しました', OrderManagePage::$検索結果_メッセージ);
+
+        OrderManagePage::go($I)->受注ステータス検索(OrderStatus::NEW)
+            ->一覧_全選択()
+            ->受注ステータス変更('発送済み');
+
+        OrderManagePage::go($I)->受注ステータス検索(OrderStatus::DELIVERED);
+        $I->see('検索結果：'.(count($DeliveredOrders) + count($NewOrders)).'件が該当しました', OrderManagePage::$検索結果_メッセージ);
+    }
 }
