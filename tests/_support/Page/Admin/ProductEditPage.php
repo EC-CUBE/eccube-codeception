@@ -67,12 +67,18 @@ class ProductEditPage extends AbstractAdminPageStyleGuide
         return $this;
     }
 
+    public function 入力_カテゴリ($category_id)
+    {
+        $this->tester->checkOption(['id' => 'admin_product_category_'.$category_id]);
+        return $this;
+    }
+
     public function 規格管理()
     {
-        $this->tester->click(['css' => '#standardConfig > div > div.d-block.text-center.text-center > button']);
-        $this->tester->waitForElement(['css' => '#confirmModal > div > div > div.modal-footer > a']);
+        $this->tester->click(['css' => '#standardConfig > div > div.d-block.text-center.text-center > a']);
+        $this->tester->waitForElement(['css' => '#confirmFormChangeModal > div > div > div.modal-footer > a']);
         $this->tester->wait(1);
-        $this->tester->click(['css' => '#confirmModal > div > div > div.modal-footer > a']);
+        $this->tester->click(['css' => '#confirmFormChangeModal > div > div > div.modal-footer > a']);
         return $this;
     }
 
