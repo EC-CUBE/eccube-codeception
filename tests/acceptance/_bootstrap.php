@@ -193,6 +193,15 @@ $findOrders = function () use ($entityManager) {
 /** 受注を検索するクロージャ. */
 Fixtures::add('findOrders', $findOrders);
 
+$findShippings = function () use ($entityManager) {
+    return $entityManager->getRepository('Eccube\Entity\Shipping')
+    ->createQueryBuilder('o')
+    ->getQuery()
+    ->getResult();
+};
+/** 出荷を検索するクロージャ. */
+Fixtures::add('findShippings', $findShippings);
+
 $findProducts = function () use ($entityManager) {
     return $entityManager->getRepository('Eccube\Entity\Product')
         ->createQueryBuilder('p')
