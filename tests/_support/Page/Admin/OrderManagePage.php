@@ -93,7 +93,7 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
         $this->tester->selectOption('#option_bulk_status', $option);
         $this->tester->click('#form_bulk #btn_bulk_status');
         $this->tester->waitForElementVisible('#confirmBulkModal', 5);
-        $this->tester->click('#confirmBulkModal button[data-action="yes"]');
+        $this->tester->click('#confirmBulkModal button[data-action="execute"]');
         return $this;
     }
 }

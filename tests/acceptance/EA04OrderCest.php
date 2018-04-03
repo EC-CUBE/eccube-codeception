@@ -209,9 +209,6 @@ class EA04OrderCest
             ->一覧_全選択()
             ->メール一括通知();
 
-        $I->waitForElementVisible('#confirmBulkModal', 5);
-        $I->click('#confirmBulkModal button[data-action="yes"]');
-
         $I->selectOption(['id' => 'template-change'], ['1' => '注文受付メール']);
         $I->click(['id' => 'mailConfirm']);
         $I->scrollTo(['id' => 'sendMail'], 0, 100);
