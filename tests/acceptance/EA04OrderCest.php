@@ -256,9 +256,20 @@ class EA04OrderCest
     {
         $I->wantTo('EA0405-UC06-T01_ー括受注のステータス変更');
 
+        // 新規受付ステータスをキャンセルに変更する
+        $entityManager = Fixtures::get('entityManager');
+        $findOrders = Fixtures::get('findOrders');
+        $NewOrders = array_filter($findOrders(), function ($Order) {
+            return $Order->getOrderStatus()->getId() == OrderStatus::NEW;
+        });
+        $CancelStatus = $entityManager->getRepository('Eccube\Entity\Master\OrderStatus')->find(OrderStatus::CANCEL);
+        foreach ($NewOrders as $newOrder) {
+            $newOrder->setOrderStatus($CancelStatus);
+        }
+        $entityManager->flush();
+
         // 新規受付ステータスの受注を作る
         $createCustomer = Fixtures::get('createCustomer');
-        $entityManager = Fixtures::get('entityManager');
         $createOrders = Fixtures::get('createOrders');
         $newOrders = $createOrders($createCustomer(), 2, array());
         $Status = $entityManager->getRepository('Eccube\Entity\Master\OrderStatus')->find(OrderStatus::NEW);
@@ -266,8 +277,6 @@ class EA04OrderCest
             $newOrder->setOrderStatus($Status);
         }
         $entityManager->flush();
-        
-        $findOrders = Fixtures::get('findOrders'); // Closure
 
         $NewOrders = array_filter($findOrders(), function ($Order) {
             return $Order->getOrderStatus()->getId() == OrderStatus::NEW;
