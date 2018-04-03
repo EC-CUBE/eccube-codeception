@@ -303,6 +303,25 @@ class EA03ProductCest
         $I->see('登録が完了しました。', ProductEditPage::$登録結果メッセージ);
     }
 
+    public function product_新製品はタグを持っています(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0302-UC01-T05-タグを商品に追加する');
+
+        ProductEditPage::go($I)
+            ->入力_商品名("規格なし商品")
+            ->入力_販売価格(50000)
+            ->クリックして開くタグリスト()
+            ->クリックして選択タグ(2)
+            ->クリックして選択タグ(3)
+            ->クリックして選択タグ(4)
+            ->登録();
+        $I->see('登録が完了しました。', 'div.c-container > div.c-contentsArea > div.alert');
+
+        $I->seeElement(['xpath' => '//*[@id="tag"]/div/div[1]/button']);
+        $I->seeElement(['xpath' => '//*[@id="tag"]/div/div[2]/button']);
+        $I->seeElement(['xpath' => '//*[@id="tag"]/div/div[3]/button']);
+    }
+
     public function product_一覧からの商品削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0310-UC05-T03 一覧からの商品削除');
