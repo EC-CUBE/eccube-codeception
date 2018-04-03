@@ -55,6 +55,18 @@ class ProductEditPage extends AbstractAdminPageStyleGuide
         return $this;
     }
 
+    public function クリックして開くタグリスト()
+    {
+        $this->tester->click(['css' => 'div[href="#allTags"] > a']);
+        return $this;
+    }
+
+    public function クリックして選択タグ($num)
+    {
+        $this->tester->click(['css' => "#allTags > div:nth-child(${num}) button"]);
+        return $this;
+    }
+
     public function 入力_カテゴリ($category_id)
     {
         $this->tester->checkOption(['id' => 'admin_product_category_'.$category_id]);
