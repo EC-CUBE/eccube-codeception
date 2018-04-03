@@ -43,6 +43,30 @@ class EA03ProductCest
         $I->see("ディナーフォーク", ProductManagePage::$検索結果_一覧);
     }
 
+    public function product_規格確認のポップアップ表示(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0301-UC01-T03 規格確認のポップアップを表示');
+
+        ProductManagePage::go($I)
+            ->検索()
+            ->規格確認ボタンをクリック()
+            ->規格確認をキャンセル();
+
+        $I->dontSeeElement(['css' => 'div.modal.show']);
+    }
+
+    public function product_ポップアップから規格編集画面に遷移(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0301-UC01-T04 ポップアップから規格編集画面に遷移');
+
+        ProductManagePage::go($I)
+            ->検索()
+            ->規格確認ボタンをクリック()
+            ->規格編集画面に遷移();
+
+        $I->see('商品登録（規格設定）商品管理', self::ページタイトルStyleGuide);
+    }
+
     public function product_商品検索結果無(\AcceptanceTester $I)
     {
         $I->wantTo('EA0301-UC01-T02 商品検索 検索結果なし');
