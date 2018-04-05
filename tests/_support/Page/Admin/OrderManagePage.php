@@ -54,7 +54,7 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
 
     public function 一覧_削除()
     {
-        $this->tester->click("#form_bulk > div.row.justify-content-between.mb-2 > div:nth-child(1) > button.btn.btn-ec-delete");
+        $this->tester->click("#form_bulk > div.row.justify-content-between.mb-2 .btn-bulk-wrapper button.btn.btn-ec-delete");
         return $this;
     }
 
@@ -79,13 +79,13 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
     public function 一覧_選択($rowNum)
     {
         $targetOrderId = $this->一覧_注文番号($rowNum);
-        $this->tester->checkOption(['id' => 'check--'.$targetOrderId]);
+        $this->tester->checkOption(['id' => 'check_'.$targetOrderId]);
         return $this;
     }
 
     public function 一覧_全選択()
     {
-        $this->tester->checkOption('#check-all');
+        $this->tester->checkOption('#check_all');
         return $this;
     }
 
