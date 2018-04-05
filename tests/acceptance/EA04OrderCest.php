@@ -134,36 +134,6 @@ class EA04OrderCest
         $I->see('受注情報を保存しました。', OrderEditPage::$登録完了メッセージ);
     }
 
-    public function order_受注削除(\AcceptanceTester $I)
-    {
-        $I->wantTo('EA0401-UC08-T01(& UC08-T02) 受注削除');
-
-        $findOrders = Fixtures::get('findOrders'); // Closure
-        $TargetOrders = array_filter($findOrders(), function ($Order) {
-            return $Order->getOrderStatus()->getId() != OrderStatus::PROCESSING;
-        });
-
-        $OrderListPage = OrderManagePage::go($I)->検索();
-        $I->see('検索結果：'.count($TargetOrders).'件が該当しました', OrderManagePage::$検索結果_メッセージ);
-
-        // 削除
-        $OrderNumForDel = $OrderListPage->一覧_注文番号(1);
-        $OrderListPage->一覧_削除(1);
-        $I->acceptPopup();
-
-        $I->getScenario()->incomplete('未実装：受注マスターでの受注削除が未実装');
-
-        $I->see('受注情報を削除しました', ['css' => '#main > div > div:nth-child(1) > div']);
-        $I->assertNotEquals($OrderNumForDel, $OrderListPage->一覧_注文番号(1));
-
-        // 削除キャンセル
-        $OrderNumForDontDel = $OrderListPage->一覧_注文番号(1);
-        $OrderListPage->一覧_削除(1);
-        $I->cancelPopup();
-
-        $I->assertEquals($OrderNumForDontDel, $OrderListPage->一覧_注文番号(1));
-    }
-
     public function order_受注メール通知(\AcceptanceTester $I)
     {
         $I->wantTo('EA0402-UC01-T01 受注メール通知');
