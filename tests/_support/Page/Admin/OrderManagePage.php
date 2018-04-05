@@ -52,15 +52,34 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
         $this->tester->click("#search_result > tbody > tr:nth-child(${rowNum}) a.action-edit");
     }
 
-    public function 一覧_削除($rowNum)
+    public function 一覧_削除()
     {
-        $this->tester->click("#search_result > tbody > tr:nth-child(${rowNum}) a.action-delete");
+        $this->tester->click("#form_bulk > div.row.justify-content-between.mb-2 > div:nth-child(1) > button.btn.btn-ec-delete");
+        return $this;
+    }
+
+    public function Accept_削除()
+    {
+        $this->tester->click("#btn_bulk_delete");
+        return $this;
+    }
+
+    public function Cancel_削除()
+    {
+        $this->tester->click("#bulkDeleteModal > div > div > div.modal-footer > button.btn.btn-ec-sub");
         return $this;
     }
 
     public function 一覧_メール通知($rowNum)
     {
         $this->tester->click("#search_result > tbody > tr:nth-child(${rowNum}) a.action-mail");
+        return $this;
+    }
+
+    public function 一覧_選択($rowNum)
+    {
+        $targetOrderId = $this->一覧_注文番号($rowNum);
+        $this->tester->checkOption(['id' => 'check--'.$targetOrderId]);
         return $this;
     }
 
