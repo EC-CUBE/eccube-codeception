@@ -25,13 +25,13 @@ class LayoutEditPage extends AbstractAdminPageStyleGuide
 
     public function 登録()
     {
-        $this->tester->click('#aside_wrap > form > div.col-md-3 > div > div.box.no-header > div > div > div > button');
+        $this->tester->click('#form1 > div > div.c-conversionArea > div > div > div:nth-child(2) > div > div > button');
         return $this;
     }
 
     public function ブロックを移動($blockName, $dest)
     {
-        $this->tester->dragAndDrop(['xpath' => "//div[contains(@id, 'detail_box__layout_item')]/a[text()='${blockName}']"], $dest);
+        $this->tester->dragAndDrop(['xpath' => "//div[contains(@id, 'detail_box__layout_item')][div[div[1][a[text()='${blockName}']]]]"], $dest);
         return $this;
     }
 
