@@ -119,6 +119,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
     public function 規格確認をキャンセル()
     {
         $this->tester->click("#page_admin_product div#productClassesModal .modal-footer button.btn-v-sub");
+        $this->tester->waitForElementNotVisible(['id' => 'productClassesModal']);
         return $this;
     }
 

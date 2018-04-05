@@ -52,7 +52,7 @@ class EA03ProductCest
             ->規格確認ボタンをクリック()
             ->規格確認をキャンセル();
 
-        $I->dontSeeElement(['css' => 'div.modal.show']);
+        $I->dontSeeElement(['id' => 'productClassesModal']);
     }
 
     public function product_ポップアップから規格編集画面に遷移(\AcceptanceTester $I)
