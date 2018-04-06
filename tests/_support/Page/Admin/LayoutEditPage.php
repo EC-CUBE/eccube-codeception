@@ -7,7 +7,7 @@ namespace Page\Admin;
 class LayoutEditPage extends AbstractAdminPageStyleGuide
 {
 
-    public static $unusedBlockItem = ['css' => '#unused-block div.sort'];
+    public static $未使用ブロックアイテム = ['css' => '#unused-block div.sort'];
     public static $登録完了メッセージ = '#page_admin_content_layout_edit > div.c-container > div.c-contentsArea > div.alert.alert-success.alert-dismissible.fade.show.m-3 > span';
 
     /**
@@ -42,7 +42,7 @@ class LayoutEditPage extends AbstractAdminPageStyleGuide
         return $this;
     }
 
-    public function filterSearch($value)
+    public function 検索ブロック名($value)
     {
         $this->tester->fillField(['css' => '#unused-block div.first input'], $value);
         return $this;

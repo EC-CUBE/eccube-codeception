@@ -169,22 +169,23 @@ class EA06ContentsManagementCest
         $I->acceptPopup();
     }
 
-    public function contentsmanagement_searchblock(\AcceptanceTester $I)
+    public function contentsmanagement_検索未使用ブロック(\AcceptanceTester $I)
     {
-        $I->wantTo('EA0603-UC01-T01(& UC01-T02/UC01-T03/UC01-T04/UC01-T05) ページ管理');
+        $I->wantTo('EA0603-UC01-T01(& UC01-T02/UC01-T03/UC01-T04/UC01-T05) 検索未使用ブロック');
         $layoutName = '下層ページ用レイアウト';
-        $items = $I->grabMultiple(LayoutEditPage::$unusedBlockItem);
-
         /* レイアウト編集 */
         LayoutManagePage::go($I)->レイアウト編集($layoutName);
-        LayoutEditPage::at($I)->filterSearch('カゴの中');
+        $items = $I->grabMultiple(LayoutEditPage::$未使用ブロックアイテム);
+        LayoutEditPage::at($I)
+            ->検索ブロック名('カゴの中');
 
-        $I->seeNumberOfElements(LayoutEditPage::$unusedBlockItem, 1);
+        $I->seeNumberOfElements(LayoutEditPage::$未使用ブロックアイテム, 1);
 
         LayoutManagePage::go($I)->レイアウト編集($layoutName);
-        LayoutEditPage::at($I)->filterSearch('');
+        LayoutEditPage::at($I)
+            ->検索ブロック名('');
 
-        $I->seeNumberOfElements(LayoutEditPage::$unusedBlockItem, count($items));
+        $I->seeNumberOfElements(LayoutEditPage::$未使用ブロックアイテム, count($items));
     }
 
     public function contentsmanagement_ブロック管理(\AcceptanceTester $I)
