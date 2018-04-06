@@ -169,6 +169,24 @@ class EA06ContentsManagementCest
         $I->acceptPopup();
     }
 
+    public function contentsmanagement_searchblock(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0603-UC01-T01(& UC01-T02/UC01-T03/UC01-T04/UC01-T05) ページ管理');
+        $layoutName = '下層ページ用レイアウト';
+        $items = $I->grabMultiple(LayoutEditPage::$unusedBlockItem);
+
+        /* レイアウト編集 */
+        LayoutManagePage::go($I)->レイアウト編集($layoutName);
+        LayoutEditPage::at($I)->filterSearch('カゴの中');
+
+        $I->seeNumberOfElements(LayoutEditPage::$unusedBlockItem, 1);
+
+        LayoutManagePage::go($I)->レイアウト編集($layoutName);
+        LayoutEditPage::at($I)->filterSearch('');
+
+        $I->seeNumberOfElements(LayoutEditPage::$unusedBlockItem, count($items));
+    }
+
     public function contentsmanagement_ブロック管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0603-UC01-T01(& UC01-T02/UC01-T03) ブロック管理');

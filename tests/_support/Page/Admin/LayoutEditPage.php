@@ -7,6 +7,7 @@ namespace Page\Admin;
 class LayoutEditPage extends AbstractAdminPageStyleGuide
 {
 
+    public static $unusedBlockItem = ['css' => '#unused-block div.sort'];
     public static $登録完了メッセージ = '#page_admin_content_layout_edit > div.c-container > div.c-contentsArea > div.alert.alert-success.alert-dismissible.fade.show.m-3 > span';
 
     /**
@@ -38,6 +39,12 @@ class LayoutEditPage extends AbstractAdminPageStyleGuide
     public function プレビュー()
     {
         $this->tester->click("#preview_box__preview_button > button");
+        return $this;
+    }
+
+    public function filterSearch($value)
+    {
+        $this->tester->fillField(['css' => '#unused-block div.first input'], $value);
         return $this;
     }
 }
