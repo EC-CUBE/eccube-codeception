@@ -7,7 +7,7 @@ namespace Page\Admin;
 class LayoutEditPage extends AbstractAdminPageStyleGuide
 {
 
-    public static $登録完了メッセージ = '#page_admin_content_layout_edit > div.c-container > div.c-contentsArea > div.alert.alert-success.alert-dismissible.fade.show.m-3 > span';
+    public static $登録完了メッセージ = ['xpath' => "//div[@class='alert alert-success alert-dismissible fade show m-3']"];
 
     /**
      * LayoutEditPage constructor.
