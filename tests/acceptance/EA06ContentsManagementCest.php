@@ -144,17 +144,40 @@ class EA06ContentsManagementCest
 
         $I->amOnPage('/user_data/'.$page);
         $config = Fixtures::get('config');
-        $I->seeElement('div.ec-layoutRole__mainWithColumn');
+        $I->seeElement('div.ec-layoutRole__footer');
 
         /* レイアウト編集 */
         LayoutManagePage::go($I)->レイアウト編集('下層ページ用レイアウト');
         LayoutEditPage::at($I)
-            ->ブロックを移動('新着情報', '#position_5')
+            ->ブロックを移動('新着情報', '#position_4')
             ->登録();
 
         $I->see('登録が完了しました。', LayoutEditPage::$登録完了メッセージ);
         $I->amOnPage('/user_data/'.$page);
         $I->see('新着情報', '.ec-news');
+
+        LayoutManagePage::go($I)->レイアウト編集('下層ページ用レイアウト');
+        LayoutEditPage::at($I)
+            ->ブロックを移動('カゴの中', '#position_2')
+            ->登録();
+        LayoutEditPage::at($I)
+            ->ブロックを移動('ログインナビ', '#position_2')
+            ->登録();
+        LayoutEditPage::at($I)
+            ->ブロックを移動('商品検索', '#position_2')
+            ->コンテキストメニューで上に移動('商品検索')
+            ->登録();
+        LayoutEditPage::at($I)
+            ->コンテキストメニューで下に移動('商品検索')
+            ->登録();
+        LayoutEditPage::at($I)
+            ->コンテキストメニューでセクションに移動('商品検索')
+            ->登録();
+        LayoutEditPage::at($I)
+            ->コンテキストメニューでコードプレビュー(
+                '商品検索',
+                ['xpath' => "//*[@id='block-source-code']//div[contains(text(), 'This file is part of EC-CUBE')]"]
+            );
 
         $I->getScenario()->incomplete('未実装：プレビューは未実装');
 
