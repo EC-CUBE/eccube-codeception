@@ -25,6 +25,7 @@ class LayoutEditPage extends AbstractAdminPageStyleGuide
 
     public function 登録()
     {
+        $this->tester->waitForElementVisible('#form1 > div > div.c-conversionArea > div > div > div:nth-child(2) > div > div > button');
         $this->tester->click('#form1 > div > div.c-conversionArea > div > div > div:nth-child(2) > div > div > button');
         return $this;
     }
