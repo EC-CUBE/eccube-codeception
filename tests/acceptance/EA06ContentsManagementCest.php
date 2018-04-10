@@ -171,7 +171,7 @@ class EA06ContentsManagementCest
 
     public function contentsmanagement_検索未使用ブロック(\AcceptanceTester $I)
     {
-        $I->wantTo('EA0603-UC01-T01(& UC01-T02/UC01-T03/UC01-T04/UC01-T05) 検索未使用ブロック');
+        $I->wantTo('EA0603-UC01-T06 検索未使用ブロック');
         $layoutName = '下層ページ用レイアウト';
         /* レイアウト編集 */
         LayoutManagePage::go($I)->レイアウト編集($layoutName);
