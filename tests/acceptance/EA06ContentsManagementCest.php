@@ -118,34 +118,33 @@ class EA06ContentsManagementCest
     public function contentsmanagement_ページ管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0603-UC01-T01(& UC01-T02/UC01-T03/UC01-T04/UC01-T05) ページ管理');
-
+        $faker = Fixtures::get('faker');
+        $page = 'page_'.$faker->word;
         PageManagePage::go($I)->新規入力();
 
         /* 作成 */
         PageEditPage::at($I)
-            ->入力_名称('page1')
-            ->入力_ファイル名('page1')
-            ->入力_URL('page1')
-            ->入力_内容('page1')
+            ->入力_名称($page)
+            ->入力_ファイル名($page)
+            ->入力_URL($page)
+            ->入力_内容($page)
             ->入力_PC用レイアウト('下層ページ用レイアウト')
             ->登録();
         $I->see('登録が完了しました。', PageEditPage::$登録完了メッセージ);
 
-        $I->amOnPage('/user_data/page1');
-        $I->see('page1', 'body');
+        $I->amOnPage('/user_data/'.$page);
+        $I->see($page, 'body');
 
         /* 編集 */
-        PageManagePage::go($I)->ページ編集('page1');
+        PageManagePage::go($I)->ページ編集($page);
         PageEditPage::at($I)
             ->入力_内容("{% extends 'default_frame.twig' %}")
             ->登録();
         $I->see('登録が完了しました。', PageEditPage::$登録完了メッセージ);
 
-        $I->amOnPage('/user_data/page1');
+        $I->amOnPage('/user_data/'.$page);
         $config = Fixtures::get('config');
-        $I->seeElement('div.ec-layoutRole__main');
-
-        $I->getScenario()->incomplete('未実装：レイアウトの更新は未実装');
+        $I->seeElement('div.ec-layoutRole__footer');
 
         /* レイアウト編集 */
         LayoutManagePage::go($I)->レイアウト編集('下層ページ用レイアウト');
@@ -154,8 +153,10 @@ class EA06ContentsManagementCest
             ->登録();
 
         $I->see('登録が完了しました。', LayoutEditPage::$登録完了メッセージ);
-        $I->amOnPage('/user_data/page1');
+        $I->amOnPage('/user_data/'.$page);
         $I->see('新着情報', '.ec-news');
+
+        $I->getScenario()->incomplete('未実装：プレビューは未実装');
 
         LayoutManagePage::go($I)->レイアウト編集('下層ページ用レイアウト');
         LayoutEditPage::at($I)
@@ -165,7 +166,7 @@ class EA06ContentsManagementCest
         $I->switchToNewWindow();
 
         /* 削除 */
-        PageManagePage::go($I)->削除('page1');
+        PageManagePage::go($I)->削除($page);
         $I->acceptPopup();
     }
 
