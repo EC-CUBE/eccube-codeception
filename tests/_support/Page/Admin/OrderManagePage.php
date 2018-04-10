@@ -60,6 +60,7 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
 
     public function Accept_削除()
     {
+        $this->tester->waitForElementVisible(['id' => 'btn_bulk_delete']);
         $this->tester->click("#btn_bulk_delete");
         return $this;
     }
