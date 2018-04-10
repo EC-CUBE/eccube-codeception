@@ -123,8 +123,8 @@ class EA03ProductCest
         ProductClassEditPage::at($I)
             ->規格設定();
 
-        $I->seeElement(['css' => '#form_class_name1:invalid']); //規格1がエラー
-        $I->dontSeeElement(['css' => '#form > div.c-contentsArea__cols > div > div > div:nth-child(2)']); // 規格編集行が表示されていない
+        $I->seeElement(['css' => '#product_class_matrix_class_name1:invalid']); //規格1がエラー
+        $I->dontSeeElement(ProductClassEditPage::$規格一覧); // 規格編集行が表示されていない
     }
 
     public function product_一覧からの規格編集規格なし_(\AcceptanceTester $I)
@@ -142,12 +142,18 @@ class EA03ProductCest
             ->入力_規格1('材質')
             ->規格設定();
 
-        $I->see('3 件の規格の組み合わせがあります', '#form > div.c-contentsArea__cols > div > div > div:nth-child(2) > div.card-header > div > div.col-6 > span');
+        $I->see('3 件の規格の組み合わせがあります', 'div.c-contentsArea__cols > div > div > form div.card-header > div > div.col-6 > span');
 
         $ProductClassEditPage
             ->選択(1)
+            ->入力_在庫数無制限(1)
+            ->入力_販売価格(1, 1000)
             ->選択(2)
+            ->入力_在庫数無制限(2)
+            ->入力_販売価格(2, 1000)
             ->選択(3)
+            ->入力_在庫数無制限(3)
+            ->入力_販売価格(3, 1000)
             ->登録();
 
         $I->waitForElement(ProductClassEditPage::$登録完了メッセージ);
@@ -212,12 +218,13 @@ class EA03ProductCest
         ProductEditPage::at($I)
             ->規格管理();
 
+        $I->seeElement(ProductClassEditPage::$規格一覧);
+
         ProductClassEditPage::at($I)
             ->規格初期化();
 
         $I->see('商品規格を削除しました', ProductClassEditPage::$登録完了メッセージ);
-
-        // TODO 規格が初期化されているのを確認
+        $I->dontSeeElement(ProductClassEditPage::$規格一覧);
     }
 
     public function product_商品登録非公開(\AcceptanceTester $I)
