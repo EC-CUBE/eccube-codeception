@@ -6,7 +6,7 @@ namespace Page\Admin;
 
 class LayoutEditPage extends AbstractAdminPageStyleGuide
 {
-
+    public static $未使用ブロックアイテム = ['css' => '#unused-block div.sort'];
     public static $登録完了メッセージ = ['xpath' => "//div[@class='alert alert-success alert-dismissible fade show m-3']"];
 
     /**
@@ -88,6 +88,12 @@ class LayoutEditPage extends AbstractAdminPageStyleGuide
     public function プレビュー()
     {
         $this->tester->click("#preview_box__preview_button > button");
+        return $this;
+    }
+
+    public function 検索ブロック名($value)
+    {
+        $this->tester->fillField(['css' => '#unused-block div.first input'], $value);
         return $this;
     }
 }

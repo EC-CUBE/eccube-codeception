@@ -193,6 +193,25 @@ class EA06ContentsManagementCest
         $I->acceptPopup();
     }
 
+    public function contentsmanagement_検索未使用ブロック(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0603-UC01-T06 検索未使用ブロック');
+        $layoutName = '下層ページ用レイアウト';
+        /* レイアウト編集 */
+        LayoutManagePage::go($I)->レイアウト編集($layoutName);
+        $items = $I->grabMultiple(LayoutEditPage::$未使用ブロックアイテム);
+        LayoutEditPage::at($I)
+            ->検索ブロック名('カゴの中');
+
+        $I->seeNumberOfElements(LayoutEditPage::$未使用ブロックアイテム, 1);
+
+        LayoutManagePage::go($I)->レイアウト編集($layoutName);
+        LayoutEditPage::at($I)
+            ->検索ブロック名('');
+
+        $I->seeNumberOfElements(LayoutEditPage::$未使用ブロックアイテム, count($items));
+    }
+
     public function contentsmanagement_ブロック管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0603-UC01-T01(& UC01-T02/UC01-T03) ブロック管理');
