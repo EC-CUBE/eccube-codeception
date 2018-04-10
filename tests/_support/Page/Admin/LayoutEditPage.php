@@ -30,9 +30,58 @@ class LayoutEditPage extends AbstractAdminPageStyleGuide
         return $this;
     }
 
-    public function ブロックを移動($blockName, $dest)
+    public function ブロックを移動($blockName, $dest, $timeout = 10)
     {
+        if (strlen($blockName) > 10) {
+            $blockName = mb_strimwidth($blockName, 0, 11, '…');
+        }
+        $this->tester->waitForElementVisible(['xpath' => "//div[contains(@id, 'detail_box__layout_item')][div[div[1][a[text()='${blockName}']]]]"], $timeout);
         $this->tester->dragAndDrop(['xpath' => "//div[contains(@id, 'detail_box__layout_item')][div[div[1][a[text()='${blockName}']]]]"], $dest);
+        return $this;
+    }
+
+    public function コンテキストメニューを開く($blockName)
+    {
+        $this->tester->click(['xpath' => "//div[contains(@id, 'detail_box__layout_item')][div[div[1][a[text()='${blockName}']]]]/div/div[2]"]);
+        return $this;
+    }
+
+    public function コンテキストメニューで上に移動($blockName)
+    {
+        $this->コンテキストメニューを開く($blockName);
+        $this->tester->waitForElementVisible(['xpath' => "//div[contains(@id, 'popover')]/div[2]/div/a[1]"]);
+        $this->tester->click(['xpath' => "//div[contains(@id, 'popover')]/div[2]/div/a[1]"]);
+        return $this;
+    }
+
+    public function コンテキストメニューで下に移動($blockName)
+    {
+        $this->コンテキストメニューを開く($blockName);
+        $this->tester->waitForElementVisible(['xpath' => "//div[contains(@id, 'popover')]/div[2]/div/a[2]"]);
+        $this->tester->click(['xpath' => "//div[contains(@id, 'popover')]/div[2]/div/a[2]"]);
+        return $this;
+    }
+
+    public function コンテキストメニューでセクションに移動($blockName)
+    {
+        $this->コンテキストメニューを開く($blockName);
+        $this->tester->waitForElementVisible(['xpath' => "//div[contains(@id, 'popover')]/div[2]/div/a[3]"]);
+        $this->tester->click(['xpath' => "//div[contains(@id, 'popover')]/div[2]/div/a[3]"]);
+        $this->tester->waitForElementVisible(['id' => "move-to-section"]);
+        $this->tester->click(['id' => "move-to-section"]);
+        return $this;
+    }
+
+    public function コンテキストメニューでコードプレビュー($blockName, $element = null, $timeout = 10)
+    {
+        $this->コンテキストメニューを開く($blockName);
+        $this->tester->waitForElementVisible(['xpath' => "//div[contains(@id, 'popover')]/div[2]/div/a[4]"]);
+        $this->tester->click(['xpath' => "//div[contains(@id, 'popover')]/div[2]/div/a[4]"]);
+        $this->tester->waitForElementVisible(['id' => "codePreview"]);
+        if ($element) {
+            $this->tester->waitForElementVisible($element, $timeout);
+        }
+        $this->tester->click(['xpath' => "//*[@id='codePreview']/div/div/div[3]/button[1]"]);
         return $this;
     }
 
