@@ -109,6 +109,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
     {
         $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr > td:nth-child(7) > button.page-link");
         $this->tester->waitForElementVisible(['id' => 'productClassesModal']);
+        $this->tester->wait(1);
         return $this;
     }
 
