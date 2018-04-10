@@ -201,7 +201,7 @@ class EA06ContentsManagementCest
         LayoutManagePage::go($I)->レイアウト編集($layoutName);
         $items = $I->grabMultiple(LayoutEditPage::$未使用ブロックアイテム);
         LayoutEditPage::at($I)
-            ->検索ブロック名('カゴの中');
+            ->検索ブロック名('ギャラリー');
 
         $I->seeNumberOfElements(LayoutEditPage::$未使用ブロックアイテム, 1);
 
