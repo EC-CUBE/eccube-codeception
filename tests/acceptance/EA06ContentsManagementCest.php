@@ -149,12 +149,35 @@ class EA06ContentsManagementCest
         /* レイアウト編集 */
         LayoutManagePage::go($I)->レイアウト編集('下層ページ用レイアウト');
         LayoutEditPage::at($I)
-            ->ブロックを移動('新着情報', '#position_5')
+            ->ブロックを移動('新着情報', '#position_4')
             ->登録();
 
         $I->see('登録が完了しました。', LayoutEditPage::$登録完了メッセージ);
         $I->amOnPage('/user_data/'.$page);
         $I->see('新着情報', '.ec-news');
+
+        LayoutManagePage::go($I)->レイアウト編集('下層ページ用レイアウト');
+        LayoutEditPage::at($I)
+            ->ブロックを移動('カゴの中', '#position_2')
+            ->登録();
+        LayoutEditPage::at($I)
+            ->ブロックを移動('ログインナビ', '#position_2')
+            ->登録();
+        LayoutEditPage::at($I)
+            ->ブロックを移動('商品検索', '#position_2')
+            ->コンテキストメニューで上に移動('商品検索')
+            ->登録();
+        LayoutEditPage::at($I)
+            ->コンテキストメニューで下に移動('商品検索')
+            ->登録();
+        LayoutEditPage::at($I)
+            ->コンテキストメニューでセクションに移動('商品検索')
+            ->登録();
+        LayoutEditPage::at($I)
+            ->コンテキストメニューでコードプレビュー(
+                '商品検索',
+                ['xpath' => "//*[@id='block-source-code']//div[contains(text(), 'This file is part of EC-CUBE')]"]
+            );
 
         $I->getScenario()->incomplete('未実装：プレビューは未実装');
 
@@ -173,42 +196,42 @@ class EA06ContentsManagementCest
     public function contentsmanagement_ブロック管理(\AcceptanceTester $I)
     {
         $I->wantTo('EA0603-UC01-T01(& UC01-T02/UC01-T03) ブロック管理');
-
+        $faker = Fixtures::get('faker');
+        $block = $faker->word.'_block';
         /* 作成 */
         BlockManagePage::go($I)->新規入力();
         BlockEditPage::at($I)
-            ->入力_ブロック名('block1')
-            ->入力_ファイル名('block1')
-            ->入力_データ("<div id='block1'>block1</div>")
+            ->入力_ブロック名($block)
+            ->入力_ファイル名($block)
+            ->入力_データ("<div id=".$block.">block1</div>")
             ->登録();
         $I->see('登録が完了しました。', BlockEditPage::$登録完了メッセージ);
-
-        $I->getScenario()->incomplete('未実装：レイアウトの更新は未実装');
 
         // TOPページにブロックを配置
         LayoutManagePage::go($I)->レイアウト編集('トップページ用レイアウト');
         LayoutEditPage::at($I)
-            ->ブロックを移動('block1', '#position_1')
+            ->ブロックを移動($block, '#position_3')
             ->登録();
 
+        $I->getScenario()->incomplete('未実装：ブロックの更新は未実装');
         $I->amOnPage('/');
-        $I->see('block1', ['id' => 'block1']);
+        $I->see('block1', ['id' => $block]);
 
         /* 編集 */
         BlockManagePage::go($I)->編集(1);
         BlockEditPage::at($I)
-            ->入力_データ("<div id='block1'>welcome</div>")
+            ->入力_データ("<div id=".$block.">welcome</div>")
             ->登録();
         $I->see('登録が完了しました。', BlockEditPage::$登録完了メッセージ);
 
         $I->amOnPage('/');
-        $I->see('welcome', ['id' => 'block1']);
+        $I->see('welcome', ['id' => $block]);
 
         /* 削除 */
         BlockManagePage::go($I)->削除(1);
         $I->acceptPopup();
 
         $I->amOnPage('/');
-        $I->dontSeeElement(['id' => 'block1']);
+        $I->dontSeeElement(['id' => $block]);
     }
 }
