@@ -127,6 +127,7 @@ class OrderEditPage extends AbstractAdminPageStyleGuide
     {
         $this->tester->click('#orderItem > div > div.row.justify-content-between.mb-2 > div.col-6 > a.btn.btn-ec-regular.mr-2.add');
         $this->tester->waitForElement(['id' => 'addProduct']);
+        $this->tester->wait(1);
         $this->tester->fillField(['id' => 'admin_search_product_id'], $value);
         $this->tester->click('#searchProductModalButton');
         return $this;
