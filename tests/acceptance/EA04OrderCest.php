@@ -148,18 +148,20 @@ class EA04OrderCest
 
         // 削除
         $OrderNumForDel = $OrderListPage->一覧_注文番号(1);
-        $OrderListPage->一覧_削除(1);
-        $I->acceptPopup();
+        $OrderListPage
+          ->一覧_選択(1)
+          ->一覧_削除()
+          ->Accept_削除();
 
-        $I->getScenario()->incomplete('未実装：受注マスターでの受注削除が未実装');
-
-        $I->see('受注情報を削除しました', ['css' => '#main > div > div:nth-child(1) > div']);
+        $I->see('受注情報を削除しました', ['css' => '#page_admin_order > div > div.c-contentsArea > div.alert.alert-success.alert-dismissible.fade.show.m-3 > span']);
         $I->assertNotEquals($OrderNumForDel, $OrderListPage->一覧_注文番号(1));
 
         // 削除キャンセル
         $OrderNumForDontDel = $OrderListPage->一覧_注文番号(1);
-        $OrderListPage->一覧_削除(1);
-        $I->cancelPopup();
+        $OrderListPage
+          ->一覧_選択(1)
+          ->一覧_削除()
+          ->Cancel_削除();
 
         $I->assertEquals($OrderNumForDontDel, $OrderListPage->一覧_注文番号(1));
     }
@@ -228,8 +230,6 @@ class EA04OrderCest
         /* 異常系 */
         $I->dontSee('受注情報を保存しました。', OrderEditPage::$登録完了メッセージ);
 
-        $I->getScenario()->incomplete('未実装：受注への商品の追加が未実装');
-
         /* 正常系 */
         $OrderRegisterPage
             ->入力_受注ステータス(['1' => '新規受付'])
@@ -254,4 +254,49 @@ class EA04OrderCest
         $I->see('受注情報を保存しました。', OrderEditPage::$登録完了メッセージ);
     }
 
+    public function order_ー括受注のステータス変更(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0405-UC06-T01_ー括受注のステータス変更');
+
+        // 新規受付ステータスをキャンセルに変更する
+        $entityManager = Fixtures::get('entityManager');
+        $findOrders = Fixtures::get('findOrders');
+        $NewOrders = array_filter($findOrders(), function ($Order) {
+            return $Order->getOrderStatus()->getId() == OrderStatus::NEW;
+        });
+        $CancelStatus = $entityManager->getRepository('Eccube\Entity\Master\OrderStatus')->find(OrderStatus::CANCEL);
+        foreach ($NewOrders as $newOrder) {
+            $newOrder->setOrderStatus($CancelStatus);
+        }
+        $entityManager->flush();
+
+        // 新規受付ステータスの受注を作る
+        $createCustomer = Fixtures::get('createCustomer');
+        $createOrders = Fixtures::get('createOrders');
+        $newOrders = $createOrders($createCustomer(), 2, array());
+        $Status = $entityManager->getRepository('Eccube\Entity\Master\OrderStatus')->find(OrderStatus::NEW);
+        foreach ($newOrders as $newOrder) {
+            $newOrder->setOrderStatus($Status);
+        }
+        $entityManager->flush();
+
+        $NewOrders = array_filter($findOrders(), function ($Order) {
+            return $Order->getOrderStatus()->getId() == OrderStatus::NEW;
+        });
+        OrderManagePage::go($I)->受注ステータス検索(OrderStatus::NEW);
+        $I->see('検索結果：'.count($NewOrders).'件が該当しました', OrderManagePage::$検索結果_メッセージ);
+
+        $DeliveredOrders = array_filter($findOrders(), function ($Order) {
+            return $Order->getOrderStatus()->getId() == OrderStatus::DELIVERED;
+        });
+        OrderManagePage::go($I)->受注ステータス検索(OrderStatus::DELIVERED);
+        $I->see('検索結果：'.count($DeliveredOrders).'件が該当しました', OrderManagePage::$検索結果_メッセージ);
+
+        OrderManagePage::go($I)->受注ステータス検索(OrderStatus::NEW)
+            ->一覧_全選択()
+            ->受注ステータス変更('発送済み');
+
+        OrderManagePage::go($I)->受注ステータス検索(OrderStatus::DELIVERED);
+        $I->see('検索結果：'.(count($DeliveredOrders) + count($NewOrders)).'件が該当しました', OrderManagePage::$検索結果_メッセージ);
+    }
 }

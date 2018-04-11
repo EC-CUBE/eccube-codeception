@@ -25,7 +25,7 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
     public static function at(\AcceptanceTester $I)
     {
         $page = new self($I);
-        return $page->atPage('受注管理受注マスター');
+        return $page->atPage('受注マスター受注管理');
     }
 
     public function 検索($value = '')
@@ -52,9 +52,22 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
         $this->tester->click("#search_result > tbody > tr:nth-child(${rowNum}) a.action-edit");
     }
 
-    public function 一覧_削除($rowNum)
+    public function 一覧_削除()
     {
-        $this->tester->click("#search_result > tbody > tr:nth-child(${rowNum}) a.action-delete");
+        $this->tester->click("#form_bulk > div.row.justify-content-between.mb-2 .btn-bulk-wrapper button.btn.btn-ec-delete");
+        return $this;
+    }
+
+    public function Accept_削除()
+    {
+        $this->tester->waitForElementVisible(['id' => 'btn_bulk_delete']);
+        $this->tester->click("#btn_bulk_delete");
+        return $this;
+    }
+
+    public function Cancel_削除()
+    {
+        $this->tester->click("#bulkDeleteModal > div > div > div.modal-footer > button.btn.btn-ec-sub");
         return $this;
     }
 
@@ -64,19 +77,19 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
         return $this;
     }
 
-    public function 一覧_全選択()
+    public function 一覧_選択($rowNum)
     {
-        $this->tester->checkOption(['id' => 'check-all']);
+        $targetOrderId = $this->一覧_注文番号($rowNum);
+        $this->tester->checkOption(['id' => 'check_'.$targetOrderId]);
         return $this;
     }
 
-    /**
-     * TODO: Should remove this function due to new design does not have other dropdown menu
-     */
-    private function その他メニュー()
+    public function 一覧_全選択()
     {
-        $this->tester->click('#dropmenu > a');
+        $this->tester->checkOption('#check_all');
+        return $this;
     }
+
 
     public function メール一括通知()
     {
@@ -86,5 +99,21 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
     public function 一覧_注文番号($rowNum)
     {
         return $this->tester->grabTextFrom("#search_result > tbody > tr:nth-child($rowNum) a.action-edit");
+    }
+
+    public function 受注ステータス検索($value = '')
+    {
+        $this->tester->checkOption(['id' => 'admin_search_order_multi_status_' . $value]);
+        $this->tester->click('#search_form #search_submit');
+        return $this;
+    }
+
+    public function 受注ステータス変更($option = [])
+    {
+        $this->tester->selectOption('#option_bulk_status', $option);
+        $this->tester->click('#form_bulk #btn_bulk_status');
+        $this->tester->waitForElementVisible('#confirmBulkModal', 5);
+        $this->tester->click('#confirmBulkModal button[data-action="execute"]');
+        return $this;
     }
 }

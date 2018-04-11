@@ -9,7 +9,7 @@ class OrderEditPage extends AbstractAdminPageStyleGuide
 
     public static $姓_エラーメッセージ = '#ordererInfo > div > div:nth-child(2) > div.col > span > ul > p';
 
-    public static $登録完了メッセージ = '#page_admin_order_edit > div > div.c-contentsArea > div.alert.alert-success.alert-dismissible.fade.show.m-3 > span';
+    public static $登録完了メッセージ = '#page_admin_order_edit > div > div.c-contentsArea > div.alert';
 
     /**
      * OrderRegisterPage constructor.
@@ -125,8 +125,9 @@ class OrderEditPage extends AbstractAdminPageStyleGuide
 
     public function 商品検索($value = '')
     {
-        $this->tester->click('#aside_wrap > form > div > div:nth-child(3) > div.box-body.accpanel > div > div.btn_area > ul > li:nth-child(1) > a');
-        $this->tester->waitForElement(['id' => 'search_product_modal_box']);
+        $this->tester->click('#orderItem > div > div.row.justify-content-between.mb-2 > div.col-6 > a.btn.btn-ec-regular.mr-2.add');
+        $this->tester->waitForElement(['id' => 'addProduct']);
+        $this->tester->wait(1);
         $this->tester->fillField(['id' => 'admin_search_product_id'], $value);
         $this->tester->click('#searchProductModalButton');
         return $this;
@@ -135,13 +136,15 @@ class OrderEditPage extends AbstractAdminPageStyleGuide
     public function 商品検索結果_選択($rowNum)
     {
         $rowNum = $rowNum * 2;
-        $this->tester->click("#searchProductModalList > div > table > tbody > tr:nth-child(${rowNum}) > td.text-right > button");
+        $this->tester->wait(8);
+        $this->tester->click("#searchProductModalList > table > tbody > tr:nth-child(${rowNum}) > td.text-right > button");
         return $this;
     }
 
     public function 受注情報登録()
     {
         $this->tester->click('#form1 > div.c-conversionArea > div > div > div:nth-child(2) > div > div > button');
+        $this->tester->wait(5);
         return $this;
     }
 }
