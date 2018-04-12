@@ -37,13 +37,13 @@ class ShippingManagePage extends AbstractAdminPageStyleGuide
 
     public function 出荷CSVダウンロード実行()
     {
-        $this->tester->click('#form_bulk #btn_csv_download');
+        $this->tester->click(['xpath' => '//*[@id="form_bulk"]/div[1]/div[2]/div[2]/div/a[1]']);
         return $this;
     }
 
     public function 出荷出荷CSV出力項目設定()
     {
-        $this->tester->click('#form_bulk #btn_csv_setting');
+        $this->tester->click(['xpath' => '//*[@id="form_bulk"]/div[1]/div[2]/div[2]/div/a[2]']);
         return $this;
     }
 

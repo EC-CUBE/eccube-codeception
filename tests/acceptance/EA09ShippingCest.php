@@ -31,7 +31,7 @@ class EA09ShippingCest
 
         $TargetShippings = Fixtures::get('findShippings'); // Closure
         $Shippings = $TargetShippings();
-        ShippingManagePage::go($I)->検索();
+        ShippingManagePage::go($I);
         $I->see('検索結果 : '.count($Shippings).' 件が該当しました', ShippingManagePage::$検索結果_メッセージ);
 
         ShippingManagePage::go($I)->検索('gege@gege.com');
@@ -51,7 +51,7 @@ class EA09ShippingCest
             return $Shipping->getShippingStatus()->getId() != ShippingStatus::PROCESSING;
         });
         $ShippingListPage = ShippingManagePage::go($I)->検索();
-        $I->see('検索結果：'.count($TargetShippings).'件が該当しました', ShippingManagePage::$検索結果_メッセージ);
+        $I->see('検索結果 : '.count($Shippings).' 件が該当しました', ShippingManagePage::$検索結果_メッセージ);
 
         $ShippingListPage->出荷CSVダウンロード実行();
         // make sure wait to download file completely
@@ -69,7 +69,7 @@ class EA09ShippingCest
             return $Shipping->getShippingStatus()->getId() != ShippingStatus::PROCESSING;
         });
         $ShippingListPage = ShippingManagePage::go($I)->検索();
-        $I->see('検索結果：'.count($TargetShippings).'件が該当しました', ShippingManagePage::$検索結果_メッセージ);
+        $I->see('検索結果 : '.count($TargetShippings).' 件が該当しました', ShippingManagePage::$検索結果_メッセージ);
 
         /* 項目設定 */
         $ShippingListPage->出荷CSV出力項目設定();
@@ -93,7 +93,7 @@ class EA09ShippingCest
             return $Shipping->getShippingStatus()->getId() != ShippingStatus::PROCESSING;
         });
         $ShippingListPage = ShippingManagePage::go($I)->検索();
-        $I->see('検索結果：'.count($TargetShippings).'件が該当しました', ShippingManagePage::$検索結果_メッセージ);
+        $I->see('検索結果 : '.count($TargetShippings).' 件が該当しました', ShippingManagePage::$検索結果_メッセージ);
 
         /* 編集 */
         $ShippingListPage->一覧_編集(1);
@@ -142,7 +142,7 @@ class EA09ShippingCest
         });
 
         $ShippingListPage = ShippingManagePage::go($I)->検索();
-        $I->see('検索結果：'.count($TargetShippings).'件が該当しました', ShippingManagePage::$検索結果_メッセージ);
+        $I->see('検索結果 : '.count($TargetShippings).' 件が該当しました', ShippingManagePage::$検索結果_メッセージ);
 
         // 削除
         $ShippingNumForDel = $ShippingListPage->一覧_注文番号(1);
@@ -173,7 +173,7 @@ class EA09ShippingCest
         });
         $Shipping = array_pop($NewShippings);
         $ShippingListPage = ShippingManagePage::go($I)->検索($Shipping->getId());
-        $I->see('検索結果：1件が該当しました', ShippingManagePage::$検索結果_メッセージ);
+        $I->see('検索結果 : 1件が該当しました', ShippingManagePage::$検索結果_メッセージ);
 
         $ShippingListPage->一覧_メール通知(1);
 
@@ -201,7 +201,7 @@ class EA09ShippingCest
             return $Shipping->getShippingStatus()->getId() != ShippingStatus::PROCESSING;
         });
         $ShippingListPage = ShippingManagePage::go($I)->検索();
-        $I->see('検索結果：'.count($TargetShippings).'件が該当しました', ShippingManagePage::$検索結果_メッセージ);
+        $I->see('検索結果 : '.count($TargetShippings).' 件が該当しました', ShippingManagePage::$検索結果_メッセージ);
 
         $ShippingListPage
             ->一覧_全選択()
