@@ -41,7 +41,7 @@ class ShippingManagePage extends AbstractAdminPageStyleGuide
         return $this;
     }
 
-    public function 出荷出荷CSV出力項目設定()
+    public function 出荷CSV出力項目設定()
     {
         $this->tester->click(['xpath' => '//*[@id="form_bulk"]/div[1]/div[2]/div[2]/div/a[2]']);
         return $this;
@@ -49,7 +49,7 @@ class ShippingManagePage extends AbstractAdminPageStyleGuide
 
     public function 一覧_編集($rowNum)
     {
-        $this->tester->click("#search_result > tbody > tr:nth-child(${rowNum}) a.action-edit");
+        $this->tester->click(['xpath' => "//*[@id='form_bulk']/div[2]/div/table/tbody/tr[${rowNum}]/td[2]/a"]);
     }
 
     public function 一覧_削除($rowNum)

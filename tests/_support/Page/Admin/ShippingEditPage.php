@@ -39,6 +39,13 @@ class ShippingEditPage extends AbstractAdminPageStyleGuide
         return $this;
     }
 
+    public function お届け先編集()
+    {
+        $this->tester->click(['id' => 'edit-shipping-addr']);
+        $this->tester->waitForElementVisible(['id' => 'shipping_name_name01']);
+        return $this;
+    }
+
     public function 入力_姓($value)
     {
         $this->tester->fillField(['id' => 'shipping_name_name01'], $value);
@@ -141,7 +148,7 @@ class ShippingEditPage extends AbstractAdminPageStyleGuide
 
     public function 出荷情報登録()
     {
-        $this->tester->click('#form1 > div.c-conversionArea > div > div > div:nth-child(2) > div > div > button');
+        $this->tester->click(['id' => 'btn_save']);
         return $this;
     }
 }
