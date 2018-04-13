@@ -4,6 +4,7 @@ use Codeception\Util\Fixtures;
 use Page\Admin\CsvSettingsPage;
 use Page\Admin\ShippingManagePage;
 use Page\Admin\ShippingEditPage;
+use Page\Admin\OrderEditPage;
 use Eccube\Entity\Master\ShippingStatus;
 
 /**
@@ -182,6 +183,29 @@ class EA09ShippingCest
     {
         $I->wantTo('EA0903-UC01-T01(& UC01-T02) 出荷登録');
 
+        $OrderRegisterPage = OrderEditPage::go($I)->受注情報登録();
+
+        /* 正常系 */
+        $OrderRegisterPage
+            ->入力_受注ステータス(['1' => '新規受付'])
+            ->入力_姓('order1')
+            ->入力_名('order1')
+            ->入力_セイ('アアア')
+            ->入力_メイ('アアア')
+            ->入力_郵便番号1('060')
+            ->入力_郵便番号2('0000')
+            ->入力_都道府県(['1' => '北海道'])
+            ->入力_市区町村名('bbb')
+            ->入力_番地_ビル名('bbb')
+            ->入力_Eメール('test@test.com')
+            ->入力_電話番号1('111')
+            ->入力_電話番号2('111')
+            ->入力_電話番号3('111')
+            ->商品検索('パーコレーター')
+            ->商品検索結果_選択(1)
+            ->入力_支払方法(['4'=> '郵便振替'])
+            ->受注情報登録();
+
         $ShippingRegisterPage = ShippingEditPage::go($I)->出荷情報登録();
 
         /* 異常系 */
@@ -204,8 +228,8 @@ class EA09ShippingCest
             ->入力_電話番号3('111')
             ->入力_出荷伝票番号('1111-1111-1111')
             ->入力_配送業者([1 => 'サンプル業者'])
-            // ->商品検索('パーコレーター') TODO 未実装
-            // ->商品検索結果_選択(1)
+            ->商品検索()
+            ->商品検索結果_選択(1)
             ->出荷情報登録();
 
         $I->see('出荷情報を登録しました。', ShippingEditPage::$登録完了メッセージ);
