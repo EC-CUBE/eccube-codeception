@@ -77,7 +77,9 @@ class EA09ShippingCest
 
     public function shipping出荷編集(\AcceptanceTester $I)
     {
-        $I->wantTo('EA0901-UC05-T01(& UC05-T02/UC06-T01) 出荷編集');
+        $I->wantTo('EA0901-UC03-T01(& UC03-T02) 出荷編集');
+
+        $I->resetEmails();
 
         $TargetShippings = Fixtures::get('findShippings'); // Closure
         $Shippings = $TargetShippings();
@@ -117,111 +119,78 @@ class EA09ShippingCest
 
         /* ステータス変更 */
         $ShippingRegisterPage
-            ->入力_出荷ステータス(['1' => '出荷準備中'])
-            ->出荷情報登録();
-
+            ->入力_出荷ステータス(['2' => '出荷済み'])
+            ->出荷情報登録()
+            ->変更を確定();
+        $I->wait(1);
         $I->see('出荷情報を登録しました。', ShippingEditPage::$登録完了メッセージ);
+
+        $I->wait(3);
+        $I->seeEmailCount(2);
     }
 
     public function shipping出荷削除(\AcceptanceTester $I)
     {
-        $I->wantTo('EA0901-UC08-T01(& UC08-T02) 出荷削除');
+        $I->wantTo('EA0901-UC04-T01(& UC04-T02) 出荷削除');
 
-        $findShippings = Fixtures::get('findShippings'); // Closure
-        $TargetShippings = array_filter($findShippings(), function ($Shipping) {
-            return $Shipping->getShippingStatus()->getId() != ShippingStatus::PROCESSING;
-        });
-
-        $ShippingListPage = ShippingManagePage::go($I)->検索();
-        $I->see('検索結果 : '.count($TargetShippings).' 件が該当しました', ShippingManagePage::$検索結果_メッセージ);
+        $TargetShippings = Fixtures::get('findShippings'); // Closure
+        $Shippings = $TargetShippings();
+        $ShippingListPage = ShippingManagePage::go($I);
+        $I->see('検索結果 : '.count($Shippings).' 件が該当しました', ShippingManagePage::$検索結果_メッセージ);
 
         // 削除
-        $ShippingNumForDel = $ShippingListPage->一覧_注文番号(1);
-        $ShippingListPage->一覧_削除(1);
-        $I->acceptPopup();
+        $ShippingListPage->一覧_チェックボックス(1);
+        $ShippingListPage->一覧_削除();
 
-        $I->getScenario()->incomplete('未実装：出荷マスターでの出荷削除が未実装');
-
-        $I->see('出荷情報を削除しました', ['css' => '#main > div > div:nth-child(1) > div']);
-        $I->assertNotEquals($ShippingNumForDel, $ShippingListPage->一覧_注文番号(1));
+        $I->waitForElementVisible(['xpath' => '//*[@id="page_admin_shipping"]/div[1]/div[3]/div[2]/span']);
+        $I->see('出荷情報を削除しました。', ['xpath' => '//*[@id="page_admin_shipping"]/div[1]/div[3]/div[2]/span']);
 
         // 削除キャンセル
-        $ShippingNumForDontDel = $ShippingListPage->一覧_注文番号(1);
-        $ShippingListPage->一覧_削除(1);
-        $I->cancelPopup();
-
-        $I->assertEquals($ShippingNumForDontDel, $ShippingListPage->一覧_注文番号(1));
+        $ShippingListPage->一覧_チェックボックス(1);
+        $ShippingListPage->一覧_削除キャンセル();
     }
 
-    public function shipping出荷メール通知(\AcceptanceTester $I)
+    public function shipping一括発送済み更新(\AcceptanceTester $I)
     {
-        $I->wantTo('EA0902-UC01-T01 出荷メール通知');
-
-        $I->resetEmails();
-        $findShippings = Fixtures::get('findShippings');
-        $NewShippings = array_filter($findShippings(), function ($Shipping) {
-            return $Shipping->getShippingStatus()->getId() == ShippingStatus::NEW;
-        });
-        $Shipping = array_pop($NewShippings);
-        $ShippingListPage = ShippingManagePage::go($I)->検索($Shipping->getId());
-        $I->see('検索結果 : 1件が該当しました', ShippingManagePage::$検索結果_メッセージ);
-
-        $ShippingListPage->一覧_メール通知(1);
-
-        $I->selectOption(['id' => 'template-change'], ['1' => '注文受付メール']);
-        $I->click(['id' => 'mailConfirm']);
-        $I->scrollTo(['id' => 'sendMail'], 0, 100);
-        $I->wait(1);
-        $I->click(['id' => 'sendMail']);
-
-        $I->wait(3);
-        $I->seeEmailCount(2);
-
-        $I->seeInLastEmailSubjectTo('admin@example.com', 'ご注文ありがとうございます');
-    }
-
-    public function shipping一括メール通知(\AcceptanceTester $I)
-    {
-        $I->wantTo('EA0902-UC02-T01(& UC02-T02) 一括メール通知');
+        $I->wantTo('EA0902-UC01-T01 一括発送済み更新');
 
         $I->resetEmails();
 
         $config = Fixtures::get('config');
-        $findShippings = Fixtures::get('findShippings'); // Closure
-        $TargetShippings = array_filter($findShippings(), function ($Shipping) use ($config) {
-            return $Shipping->getShippingStatus()->getId() != ShippingStatus::PROCESSING;
-        });
-        $ShippingListPage = ShippingManagePage::go($I)->検索();
-        $I->see('検索結果 : '.count($TargetShippings).' 件が該当しました', ShippingManagePage::$検索結果_メッセージ);
+        // ステータスを出荷準備中にリセット
+        $resetShippingStatusPrepared = Fixtures::get('resetShippingStatusPrepared'); // Closure
+        $resetShippingStatusPrepared();
+
+        $TargetShippings = Fixtures::get('findShippings'); // Closure
+        $Shippings = $TargetShippings();
+        $ShippingListPage = ShippingManagePage::go($I);
+        $I->see('検索結果 : '.count($Shippings).' 件が該当しました', ShippingManagePage::$検索結果_メッセージ);
 
         $ShippingListPage
             ->一覧_全選択()
-            ->メール一括通知();
-
-        $I->selectOption(['id' => 'template-change'], ['1' => '注文受付メール']);
-        $I->click(['id' => 'mailConfirm']);
-        $I->scrollTo(['id' => 'sendMail'], 0, 100);
-        $I->wait(1);
-        $I->click(['id' => 'sendMail']);
+            ->一括発送済み更新();
 
         $I->wait(5);
+        $I->waitForElementVisible(['xpath' => '//*[@id="sentUpdateModal"]/div/div/div[2]/p']);
+        $I->see('処理完了', ['xpath' => '//*[@id="sentUpdateModal"]/div/div/div[2]/p']);
+
         $I->seeEmailCount(20);
+
+        $I->click(['id' => 'bulkChangeComplete']);
     }
 
     public function shipping出荷登録(\AcceptanceTester $I)
     {
-        $I->wantTo('EA0905-UC01-T01(& UC01-T02) 出荷登録');
+        $I->wantTo('EA0903-UC01-T01(& UC01-T02) 出荷登録');
 
         $ShippingRegisterPage = ShippingEditPage::go($I)->出荷情報登録();
 
         /* 異常系 */
         $I->dontSee('出荷情報を保存しました。', ShippingEditPage::$登録完了メッセージ);
 
-        $I->getScenario()->incomplete('未実装：出荷への商品の追加が未実装');
 
         /* 正常系 */
         $ShippingRegisterPage
-            ->入力_出荷ステータス(['1' => '新規受付'])
             ->入力_姓('shipping1')
             ->入力_名('shipping1')
             ->入力_セイ('アアア')
@@ -231,16 +200,15 @@ class EA09ShippingCest
             ->入力_都道府県(['1' => '北海道'])
             ->入力_市区町村名('bbb')
             ->入力_番地_ビル名('bbb')
-            ->入力_Eメール('test@test.com')
             ->入力_電話番号1('111')
             ->入力_電話番号2('111')
             ->入力_電話番号3('111')
-            ->商品検索('パーコレーター')
-            ->商品検索結果_選択(1)
-            ->入力_支払方法(['4'=> '郵便振替'])
+            ->入力_出荷伝票番号('1111-1111-1111')
+            ->入力_配送業者([1 => 'サンプル業者'])
+            // ->商品検索('パーコレーター') TODO 未実装
+            // ->商品検索結果_選択(1)
             ->出荷情報登録();
 
-        $I->see('出荷情報を保存しました。', ShippingEditPage::$登録完了メッセージ);
+        $I->see('出荷情報を登録しました。', ShippingEditPage::$登録完了メッセージ);
     }
-
 }

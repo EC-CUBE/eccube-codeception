@@ -52,15 +52,28 @@ class ShippingManagePage extends AbstractAdminPageStyleGuide
         $this->tester->click(['xpath' => "//*[@id='form_bulk']/div[2]/div/table/tbody/tr[${rowNum}]/td[2]/a"]);
     }
 
-    public function 一覧_削除($rowNum)
+    public function 一覧_削除()
     {
-        $this->tester->click("#search_result > tbody > tr:nth-child(${rowNum}) a.action-delete");
+        $this->tester->waitForElementVisible(['xpath' => '//*[@id="btn_bulk"]/button[2]']);
+        $this->tester->click(['xpath' => '//*[@id="btn_bulk"]/button[2]']);
+        $this->tester->waitForElementVisible(['xpath' => '//*[@id="btn_bulk_delete"]']);
+        $this->tester->click(['xpath' => '//*[@id="btn_bulk_delete"]']);
         return $this;
     }
 
-    public function 一覧_メール通知($rowNum)
+    public function 一覧_削除キャンセル()
     {
-        $this->tester->click("#search_result > tbody > tr:nth-child(${rowNum}) a.action-mail");
+        $this->tester->waitForElementVisible(['xpath' => '//*[@id="btn_bulk"]/button[1]']);
+        $this->tester->click(['xpath' => '//*[@id="btn_bulk"]/button[1]']);
+        return $this;
+    }
+
+    public function 一括発送済み更新()
+    {
+        $this->tester->waitForElementVisible(['xpath' => '//*[@id="btn_bulk"]/button[1]']);
+        $this->tester->click(['xpath' => '//*[@id="btn_bulk"]/button[1]']);
+        $this->tester->waitForElementVisible(['id' => 'bulkChange']);
+        $this->tester->click(['id' => 'bulkChange']);
         return $this;
     }
 
@@ -83,8 +96,8 @@ class ShippingManagePage extends AbstractAdminPageStyleGuide
         $this->tester->click('#form_bulk #btn_bulk_mail');
     }
 
-    public function 一覧_注文番号($rowNum)
+    public function 一覧_チェックボックス($rowNum)
     {
-        return $this->tester->grabTextFrom("#search_result > tbody > tr:nth-child($rowNum) a.action-edit");
+        $this->tester->click(['xpath' => "//*[@id='form_bulk']/div[2]/div/table/tbody/tr[${rowNum}]/td[1]/input"]);
     }
 }

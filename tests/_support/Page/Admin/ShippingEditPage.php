@@ -118,15 +118,15 @@ class ShippingEditPage extends AbstractAdminPageStyleGuide
         return $this;
     }
 
-    public function 入力_Eメール($value)
+    public function 入力_出荷伝票番号($value)
     {
-        $this->tester->fillField(['id' => 'shipping_email'], $value);
+        $this->tester->fillField(['id' => 'shipping_tracking_number'], $value);
         return $this;
     }
 
-    public function 入力_支払方法($value)
+    public function 入力_配送業者($value)
     {
-        $this->tester->selectOption(['id' => 'shipping_Payment'], $value);
+        $this->tester->selectOption(['id' => 'shipping_Delivery'], $value);
         return $this;
     }
 
@@ -149,6 +149,13 @@ class ShippingEditPage extends AbstractAdminPageStyleGuide
     public function 出荷情報登録()
     {
         $this->tester->click(['id' => 'btn_save']);
+        return $this;
+    }
+
+    public function 変更を確定()
+    {
+        $this->tester->waitForElementVisible(['xpath' => '//*[@id="shippedNotifyModal"]/div/div/div[3]/button[2]']);
+        $this->tester->click(['xpath' => '//*[@id="shippedNotifyModal"]/div/div/div[3]/button[2]']);
         return $this;
     }
 }
