@@ -72,7 +72,7 @@ class ShippingManagePage extends AbstractAdminPageStyleGuide
     {
         $this->tester->waitForElementVisible(['xpath' => '//*[@id="btn_bulk"]/button[1]']);
         $this->tester->click(['xpath' => '//*[@id="btn_bulk"]/button[1]']);
-        $this->tester->wait(1);
+        $this->tester->wait(3);
         $this->tester->click(['id' => 'bulkChange']);
         return $this;
     }
