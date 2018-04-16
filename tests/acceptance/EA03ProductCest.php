@@ -529,7 +529,7 @@ class EA03ProductCest
         $I->acceptPopup();
     }
 
-    public function product_カテゴリ登録(\AcceptanceTester $I)
+    public function product_1(\AcceptanceTester $I)
     {
         $I->wantTo('EA0305-UC01-T01(& UC01-T02/UC02-T01/UC04-T01) カテゴリ登録/編集/削除');
 
@@ -541,11 +541,10 @@ class EA03ProductCest
 
         $CategoryPage->一覧_編集(1);
 
-        $I->see('test category1', CategoryManagePage::$パンくず_1階層);
+        $I->seeElement('body > div > div.c-contentsArea > div.c-contentsArea__cols > div.c-contentsArea__primaryCol > div > div > div > div > ul > li:nth-child(1) > form.mode-edit');
 
-        $CategoryPage
-            ->入力_カテゴリ名('test category11')
-            ->カテゴリ作成();
+        $CategoryPage->一覧_インライン編集_カテゴリ名(1, 'test category11')
+            ->一覧_インライン編集_提出する(1);
 
         $I->see('カテゴリを保存しました。', $CategoryPage::$登録完了メッセージ);
 
