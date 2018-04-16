@@ -529,7 +529,7 @@ class EA03ProductCest
         $I->acceptPopup();
     }
 
-    public function product_1(\AcceptanceTester $I)
+    public function product_カテゴリ登録(\AcceptanceTester $I)
     {
         $I->wantTo('EA0305-UC01-T01(& UC01-T02/UC02-T01/UC04-T01) カテゴリ登録/編集/削除');
 
