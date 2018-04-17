@@ -57,13 +57,13 @@ class CustomerManagePage extends AbstractAdminPageStyleGuide
 
     public function 一覧_仮会員メール再送($rowNum)
     {
-        $this->tester->click("#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div.col.text-center > a");
+        $this->tester->click('#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child('.$rowNum.') > td.align-middle.pr-3 > div [data-target*="#discontinuance_cus_"]');
         return $this;
     }
 
     public function 一覧_仮会員メール再送_Accept($rowNum)
     {
-        $this->tester->click("#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div.col.text-center a.btn.btn-ec-delete");
+        $this->tester->click('#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child('.$rowNum.') > td.align-middle.pr-3 > div [id*="discontinuance_cus_"] a.btn.btn-ec-delete');
         return $this;
     }
 
