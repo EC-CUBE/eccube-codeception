@@ -12,7 +12,6 @@ RUN composer require captbaritone/mailcatcher-codeception-module "1.*"
 
 ## Clone EC-CUBE3
 
-ENV ECCUBE_PATH /var/www
 ENV BASE_URL="http://eccube3/"
 ENV DATABASE_URL=${DATABASE_URL}
 ENV DATABASE_SERVER_VERSION=${DATABASE_SERVER_VERSION}
@@ -21,22 +20,15 @@ ARG ECCUBE_REPOS
 ARG ECCUBE_BRANCH
 ARG DBTYPE
 
-RUN cd /var && \
-    git clone --depth=50 -b ${ECCUBE_BRANCH} ${ECCUBE_REPOS} ${ECCUBE_PATH}
+WORKDIR /project
 
-WORKDIR ${ECCUBE_PATH}
+RUN git clone --depth=50 -b ${ECCUBE_BRANCH} ${ECCUBE_REPOS} /project
+
 RUN { \
     echo "APP_ENV=test"; \
     echo "APP_DEBUG=0"; \
-} > ${ECCUBE_PATH}/.env
-RUN composer install && rm -rf ${ECCUBE_PATH}/var/cache
-
-## create config yaml files
-WORKDIR /project
-
-## create dummy directories
-RUN mkdir /project/html
-RUN mkdir /project/app
+} > /project/.env
+RUN composer install && rm -rf /project/var/cache
 
 COPY codecept /repo/codecept
 RUN chmod +x /repo/codecept

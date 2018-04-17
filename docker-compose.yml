@@ -61,11 +61,12 @@ services:
       - ECCUBE_COOKIE_NAME=eccube
       - ECCUBE_COOKIE_LIFETIME=0
       - ECCUBE_ADMIN_ROUTE=admin
+      - WEB_DRIVER_HOST=browser
+      - WEB_DRIVER_PORT=4444
+      - MAILCATCHER_HOST=mailcatcher
     volumes:
-      - ./tests:/project/tests
-      - ./codeception.yml:/project/codeception.yml
       - ./ff_profile.zip.b64:/root/ff_profile.zip.b64
-      - ./tests/_support/_downloads:/project/downloads
+      - ./tests/_support/_downloads:/project/codeception/_support/_downloads
   browser:
     image: selenium/standalone-firefox-debug:2.53.1
     ports:
