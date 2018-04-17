@@ -43,6 +43,30 @@ class EA03ProductCest
         $I->see("ディナーフォーク", ProductManagePage::$検索結果_一覧);
     }
 
+    public function product_規格確認のポップアップ表示(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0301-UC01-T03 規格確認のポップアップを表示');
+
+        ProductManagePage::go($I)
+            ->検索()
+            ->規格確認ボタンをクリック()
+            ->規格確認をキャンセル();
+
+        $I->dontSeeElement(['css' => 'div.modal.show']);
+    }
+
+    public function product_ポップアップから規格編集画面に遷移(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0301-UC01-T04 ポップアップから規格編集画面に遷移');
+
+        ProductManagePage::go($I)
+            ->検索()
+            ->規格確認ボタンをクリック()
+            ->規格編集画面に遷移();
+
+        $I->see('商品登録（規格設定）商品管理', self::ページタイトルStyleGuide);
+    }
+
     public function product_商品検索結果無(\AcceptanceTester $I)
     {
         $I->wantTo('EA0301-UC01-T02 商品検索 検索結果なし');
@@ -99,8 +123,8 @@ class EA03ProductCest
         ProductClassEditPage::at($I)
             ->規格設定();
 
-        $I->seeElement(['css' => '#form_class_name1:invalid']); //規格1がエラー
-        $I->dontSeeElement(['css' => '#form > div.c-contentsArea__cols > div > div > div:nth-child(2)']); // 規格編集行が表示されていない
+        $I->seeElement(['css' => '#product_class_matrix_class_name1:invalid']); //規格1がエラー
+        $I->dontSeeElement(ProductClassEditPage::$規格一覧); // 規格編集行が表示されていない
     }
 
     public function product_一覧からの規格編集規格なし_(\AcceptanceTester $I)
@@ -118,12 +142,18 @@ class EA03ProductCest
             ->入力_規格1('材質')
             ->規格設定();
 
-        $I->see('3 件の規格の組み合わせがあります', '#form > div.c-contentsArea__cols > div > div > div:nth-child(2) > div.card-header > div > div.col-6 > span');
+        $I->see('3 件の規格の組み合わせがあります', 'div.c-contentsArea__cols > div > div > form div.card-header > div > div.col-6 > span');
 
         $ProductClassEditPage
             ->選択(1)
+            ->入力_在庫数無制限(1)
+            ->入力_販売価格(1, 1000)
             ->選択(2)
+            ->入力_在庫数無制限(2)
+            ->入力_販売価格(2, 1000)
             ->選択(3)
+            ->入力_在庫数無制限(3)
+            ->入力_販売価格(3, 1000)
             ->登録();
 
         $I->waitForElement(ProductClassEditPage::$登録完了メッセージ);
@@ -188,12 +218,13 @@ class EA03ProductCest
         ProductEditPage::at($I)
             ->規格管理();
 
+        $I->seeElement(ProductClassEditPage::$規格一覧);
+
         ProductClassEditPage::at($I)
             ->規格初期化();
 
         $I->see('商品規格を削除しました', ProductClassEditPage::$登録完了メッセージ);
-
-        // TODO 規格が初期化されているのを確認
+        $I->dontSeeElement(ProductClassEditPage::$規格一覧);
     }
 
     public function product_商品登録非公開(\AcceptanceTester $I)
@@ -203,6 +234,7 @@ class EA03ProductCest
         ProductEditPage::go($I)
             ->入力_商品名('test product1')
             ->入力_販売価格('1000')
+            ->入力_カテゴリ(1)
             ->登録();
 
         $I->see('登録が完了しました。', ProductEditPage::$登録結果メッセージ);
@@ -215,6 +247,7 @@ class EA03ProductCest
         ProductEditPage::go($I)
             ->入力_商品名('test product2')
             ->入力_販売価格('1000')
+            ->入力_カテゴリ(1)
             ->入力_公開()
             ->登録();
 
@@ -231,6 +264,8 @@ class EA03ProductCest
 
         ProductEditPage::at($I)
             ->入力_商品名('test product11')
+            ->入力_カテゴリ(1)
+            ->入力_カテゴリ(2)
             ->登録();
 
         $I->see('登録が完了しました。', ProductEditPage::$登録結果メッセージ);
@@ -275,15 +310,98 @@ class EA03ProductCest
         $I->see('登録が完了しました。', ProductEditPage::$登録結果メッセージ);
     }
 
+    public function product_新製品はタグを持っています(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0302-UC01-T05-タグを商品に追加する');
+
+        ProductEditPage::go($I)
+            ->入力_商品名("規格なし商品")
+            ->入力_販売価格(50000)
+            ->クリックして開くタグリスト()
+            ->クリックして選択タグ(2)
+            ->クリックして選択タグ(3)
+            ->クリックして選択タグ(4)
+            ->登録();
+        $I->see('登録が完了しました。', 'div.c-container > div.c-contentsArea > div.alert');
+
+        $I->seeElement(['xpath' => '//*[@id="tag"]/div/div[1]/button']);
+        $I->seeElement(['xpath' => '//*[@id="tag"]/div/div[2]/button']);
+        $I->seeElement(['xpath' => '//*[@id="tag"]/div/div[3]/button']);
+    }
+
     public function product_一覧からの商品削除(\AcceptanceTester $I)
     {
         $I->wantTo('EA0310-UC05-T03 一覧からの商品削除');
 
         ProductManagePage::go($I)
-            ->検索('test product2')
-            ->検索結果_削除(1);
+            ->検索('')
+            ->検索結果_削除(1)
+            ->wait()
+            ->Accept_削除(1);
+    }
 
-        $I->acceptPopup();
+    public function product_商品の一括削除_正常(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0302-UC05-T04 商品の一括削除(正常)');
+
+        $createProduct = Fixtures::get('createProduct');
+        foreach (range(1, 5) as $i) {
+            $createProduct("一括削除用_${i}");
+        }
+        $ProductManagePage = ProductManagePage::go($I)
+            ->検索('一括削除用')
+            ->すべて選択();
+
+        $I->see("検索結果：5件が該当しました", ProductManagePage::$検索結果_メッセージ);
+
+        $ProductManagePage
+            ->完全に削除()
+            ->一括削除完了();
+
+        $I->see("検索結果：0件が該当しました", ProductManagePage::$検索結果_メッセージ);
+    }
+
+
+
+    public function product_商品の一括削除_削除エラー(\AcceptanceTester $I)
+    {
+        $I->wantTo('EA0302-UC05-T04 商品の一括削除(正常)');
+
+        $createProduct = Fixtures::get('createProduct');
+        $createOrders = Fixtures::get('createOrders');
+
+        $timestamp = time();
+        // 受注に紐付いていない商品と紐付いている商品を作成
+        foreach (range(1, 5) as $i) {
+            $createProduct("一括削除用_${timestamp}_受注なし_${i}");
+        }
+        $Customer = (Fixtures::get('createCustomer'))();
+        foreach (range(1, 5) as $i) {
+            $Product = $createProduct("一括削除用_${timestamp}_受注あり_${i}");
+            $createOrders($Customer, 1, $Product->getProductClasses()->toArray());
+        }
+
+        $ProductManagePage = ProductManagePage::go($I)
+            ->検索("一括削除用_${timestamp}")
+            ->すべて選択();
+
+        $I->see("検索結果：10件が該当しました", ProductManagePage::$検索結果_メッセージ);
+        $I->see("一括削除用_${timestamp}_受注あり", ProductManagePage::$検索結果_一覧);
+        $I->see("一括削除用_${timestamp}_受注なし", ProductManagePage::$検索結果_一覧);
+
+        $ProductManagePage->完全に削除();
+
+        $I->see("一括削除用_${timestamp}_受注あり_1", ProductManagePage::$一括削除エラー);
+        $I->see("一括削除用_${timestamp}_受注あり_2", ProductManagePage::$一括削除エラー);
+        $I->see("一括削除用_${timestamp}_受注あり_3", ProductManagePage::$一括削除エラー);
+        $I->see("一括削除用_${timestamp}_受注あり_4", ProductManagePage::$一括削除エラー);
+        $I->see("一括削除用_${timestamp}_受注あり_5", ProductManagePage::$一括削除エラー);
+
+        $ProductManagePage->一括削除完了();
+
+        $I->see("検索結果：5件が該当しました", ProductManagePage::$検索結果_メッセージ);
+        $I->see("一括削除用_${timestamp}_受注あり", ProductManagePage::$検索結果_一覧);
+        $I->dontSee("一括削除用_${timestamp}_受注なし", ProductManagePage::$検索結果_一覧);
     }
 
     public function product_規格登録_(\AcceptanceTester $I)
@@ -291,7 +409,8 @@ class EA03ProductCest
         $I->wantTo('EA0303-UC01-T01 規格登録');
 
         ClassNameManagePage::go($I)
-            ->入力_管理名('test class1')
+            ->入力_管理名('backend test class1')
+            ->入力_表示名('display test class1')
             ->規格作成();
 
         $I->see('規格を保存しました。', ClassNameManagePage::$登録完了メッセージ);
@@ -307,14 +426,15 @@ class EA03ProductCest
     {
         $I->wantTo('EA0303-UC02-T01 規格編集');
 
-        $I->getScenario()->skip('編集機能を実装するまでスキップ');
+        $ProductClassPage = ClassNameManagePage::go($I)->一覧_編集(2);
 
-        $ProductClassPage = ClassNameManagePage::go($I)->一覧_編集(1);
+        $backendValue = $I->grabValueFrom(ClassNameManagePage::$管理名編集3);
+        $I->assertEquals('backend test class1', $backendValue);
 
-        $value = $I->grabValueFrom(ClassNameManagePage::$管理名);
-        $I->assertEquals('test class1', $value);
+        $displayValue = $I->grabValueFrom(ClassNameManagePage::$表示名編集3);
+        $I->assertEquals('display test class1', $displayValue);
 
-        $ProductClassPage->規格作成();
+        $ProductClassPage->規格編集(2);
 
         $I->see('規格を保存しました。', ClassNameManagePage::$登録完了メッセージ);
     }
@@ -389,7 +509,7 @@ class EA03ProductCest
         $I->see('規格を保存しました。', ClassNameManagePage::$登録完了メッセージ);
 
         $ProductClassPage->一覧_分類登録(1);
-        $I->see('規格名 test class2', 'div.card-header');
+        $I->see('管理名 test class2', '#page_admin_product_class_category > div > div.c-contentsArea > div.c-contentsArea__cols > div > div.c-primaryCol > div:nth-child(1) > div.card-body > div:nth-child(1)');
 
         $ProductClassCategoryPage = ClassCategoryManagePage::at($I)
             ->入力_分類名('test class2 category1')

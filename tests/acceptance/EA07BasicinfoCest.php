@@ -60,12 +60,19 @@ class EA07BasicinfoCest
         // 入れ替え
         $I->see('郵便振替', $PaymentManagePage->一覧_支払方法(1));
         $PaymentManagePage->一覧_下に(1);
-        $I->see('ランクの移動が完了しました。', PaymentManagePage::$登録完了メッセージ);
+
+        $PaymentManagePage = PaymentManagePage::go($I);
+        $I->see('郵便振替', $PaymentManagePage->一覧_支払方法(2));
+
+
+        $PaymentManagePage->一覧_上に(2);
+        $PaymentManagePage = PaymentManagePage::go($I);
+        $I->see('郵便振替', $PaymentManagePage->一覧_支払方法(1));
     }
 
     public function basicinfo_支払方法登録(\AcceptanceTester $I)
     {
-        $I->getScenario()->incomplete('EA0705-UC01-T01 支払方法 登録');
+        $I->getScenario()->skip('EA0705-UC01-T01 支払方法 登録');
         $I->wantTo('EA0705-UC01-T01 支払方法 登録');
 
         // 表示
@@ -87,7 +94,7 @@ class EA07BasicinfoCest
 
     public function basicinfo_支払方法編集(\AcceptanceTester $I)
     {
-        $I->getScenario()->incomplete('EA0705-UC01-T01 支払方法 登録');
+        $I->getScenario()->skip('EA0705-UC01-T01 支払方法 登録');
         $I->wantTo('EA0705-UC02-T01 支払方法 編集');
 
         // 表示
@@ -113,7 +120,6 @@ class EA07BasicinfoCest
         // 削除
         PaymentManagePage::go($I)
             ->一覧_削除(1);
-        $I->acceptPopup();
     }
 
     public function basicinfo_配送方法一覧(\AcceptanceTester $I)
@@ -243,7 +249,7 @@ class EA07BasicinfoCest
 
         // 表示
         CsvSettingsPage::go($I)
-            ->入力_CSVタイプ('配送CSV')
+            ->入力_CSVタイプ('出荷CSV')
             ->選択_出力項目('誕生日')
             ->削除()
             ->設定();

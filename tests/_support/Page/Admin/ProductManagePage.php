@@ -15,8 +15,10 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
 
     public static $検索結果_メッセージ = '#search_form > div.c-outsideBlock__contents.mb-5 > span';
     public static $検索結果_結果なしメッセージ = '.c-contentsArea .c-contentsArea__cols div.text-center.h5';
-    public static $検索結果_一覧 = "#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody";
+    public static $検索結果_一覧 = "#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody";
+    public static $一括削除エラー = ['id' => 'bulkErrors'];
 
+    /** @var \AcceptanceTester $tester */
     protected $tester;
 
     /**
@@ -31,6 +33,16 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
     {
         $page = new ProductManagePage($I);
         return $page->goPage(self::$URL, '商品マスター商品管理');
+    }
+
+    /**
+     * @param $second
+     * @return $this
+     */
+    public function wait($second = 3)
+    {
+        $this->tester->wait($second);
+        return $this;
     }
 
     /**
@@ -63,7 +75,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
      */
     public function 検索結果_複製($rowNum)
     {
-        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(2) > a");
+        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(2) > a");
         return $this;
     }
 
@@ -74,7 +86,7 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
      */
     public function 検索結果_確認($rowNum)
     {
-        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(1) > a");
+        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(1) > a");
         return $this;
     }
 
@@ -85,7 +97,39 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
      */
     public function 検索結果_選択($rowNum)
     {
-        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(4) > a");
+        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td:nth-child(4) > a");
+        return $this;
+    }
+
+    /**
+     * Btn class product, list product search
+     * @return $this
+     */
+    public function 規格確認ボタンをクリック()
+    {
+        $this->tester->click("#page_admin_product > div > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr > td:nth-child(7) > button.page-link");
+        $this->tester->waitForElementVisible(['id' => 'productClassesModal']);
+        $this->tester->wait(1);
+        return $this;
+    }
+
+    /**
+     * Btn class product, list product search
+     * @return $this
+     */
+    public function 規格確認をキャンセル()
+    {
+        $this->tester->click("#page_admin_product div#productClassesModal .modal-footer button.btn-v-sub");
+        $this->tester->waitForElementNotVisible(['id' => 'productClassesModal']);
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function 規格編集画面に遷移()
+    {
+        $this->tester->click("#page_admin_product div#productClassesModal .modal-footer a.btn-ec-conversion");
         return $this;
     }
 
@@ -96,9 +140,19 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
      */
     public function 検索結果_削除($rowNum)
     {
-        $this->tester->getScenario()->incomplete('未実装：商品マスター画面での削除は未実装');
+      $this->tester->click("#page_admin_product > div.c-container > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(3) > a");
+      return $this;
+    }
 
-        $this->tester->click("#main #result_list__list > div > div:nth-child(${rowNum}) > div:nth-child(4) > div > ul > li:nth-child(4) > a");
+    public function Accept_削除($rowNum)
+    {
+        $this->tester->click("#page_admin_product > div.c-container > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(3) div.modal div.modal-footer a.btn-ec-delete");
+        return $this;
+    }
+
+    public function Cancel_削除($rowNum)
+    {
+        $this->tester->click("#page_admin_product > div.c-container > div.c-contentsArea > div.c-contentsArea__cols > div > div > form > div.card.rounded.border-0.mb-4 > div.card-body.p-0 > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div:nth-child(3) button.btn.btn-ec-sub");
         return $this;
     }
 
@@ -111,6 +165,27 @@ class ProductManagePage extends AbstractAdminPageStyleGuide
     public function CSV出力項目設定()
     {
         $this->tester->click('.c-contentsArea__cols .row div:nth-child(2) div:nth-child(2) button:nth-child(2)');
+        return $this;
+    }
+
+    public function すべて選択()
+    {
+        $this->tester->checkOption(['id' => 'check_all']);
+        return $this;
+    }
+
+    public function 完全に削除()
+    {
+        $this->tester->click(['css' => '#form_bulk button.btn-ec-delete']);
+        $this->tester->waitForElementVisible(['id' => 'bulkDelete']);
+        $this->tester->click(['id' => 'bulkDelete']);
+        $this->tester->waitForElementVisible(['id' => 'bulkDeleteDone']);
+        return $this;
+    }
+
+    public function 一括削除完了()
+    {
+        $this->tester->click(['id' => 'bulkDeleteDone']);
         return $this;
     }
 }
