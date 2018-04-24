@@ -9,10 +9,15 @@ services:
       - MYSQL_PASSWORD=password
       - DATABASE_URL=mysql://eccube_user:password@db:3306/eccube_db
       - DATABASE_SERVER_VERSION=8
+    volumes:
+      - ./mysql8/default_authentication_plugin.cnf:/etc/mysql/conf.d/default_authentication_plugin.cnf:cached
   eccube3:
     build:
       args:
         - DBTYPE=mysql
+    environment:
+      - DATABASE_URL=mysql://eccube_user:password@db:3306/eccube_db
+      - DATABASE_SERVER_VERSION=8
   codecept:
     build:
       args:
