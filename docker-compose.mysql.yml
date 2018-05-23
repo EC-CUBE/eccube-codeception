@@ -10,7 +10,7 @@ services:
       - DATABASE_URL=mysql://eccube_user:password@db:3306/eccube_db
       - DATABASE_SERVER_VERSION=8
     volumes:
-      - ./mysql8/default_authentication_plugin.cnf:/etc/mysql/conf.d/default_authentication_plugin.cnf:cached
+      - ./mysql8/default_authentication_plugin.cnf:/etc/mysql/conf.d/default_authentication_plugin.cnf
   eccube3:
     build:
       args:
