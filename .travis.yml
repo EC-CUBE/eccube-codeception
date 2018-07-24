@@ -43,16 +43,16 @@ env:
   # - USE_PLUGIN=1 BROWSER=chrome DB=mysql55 TARGET_GROUP=admin01 TARGET_ENV=chrome,mysql
   # - USE_PLUGIN=1 BROWSER=chrome DB=mysql55 TARGET_GROUP=admin02 TARGET_ENV=chrome,mysql
   # - USE_PLUGIN=1 BROWSER=chrome DB=mysql55 TARGET_GROUP=admin03 TARGET_ENV=chrome,mysql
-  # Firefox, PostgreSQL
-  - BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql
-  - BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql
-  - BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql
-  - BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql
-  # Firefox, MySQL
-  - BROWSER=firefox DB=mysql TARGET_GROUP=front TARGET_ENV=firefox,mysql
-  - BROWSER=firefox DB=mysql TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql
-  - BROWSER=firefox DB=mysql TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql
-  - BROWSER=firefox DB=mysql TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql
+  # # Firefox, PostgreSQL
+  # - BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql
+  # - BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql
+  # - BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql
+  # - BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql
+  # # Firefox, MySQL
+  # - BROWSER=firefox DB=mysql TARGET_GROUP=front TARGET_ENV=firefox,mysql
+  # - BROWSER=firefox DB=mysql TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql
+  # - BROWSER=firefox DB=mysql TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql
+  # - BROWSER=firefox DB=mysql TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql
   ## Sub Direcotry, Chrome, PostgreSQL
   # - DIRTYPE=subdir BROWSER=chrome DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql
   # - DIRTYPE=subdir BROWSER=chrome DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
