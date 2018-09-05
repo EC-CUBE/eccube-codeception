@@ -20,15 +20,7 @@ ARG ECCUBE_REPOS
 ARG ECCUBE_BRANCH
 ARG DBTYPE
 
-WORKDIR /project
-
-RUN git clone --depth=50 -b ${ECCUBE_BRANCH} ${ECCUBE_REPOS} /project
-
-RUN { \
-    echo "APP_ENV=test"; \
-    echo "APP_DEBUG=0"; \
-} > /project/.env
-RUN composer install && rm -rf /project/var/cache
+WORKDIR /var/www/html
 
 COPY codecept /repo/codecept
 RUN chmod +x /repo/codecept

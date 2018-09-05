@@ -64,19 +64,21 @@ services:
       - WEB_DRIVER_HOST=browser
       - WEB_DRIVER_PORT=4444
       - MAILCATCHER_HOST=mailcatcher
+    volumes_from:
+      - eccube3:cached
     volumes:
       - ./ff_profile.zip.b64:/root/ff_profile.zip.b64
       - ./tests/_support/_downloads:/project/codeception/_support/_downloads
   browser:
-    image: selenium/standalone-firefox-debug:2.53.1
+    image: selenium/standalone-chrome-debug:latest
+    shm_size: 1g
     ports:
       - 5900
     dns: 8.8.4.4
     environment:
-      - TZ=Asia/Tokyo
       - no_proxy=localhost
     volumes:
-      - ./tests/_support/_downloads:/home/seluser/Downloads
+      - ./tests/_support/_downloads:/root/Downloads
   mailcatcher:
     image: schickling/mailcatcher
     ports:

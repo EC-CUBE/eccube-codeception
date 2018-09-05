@@ -10,7 +10,7 @@ until psql -h db -U "${ECCUBE_DB_USERNAME}" -d "template1" -c '\l'; do
 done
 
 >&2 echo "Postgres is up - executing command"
-${ECCUBE_PATH}/exec_env.sh
+#${ECCUBE_PATH}/exec_env.sh
 
 bin/console doctrine:schema:create
 bin/console eccube:fixtures:load
