@@ -41,6 +41,7 @@ services:
     build:
       context: codeception
       args:
+        - ECCUBE_PATH=/var/www/html
         - ECCUBE_BRANCH=${ECCUBE_BRANCH}
         - ECCUBE_REPOS=${ECCUBE_REPOS}
         - DBTYPE=pgsql

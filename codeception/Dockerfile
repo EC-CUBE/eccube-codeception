@@ -10,15 +10,17 @@ RUN echo "date.timezone = Asia/Tokyo" >> /usr/local/etc/php/php.ini
 WORKDIR /repo
 RUN composer require captbaritone/mailcatcher-codeception-module "1.*"
 
-ENV BASE_URL="http://eccube4/"
-ENV DATABASE_URL=${DATABASE_URL}
-ENV DATABASE_SERVER_VERSION=${DATABASE_SERVER_VERSION}
-
+ARG ECCUBE_PATH
 ARG ECCUBE_REPOS
 ARG ECCUBE_BRANCH
 ARG DBTYPE
 
-WORKDIR /var/www/html
+ENV ECCUBE_PATH=${ECCUBE_PATH}
+ENV BASE_URL="http://eccube4/"
+ENV DATABASE_URL=${DATABASE_URL}
+ENV DATABASE_SERVER_VERSION=${DATABASE_SERVER_VERSION}
+
+WORKDIR ${ECCUBE_PATH}
 
 COPY codecept /repo/codecept
 RUN chmod +x /repo/codecept

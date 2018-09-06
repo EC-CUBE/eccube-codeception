@@ -1,9 +1,0 @@
-version: "2"
-services:
-  browser:
-    image: selenium/standalone-firefox:latest
-    ports:
-      - 5900
-    dns: 8.8.4.4
-    environment:
-      - no_proxy=localhost

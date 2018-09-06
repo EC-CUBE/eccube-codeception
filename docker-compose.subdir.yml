@@ -8,5 +8,8 @@ services:
     environment:
       - ECCUBE_ROOT_URLPATH=/ec-cube
   codecept:
+    build:
+      args:
+        - ECCUBE_PATH=/var/www/html/ec-cube
     environment:
       - BASE_URL=http://eccube4/ec-cube/
