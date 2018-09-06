@@ -11,7 +11,7 @@ services:
       - DATABASE_SERVER_VERSION=8
     volumes:
       - ./mysql8/default_authentication_plugin.cnf:/etc/mysql/conf.d/default_authentication_plugin.cnf
-  eccube3:
+  eccube4:
     build:
       args:
         - DBTYPE=mysql

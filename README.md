@@ -99,7 +99,7 @@ docker ps
 
 CONTAINER ID        IMAGE                                      COMMAND                  CREATED             STATUS              PORTS                               NAMES
 d8c3d147e103        front_codecept                             "codecept run -d -g f"   5 minutes ago       Up 5 minutes                                            front_codecept_run_1
-f5377e65ea82        front_eccube3                              "/wait-for-postgres.s"   5 minutes ago       Up 5 minutes        0.0.0.0:32804->80/tcp               front_eccube3_1
+f5377e65ea82        front_eccube4                              "/wait-for-postgres.s"   5 minutes ago       Up 5 minutes        0.0.0.0:32804->80/tcp               front_eccube4_1
 1dfeff84330c        postgres:9.4                               "/docker-entrypoint.s"   5 minutes ago       Up 5 minutes        5432/tcp                            front_postgres_1
 9f3c7bcc17f9        selenium/standalone-firefox-debug:2.53.1   "/opt/bin/entry_point"   5 minutes ago       Up 5 minutes        4444/tcp, 0.0.0.0:32803->5900/tcp   front_firefox_1
 ```

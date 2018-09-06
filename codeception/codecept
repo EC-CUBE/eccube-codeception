@@ -11,8 +11,9 @@
  * する必要がある.
  */
 
-$base_url = getenv('BASE_URL') ? getenv('BASE_URL') : 'http://eccube3/';
+$base_url = getenv('BASE_URL') ? getenv('BASE_URL') : 'http://eccube4/';
 $i = 0;
+
 echo 'health check to '.$base_url.', please wait.';
 while (healthCheck($base_url) === false) {
     if ($i >= 6) break;

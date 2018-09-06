@@ -7,9 +7,9 @@ services:
       - POSTGRES_USER=eccube_user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=eccube_db
-  eccube3:
+  eccube4:
     build:
-      context: eccube3
+      context: eccube4
       args:
         - ECCUBE_PATH=/var/www/html
         - ECCUBE_BRANCH=${ECCUBE_BRANCH}
@@ -48,7 +48,7 @@ services:
       - mailcatcher
     depends_on:
       - browser
-      - eccube3
+      - eccube4
     environment:
       - TZ=Asia/Tokyo
       - ECCUBE_DB_HOST=db
@@ -65,7 +65,7 @@ services:
       - WEB_DRIVER_PORT=4444
       - MAILCATCHER_HOST=mailcatcher
     volumes_from:
-      - eccube3:cached
+      - eccube4:cached
     volumes:
       - ./ff_profile.zip.b64:/root/ff_profile.zip.b64
       - ./tests/_support/_downloads:/project/codeception/_support/_downloads

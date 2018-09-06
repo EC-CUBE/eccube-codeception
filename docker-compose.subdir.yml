@@ -1,6 +1,6 @@
 version: "2"
 services:
-  eccube3:
+  eccube4:
     build:
       args:
         - DIRTYPE=subdir
@@ -9,4 +9,4 @@ services:
       - ECCUBE_ROOT_URLPATH=/ec-cube
   codecept:
     environment:
-      - BASE_URL=http://eccube3/ec-cube/
+      - BASE_URL=http://eccube4/ec-cube/

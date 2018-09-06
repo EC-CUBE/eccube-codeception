@@ -6,7 +6,7 @@ services:
       - POSTGRES_USER=eccube_user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=eccube_db
-  eccube3:
+  eccube4:
     build:
       args:
         - DBTYPE=pgsql

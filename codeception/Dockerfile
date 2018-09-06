@@ -10,9 +10,7 @@ RUN echo "date.timezone = Asia/Tokyo" >> /usr/local/etc/php/php.ini
 WORKDIR /repo
 RUN composer require captbaritone/mailcatcher-codeception-module "1.*"
 
-## Clone EC-CUBE3
-
-ENV BASE_URL="http://eccube3/"
+ENV BASE_URL="http://eccube4/"
 ENV DATABASE_URL=${DATABASE_URL}
 ENV DATABASE_SERVER_VERSION=${DATABASE_SERVER_VERSION}
 
