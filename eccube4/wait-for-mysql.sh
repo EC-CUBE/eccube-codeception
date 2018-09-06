@@ -4,13 +4,15 @@ set -e
 
 cmd="$@"
 
-until psql -h db -U "${ECCUBE_DB_USERNAME}" -d "template1" -c '\l'; do
-  >&2 echo "Postgres is unavailable - sleeping"
+echo "Waiting for mysql"
+until mysql -h db --password=password -uroot &> /dev/null
+do
+  printf "."
   sleep 1
 done
 
->&2 echo "Postgres is up - executing command"
-#${ECCUBE_PATH}/exec_env.sh
+
+>&2 echo "MySQL Ready"
 
 bin/console doctrine:schema:create
 bin/console eccube:fixtures:load

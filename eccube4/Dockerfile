@@ -39,10 +39,6 @@ WORKDIR ${ECCUBE_PATH}
 
 USER root
 
-COPY config/exec_env.sh ${ECCUBE_PATH}/exec_env.sh
-RUN chmod +x ${ECCUBE_PATH}/exec_env.sh
-RUN ls -lt ${ECCUBE_PATH}/
-
 # Enable SSL
 RUN a2enmod ssl
 RUN ln -s ${APACHE_CONFDIR}/sites-available/default-ssl.conf ${APACHE_CONFDIR}/sites-enabled/default-ssl.conf
