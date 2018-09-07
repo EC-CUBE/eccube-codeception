@@ -1,0 +1,8 @@
+modules:
+  config:
+    WebDriver:
+      browser: chrome
+      capabilities:
+        chromeOptions:
+          prefs:
+            download.default_directory: '/home/seluser/Downloads'

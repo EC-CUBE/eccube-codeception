@@ -2,7 +2,7 @@ FROM eccube/php-ext-apache
 
 MAINTAINER Kentaro Ohkouchi <nanasess@fsm.ne.jp>
 
-ENV PGUSER cube3_dev_user
+ENV PGUSER cube4_dev_user
 ARG ECCUBE_PATH
 ARG DBTYPE
 ARG ECCUBE_REPOS
@@ -24,7 +24,7 @@ ENTRYPOINT /wait-for-db.sh
 
 USER www-data
 
-## Clone EC-CUBE3
+## Clone EC-CUBE
 
 ADD clone-${DIRTYPE}.sh /clone.sh
 RUN /clone.sh

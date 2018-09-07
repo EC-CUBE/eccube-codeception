@@ -70,6 +70,7 @@ services:
     volumes:
       - ./ff_profile.zip.b64:/root/ff_profile.zip.b64
       - ./tests/_support/_downloads:/var/www/html/codeception/_support/_downloads
+      - ./tests/_envs:/var/www/html/codeception/_envs
   browser:
     image: selenium/standalone-chrome-debug:latest
     shm_size: 1g
