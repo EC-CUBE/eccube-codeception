@@ -1,13 +1,13 @@
-# EC-CUBE3 Continuous Delivery
+# EC-CUBE4 Continuous Delivery
 
 [![Build Status](https://travis-ci.org/EC-CUBE/eccube-codeception.svg?branch=master)](https://travis-ci.org/EC-CUBE/eccube-codeception)
 
-* [EC-CUBE3](https://github.com/EC-CUBE/ec-cube)の開発における継続的デリバリー環境構築用
+* [EC-CUBE4](https://github.com/EC-CUBE/ec-cube)の開発における継続的デリバリー環境構築用
 
 
 ## 実行方法
 
-以下のコマンドで、 PostgreSQL, Selenium/Firefox, EC-CUBE3, Codeception の各コンテナが生成され、テストを実行します。
+以下のコマンドで、 PostgreSQL, Selenium/Chrome, EC-CUBE4, Codeception の各コンテナが生成され、テストを実行します。
 `--env default` は 必ず指定して下さい。(変更方法は後述)
 テストレポートは `tests/_output` 以下へ保存されます。
 
@@ -34,16 +34,9 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm codecept
 
 ### サブディレクトリにデプロイした環境でのテスト実行方法
 
-htmlディレクトリありの場合(http://locahost:8080/ec-cube/html/)
 ```
 docker-compose -f docker-compose.yml -f docker-compose.subdir.yml build && \
 docker-compose -f docker-compose.yml -f docker-compose.subdir.yml run --rm codecept run -d --env default --html report.html
-```
-
-htmlディレクトリなしの場合(http://locahost:8080/ec-cube/)
-```
-docker-compose -f docker-compose.yml -f docker-compose.withouthtml.yml build && \
-docker-compose -f docker-compose.yml -f docker-compose.withouthtml.yml run --rm codecept run -d --env default --html report.html
 ```
 
 ### 並列実行
@@ -99,7 +92,7 @@ docker ps
 
 CONTAINER ID        IMAGE                                      COMMAND                  CREATED             STATUS              PORTS                               NAMES
 d8c3d147e103        front_codecept                             "codecept run -d -g f"   5 minutes ago       Up 5 minutes                                            front_codecept_run_1
-f5377e65ea82        front_eccube3                              "/wait-for-postgres.s"   5 minutes ago       Up 5 minutes        0.0.0.0:32804->80/tcp               front_eccube3_1
+f5377e65ea82        front_eccube4                              "/wait-for-postgres.s"   5 minutes ago       Up 5 minutes        0.0.0.0:32804->80/tcp               front_eccube4_1
 1dfeff84330c        postgres:9.4                               "/docker-entrypoint.s"   5 minutes ago       Up 5 minutes        5432/tcp                            front_postgres_1
 9f3c7bcc17f9        selenium/standalone-firefox-debug:2.53.1   "/opt/bin/entry_point"   5 minutes ago       Up 5 minutes        4444/tcp, 0.0.0.0:32803->5900/tcp   front_firefox_1
 ```
@@ -112,21 +105,17 @@ Mac の場合は、 `⌘ + k` で画面共有、 Windows の場合は [TightVNC 
 `docker-compose -f` で `docker-compose.<browser>.yml` 及び `docker-compose.<db>.yml` をオーバーライドすることで、デフォルト以外のブラウザ, データベースでもテスト可能です。
 この場合、 Codeception の `--env` オプションにもブラウザ種別, データベースを指定してください。
 
-*現在のところ、PhantomJS でのテストは JavaScript alert の箇所で失敗してしまいます*
 
 ```
 ### Chrome, MySQL
 docker-compose -f docker-compose.yml -f docker-compose.chrome.yml -f docker-compose.mysql.yml --project-name chrome_mysql run --rm codecept run -d --env chrome,mysql --html report_chrome.html
-
-### PhantomJS, PostgreSQL
-docker-compose -f docker-compose.yml -f docker-compose.phantomjs.yml -f docker-compose.pgsql.yml --project-name phantomjs_pgsql run --rm codecept run -d --env phantomjs,pgsql --html report_phantomjs.html
 ```
 
 ブラウザ種別は、以下を選択可能です。
 
-- firefox
+- ~firefox~
 - chrome
-- phantomjs
+- ~phantomjs~
 
 データベースは、以下を選択可能です。
 

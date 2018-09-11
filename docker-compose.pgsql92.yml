@@ -6,14 +6,20 @@ services:
       - POSTGRES_USER=eccube_user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=eccube_db
-  eccube3:
+  eccube4:
     build:
       args:
         - DBTYPE=pgsql
     environment:
+      - PGUSER=eccube_user
       - PGPASSWORD=password
       - POSTGRES_ENV_POSTGRES_PASSWORD=password
+      - DATABASE_URL=pgsql://eccube_user:password@db:5432/eccube_db
+      - DATABASE_SERVER_VERSION=9
   codecept:
     build:
       args:
         - DBTYPE=pgsql
+    environment:
+      - DATABASE_URL=pgsql://eccube_user:password@db:5432/eccube_db
+      - DATABASE_SERVER_VERSION=9

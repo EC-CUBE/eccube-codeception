@@ -7,9 +7,9 @@ services:
       - POSTGRES_USER=eccube_user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=eccube_db
-  eccube3:
+  eccube4:
     build:
-      context: eccube3
+      context: eccube4
       args:
         - ECCUBE_PATH=/var/www/html
         - ECCUBE_BRANCH=${ECCUBE_BRANCH}
@@ -41,6 +41,7 @@ services:
     build:
       context: codeception
       args:
+        - ECCUBE_PATH=/var/www/html
         - ECCUBE_BRANCH=${ECCUBE_BRANCH}
         - ECCUBE_REPOS=${ECCUBE_REPOS}
         - DBTYPE=pgsql
@@ -48,7 +49,7 @@ services:
       - mailcatcher
     depends_on:
       - browser
-      - eccube3
+      - eccube4
     environment:
       - TZ=Asia/Tokyo
       - ECCUBE_DB_HOST=db
@@ -61,18 +62,22 @@ services:
       - ECCUBE_COOKIE_NAME=eccube
       - ECCUBE_COOKIE_LIFETIME=0
       - ECCUBE_ADMIN_ROUTE=admin
+      - WEB_DRIVER_HOST=browser
+      - WEB_DRIVER_PORT=4444
+      - MAILCATCHER_HOST=mailcatcher
+    volumes_from:
+      - eccube4
     volumes:
-      - ./tests:/project/tests
-      - ./codeception.yml:/project/codeception.yml
       - ./ff_profile.zip.b64:/root/ff_profile.zip.b64
-      - ./tests/_support/_downloads:/project/downloads
+      - ./tests/_support/_downloads:/var/www/html/codeception/_support/_downloads
+      - ./tests/_envs:/var/www/html/codeception/_envs
   browser:
-    image: selenium/standalone-firefox-debug:2.53.1
+    image: selenium/standalone-chrome-debug:latest
+    shm_size: 1g
     ports:
       - 5900
     dns: 8.8.4.4
     environment:
-      - TZ=Asia/Tokyo
       - no_proxy=localhost
     volumes:
       - ./tests/_support/_downloads:/home/seluser/Downloads

@@ -1,7 +1,0 @@
-version: "2"
-services:
-  browser:
-    image: edvakf/phantomjs-japanese
-    command: --webdriver=0.0.0.0:4444
-    ports:
-      - 5900
