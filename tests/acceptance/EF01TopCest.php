@@ -81,7 +81,12 @@ class EF01TopCest
         $I->reloadPage();
         $I->click('#news_area .newslist dt');
 
-        $I->see('詳しくはこちら', '#news_area .newslist dd');
+        $test = $I->grabTextFrom('#news_area .newslist dd');
+
+        codecept_debug($test);
+
+        $I->assertContains("詳しくはこちら", $I->grabTextFrom('#news_area .newslist dd'));
+        $i->see('配送方法が異なる商品が含まれているため、お届け先は複数となります', '#news_area .newslist dd');
         $I->click('#news_area .newslist dd a');
         $I->seeInTitle('ECサイト構築・リニューアルは「ECオープンプラットフォームEC-CUBE」');
     }
