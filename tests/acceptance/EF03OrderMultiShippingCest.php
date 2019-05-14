@@ -68,8 +68,13 @@ class EF03OrderMultiShippingCest
         // go to cart page
         $i->click('#main_middle .total_box .btn_group p a');
 
+
+        $test = $i->grabTextFrom('#main_middle #confirm_flow_box');
+
+        $i->assertEquals("配送方法が異なる商品が含まれているため、お届け先は複数となります。", $test);
+
         // 確認
-        $i->see('配送方法が異なる商品が含まれているため、お届け先は複数となります', '#main_middle #confirm_wrap #confirm_flow_box #confirm_flow_box__body #confirm_flow_box__message p');
+        $i->see('配送方法が異なる商品が含まれているため、お届け先は複数となります。', '#main_middle #confirm_flow_box #confirm_flow_box__message--1 p');
         $i->see('ご注文内容のご確認', '#main_middle .page-heading');
         $i->see('お客様情報', '#main_middle #shopping-form #confirm_main');
         $i->see('配送情報', '#main_middle #shopping-form #confirm_main');
