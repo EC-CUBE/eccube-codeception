@@ -7,42 +7,7 @@ services:
   - docker
 
 env:
-  ## Firefox, PostgreSQL
-  - BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql
-  - BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql
-  - BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql
-  - BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql
-  - BROWSER=firefox DB=pgsql84 TARGET_GROUP=front TARGET_ENV=firefox,pgsql
-  - BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql
-  - BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql
-  - BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql
-  ## Firefox, MySQL
-  - BROWSER=firefox DB=mysql TARGET_GROUP=front TARGET_ENV=firefox,mysql
-  - BROWSER=firefox DB=mysql TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql
-  - BROWSER=firefox DB=mysql TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql
-  - BROWSER=firefox DB=mysql TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql
-  - BROWSER=firefox DB=mysql51 TARGET_GROUP=front TARGET_ENV=firefox,mysql
-  - BROWSER=firefox DB=mysql51 TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql
-  - BROWSER=firefox DB=mysql51 TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql
-  - BROWSER=firefox DB=mysql51 TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql
-  ## Use Plugins, Firefox, PostgreSQL
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=front TARGET_ENV=firefox,pgsql
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql
-  - USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql
-  ## Use Plugins, Firefox, MySQL
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=front TARGET_ENV=firefox,mysql
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=front TARGET_ENV=firefox,mysql
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql
-  - USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql
+
   ## Chrome, PostgreSQL
   - BROWSER=chrome DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql
   - BROWSER=chrome DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
