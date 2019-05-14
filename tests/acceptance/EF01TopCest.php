@@ -80,6 +80,11 @@ class EF01TopCest
         $I->haveInDatabase('dtb_news', array('news_id' => rand(999, 9999), 'news_date' => $today->format('Y-m-d 00:00:00'), 'news_title' => 'タイトル1', 'news_comment' => 'コメント1', 'creator_id' => 1, 'news_url' => 'http://www.ec-cube.net', 'rank' => 2, 'create_date' => $today->format('Y-m-d 00:00:00'), 'update_date' => $today->format('Y-m-d 00:00:00')));
         $I->reloadPage();
         $I->click('#news_area .newslist dt');
+
+        $test = $I->grabTextFrom('#news_area .newslist dd');
+
+        codecept_debug($test);
+
         $I->see('詳しくはこちら', '#news_area .newslist dd');
         $I->click('#news_area .newslist dd a');
         $I->seeInTitle('ECサイト構築・リニューアルは「ECオープンプラットフォームEC-CUBE」');
