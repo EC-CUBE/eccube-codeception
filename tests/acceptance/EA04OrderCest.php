@@ -227,9 +227,6 @@ class EA04OrderCest
 
         $OrderListPage->一覧_メール通知(1);
 
-
-        codecept_debug($I->grabTextFrom('#template-change'));
-
         $I->selectOption(['id' => 'template-change'], ['1' => 'ご注文ありがとうございます']);
         $I->click(['css' => '#button_box__button_menu > button']);
         $I->click(['css' => '#confirm_box__button_menu > p:nth-child(2) > button']);
