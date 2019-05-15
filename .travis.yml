@@ -67,14 +67,14 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
-    - env: BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql
-    - env: BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
-    - env: BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql
-    - env: BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=chrome,pgsql
-    - env: BROWSER=firefox DB=mysql TARGET_GROUP=front TARGET_ENV=chrome,mysql
-    - env: BROWSER=firefox DB=mysql TARGET_GROUP=admin01 TARGET_ENV=chrome,mysql
-    - env: BROWSER=firefox DB=mysql TARGET_GROUP=admin02 TARGET_ENV=chrome,mysql
-    - env: BROWSER=firefox DB=mysql TARGET_GROUP=admin03 TARGET_ENV=chrome,mysql
+    - env: BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql
+    - env: BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql
+    - env: BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql
+    - env: BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql
+    - env: BROWSER=firefox DB=mysql TARGET_GROUP=front TARGET_ENV=firefox,mysql
+    - env: BROWSER=firefox DB=mysql TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql
+    - env: BROWSER=firefox DB=mysql TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql
+    - env: BROWSER=firefox DB=mysql TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql
     - env: USE_PLUGIN=1 BROWSER=chrome DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql
     - env: USE_PLUGIN=1 BROWSER=chrome DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
     - env: USE_PLUGIN=1 BROWSER=chrome DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql
