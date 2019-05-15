@@ -7,7 +7,7 @@ services:
   - docker
 
 env:
-  ## chrome, PostgreSQL
+  ## Chrome, PostgreSQL
   - BROWSER=chrome DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql
   - BROWSER=chrome DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
   - BROWSER=chrome DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql
@@ -16,7 +16,7 @@ env:
   - BROWSER=chrome DB=pgsql84 TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
   - BROWSER=chrome DB=pgsql84 TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql
   - BROWSER=chrome DB=pgsql84 TARGET_GROUP=admin03 TARGET_ENV=chrome,pgsql
-  ## chrome, MySQL
+  ## Chrome, MySQL
   - BROWSER=chrome DB=mysql TARGET_GROUP=front TARGET_ENV=chrome,mysql
   - BROWSER=chrome DB=mysql TARGET_GROUP=admin01 TARGET_ENV=chrome,mysql
   - BROWSER=chrome DB=mysql TARGET_GROUP=admin02 TARGET_ENV=chrome,mysql
@@ -25,7 +25,7 @@ env:
   - BROWSER=chrome DB=mysql51 TARGET_GROUP=admin01 TARGET_ENV=chrome,mysql
   - BROWSER=chrome DB=mysql51 TARGET_GROUP=admin02 TARGET_ENV=chrome,mysql
   - BROWSER=chrome DB=mysql51 TARGET_GROUP=admin03 TARGET_ENV=chrome,mysql
-  ## Use Plugins, chrome, PostgreSQL
+  ## Use Plugins, Chrome, PostgreSQL
   - USE_PLUGIN=1 BROWSER=chrome DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql
   - USE_PLUGIN=1 BROWSER=chrome DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
   - USE_PLUGIN=1 BROWSER=chrome DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql
@@ -34,7 +34,7 @@ env:
   - USE_PLUGIN=1 BROWSER=chrome DB=pgsql84 TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
   - USE_PLUGIN=1 BROWSER=chrome DB=pgsql84 TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql
   - USE_PLUGIN=1 BROWSER=chrome DB=pgsql84 TARGET_GROUP=admin03 TARGET_ENV=chrome,pgsql
-  ## Use Plugins, chrome, MySQL
+  ## Use Plugins, Chrome, MySQL
   - USE_PLUGIN=1 BROWSER=chrome DB=mysql TARGET_GROUP=front TARGET_ENV=chrome,mysql
   - USE_PLUGIN=1 BROWSER=chrome DB=mysql TARGET_GROUP=admin01 TARGET_ENV=chrome,mysql
   - USE_PLUGIN=1 BROWSER=chrome DB=mysql TARGET_GROUP=admin02 TARGET_ENV=chrome,mysql
@@ -43,22 +43,22 @@ env:
   - USE_PLUGIN=1 BROWSER=chrome DB=mysql51 TARGET_GROUP=admin01 TARGET_ENV=chrome,mysql
   - USE_PLUGIN=1 BROWSER=chrome DB=mysql51 TARGET_GROUP=admin02 TARGET_ENV=chrome,mysql
   - USE_PLUGIN=1 BROWSER=chrome DB=mysql51 TARGET_GROUP=admin03 TARGET_ENV=chrome,mysql
-  ## Chrome, PostgreSQL
-  - BROWSER=chrome DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql
-  - BROWSER=chrome DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
-  - BROWSER=chrome DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql
-  - BROWSER=chrome DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=chrome,pgsql
-  ## Chrome, MySQL
-  - BROWSER=chrome DB=mysql TARGET_GROUP=front TARGET_ENV=chrome,mysql
-  - BROWSER=chrome DB=mysql TARGET_GROUP=admin01 TARGET_ENV=chrome,mysql
-  - BROWSER=chrome DB=mysql TARGET_GROUP=admin02 TARGET_ENV=chrome,mysql
-  - BROWSER=chrome DB=mysql TARGET_GROUP=admin03 TARGET_ENV=chrome,mysql
-  ## Sub Direcotry, chrome, PostgreSQL
+  ## Firefox, PostgreSQL
+  - BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql
+  - BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql
+  - BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql
+  - BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql
+  ## Firefox, MySQL
+  - BROWSER=firefox DB=mysql TARGET_GROUP=front TARGET_ENV=firefox,mysql
+  - BROWSER=firefox DB=mysql TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql
+  - BROWSER=firefox DB=mysql TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql
+  - BROWSER=firefox DB=mysql TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql
+  ## Sub Direcotry, Chrome, PostgreSQL
   - DIRTYPE=subdir BROWSER=chrome DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql
   - DIRTYPE=subdir BROWSER=chrome DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
   - DIRTYPE=subdir BROWSER=chrome DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql
   - DIRTYPE=subdir BROWSER=chrome DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=chrome,pgsql
-  ## Without html directory, chrome, PostgreSQL
+  ## Without html directory, Chrome, PostgreSQL
   - DIRTYPE=withouthtml BROWSER=chrome DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql
   - DIRTYPE=withouthtml BROWSER=chrome DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
   - DIRTYPE=withouthtml BROWSER=chrome DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql
@@ -67,38 +67,38 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
-    - env: BROWSER=chrome DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql
-    - env: BROWSER=chrome DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
-    - env: BROWSER=chrome DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql
-    - env: BROWSER=chrome DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=chrome,pgsql
-    - env: BROWSER=chrome DB=mysql TARGET_GROUP=front TARGET_ENV=chrome,mysql
-    - env: BROWSER=chrome DB=mysql TARGET_GROUP=admin01 TARGET_ENV=chrome,mysql
-    - env: BROWSER=chrome DB=mysql TARGET_GROUP=admin02 TARGET_ENV=chrome,mysql
-    - env: BROWSER=chrome DB=mysql TARGET_GROUP=admin03 TARGET_ENV=chrome,mysql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=front TARGET_ENV=firefox,pgsql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=pgsql84 TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=front TARGET_ENV=firefox,mysql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=mysql TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=front TARGET_ENV=firefox,mysql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=admin01 TARGET_ENV=firefox,mysql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=admin02 TARGET_ENV=firefox,mysql
-    - env: USE_PLUGIN=1 BROWSER=firefox DB=mysql51 TARGET_GROUP=admin03 TARGET_ENV=firefox,mysql
-    - env: DIRTYPE=subdir BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql
-    - env: DIRTYPE=subdir BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql
-    - env: DIRTYPE=subdir BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql
-    - env: DIRTYPE=subdir BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql
-    - env: DIRTYPE=withouthtml BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=firefox,pgsql
-    - env: DIRTYPE=withouthtml BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=firefox,pgsql
-    - env: DIRTYPE=withouthtml BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=firefox,pgsql
-    - env: DIRTYPE=withouthtml BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=firefox,pgsql
+    - env: BROWSER=firefox DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql
+    - env: BROWSER=firefox DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
+    - env: BROWSER=firefox DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql
+    - env: BROWSER=firefox DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=chrome,pgsql
+    - env: BROWSER=firefox DB=mysql TARGET_GROUP=front TARGET_ENV=chrome,mysql
+    - env: BROWSER=firefox DB=mysql TARGET_GROUP=admin01 TARGET_ENV=chrome,mysql
+    - env: BROWSER=firefox DB=mysql TARGET_GROUP=admin02 TARGET_ENV=chrome,mysql
+    - env: BROWSER=firefox DB=mysql TARGET_GROUP=admin03 TARGET_ENV=chrome,mysql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=chrome,pgsql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=pgsql84 TARGET_GROUP=front TARGET_ENV=chrome,pgsql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=pgsql84 TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=pgsql84 TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=pgsql84 TARGET_GROUP=admin03 TARGET_ENV=chrome,pgsql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=mysql TARGET_GROUP=front TARGET_ENV=chrome,mysql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=mysql TARGET_GROUP=admin01 TARGET_ENV=chrome,mysql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=mysql TARGET_GROUP=admin02 TARGET_ENV=chrome,mysql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=mysql TARGET_GROUP=admin03 TARGET_ENV=chrome,mysql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=mysql51 TARGET_GROUP=front TARGET_ENV=chrome,mysql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=mysql51 TARGET_GROUP=admin01 TARGET_ENV=chrome,mysql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=mysql51 TARGET_GROUP=admin02 TARGET_ENV=chrome,mysql
+    - env: USE_PLUGIN=1 BROWSER=chrome DB=mysql51 TARGET_GROUP=admin03 TARGET_ENV=chrome,mysql
+    - env: DIRTYPE=subdir BROWSER=chrome DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql
+    - env: DIRTYPE=subdir BROWSER=chrome DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
+    - env: DIRTYPE=subdir BROWSER=chrome DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql
+    - env: DIRTYPE=subdir BROWSER=chrome DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=chrome,pgsql
+    - env: DIRTYPE=withouthtml BROWSER=chrome DB=pgsql TARGET_GROUP=front TARGET_ENV=chrome,pgsql
+    - env: DIRTYPE=withouthtml BROWSER=chrome DB=pgsql TARGET_GROUP=admin01 TARGET_ENV=chrome,pgsql
+    - env: DIRTYPE=withouthtml BROWSER=chrome DB=pgsql TARGET_GROUP=admin02 TARGET_ENV=chrome,pgsql
+    - env: DIRTYPE=withouthtml BROWSER=chrome DB=pgsql TARGET_GROUP=admin03 TARGET_ENV=chrome,pgsql
 
 before_install:
     - docker-compose -f docker-compose.yml ${DIRTYPE:+-f docker-compose.${DIRTYPE}.yml} -f docker-compose.${BROWSER}.yml -f docker-compose.${DB}.yml --project-name ${BROWSER}_${DB}_${TARGET_GROUP} build --no-cache
