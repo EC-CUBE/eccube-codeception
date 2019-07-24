@@ -2,9 +2,9 @@
 /*
  * This file is part of EC-CUBE
  *
- * Copyright(c) 2000-2017 LOCKON CO.,LTD. All Rights Reserved.
+ * Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
  *
- * http://www.lockon.co.jp/
+ * https://www.ec-cube.co.jp/
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
