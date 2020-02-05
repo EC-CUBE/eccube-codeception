@@ -9,4 +9,4 @@ services:
     environment:
       - no_proxy=localhost
     volumes:
-      - ./tests/_support/_downloads:/root/Downloads
+      - ./tests/_support/_downloads:/home/seluser/Downloads
